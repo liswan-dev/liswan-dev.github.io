@@ -1,1 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Liswan Susanto — IT Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;
+  --bg2:#0d1117;
+  --bg3:#161b22;
+  --ink:#e6edf3;
+  --muted:#8b949e;
+  --acc:#ff4d4d;
+  --acc2:#ff8c42;
+  --blue:#58a6ff;
+  --green:#3fb950;
+  --line:#21262d;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'JetBrains Mono',monospace;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CUSTOM CURSOR */
+#cursor{
+  width:12px;height:12px;
+  background:var(--acc);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s, width .2s, height .2s, background .2s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  width:36px;height:36px;
+  border:1.5px solid var(--acc);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .15s ease-out, width .2s, height .2s, opacity .2s;
+  opacity:.5;
+}
+body:hover #cursor{opacity:1}
+
+/* CANVAS */
+#canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;
+  opacity:.35;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem 5vw;
+  background:rgba(7,9,15,.8);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.1rem;
+  color:var(--acc);
+  text-decoration:none;
+  letter-spacing:.02em;
+}
+.nav-logo span{color:var(--ink)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  text-decoration:none;
+  color:var(--muted);
+  font-size:.75rem;
+  letter-spacing:.1em;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--acc)}
+.nav-status{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.7rem;color:var(--green);
+  letter-spacing:.08em;
+}
+.nav-dot{
+  width:7px;height:7px;
+  background:var(--green);
+  border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(.8)}
+}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:8rem 5vw 4rem;
+  position:relative;z-index:1;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:2rem;
+  align-items:center;
+  width:100%;
+  max-width:1200px;
+}
+.hero-left{}
+.hero-tag{
+  font-size:.7rem;
+  letter-spacing:.2em;
+  color:var(--acc);
+  margin-bottom:1.5rem;
+  opacity:0;
+  animation:fadeUp .6s .2s forwards;
+}
+.hero-tag::before{
+  content:'> ';color:var(--green);
+}
+.hero-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3rem,7vw,5.5rem);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.03em;
+  margin-bottom:.5rem;
+  opacity:0;
+  animation:fadeUp .7s .35s forwards;
+}
+.hero-name .acc{
+  color:transparent;
+  -webkit-text-stroke:2px var(--acc);
+}
+.hero-typewriter{
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.1rem;
+  color:var(--blue);
+  margin-bottom:1.5rem;
+  min-height:1.6rem;
+  opacity:0;
+  animation:fadeUp .7s .5s forwards;
+}
+.hero-typewriter::after{
+  content:'|';
+  animation:blink .7s infinite;
+  color:var(--acc);
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{
+  font-size:.9rem;
+  color:var(--muted);
+  line-height:1.8;
+  max-width:520px;
+  margin-bottom:2.5rem;
+  opacity:0;
+  animation:fadeUp .7s .65s forwards;
+}
+.hero-desc .hl{color:var(--ink)}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp .7s .8s forwards;
+}
+.btn{
+  padding:.7rem 1.6rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;
+  letter-spacing:.08em;
+  text-decoration:none;
+  border:none;
+  cursor:none;
+  transition:all .25s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-primary{background:var(--acc);color:#fff}
+.btn-primary:hover{background:#ff2020;transform:translateY(-2px)}
+.btn-outline{
+  background:transparent;
+  color:var(--ink);
+  border:1px solid var(--line);
+}
+.btn-outline:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-2px)}
+.hero-stats{
+  display:flex;gap:2.5rem;
+  margin-top:3rem;
+  padding-top:2rem;
+  border-top:1px solid var(--line);
+  opacity:0;
+  animation:fadeUp .7s 1s forwards;
+}
+.stat-num{
+  font-family:'Syne',sans-serif;
+  font-size:2rem;
+  font-weight:800;
+  color:var(--acc);
+  line-height:1;
+}
+.stat-label{
+  font-size:.65rem;
+  color:var(--muted);
+  letter-spacing:.08em;
+  margin-top:.3rem;
+}
+
+/* AVATAR */
+.hero-right{
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+  opacity:0;
+  animation:fadeIn .8s .5s forwards;
+}
+.avatar-wrap{
+  position:relative;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+.avatar-img{
+  width:340px;
+  image-rendering:pixelated;
+  position:relative;z-index:2;
+  filter:drop-shadow(0 0 40px rgba(255,77,77,.25));
+}
+.avatar-ring{
+  position:absolute;
+  width:320px;height:320px;
+  border:1px solid var(--acc);
+  border-radius:50%;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  opacity:.2;
+  animation:spin 20s linear infinite;
+}
+.avatar-ring2{
+  position:absolute;
+  width:380px;height:380px;
+  border:1px dashed var(--blue);
+  border-radius:50%;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  opacity:.12;
+  animation:spin 30s linear infinite reverse;
+}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.avatar-badge{
+  position:absolute;
+  bottom:20px;right:-10px;
+  background:var(--bg3);
+  border:1px solid var(--line);
+  padding:.5rem .8rem;
+  font-size:.7rem;
+  color:var(--green);
+  z-index:3;
+}
+.avatar-badge::before{content:'$ ';color:var(--muted)}
+
+/* SECTION BASE */
+section{
+  padding:6rem 5vw;
+  position:relative;z-index:1;
+}
+.sec-label{
+  font-size:.65rem;
+  letter-spacing:.2em;
+  color:var(--acc);
+  margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.sec-label::before{content:'//';color:var(--muted)}
+.sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:800;
+  line-height:1.1;
+  margin-bottom:3rem;
+  letter-spacing:-.02em;
+}
+.sec-title span{color:var(--acc)}
+
+/* TENTANG */
+#tentang{background:var(--bg2)}
+.tentang-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+  align-items:start;
+}
+.tentang-text p{
+  color:var(--muted);
+  font-size:.88rem;
+  line-height:1.9;
+  margin-bottom:1rem;
+}
+.tentang-text p .hl{color:var(--ink)}
+.tentang-code{
+  background:var(--bg3);
+  border:1px solid var(--line);
+  padding:1.5rem;
+  font-size:.8rem;
+  line-height:1.9;
+}
+.code-line{display:flex;gap:.8rem}
+.code-ln{color:var(--line);min-width:20px;text-align:right;user-select:none}
+.code-key{color:var(--blue)}
+.code-str{color:#a5d6a7}
+.code-val{color:#ffb74d}
+.code-comm{color:var(--muted);font-style:italic}
+
+/* KEAHLIAN */
+#keahlian{}
+.skill-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1px;
+  border:1px solid var(--line);
+}
+.skill-item{
+  background:var(--bg);
+  padding:1.5rem;
+  border:1px solid var(--line);
+  transition:background .25s, transform .25s;
+  position:relative;
+  overflow:hidden;
+}
+.skill-item::before{
+  content:'';
+  position:absolute;top:0;left:0;
+  width:3px;height:100%;
+  background:var(--acc);
+  transform:scaleY(0);
+  transition:transform .25s;
+}
+.skill-item:hover{background:var(--bg3)}
+.skill-item:hover::before{transform:scaleY(1)}
+.skill-icon{font-size:1.4rem;margin-bottom:.8rem}
+.skill-name{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:.95rem;
+  margin-bottom:.4rem;
+}
+.skill-desc{font-size:.75rem;color:var(--muted);line-height:1.6}
+.skill-bar{
+  margin-top:.8rem;
+  height:2px;
+  background:var(--line);
+}
+.skill-bar-fill{
+  height:100%;
+  background:var(--acc);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .8s .2s ease;
+}
+.skill-item.visible .skill-bar-fill{transform:scaleX(1)}
+
+/* PROYEK */
+#proyek{background:var(--bg2)}
+.proyek-list{display:flex;flex-direction:column}
+.proyek-item{
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  align-items:center;
+  gap:2rem;
+  padding:1.8rem 0;
+  border-bottom:1px solid var(--line);
+  transition:background .2s;
+  cursor:default;
+}
+.proyek-item:first-child{border-top:1px solid var(--line)}
+.proyek-item:hover{padding-left:1rem;transition:padding .2s}
+.proyek-num{
+  font-family:'Syne',sans-serif;
+  font-size:.75rem;
+  font-weight:800;
+  color:var(--acc);
+}
+.proyek-name{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:1.05rem;
+  margin-bottom:.3rem;
+}
+.proyek-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+.proyek-tags{display:flex;gap:.4rem;flex-wrap:wrap}
+.tag{
+  font-size:.65rem;
+  letter-spacing:.06em;
+  padding:.2rem .6rem;
+  border:1px solid var(--line);
+  color:var(--muted);
+}
+.tag-acc{border-color:var(--acc);color:var(--acc)}
+
+/* KONTAK */
+#kontak{}
+.kontak-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4rem;
+}
+.kontak-big{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,5vw,4rem);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-.03em;
+  margin-bottom:1.5rem;
+}
+.kontak-big span{
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--acc);
+}
+.kontak-sub{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:2rem}
+.kontak-links{display:flex;flex-direction:column;gap:.8rem}
+.kontak-link{
+  display:flex;align-items:center;gap:1rem;
+  text-decoration:none;
+  color:var(--muted);
+  font-size:.82rem;
+  transition:color .2s;
+  padding:.6rem 0;
+  border-bottom:1px solid var(--line);
+}
+.kontak-link:hover{color:var(--acc)}
+.kontak-link-icon{
+  width:32px;height:32px;
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;
+  flex-shrink:0;
+  transition:border-color .2s, color .2s;
+}
+.kontak-link:hover .kontak-link-icon{border-color:var(--acc);color:var(--acc)}
+.kontak-right{padding-top:1rem}
+.kontak-info{margin-bottom:2rem}
+.kontak-info p{
+  font-size:.8rem;
+  color:var(--muted);
+  line-height:2.2;
+  border-bottom:1px solid var(--line);
+  padding-bottom:.5rem;
+  margin-bottom:.5rem;
+}
+.kontak-info p span{color:var(--green);float:right}
+
+/* FOOTER */
+footer{
+  padding:1.5rem 5vw;
+  background:var(--bg2);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.7rem;
+  color:var(--muted);
+  position:relative;z-index:1;
+}
+footer span{color:var(--acc)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{
+  from{opacity:0}to{opacity:1}
+}
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .tentang-grid,.kontak-wrap{grid-template-columns:1fr;gap:2rem}
+  .proyek-item{grid-template-columns:60px 1fr}
+  .proyek-tags{display:none}
+  .nav-links{display:none}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>liswan</span>.dev</a>
+  <ul class="nav-links">
+    <li><a href="#tentang">tentang</a></li>
+    <li><a href="#keahlian">keahlian</a></li>
+    <li><a href="#proyek">proyek</a></li>
+    <li><a href="#kontak">kontak</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="nav-dot"></div>
+    tersedia untuk kolaborasi
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <p class="hero-tag">IT Developer & System Builder</p>
+      <h1 class="hero-name">LISWAN<br><span class="acc">SUSANTO</span></h1>
+      <div class="hero-typewriter" id="typewriter"></div>
+      <p class="hero-desc">
+        Membangun <span class="hl">sistem internal</span>, infrastruktur digital, dan solusi web
+        berbasis <span class="hl">PHP · WordPress · Apps Script</span> — berbasis di Surabaya, Indonesia.
+      </p>
+      <div class="hero-btns">
+        <a href="#proyek" class="btn btn-primary">→ Lihat Proyek</a>
+        <a href="#kontak" class="btn btn-outline">Hubungi Saya</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Sistem Dibangun</div>
+        </div>
+        <div>
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Tahun Pengalaman</div>
+        </div>
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Modul Aktif</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar-ring2"></div>
+        <img src="avatar.png" alt="Liswan Susanto" class="avatar-img"/>
+        <div class="avatar-badge">sistem online</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section id="tentang">
+  <div class="reveal">
+    <p class="sec-label">tentang saya</p>
+    <h2 class="sec-title">Siapa <span>Liswan?</span></h2>
+  </div>
+  <div class="tentang-grid reveal">
+    <div class="tentang-text">
+      <p>Halo! Nama saya <span class="hl">Liswan Susanto</span> — seorang IT profesional dengan pengalaman mendalam di bidang infrastruktur, pengembangan sistem internal, dan koordinasi vendor di seluruh Indonesia.</p>
+      <p>Saat ini bekerja di <span class="hl">PT Solusi Indomitra Nusantara</span>, membangun dan memelihara berbagai platform internal mulai dari sistem pelaporan, manajemen aset, hingga monitoring distribusi.</p>
+      <p>Di luar pekerjaan, saya menjalankan bisnis minuman <span class="hl">Es Teh Solo</span> dan aktif dalam penelitian akademis di bidang komunikasi pemasaran terpadu.</p>
+    </div>
+    <div class="tentang-code">
+      <div class="code-line"><span class="code-ln">1</span><span class="code-comm">// profil.json</span></div>
+      <div class="code-line"><span class="code-ln">2</span><span>{</span></div>
+      <div class="code-line"><span class="code-ln">3</span>&nbsp;&nbsp;<span class="code-key">"nama"</span>: <span class="code-str">"Liswan Susanto"</span>,</div>
+      <div class="code-line"><span class="code-ln">4</span>&nbsp;&nbsp;<span class="code-key">"lokasi"</span>: <span class="code-str">"Surabaya, ID"</span>,</div>
+      <div class="code-line"><span class="code-ln">5</span>&nbsp;&nbsp;<span class="code-key">"perusahaan"</span>: <span class="code-str">"PT SIN"</span>,</div>
+      <div class="code-line"><span class="code-ln">6</span>&nbsp;&nbsp;<span class="code-key">"stack"</span>: [</div>
+      <div class="code-line"><span class="code-ln">7</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"PHP"</span>, <span class="code-str">"WordPress"</span>,</div>
+      <div class="code-line"><span class="code-ln">8</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-str">"MySQL"</span>, <span class="code-str">"Apps Script"</span></div>
+      <div class="code-line"><span class="code-ln">9</span>&nbsp;&nbsp;],</div>
+      <div class="code-line"><span class="code-ln">10</span>&nbsp;&nbsp;<span class="code-key">"status"</span>: <span class="code-val">true</span>,</div>
+      <div class="code-line"><span class="code-ln">11</span>&nbsp;&nbsp;<span class="code-key">"kopi"</span>: <span class="code-val">Infinity</span></div>
+      <div class="code-line"><span class="code-ln">12</span>}</div>
+    </div>
+  </div>
+</section>
+
+<!-- KEAHLIAN -->
+<section id="keahlian">
+  <div class="reveal">
+    <p class="sec-label">keahlian</p>
+    <h2 class="sec-title">Yang Saya <span>Kuasai</span></h2>
+  </div>
+  <div class="skill-grid reveal">
+    <div class="skill-item">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">PHP & WordPress</div>
+      <div class="skill-desc">Plugin kustom, shortcode, dan portal internal berbasis WordPress.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Google Apps Script</div>
+      <div class="skill-desc">Otomasi, integrasi spreadsheet, dan sinkronisasi data sistem.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">MySQL / Database</div>
+      <div class="skill-desc">Desain tabel, optimasi query, dan manajemen data relasional.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name">IT Infrastruktur</div>
+      <div class="skill-desc">Dukungan hardware, jaringan, server, dan koordinasi vendor.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">HTML / CSS / JS</div>
+      <div class="skill-desc">Antarmuka frontend bersih, dashboard, dan komponen UI interaktif.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">📦</div>
+      <div class="skill-name">ERP / CRM</div>
+      <div class="skill-desc">Integrasi Accurate ERP, SFA, dan sistem manajemen distribusi.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYEK -->
+<section id="proyek">
+  <div class="reveal">
+    <p class="sec-label">proyek</p>
+    <h2 class="sec-title">Karya <span>Terpilih</span></h2>
+  </div>
+  <div class="proyek-list reveal">
+    <div class="proyek-item">
+      <span class="proyek-num">01 //</span>
+      <div>
+        <div class="proyek-name">SMART Asset System</div>
+        <div class="proyek-desc">Platform manajemen aset dengan pelabelan QR, tracking mutasi, dan akses multi-role untuk PT SIN.</div>
+      </div>
+      <div class="proyek-tags">
+        <span class="tag tag-acc">PHP</span>
+        <span class="tag">WordPress</span>
+        <span class="tag">MySQL</span>
+      </div>
+    </div>
+    <div class="proyek-item">
+      <span class="proyek-num">02 //</span>
+      <div>
+        <div class="proyek-name">DSA — Aktivitas Penjualan Harian</div>
+        <div class="proyek-desc">Sistem monitoring penjualan dengan ranking SPV, laporan siang/malam, dan analitik performa.</div>
+      </div>
+      <div class="proyek-tags">
+        <span class="tag tag-acc">PHP</span>
+        <span class="tag">Apps Script</span>
+      </div>
+    </div>
+    <div class="proyek-item">
+      <span class="proyek-num">03 //</span>
+      <div>
+        <div class="proyek-name">GASS Center</div>
+        <div class="proyek-desc">Sistem pelacakan kendaraan dengan pengingat GPS top-up, pajak, KIR, dan QR MyPertamina.</div>
+      </div>
+      <div class="proyek-tags">
+        <span class="tag tag-acc">WordPress</span>
+        <span class="tag">MySQL</span>
+      </div>
+    </div>
+    <div class="proyek-item">
+      <span class="proyek-num">04 //</span>
+      <div>
+        <div class="proyek-name">SIBER — Pusat Laporan Mingguan</div>
+        <div class="proyek-desc">Sistem pelaporan internal dengan alur review, akses berbasis peran, dan auto-fill dari data master.</div>
+      </div>
+      <div class="proyek-tags">
+        <span class="tag tag-acc">PHP</span>
+        <span class="tag">WordPress</span>
+      </div>
+    </div>
+    <div class="proyek-item">
+      <span class="proyek-num">05 //</span>
+      <div>
+        <div class="proyek-name">HCGA Center</div>
+        <div class="proyek-desc">Portal HR & GA dengan SOP Online, Job Desk Online, dan manajemen data master karyawan.</div>
+      </div>
+      <div class="proyek-tags">
+        <span class="tag tag-acc">WordPress</span>
+        <span class="tag">PHP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak">
+  <div class="reveal">
+    <p class="sec-label">kontak</p>
+  </div>
+  <div class="kontak-wrap reveal">
+    <div>
+      <div class="kontak-big">Mari <span>Terhubung</span></div>
+      <p class="kontak-sub">Terbuka untuk kolaborasi, freelance, atau sekadar ngobrol tentang teknologi dan sistem.</p>
+      <div class="kontak-links">
+        <a href="https://github.com/liswan-dev" target="_blank" class="kontak-link">
+          <span class="kontak-link-icon">GH</span>
+          github.com/liswan-dev
+        </a>
+        <a href="https://liswan.dev" class="kontak-link">
+          <span class="kontak-link-icon">🌐</span>
+          liswan.dev
+        </a>
+        <a href="mailto:hello@liswan.dev" class="kontak-link">
+          <span class="kontak-link-icon">@</span>
+          hello@liswan.dev
+        </a>
+      </div>
+    </div>
+    <div class="kontak-right">
+      <div class="kontak-info">
+        <p>Lokasi <span>Surabaya, Indonesia</span></p>
+        <p>Ketersediaan <span>Remote & On-site</span></p>
+        <p>Respons <span>dalam 24 jam</span></p>
+        <p>Status <span style="color:var(--green)">● Aktif</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Liswan Susanto</span>
+  <span>dibuat dengan ☕ & PHP</span>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
+animRing();
+document.querySelectorAll('a,.btn,.proyek-item,.skill-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.opacity='0.3';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5';});
+});
+
+// CANVAS PARTICLES
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+const dots=[];
+for(let i=0;i<80;i++){
+  dots.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*1.5+.5,
+    vx:(Math.random()-.5)*.4,
+    vy:(Math.random()-.5)*.4,
+  });
+}
+function drawCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  dots.forEach(d=>{
+    d.x+=d.vx;d.y+=d.vy;
+    if(d.x<0||d.x>canvas.width)d.vx*=-1;
+    if(d.y<0||d.y>canvas.height)d.vy*=-1;
+    ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(88,166,255,.6)';ctx.fill();
+  });
+  dots.forEach((a,i)=>{
+    dots.slice(i+1).forEach(b=>{
+      const dist=Math.hypot(a.x-b.x,a.y-b.y);
+      if(dist<120){
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(88,166,255,${.15*(1-dist/120)})`;
+        ctx.lineWidth=.5;ctx.stroke();
+      }
+    });
+  });
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
+
+// TYPEWRITER
+const phrases=['IT Support & Developer','System Builder','PHP Enthusiast','Berbasis di Surabaya'];
+let pi=0,ci=0,del=false;
+const tw=document.getElementById('typewriter');
+function type(){
+  const p=phrases[pi];
+  if(!del){
+    tw.textContent=p.slice(0,++ci);
+    if(ci===p.length){del=true;setTimeout(type,1800);return;}
+  } else {
+    tw.textContent=p.slice(0,--ci);
+    if(ci===0){del=false;pi=(pi+1)%phrases.length;}
+  }
+  setTimeout(type,del?50:90);
+}
+setTimeout(type,1200);
+
+// SCROLL REVEAL
+const reveals=document.querySelectorAll('.reveal');
+const skills=document.querySelectorAll('.skill-item');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+reveals.forEach(el=>obs.observe(el));
+skills.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
 

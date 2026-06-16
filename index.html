@@ -1298,20 +1298,20 @@ const CONNECTIONS = [
 // Fingertip indices
 const TIPS = [4, 8, 12, 16, 20];
 
-/* ── Gesture scroll state ── */
-let prevPalmY    = null;
-const palmYBuf   = [];
-const BUF_SIZE   = 4;           // smaller = more responsive
-let scrollVel    = 0;           // current scroll velocity px/frame
-const VEL_DECAY  = 0.82;        // momentum decay per rAF tick
-const VEL_SCALE  = 2200;        // normalized-delta → px velocity
-const DEAD_ZONE  = 0.008;       // ignore tiny jitter (normalized units)
+/* ── PINCH SCROLL STATE ── */
+let pinchActive  = false;   // currently pinching?
+let pinchStartY  = null;    // normalized Y where pinch began
+let lastPinchY   = null;    // last known pinch Y
+let scrollVel    = 0;
+const VEL_DECAY  = 0.85;
+const VEL_SCALE  = 2800;
+const PINCH_DIST = 0.07;    // normalized distance threshold to trigger pinch
 let rafScroll    = null;
 
-/* Continuous rAF scroll loop — decoupled from MediaPipe fps */
+/* rAF scroll loop — smooth momentum */
 function startScrollLoop() {
   function loop() {
-    if (Math.abs(scrollVel) > 0.5) {
+    if (Math.abs(scrollVel) > 0.3) {
       window.scrollBy(0, scrollVel);
       scrollVel *= VEL_DECAY;
     } else {
@@ -1321,23 +1321,109 @@ function startScrollLoop() {
   }
   if (!rafScroll) rafScroll = requestAnimationFrame(loop);
 }
-
 function stopScrollLoop() {
   if (rafScroll) { cancelAnimationFrame(rafScroll); rafScroll = null; }
   scrollVel = 0;
 }
 
-/* ── HUD scroll indicator ── */
+/* ── HUD ── */
 let scrollHudTimeout = null;
-function showScrollHud(dir) {
+function showScrollHud(msg) {
   const hud = document.getElementById('cam-hud');
-  if (dir < 0)      hud.textContent = '▲  SCROLL UP';
-  else if (dir > 0) hud.textContent = '▼  SCROLL DOWN';
-  else              hud.textContent = '◉ TRACKING — Move hand up/down to scroll';
+  hud.textContent = msg;
   clearTimeout(scrollHudTimeout);
-  if (dir !== 0) scrollHudTimeout = setTimeout(() => {
-    hud.textContent = '◉ TRACKING — Move hand up/down to scroll';
-  }, 800);
+  scrollHudTimeout = setTimeout(() => {
+    hud.textContent = '👌 Pinch & move up/down to scroll';
+  }, 900);
+}
+
+/* ── PINCH DETECTOR ── */
+function handlePinchScroll(landmarks) {
+  const thumb = landmarks[4];   // thumb tip
+  const index = landmarks[8];   // index tip
+
+  // Euclidean distance in normalized space
+  const dx   = thumb.x - index.x;
+  const dy   = thumb.y - index.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  // Midpoint Y of pinch (average thumb+index)
+  const midY = (thumb.y + index.y) / 2;
+
+  if (dist < PINCH_DIST) {
+    // ── PINCH ACTIVE ──
+    if (!pinchActive) {
+      // Just started pinching — record anchor
+      pinchActive  = true;
+      pinchStartY  = midY;
+      lastPinchY   = midY;
+      showScrollHud('👌 Pinch detected — move up/down');
+    } else {
+      // Already pinching — compute delta from last frame
+      const delta = midY - lastPinchY;  // + = hand moved down = scroll down
+      lastPinchY  = midY;
+
+      if (Math.abs(delta) > 0.001) {
+        scrollVel += delta * VEL_SCALE;
+        scrollVel  = Math.max(-80, Math.min(80, scrollVel));
+        showScrollHud(delta < 0 ? '▲  SCROLL UP' : '▼  SCROLL DOWN');
+      }
+    }
+  } else {
+    // ── PINCH RELEASED ──
+    if (pinchActive) {
+      pinchActive = false;
+      pinchStartY = null;
+      lastPinchY  = null;
+      showScrollHud('✋ Pinch released');
+    }
+  }
+}
+
+/* ── DRAW: pinch indicator on thumb+index tips ── */
+function drawPinchIndicator(pts, isPinching) {
+  const t = pts[4];   // thumb tip
+  const i = pts[8];   // index tip
+  const color = isPinching ? '#facc15' : 'rgba(255,255,255,0.35)';
+  const glow  = isPinching ? '#facc15' : 'transparent';
+
+  // Line between thumb and index
+  hCtx.beginPath();
+  hCtx.moveTo(t.x, t.y);
+  hCtx.lineTo(i.x, i.y);
+  hCtx.strokeStyle = color;
+  hCtx.lineWidth   = isPinching ? 3 : 1.5;
+  hCtx.setLineDash(isPinching ? [] : [5, 4]);
+  hCtx.shadowBlur  = isPinching ? 16 : 0;
+  hCtx.shadowColor = glow;
+  hCtx.stroke();
+  hCtx.setLineDash([]);
+  hCtx.shadowBlur  = 0;
+
+  // Highlight the two tips
+  [t, i].forEach(pt => {
+    hCtx.beginPath();
+    hCtx.arc(pt.x, pt.y, isPinching ? 12 : 9, 0, Math.PI * 2);
+    hCtx.strokeStyle = color;
+    hCtx.lineWidth   = 2.5;
+    hCtx.shadowBlur  = isPinching ? 20 : 0;
+    hCtx.shadowColor = glow;
+    hCtx.stroke();
+    hCtx.shadowBlur  = 0;
+  });
+
+  // Pinch midpoint dot when active
+  if (isPinching) {
+    const mx = (t.x + i.x) / 2;
+    const my = (t.y + i.y) / 2;
+    hCtx.beginPath();
+    hCtx.arc(mx, my, 5, 0, Math.PI * 2);
+    hCtx.fillStyle   = '#facc15';
+    hCtx.shadowBlur  = 14;
+    hCtx.shadowColor = '#facc15';
+    hCtx.fill();
+    hCtx.shadowBlur  = 0;
+  }
 }
 
 /* ── Resize canvas ── */
@@ -1351,13 +1437,15 @@ window.addEventListener('resize', resizeHandCanvas);
 /* ── TOGGLE ── */
 window.toggleCamera = async function () {
   if (!camActive) {
-    camActive = true;
+    camActive   = true;
+    pinchActive = false;
+    pinchStartY = null;
+    lastPinchY  = null;
+    scrollVel   = 0;
     camBtn.classList.add('active');
     camLabel.textContent = '◉ STOP';
     camPopup.classList.add('active');
     hCanvas.classList.add('active');
-    prevPalmY = null;
-    palmYBuf.length = 0;
     startScrollLoop();
     await startHandTracking();
   } else {
@@ -1393,8 +1481,7 @@ async function startHandTracking() {
 function stopHandTracking() {
   if (mpCamera) { mpCamera.stop(); mpCamera = null; }
   if (hands)    { hands.close();   hands    = null; }
-  prevPalmY = null;
-  palmYBuf.length = 0;
+  pinchActive = false; pinchStartY = null; lastPinchY = null;
   stopScrollLoop();
 }
 
@@ -1509,60 +1596,29 @@ function drawLabel(text, x, y) {
   hCtx.shadowBlur  = 0;
 }
 
-/* ── GESTURE: velocity-based scroll ── */
-function handleScrollGesture(landmarks) {
-  // Track wrist Y (landmark 0) — normalized 0 (top) to 1 (bottom)
-  const rawY = landmarks[0].y;
-
-  // Rolling average smoothing (small buffer = responsive)
-  palmYBuf.push(rawY);
-  if (palmYBuf.length > BUF_SIZE) palmYBuf.shift();
-  const smoothY = palmYBuf.reduce((a, b) => a + b, 0) / palmYBuf.length;
-
-  if (prevPalmY !== null) {
-    const delta = smoothY - prevPalmY; // + = hand went down, - = hand went up
-
-    if (Math.abs(delta) > DEAD_ZONE) {
-      // Inject velocity — rAF loop handles actual scrolling smoothly
-      // delta > 0 (hand down in cam) = scroll down (positive)
-      // delta < 0 (hand up in cam)   = scroll up (negative)
-      scrollVel += delta * VEL_SCALE;
-
-      // Cap max velocity so it doesn't fly off screen
-      scrollVel = Math.max(-60, Math.min(60, scrollVel));
-
-      showScrollHud(delta > 0 ? 1 : -1);
-    }
-  }
-
-  prevPalmY = smoothY;
-}
-
-/* ── DETECT: simple open/closed hand label ── */
+/* ── GESTURE label ── */
 function detectGesture(landmarks) {
-  // Count extended fingers (tip Y above MCP Y = finger up)
-  const fingerExtended = [
-    landmarks[8].y  < landmarks[6].y,   // index
-    landmarks[12].y < landmarks[10].y,  // middle
-    landmarks[16].y < landmarks[14].y,  // ring
-    landmarks[20].y < landmarks[18].y,  // pinky
-  ];
-  const count = fingerExtended.filter(Boolean).length;
-  if (count >= 3) return 'Open';
-  if (count === 0) return 'Fist';
-  return `${count} Finger${count > 1 ? 's' : ''}`;
+  const dx   = landmarks[4].x - landmarks[8].x;
+  const dy   = landmarks[4].y - landmarks[8].y;
+  if (Math.sqrt(dx*dx + dy*dy) < PINCH_DIST) return 'Pinch ✓';
+  const ext = [
+    landmarks[8].y  < landmarks[6].y,
+    landmarks[12].y < landmarks[10].y,
+    landmarks[16].y < landmarks[14].y,
+    landmarks[20].y < landmarks[18].y,
+  ].filter(Boolean).length;
+  if (ext >= 3) return 'Open';
+  if (ext === 0) return 'Fist';
+  return `${ext} Finger${ext > 1 ? 's' : ''}`;
 }
 
 /* ── MAIN RESULT HANDLER ── */
 function onResults(results) {
   if (!camActive) return;
-
   hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
 
   if (!results.multiHandLandmarks || !results.multiHandLandmarks.length) {
-    // Hand lost — let velocity decay naturally (don't hard-stop)
-    prevPalmY = null;
-    palmYBuf.length = 0;
+    pinchActive = false; lastPinchY = null;
     return;
   }
 
@@ -1570,27 +1626,23 @@ function onResults(results) {
     const handedness = results.multiHandedness?.[hIdx]?.label || 'Hand';
     const pts = lms.map(lm => lm2s(lm));
 
-    // ── Gesture scroll ──
-    handleScrollGesture(lms);
+    // ── Pinch scroll ──
+    handlePinchScroll(lms);
 
-    // ── Bounding box ──
+    // ── Is pinching? ──
+    const dx = lms[4].x - lms[8].x, dy = lms[4].y - lms[8].y;
+    const isPinching = Math.sqrt(dx*dx + dy*dy) < PINCH_DIST;
+
+    // ── Bounding box + label ──
     const box = drawBoundingBox(pts);
+    drawLabel(`${handedness}: ${detectGesture(lms)}`, (box.minX+box.maxX)/2, box.minY);
 
-    // ── Label ──
-    const gesture = detectGesture(lms);
-    const labelText = `${handedness}: ${gesture}`;
-    drawLabel(labelText, (box.minX + box.maxX) / 2, box.minY);
+    // ── Skeleton ──
+    CONNECTIONS.forEach(([a,b]) => drawBone(pts[a].x, pts[a].y, pts[b].x, pts[b].y));
+    pts.forEach((pt, idx) => drawJoint(pt.x, pt.y, TIPS.includes(idx)));
 
-    // ── Bones ──
-    CONNECTIONS.forEach(([a, b]) => {
-      drawBone(pts[a].x, pts[a].y, pts[b].x, pts[b].y);
-    });
-
-    // ── Joints — draw all 21, larger for tips ──
-    pts.forEach((pt, idx) => {
-      const isTip = TIPS.includes(idx);
-      drawJoint(pt.x, pt.y, isTip);
-    });
+    // ── Pinch overlay ──
+    drawPinchIndicator(pts, isPinching);
   });
 }
 

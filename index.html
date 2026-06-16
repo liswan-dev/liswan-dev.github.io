@@ -1299,28 +1299,45 @@ const CONNECTIONS = [
 const TIPS = [4, 8, 12, 16, 20];
 
 /* ── Gesture scroll state ── */
-let prevPalmY   = null;   // previous frame palm Y (normalized 0-1)
-let scrollMode  = false;  // true when hand is detected
-const SCROLL_SENSITIVITY = 8; // multiplier
+let prevPalmY    = null;
+const palmYBuf   = [];
+const BUF_SIZE   = 4;           // smaller = more responsive
+let scrollVel    = 0;           // current scroll velocity px/frame
+const VEL_DECAY  = 0.82;        // momentum decay per rAF tick
+const VEL_SCALE  = 2200;        // normalized-delta → px velocity
+const DEAD_ZONE  = 0.008;       // ignore tiny jitter (normalized units)
+let rafScroll    = null;
 
-// Smoothing buffer for palm Y
-const palmYBuf  = [];
-const BUF_SIZE  = 6;
+/* Continuous rAF scroll loop — decoupled from MediaPipe fps */
+function startScrollLoop() {
+  function loop() {
+    if (Math.abs(scrollVel) > 0.5) {
+      window.scrollBy(0, scrollVel);
+      scrollVel *= VEL_DECAY;
+    } else {
+      scrollVel = 0;
+    }
+    rafScroll = requestAnimationFrame(loop);
+  }
+  if (!rafScroll) rafScroll = requestAnimationFrame(loop);
+}
+
+function stopScrollLoop() {
+  if (rafScroll) { cancelAnimationFrame(rafScroll); rafScroll = null; }
+  scrollVel = 0;
+}
 
 /* ── HUD scroll indicator ── */
-let scrollDir    = 0;    // -1 up, 0 none, +1 down
 let scrollHudTimeout = null;
-
 function showScrollHud(dir) {
   const hud = document.getElementById('cam-hud');
-  scrollDir = dir;
-  if (dir < 0)       hud.textContent = '▲ Scrolling UP';
-  else if (dir > 0)  hud.textContent = '▼ Scrolling DOWN';
-  else               hud.textContent = '◉ TRACKING ACTIVE — Move hand up/down to scroll';
+  if (dir < 0)      hud.textContent = '▲  SCROLL UP';
+  else if (dir > 0) hud.textContent = '▼  SCROLL DOWN';
+  else              hud.textContent = '◉ TRACKING — Move hand up/down to scroll';
   clearTimeout(scrollHudTimeout);
   if (dir !== 0) scrollHudTimeout = setTimeout(() => {
-    hud.textContent = '◉ TRACKING ACTIVE — Move hand up/down to scroll';
-  }, 600);
+    hud.textContent = '◉ TRACKING — Move hand up/down to scroll';
+  }, 800);
 }
 
 /* ── Resize canvas ── */
@@ -1341,10 +1358,12 @@ window.toggleCamera = async function () {
     hCanvas.classList.add('active');
     prevPalmY = null;
     palmYBuf.length = 0;
+    startScrollLoop();
     await startHandTracking();
   } else {
     camActive = false;
     stopHandTracking();
+    stopScrollLoop();
     camBtn.classList.remove('active');
     camLabel.textContent = '◉ CAM';
     camPopup.classList.remove('active');
@@ -1376,6 +1395,7 @@ function stopHandTracking() {
   if (hands)    { hands.close();   hands    = null; }
   prevPalmY = null;
   palmYBuf.length = 0;
+  stopScrollLoop();
 }
 
 /* ── lm → screen px (mirror X selfie) ── */
@@ -1489,30 +1509,32 @@ function drawLabel(text, x, y) {
   hCtx.shadowBlur  = 0;
 }
 
-/* ── GESTURE: detect scroll direction from wrist Y movement ── */
+/* ── GESTURE: velocity-based scroll ── */
 function handleScrollGesture(landmarks) {
-  // Use wrist (0) Y position in normalized coords
-  const palmY = landmarks[0].y;  // 0=top, 1=bottom
+  // Track wrist Y (landmark 0) — normalized 0 (top) to 1 (bottom)
+  const rawY = landmarks[0].y;
 
-  palmYBuf.push(palmY);
+  // Rolling average smoothing (small buffer = responsive)
+  palmYBuf.push(rawY);
   if (palmYBuf.length > BUF_SIZE) palmYBuf.shift();
-  const smoothY = palmYBuf.reduce((a,b) => a+b, 0) / palmYBuf.length;
+  const smoothY = palmYBuf.reduce((a, b) => a + b, 0) / palmYBuf.length;
 
   if (prevPalmY !== null) {
-    const delta = smoothY - prevPalmY; // positive = hand moved DOWN in camera (= scroll DOWN)
-    const threshold = 0.004;
+    const delta = smoothY - prevPalmY; // + = hand went down, - = hand went up
 
-    if (Math.abs(delta) > threshold) {
-      // Camera is mirrored: hand up in real life → y decreases in camera
-      // So delta < 0 = hand moved UP → scroll UP (negative scroll)
-      // delta > 0 = hand moved DOWN → scroll DOWN
-      const scrollAmt = delta * window.innerHeight * SCROLL_SENSITIVITY;
-      window.scrollBy({ top: scrollAmt, behavior: 'auto' });
-      showScrollHud(delta < 0 ? -1 : 1);
-    } else {
-      showScrollHud(0);
+    if (Math.abs(delta) > DEAD_ZONE) {
+      // Inject velocity — rAF loop handles actual scrolling smoothly
+      // delta > 0 (hand down in cam) = scroll down (positive)
+      // delta < 0 (hand up in cam)   = scroll up (negative)
+      scrollVel += delta * VEL_SCALE;
+
+      // Cap max velocity so it doesn't fly off screen
+      scrollVel = Math.max(-60, Math.min(60, scrollVel));
+
+      showScrollHud(delta > 0 ? 1 : -1);
     }
   }
+
   prevPalmY = smoothY;
 }
 
@@ -1538,9 +1560,9 @@ function onResults(results) {
   hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
 
   if (!results.multiHandLandmarks || !results.multiHandLandmarks.length) {
+    // Hand lost — let velocity decay naturally (don't hard-stop)
     prevPalmY = null;
     palmYBuf.length = 0;
-    showScrollHud(0);
     return;
   }
 

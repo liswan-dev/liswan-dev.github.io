@@ -737,7 +737,7 @@
 <!-- CAMERA ELEMENTS -->
 <canvas id="hand-canvas"></canvas>
 <div id="cam-popup">
-  <div id="cam-popup-bar" id="cam-drag-handle">
+  <div id="cam-popup-bar">
     <div class="cam-bar-left">
       <div class="cam-bar-dots">
         <span class="cam-bar-dot cbd-red"></span>
@@ -1266,21 +1266,6 @@ particlesJS('particles-js', {
 <script>
 /* ═══════════════════════════════════════════════
    HAND TRACKING — MediaPipe Hands + Canvas Overlay
-   ═══════════════════════════════════════════════ */
-
-const video    = document.getElementById('cam-video');
-const hCanvas  = document.getElementById('hand-canvas');
-const hCtx     = hCanvas.getContext('2d');
-const camBtn   = document.getElementById('cam-btn');
-const camLabel = document.getElementById('cam-label');
-const camHud   = document.getElementById('cam-hud');
-
-let camActive  = false;
-let mpCamera   = null;
-let hands      = null;
-/* ═══════════════════════════════════════════════
-   HAND TRACKING — MediaPipe Hands + Canvas Overlay
-   FINGERTIPS ONLY: orbs + trails per finger
    ═══════════════════════════════════════════════ */
 
 const video    = document.getElementById('cam-video');

@@ -1264,9 +1264,9 @@ particlesJS('particles-js', {
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 <script>
-/* ═══════════════════════════════════════════════
-   HAND TRACKING — MediaPipe Hands + Canvas Overlay
-   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   HAND TRACKING — Skeleton style + Gesture Scroll
+   ═══════════════════════════════════════════════════ */
 
 const video    = document.getElementById('cam-video');
 const hCanvas  = document.getElementById('hand-canvas');
@@ -1275,22 +1275,55 @@ const camBtn   = document.getElementById('cam-btn');
 const camLabel = document.getElementById('cam-label');
 const camPopup = document.getElementById('cam-popup');
 
-let camActive  = false;
-let mpCamera   = null;
-let hands      = null;
+let camActive = false;
+let mpCamera  = null;
+let hands     = null;
 
-// ── Fingertip → base landmark mapping (tip, DIP joint one below)
-const FINGER_PAIRS = [
-  [4,  3 ],  // thumb tip → IP
-  [8,  6 ],  // index tip → PIP
-  [12, 10],  // middle tip → PIP
-  [16, 14],  // ring tip → PIP
-  [20, 18],  // pinky tip → PIP
+/* ── MediaPipe 21-landmark connections ── */
+const CONNECTIONS = [
+  // Thumb
+  [0,1],[1,2],[2,3],[3,4],
+  // Index
+  [0,5],[5,6],[6,7],[7,8],
+  // Middle
+  [0,9],[9,10],[10,11],[11,12],
+  // Ring
+  [0,13],[13,14],[14,15],[15,16],
+  // Pinky
+  [0,17],[17,18],[18,19],[19,20],
+  // Palm arc
+  [5,9],[9,13],[13,17],[0,17],
 ];
 
-const AXIS_LEN = 38; // pixel length of each axis arrow
+// Fingertip indices
+const TIPS = [4, 8, 12, 16, 20];
 
-/* Resize overlay canvas */
+/* ── Gesture scroll state ── */
+let prevPalmY   = null;   // previous frame palm Y (normalized 0-1)
+let scrollMode  = false;  // true when hand is detected
+const SCROLL_SENSITIVITY = 8; // multiplier
+
+// Smoothing buffer for palm Y
+const palmYBuf  = [];
+const BUF_SIZE  = 6;
+
+/* ── HUD scroll indicator ── */
+let scrollDir    = 0;    // -1 up, 0 none, +1 down
+let scrollHudTimeout = null;
+
+function showScrollHud(dir) {
+  const hud = document.getElementById('cam-hud');
+  scrollDir = dir;
+  if (dir < 0)       hud.textContent = '▲ Scrolling UP';
+  else if (dir > 0)  hud.textContent = '▼ Scrolling DOWN';
+  else               hud.textContent = '◉ TRACKING ACTIVE — Move hand up/down to scroll';
+  clearTimeout(scrollHudTimeout);
+  if (dir !== 0) scrollHudTimeout = setTimeout(() => {
+    hud.textContent = '◉ TRACKING ACTIVE — Move hand up/down to scroll';
+  }, 600);
+}
+
+/* ── Resize canvas ── */
 function resizeHandCanvas() {
   hCanvas.width  = window.innerWidth;
   hCanvas.height = window.innerHeight;
@@ -1306,6 +1339,8 @@ window.toggleCamera = async function () {
     camLabel.textContent = '◉ STOP';
     camPopup.classList.add('active');
     hCanvas.classList.add('active');
+    prevPalmY = null;
+    palmYBuf.length = 0;
     await startHandTracking();
   } else {
     camActive = false;
@@ -1318,13 +1353,11 @@ window.toggleCamera = async function () {
   }
 };
 
-/* ── START MEDIAPIPE ── */
+/* ── START ── */
 async function startHandTracking() {
-  hands = new Hands({
-    locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`
-  });
+  hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
   hands.setOptions({
-    maxNumHands: 2,
+    maxNumHands: 1,
     modelComplexity: 1,
     minDetectionConfidence: 0.75,
     minTrackingConfidence: 0.65,
@@ -1341,148 +1374,200 @@ async function startHandTracking() {
 function stopHandTracking() {
   if (mpCamera) { mpCamera.stop(); mpCamera = null; }
   if (hands)    { hands.close();   hands    = null; }
+  prevPalmY = null;
+  palmYBuf.length = 0;
 }
 
-/* ── lm → screen px (mirror X for selfie) ── */
+/* ── lm → screen px (mirror X selfie) ── */
 function lm2s(lm) {
   return {
     x: (1 - lm.x) * hCanvas.width,
     y: lm.y        * hCanvas.height,
-    z: lm.z        * hCanvas.width,   // z scaled same as x
   };
 }
 
-/* ── 3D vector math helpers ── */
-function v3sub(a, b) { return { x:a.x-b.x, y:a.y-b.y, z:a.z-b.z }; }
-function v3norm(v) {
-  const l = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z) || 1;
-  return { x:v.x/l, y:v.y/l, z:v.z/l };
-}
-function v3cross(a, b) {
-  return {
-    x: a.y*b.z - a.z*b.y,
-    y: a.z*b.x - a.x*b.z,
-    z: a.x*b.y - a.y*b.x,
-  };
-}
-
-/* ── Project 3D axis direction onto 2D screen ── */
-// Given origin (screen px) + 3D unit direction, returns tip screen px
-function project2D(origin, dir3d, len) {
-  // Simple orthographic projection (z adds slight perspective offset)
-  const perspective = 1 + dir3d.z * 0.3;
-  return {
-    x: origin.x + dir3d.x * len * perspective,
-    y: origin.y + dir3d.y * len * perspective,
-  };
-}
-
-/* ── Draw one axis arrow with neon glow ── */
-function drawAxis(ox, oy, tx, ty, color, label) {
-  const dx = tx - ox, dy = ty - oy;
-  const len = Math.sqrt(dx*dx + dy*dy);
-  if (len < 1) return;
-
-  // Glow pass (thick, low opacity)
+/* ── DRAW: bone line with gradient glow ── */
+function drawBone(ax, ay, bx, by) {
+  // Glow
   hCtx.beginPath();
-  hCtx.moveTo(ox, oy);
-  hCtx.lineTo(tx, ty);
-  hCtx.strokeStyle = color;
-  hCtx.lineWidth   = 6;
-  hCtx.globalAlpha = 0.18;
+  hCtx.moveTo(ax, ay); hCtx.lineTo(bx, by);
+  hCtx.strokeStyle = 'rgba(0,245,255,0.15)';
+  hCtx.lineWidth   = 8;
+  hCtx.lineCap     = 'round';
   hCtx.stroke();
-  hCtx.globalAlpha = 1;
-
-  // Solid line
+  // Core
   hCtx.beginPath();
-  hCtx.moveTo(ox, oy);
-  hCtx.lineTo(tx, ty);
-  hCtx.strokeStyle = color;
+  hCtx.moveTo(ax, ay); hCtx.lineTo(bx, by);
+  hCtx.strokeStyle = 'rgba(200,240,255,0.85)';
   hCtx.lineWidth   = 2;
-  hCtx.shadowBlur  = 8;
-  hCtx.shadowColor = color;
+  hCtx.shadowBlur  = 6;
+  hCtx.shadowColor = '#00f5ff';
   hCtx.stroke();
   hCtx.shadowBlur  = 0;
+}
 
-  // Arrowhead
-  const angle = Math.atan2(dy, dx);
-  const hs = 9, ha = 0.42;
+/* ── DRAW: joint dot ── */
+function drawJoint(x, y, isTip) {
+  const r = isTip ? 9 : 5;
+  // Outer glow ring
   hCtx.beginPath();
-  hCtx.moveTo(tx, ty);
-  hCtx.lineTo(tx - hs*Math.cos(angle-ha), ty - hs*Math.sin(angle-ha));
-  hCtx.lineTo(tx - hs*Math.cos(angle+ha), ty - hs*Math.sin(angle+ha));
-  hCtx.closePath();
-  hCtx.fillStyle   = color;
-  hCtx.shadowBlur  = 8;
-  hCtx.shadowColor = color;
+  hCtx.arc(x, y, r + 5, 0, Math.PI * 2);
+  hCtx.strokeStyle = isTip ? 'rgba(0,245,255,0.3)' : 'rgba(0,245,255,0.1)';
+  hCtx.lineWidth   = 2;
+  hCtx.stroke();
+  // Fill dot
+  hCtx.beginPath();
+  hCtx.arc(x, y, r, 0, Math.PI * 2);
+  hCtx.fillStyle   = isTip ? '#00f5ff' : '#ffffff';
+  hCtx.shadowBlur  = isTip ? 18 : 8;
+  hCtx.shadowColor = '#00f5ff';
   hCtx.fill();
   hCtx.shadowBlur  = 0;
-
-  // Axis label (X / Y / Z)
-  if (label) {
-    hCtx.font        = 'bold 11px JetBrains Mono, monospace';
-    hCtx.fillStyle   = color;
-    hCtx.shadowBlur  = 6;
-    hCtx.shadowColor = color;
-    hCtx.fillText(label, tx + 4, ty + 4);
-    hCtx.shadowBlur  = 0;
+  // Inner white core for tips
+  if (isTip) {
+    hCtx.beginPath();
+    hCtx.arc(x, y, 3.5, 0, Math.PI * 2);
+    hCtx.fillStyle = '#ffffff';
+    hCtx.fill();
   }
 }
 
-/* ── Center dot at fingertip origin ── */
-function drawOriginDot(ox, oy) {
+/* ── DRAW: bounding box around hand ── */
+function drawBoundingBox(pts) {
+  let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
+  pts.forEach(p => {
+    if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
+  });
+  const pad = 18;
+  minX -= pad; minY -= pad; maxX += pad; maxY += pad;
+
   hCtx.beginPath();
-  hCtx.arc(ox, oy, 4, 0, Math.PI*2);
-  hCtx.fillStyle   = '#ffffff';
-  hCtx.shadowBlur  = 10;
-  hCtx.shadowColor = '#ffffff';
+  hCtx.rect(minX, minY, maxX - minX, maxY - minY);
+  hCtx.strokeStyle = 'rgba(0,245,255,0.25)';
+  hCtx.lineWidth   = 1.5;
+  hCtx.setLineDash([6, 4]);
+  hCtx.stroke();
+  hCtx.setLineDash([]);
+
+  // Corner accents
+  const cLen = 16, cW = 2;
+  [
+    [minX, minY, 1, 1],
+    [maxX, minY,-1, 1],
+    [minX, maxY, 1,-1],
+    [maxX, maxY,-1,-1],
+  ].forEach(([cx, cy, dx, dy]) => {
+    hCtx.beginPath();
+    hCtx.moveTo(cx, cy); hCtx.lineTo(cx + dx*cLen, cy);
+    hCtx.moveTo(cx, cy); hCtx.lineTo(cx, cy + dy*cLen);
+    hCtx.strokeStyle = '#00f5ff';
+    hCtx.lineWidth   = cW;
+    hCtx.shadowBlur  = 8;
+    hCtx.shadowColor = '#00f5ff';
+    hCtx.stroke();
+    hCtx.shadowBlur  = 0;
+  });
+
+  return { minX, minY, maxX, maxY };
+}
+
+/* ── DRAW: label above bounding box ── */
+function drawLabel(text, x, y) {
+  hCtx.font        = 'bold 12px JetBrains Mono, monospace';
+  const w          = hCtx.measureText(text).width + 16;
+  // bg pill
+  hCtx.fillStyle   = 'rgba(0,0,0,0.65)';
+  hCtx.beginPath();
+  hCtx.roundRect(x - w/2, y - 20, w, 22, 4);
   hCtx.fill();
+  // text
+  hCtx.fillStyle   = '#00f5ff';
+  hCtx.shadowBlur  = 6;
+  hCtx.shadowColor = '#00f5ff';
+  hCtx.fillText(text, x - w/2 + 8, y - 4);
   hCtx.shadowBlur  = 0;
 }
 
-/* ── MAIN DRAW ── */
+/* ── GESTURE: detect scroll direction from wrist Y movement ── */
+function handleScrollGesture(landmarks) {
+  // Use wrist (0) Y position in normalized coords
+  const palmY = landmarks[0].y;  // 0=top, 1=bottom
+
+  palmYBuf.push(palmY);
+  if (palmYBuf.length > BUF_SIZE) palmYBuf.shift();
+  const smoothY = palmYBuf.reduce((a,b) => a+b, 0) / palmYBuf.length;
+
+  if (prevPalmY !== null) {
+    const delta = smoothY - prevPalmY; // positive = hand moved DOWN in camera (= scroll DOWN)
+    const threshold = 0.004;
+
+    if (Math.abs(delta) > threshold) {
+      // Camera is mirrored: hand up in real life → y decreases in camera
+      // So delta < 0 = hand moved UP → scroll UP (negative scroll)
+      // delta > 0 = hand moved DOWN → scroll DOWN
+      const scrollAmt = delta * window.innerHeight * SCROLL_SENSITIVITY;
+      window.scrollBy({ top: scrollAmt, behavior: 'auto' });
+      showScrollHud(delta < 0 ? -1 : 1);
+    } else {
+      showScrollHud(0);
+    }
+  }
+  prevPalmY = smoothY;
+}
+
+/* ── DETECT: simple open/closed hand label ── */
+function detectGesture(landmarks) {
+  // Count extended fingers (tip Y above MCP Y = finger up)
+  const fingerExtended = [
+    landmarks[8].y  < landmarks[6].y,   // index
+    landmarks[12].y < landmarks[10].y,  // middle
+    landmarks[16].y < landmarks[14].y,  // ring
+    landmarks[20].y < landmarks[18].y,  // pinky
+  ];
+  const count = fingerExtended.filter(Boolean).length;
+  if (count >= 3) return 'Open';
+  if (count === 0) return 'Fist';
+  return `${count} Finger${count > 1 ? 's' : ''}`;
+}
+
+/* ── MAIN RESULT HANDLER ── */
 function onResults(results) {
   if (!camActive) return;
 
   hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
 
-  if (!results.multiHandLandmarks || !results.multiHandLandmarks.length) return;
+  if (!results.multiHandLandmarks || !results.multiHandLandmarks.length) {
+    prevPalmY = null;
+    palmYBuf.length = 0;
+    showScrollHud(0);
+    return;
+  }
 
-  results.multiHandLandmarks.forEach((lms) => {
+  results.multiHandLandmarks.forEach((lms, hIdx) => {
+    const handedness = results.multiHandedness?.[hIdx]?.label || 'Hand';
+    const pts = lms.map(lm => lm2s(lm));
 
-    FINGER_PAIRS.forEach(([tipIdx, baseIdx]) => {
-      const tip  = lm2s(lms[tipIdx]);
-      const base = lm2s(lms[baseIdx]);
+    // ── Gesture scroll ──
+    handleScrollGesture(lms);
 
-      // ── Y axis: points from base joint → tip (along finger)
-      const axisY = v3norm(v3sub(
-        { x: tip.x,  y: tip.y,  z: tip.z  },
-        { x: base.x, y: base.y, z: base.z }
-      ));
+    // ── Bounding box ──
+    const box = drawBoundingBox(pts);
 
-      // ── Z axis: approximate "out of palm" using global UP cross Y
-      // Use world UP = (0,-1,0) (screen up) as reference
-      const worldUp = { x: 0, y: -1, z: 0 };
-      let axisX = v3norm(v3cross(axisY, worldUp));
-      // Degenerate guard: if axisY ≈ worldUp, use world Z instead
-      if (Math.abs(axisX.x) + Math.abs(axisX.y) + Math.abs(axisX.z) < 0.01) {
-        axisX = v3norm(v3cross(axisY, { x:0, y:0, z:1 }));
-      }
+    // ── Label ──
+    const gesture = detectGesture(lms);
+    const labelText = `${handedness}: ${gesture}`;
+    drawLabel(labelText, (box.minX + box.maxX) / 2, box.minY);
 
-      // ── Z axis: perpendicular to both X and Y
-      const axisZ = v3norm(v3cross(axisX, axisY));
+    // ── Bones ──
+    CONNECTIONS.forEach(([a, b]) => {
+      drawBone(pts[a].x, pts[a].y, pts[b].x, pts[b].y);
+    });
 
-      // ── Project all 3 axes to screen 2D ──
-      const ox = tip.x, oy = tip.y;
-      const xTip = project2D({ x: ox, y: oy }, axisX, AXIS_LEN);
-      const yTip = project2D({ x: ox, y: oy }, axisY, AXIS_LEN);
-      const zTip = project2D({ x: ox, y: oy }, axisZ, AXIS_LEN * 0.8);
-
-      // ── Draw Z first (behind), then X, then Y (front) ──
-      drawAxis(ox, oy, zTip.x, zTip.y, '#4488ff', 'z');  // blue  — Z
-      drawAxis(ox, oy, xTip.x, xTip.y, '#ff3333', 'x');  // red   — X
-      drawAxis(ox, oy, yTip.x, yTip.y, '#33ff66', 'y');  // green — Y
-      drawOriginDot(ox, oy);
+    // ── Joints — draw all 21, larger for tips ──
+    pts.forEach((pt, idx) => {
+      const isTip = TIPS.includes(idx);
+      drawJoint(pt.x, pt.y, isTip);
     });
   });
 }
@@ -1500,14 +1585,12 @@ function onResults(results) {
   });
   document.addEventListener('mousemove',(e)=>{
     if(!dragging)return;
-    popup.style.right='auto';
-    popup.style.bottom='auto';
+    popup.style.right='auto'; popup.style.bottom='auto';
     popup.style.left=(e.clientX-ox)+'px';
     popup.style.top=(e.clientY-oy)+'px';
   });
   document.addEventListener('mouseup',()=>{
-    dragging=false;
-    popup.style.transition='';
+    dragging=false; popup.style.transition='';
   });
 })();
 </script>

@@ -572,6 +572,70 @@
     .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.show{opacity:1;transform:translateY(0)}
 
+    /* ── CAMERA MODE ── */
+    #cam-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 18px;
+      border:1px solid rgba(255,45,107,0.5);
+      background:rgba(255,45,107,0.08);
+      color:#ff2d6b;
+      border-radius:4px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;font-weight:700;letter-spacing:0.06em;
+      cursor:pointer;transition:background 0.2s,box-shadow 0.2s,border-color 0.2s;
+      position:relative;overflow:hidden;
+    }
+    #cam-btn:hover{background:rgba(255,45,107,0.18);box-shadow:0 0 20px rgba(255,45,107,0.3);border-color:rgba(255,45,107,0.8)}
+    #cam-btn.active{
+      background:rgba(255,45,107,0.22);
+      border-color:#ff2d6b;
+      box-shadow:0 0 30px rgba(255,45,107,0.4),0 0 60px rgba(255,45,107,0.15);
+      animation:cam-pulse 2s ease-in-out infinite;
+    }
+    @keyframes cam-pulse{0%,100%{box-shadow:0 0 20px rgba(255,45,107,0.3)}50%{box-shadow:0 0 40px rgba(255,45,107,0.6)}}
+    #cam-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#ff2d6b;
+      box-shadow:0 0 8px #ff2d6b;
+      transition:background 0.2s;
+    }
+    #cam-btn.active #cam-dot{animation:cam-dot-blink 1s step-end infinite}
+    @keyframes cam-dot-blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+    /* CAMERA OVERLAY CANVAS */
+    #hand-canvas{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:9000;pointer-events:none;
+      display:none;
+    }
+    #hand-canvas.active{display:block}
+
+    /* HIDDEN VIDEO */
+    #cam-video{
+      position:fixed;bottom:24px;right:24px;
+      width:200px;height:150px;border-radius:12px;
+      object-fit:cover;
+      border:1px solid rgba(255,45,107,0.4);
+      box-shadow:0 0 20px rgba(255,45,107,0.2);
+      z-index:9001;transform:scaleX(-1);
+      display:none;
+      background:#000;
+    }
+    #cam-video.active{display:block}
+
+    /* CAMERA STATUS HUD */
+    #cam-hud{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      padding:10px 22px;
+      background:rgba(5,5,16,0.85);
+      border:1px solid rgba(255,45,107,0.35);
+      border-radius:999px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;color:#ff2d6b;letter-spacing:0.08em;
+      z-index:9002;display:none;backdrop-filter:blur(12px);
+    }
+    #cam-hud.active{display:block}
+
     /* SCANLINE OVERLAY */
     .scanlines{
       position:fixed;inset:0;z-index:2;pointer-events:none;
@@ -605,6 +669,11 @@
 <div id="grid-overlay"></div>
 <div class="scanlines"></div>
 
+<!-- CAMERA ELEMENTS -->
+<video id="cam-video" autoplay playsinline muted></video>
+<canvas id="hand-canvas"></canvas>
+<div id="cam-hud">◉ HAND TRACKING ACTIVE — Move your fingers!</div>
+
 <!-- NAV -->
 <nav class="nav">
   <a href="#" class="brand">LISWAN.DEV</a>
@@ -614,6 +683,10 @@
     <a href="#architecture">Architecture</a>
     <a href="#log">Log</a>
     <a href="mailto:lis.creativework@gmail.com" class="nav-cta">Contact</a>
+    <button id="cam-btn" onclick="toggleCamera()">
+      <span id="cam-dot"></span>
+      <span id="cam-label">◉ CAM</span>
+    </button>
   </div>
 </nav>
 
@@ -1104,6 +1177,277 @@ particlesJS('particles-js', {
   },
   retina_detect: true
 });
+</script>
+
+<!-- MEDIAPIPE HANDS -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   HAND TRACKING — MediaPipe Hands + Canvas Overlay
+   ═══════════════════════════════════════════════ */
+
+const video    = document.getElementById('cam-video');
+const hCanvas  = document.getElementById('hand-canvas');
+const hCtx     = hCanvas.getContext('2d');
+const camBtn   = document.getElementById('cam-btn');
+const camLabel = document.getElementById('cam-label');
+const camHud   = document.getElementById('cam-hud');
+
+let camActive  = false;
+let mpCamera   = null;
+let hands      = null;
+let lastLandmarks = [];
+
+// Trail history per fingertip [0-4 per hand, up to 2 hands]
+const TIPS = [4, 8, 12, 16, 20]; // thumb, index, middle, ring, pinky
+const trails = {}; // key: "hand_tip" → array of {x,y}
+const TRAIL_LEN = 28;
+
+// Colors per fingertip
+const TIP_COLORS = [
+  '#00f5ff', // thumb  — cyan
+  '#ff2d6b', // index  — magenta
+  '#7b2fff', // middle — violet
+  '#facc15', // ring   — yellow
+  '#4ade80', // pinky  — green
+];
+
+/* resize canvas to window */
+function resizeHandCanvas() {
+  hCanvas.width  = window.innerWidth;
+  hCanvas.height = window.innerHeight;
+}
+resizeHandCanvas();
+window.addEventListener('resize', resizeHandCanvas);
+
+/* ── TOGGLE CAMERA ── */
+window.toggleCamera = async function () {
+  if (!camActive) {
+    camBtn.classList.add('active');
+    camLabel.textContent = '◉ STOP';
+    camHud.classList.add('active');
+    video.classList.add('active');
+    hCanvas.classList.add('active');
+    camActive = true;
+    await startHandTracking();
+  } else {
+    stopHandTracking();
+    camBtn.classList.remove('active');
+    camLabel.textContent = '◉ CAM';
+    camHud.classList.remove('active');
+    video.classList.remove('active');
+    hCanvas.classList.remove('active');
+    hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
+    lastLandmarks = [];
+    camActive = false;
+  }
+};
+
+/* ── START ── */
+async function startHandTracking() {
+  hands = new Hands({
+    locateFile: (f) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`
+  });
+
+  hands.setOptions({
+    maxNumHands: 2,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.7,
+    minTrackingConfidence: 0.6,
+  });
+
+  hands.onResults(onResults);
+
+  mpCamera = new Camera(video, {
+    onFrame: async () => { await hands.send({ image: video }); },
+    width: 640, height: 480,
+  });
+
+  await mpCamera.start();
+}
+
+/* ── STOP ── */
+function stopHandTracking() {
+  if (mpCamera) { mpCamera.stop(); mpCamera = null; }
+  if (hands)    { hands.close();   hands    = null; }
+}
+
+/* ── ON RESULTS ── */
+function onResults(results) {
+  if (!camActive) return;
+
+  hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
+
+  if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
+    lastLandmarks = [];
+    return;
+  }
+
+  lastLandmarks = results.multiHandLandmarks;
+
+  results.multiHandLandmarks.forEach((landmarks, hIdx) => {
+    drawHandSkeleton(landmarks, hIdx);
+    drawFingertipTrails(landmarks, hIdx);
+    drawFingertipOrbs(landmarks, hIdx);
+    drawInterFingerLines(landmarks, hIdx);
+  });
+
+  // Cross-hand connections if 2 hands
+  if (results.multiHandLandmarks.length === 2) {
+    drawCrossHandLines(results.multiHandLandmarks[0], results.multiHandLandmarks[1]);
+  }
+}
+
+/* ── COORD HELPER (mirror X for selfie feel) ── */
+function lmToScreen(lm) {
+  return {
+    x: (1 - lm.x) * hCanvas.width,
+    y: lm.y * hCanvas.height,
+    z: lm.z,
+  };
+}
+
+/* ── SKELETON (bones) ── */
+const CONNECTIONS = [
+  [0,1],[1,2],[2,3],[3,4],         // thumb
+  [0,5],[5,6],[6,7],[7,8],         // index
+  [0,9],[9,10],[10,11],[11,12],    // middle
+  [0,13],[13,14],[14,15],[15,16],  // ring
+  [0,17],[17,18],[18,19],[19,20],  // pinky
+  [5,9],[9,13],[13,17],            // palm arc
+];
+
+function drawHandSkeleton(landmarks, hIdx) {
+  CONNECTIONS.forEach(([a, b]) => {
+    const pa = lmToScreen(landmarks[a]);
+    const pb = lmToScreen(landmarks[b]);
+
+    const grad = hCtx.createLinearGradient(pa.x, pa.y, pb.x, pb.y);
+    grad.addColorStop(0, 'rgba(0,245,255,0.25)');
+    grad.addColorStop(1, 'rgba(123,47,255,0.25)');
+
+    hCtx.beginPath();
+    hCtx.moveTo(pa.x, pa.y);
+    hCtx.lineTo(pb.x, pb.y);
+    hCtx.strokeStyle = grad;
+    hCtx.lineWidth = 1.5;
+    hCtx.stroke();
+  });
+}
+
+/* ── TRAILS per fingertip ── */
+function drawFingertipTrails(landmarks, hIdx) {
+  TIPS.forEach((tipIdx, fi) => {
+    const key = `${hIdx}_${fi}`;
+    if (!trails[key]) trails[key] = [];
+
+    const pt = lmToScreen(landmarks[tipIdx]);
+    trails[key].push({ x: pt.x, y: pt.y });
+    if (trails[key].length > TRAIL_LEN) trails[key].shift();
+
+    const trail = trails[key];
+    if (trail.length < 2) return;
+
+    for (let i = 1; i < trail.length; i++) {
+      const alpha = (i / trail.length) * 0.7;
+      const width = (i / trail.length) * 3;
+      hCtx.beginPath();
+      hCtx.moveTo(trail[i - 1].x, trail[i - 1].y);
+      hCtx.lineTo(trail[i].x, trail[i].y);
+      hCtx.strokeStyle = hexToRgba(TIP_COLORS[fi], alpha);
+      hCtx.lineWidth = width;
+      hCtx.lineCap = 'round';
+      hCtx.stroke();
+    }
+  });
+}
+
+/* ── ORBS at fingertips ── */
+function drawFingertipOrbs(landmarks, hIdx) {
+  TIPS.forEach((tipIdx, fi) => {
+    const pt = lmToScreen(landmarks[tipIdx]);
+    const color = TIP_COLORS[fi];
+
+    // outer glow
+    const grd = hCtx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 22);
+    grd.addColorStop(0, hexToRgba(color, 0.5));
+    grd.addColorStop(1, hexToRgba(color, 0));
+    hCtx.beginPath();
+    hCtx.arc(pt.x, pt.y, 22, 0, Math.PI * 2);
+    hCtx.fillStyle = grd;
+    hCtx.fill();
+
+    // core dot
+    hCtx.beginPath();
+    hCtx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+    hCtx.fillStyle = color;
+    hCtx.shadowBlur = 14;
+    hCtx.shadowColor = color;
+    hCtx.fill();
+    hCtx.shadowBlur = 0;
+  });
+}
+
+/* ── INTER-FINGER LINES (connect all tips of one hand) ── */
+function drawInterFingerLines(landmarks, hIdx) {
+  const pts = TIPS.map(i => lmToScreen(landmarks[i]));
+
+  for (let a = 0; a < pts.length; a++) {
+    for (let b = a + 1; b < pts.length; b++) {
+      const dx = pts[a].x - pts[b].x;
+      const dy = pts[a].y - pts[b].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 300) continue; // skip if too far
+
+      const alpha = Math.max(0, (1 - dist / 300) * 0.4);
+      const grad = hCtx.createLinearGradient(pts[a].x, pts[a].y, pts[b].x, pts[b].y);
+      grad.addColorStop(0, hexToRgba(TIP_COLORS[a], alpha));
+      grad.addColorStop(1, hexToRgba(TIP_COLORS[b], alpha));
+
+      hCtx.beginPath();
+      hCtx.moveTo(pts[a].x, pts[a].y);
+      hCtx.lineTo(pts[b].x, pts[b].y);
+      hCtx.strokeStyle = grad;
+      hCtx.lineWidth = 1.2;
+      hCtx.stroke();
+    }
+  }
+}
+
+/* ── CROSS-HAND LINES (2 hands) ── */
+function drawCrossHandLines(lm1, lm2) {
+  TIPS.forEach((tipIdx, fi) => {
+    const pa = lmToScreen(lm1[tipIdx]);
+    const pb = lmToScreen(lm2[tipIdx]);
+    const dx = pa.x - pb.x, dy = pa.y - pb.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > 500) return;
+
+    const alpha = Math.max(0, (1 - dist / 500) * 0.5);
+    const grad = hCtx.createLinearGradient(pa.x, pa.y, pb.x, pb.y);
+    grad.addColorStop(0, hexToRgba(TIP_COLORS[fi], alpha));
+    grad.addColorStop(0.5, 'rgba(255,255,255,' + alpha * 0.8 + ')');
+    grad.addColorStop(1, hexToRgba(TIP_COLORS[fi], alpha));
+
+    hCtx.beginPath();
+    hCtx.moveTo(pa.x, pa.y);
+    hCtx.lineTo(pb.x, pb.y);
+    hCtx.strokeStyle = grad;
+    hCtx.lineWidth = 1.5;
+    hCtx.setLineDash([6, 4]);
+    hCtx.stroke();
+    hCtx.setLineDash([]);
+  });
+}
+
+/* ── UTIL ── */
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
 </script>
 </body>
 </html>

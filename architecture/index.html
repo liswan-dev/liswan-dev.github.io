@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Liswan Susanto — IT Developer &amp; Internal System Builder</title>
-  <meta name="description" content="Personal portfolio of Liswan Susanto — IT Developer &amp; Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
+  <title>Architecture — Liswan.dev</title>
+  <meta name="description" content="Internal system architecture pattern for access, modules, data, automation, and output."/>
   <meta name="author" content="Liswan Susanto"/>
-  <meta property="og:title" content="Liswan Susanto — IT Developer &amp; Internal System Builder"/>
-  <meta property="og:description" content="Personal portfolio of Liswan Susanto — IT Developer &amp; Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
+  <meta property="og:title" content="Architecture — Liswan.dev"/>
+  <meta property="og:description" content="Internal system architecture pattern for access, modules, data, automation, and output."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://liswan.dev"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -173,54 +173,25 @@
 <div class="floating-dev-menu" aria-label="Developer quick menu">
     <a href="/projects/" class="">Projects</a>
     <a href="/stack/" class="">Stack</a>
-    <a href="/architecture/" class="">Architecture</a>
+    <a href="/architecture/" class="active">Architecture</a>
     <a href="/log/" class="">Log</a>
 </div>
 <main class="page">
 
-  <section class="container hero">
-    <div>
-      <div class="eyebrow"><span class="dot"></span><span>SYS_STATUS: ONLINE · IT Developer · Internal System Builder</span></div>
-      <h1><span class="dim">// BUILDING</span><span class="gradient-text">INTERNAL</span><br><span class="gradient-text">SYSTEMS</span></h1>
-      <p class="lead">I design and ship practical internal tools for operational workflows, reporting dashboards, approval processes, asset management, Google Drive-based file services, and business automation.</p>
-      <div class="actions">
-        <a href="/portfolio/" class="btn btn-primary">View Portfolio</a>
-        <a href="/custom-apps/" class="btn btn-secondary">Custom Apps</a>
-        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
-      </div>
-    </div>
-    <aside class="panel">
-      <div class="logo-mark"><img src="/liswan-dev-logo.svg" alt="Liswan.dev logo" onerror="this.style.display='none'"></div>
-      <div class="profile-name">Liswan Susanto</div>
-      <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
-      <p class="lead" style="font-size:14px">Focused on internal portals, operational dashboards, asset workflows, employee systems, and automation tools.</p>
-      <div class="terminal">
-        <div class="terminal-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>
-        <div class="terminal-body">
-          <div><span class="tc">❯ status --active-build</span></div>
-          <div class="to">▸ Asset Management · Internal Company Website</div>
-          <div class="to">▸ Daily Sales Activity Report · File Service</div>
-          <div class="to">▸ Tracking Sales &amp; Marketing</div>
-          <br>
-          <div><span class="tc">❯ stack --list</span></div>
-          <div class="tv">WordPress · PHP · JavaScript · MySQL · Apps Script</div>
-        </div>
-      </div>
-    </aside>
-  </section>
-
   <section class="container section">
     <div class="section-head">
       <div>
-        <div class="kicker">// focus</div>
-        <h2>Operational tools,<br>not just landing pages.</h2>
+        <div class="kicker">// architecture</div>
+        <h2>Typical internal<br>system flow.</h2>
       </div>
-      <p class="section-desc">The main structure is now page-based. The top menu moves visitors to core profile pages, while the floating menu keeps technical sections available without crowding the navbar.</p>
+      <p class="section-desc">Secure user access → structured input → storage → automation → output. A repeatable pattern across operational systems.</p>
     </div>
-    <div class="grid-3">
-      <article class="card"><div class="badge">01</div><h3>Workflow Systems</h3><p>Approval flows, validation stages, evidence uploads, and document generation.</p></article>
-      <article class="card"><div class="badge">02</div><h3>Dashboards</h3><p>Weekly reports, branch monitoring, sales activity summaries, target tracking, and charts.</p></article>
-      <article class="card"><div class="badge">03</div><h3>File Automation</h3><p>Google Drive-based upload flows, folder access, Apps Script automation, and file portals.</p></article>
+    <div class="flow">
+      <article class="card"><span class="num">NODE_01</span><h3>User Access</h3><p>Login, role access, NIK, department, branch, or supervisor mapping.</p></article>
+      <article class="card"><span class="num">NODE_02</span><h3>Portal Module</h3><p>WordPress page, shortcode app, form, table, modal, or dashboard view.</p></article>
+      <article class="card"><span class="num">NODE_03</span><h3>Data Layer</h3><p>MySQL, Supabase, Google Sheet, structured master data, or transaction records.</p></article>
+      <article class="card"><span class="num">NODE_04</span><h3>Automation</h3><p>Email approval, Apps Script, Drive upload, document generation, or validation.</p></article>
+      <article class="card"><span class="num">NODE_05</span><h3>Output</h3><p>Dashboard, report, BAST, file link, activity log, or management summary.</p></article>
     </div>
   </section>
 

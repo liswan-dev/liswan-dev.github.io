@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Liswan Susanto — Internal System Builder</title>
-  <meta name="description" content="Portfolio of Liswan Susanto — IT Developer & Internal System Builder."/>
+  <title>Liswan Susanto — IT Developer & Internal System Builder</title>
+  <meta name="description" content="Personal portfolio of Liswan Susanto — IT Developer & Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
+  <meta name="author" content="Liswan Susanto"/>
+  <meta property="og:title" content="Liswan Susanto — IT Developer & Internal System Builder"/>
+  <meta property="og:description" content="Portfolio showcase for internal business systems, dashboards, asset management, document workflows, and automation."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://liswan.dev"/>
+  <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -709,13 +715,24 @@
       );
     }
 
+
+
+    @media (pointer: coarse) {
+      body { cursor: auto; }
+      #cursor,
+      #cursor-ring {
+        display: none;
+      }
+    }
+
     /* MOBILE */
     @media(max-width:960px){
       .hero{grid-template-columns:1fr;padding-top:90px}
       .card-grid-3,.card-grid-2,.flow-grid{grid-template-columns:1fr}
       .section-head{flex-direction:column;align-items:flex-start}
       .contact-card{grid-template-columns:1fr}
-      .nav-links{display:none}
+      .nav-links{display:flex;gap:10px}
+      .nav-links a:not(.nav-cta),#cam-btn{display:none}
       .flow-node::after{display:none}
       .chip{display:none}
     }
@@ -744,7 +761,7 @@
         <span class="cam-bar-dot cbd-yellow"></span>
         <span class="cam-bar-dot cbd-green"></span>
       </div>
-      <span id="cam-bar-title">HAND_TRACK.exe</span>
+      <span id="cam-bar-title">GESTURE_LAB.exe</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <span id="cam-rec-dot"></span>
@@ -752,7 +769,7 @@
     </div>
   </div>
   <video id="cam-video" autoplay playsinline muted></video>
-  <div id="cam-hud">◉ TRACKING ACTIVE — Move your fingers</div>
+  <div id="cam-hud">LAB ACTIVE — Pinch to scroll</div>
 </div>
 
 <!-- NAV -->
@@ -766,7 +783,7 @@
     <a href="mailto:lis.creativework@gmail.com" class="nav-cta">Contact</a>
     <button id="cam-btn" onclick="toggleCamera()">
       <span id="cam-dot"></span>
-      <span id="cam-label">◉ CAM</span>
+      <span id="cam-label">LAB</span>
     </button>
   </div>
 </nav>
@@ -796,7 +813,7 @@
       </div>
       <div class="quick-stats">
         <div class="stat">
-          <strong>5+</strong>
+          <strong>6+</strong>
           <span>Systems Built</span>
         </div>
         <div class="stat">
@@ -823,7 +840,7 @@
         </div>
         <div class="profile-name">Liswan Susanto</div>
         <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
-        <p class="profile-bio">IT staff and system builder at Surabaya, focused on internal portals, operational dashboards, asset workflows, and automation tools.</p>
+        <p class="profile-bio">IT staff and system builder based in Surabaya, focused on internal portals, operational dashboards, asset workflows, and automation tools.</p>
 
         <div class="terminal">
           <div class="terminal-bar">
@@ -834,8 +851,9 @@
           </div>
           <div class="terminal-body">
             <div><span class="t-prompt">❯ </span><span class="t-cmd">status --active-build</span></div>
-            <div class="t-out">▸ SIBER Portal v9.4 · SMART Asset v2.0</div>
-            <div class="t-out">▸ Drive Portal · DSA Dashboard</div>
+            <div class="t-out">▸ Asset Management · Internal Company Website</div>
+            <div class="t-out">▸ Daily Sales Activity Report · File Service</div>
+            <div class="t-out">▸ Tracking Sales &amp; Marketing</div>
             <div>&nbsp;</div>
             <div><span class="t-prompt">❯ </span><span class="t-cmd">stack --list</span></div>
             <div class="t-out2">WordPress · PHP · JS · MySQL · Apps Script</div>
@@ -898,9 +916,9 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SA</div>
-          <h4>SMART Asset Management</h4>
-          <p>Asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, and role-based access.</p>
+          <div class="card-icon-badge">AM</div>
+          <h4>Asset Management System</h4>
+          <p>Internal asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, mutation history, and role-based access.</p>
           <div class="tags">
             <span class="tag">Asset Tracking</span>
             <span class="tag">QR Label</span>
@@ -914,12 +932,12 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SM</div>
-          <h4>SMART Mutation Workflow</h4>
-          <p>Asset mutation workflow with draft request, Area Manager email approval, approve/reject flow, BAST generation, upload evidence, and IT validation stages.</p>
+          <div class="card-icon-badge">AW</div>
+          <h4>Asset Mutation Workflow</h4>
+          <p>Asset transfer workflow system for managing mutation requests, managerial approval, handover document generation, evidence upload, and IT validation stages.</p>
           <div class="tags">
             <span class="tag">Approval Flow</span>
-            <span class="tag">BAST</span>
+            <span class="tag">Handover Doc</span>
             <span class="tag">Email Action</span>
           </div>
         </div>
@@ -930,11 +948,11 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SB</div>
-          <h4>SIBER Internal Portal</h4>
-          <p>Internal portal for department-based access across FAT, HCGA, IT, Business Development, Weekly Report, and reporting dashboard modules.</p>
+          <div class="card-icon-badge">IC</div>
+          <h4>Internal Company Website</h4>
+          <p>Internal company website for department-based access, operational information, reporting dashboards, weekly reports, and business support modules.</p>
           <div class="tags">
-            <span class="tag">Portal</span>
+            <span class="tag">Internal Website</span>
             <span class="tag">Department Access</span>
             <span class="tag">Dashboard</span>
           </div>
@@ -946,9 +964,9 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">DS</div>
-          <h4>Daily Sales Activity Dashboard</h4>
-          <p>Sales activity reporting system for daily input, supervisor monitoring, branch summaries, target tracking, and national dashboard views.</p>
+          <div class="card-icon-badge">DR</div>
+          <h4>Daily Sales Activity Report</h4>
+          <p>Sales activity reporting system for daily input, supervisor monitoring, branch-level summaries, target tracking, and performance review.</p>
           <div class="tags">
             <span class="tag">Sales Report</span>
             <span class="tag">Monitoring</span>
@@ -962,13 +980,13 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SF</div>
-          <h4>SIN Drive Portal</h4>
-          <p>Google Drive-based file portal with Windows Explorer-style UI, NIK-based auth, drag-and-drop upload, folder hierarchy, breadcrumb nav, and Apps Script backend.</p>
+          <div class="card-icon-badge">DF</div>
+          <h4>Document &amp; File Service</h4>
+          <p>Google Drive-based document and file service with portal interface, folder hierarchy, employee access control, drag-and-drop upload, and Apps Script automation.</p>
           <div class="tags">
             <span class="tag">Google Drive</span>
             <span class="tag">Apps Script</span>
-            <span class="tag">File Portal</span>
+            <span class="tag">File Service</span>
           </div>
         </div>
         <a class="project-link" href="#">[ case study coming soon → ]</a>
@@ -978,13 +996,29 @@
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">HC</div>
-          <h4>HCGA Center</h4>
-          <p>Internal access center for HCGA information, SOP, jobdesk, forms, pop-up announcements, and employee-facing resources.</p>
+          <div class="card-icon-badge">TS</div>
+          <h4>Tracking Sales &amp; Marketing</h4>
+          <p>Sales and marketing tracking system for monitoring field activity, role-based access, sales performance, branch reporting, target progress, and operational activity.</p>
           <div class="tags">
-            <span class="tag">HCGA</span>
-            <span class="tag">Internal Portal</span>
-            <span class="tag">Resources</span>
+            <span class="tag">Sales Tracking</span>
+            <span class="tag">Marketing Activity</span>
+            <span class="tag">Performance</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">ER</div>
+          <h4>Employee Resource Center</h4>
+          <p>Internal resource center for employee information, SOP, job descriptions, forms, announcements, and department-facing resources.</p>
+          <div class="tags">
+            <span class="tag">Employee Portal</span>
+            <span class="tag">Internal Resource</span>
+            <span class="tag">Forms</span>
           </div>
         </div>
         <a class="project-link" href="#">[ case study coming soon → ]</a>
@@ -1013,7 +1047,8 @@
       <div class="stack-badge"><span>Google Apps Script</span></div>
       <div class="stack-badge"><span>Google Drive API</span></div>
       <div class="stack-badge"><span>Chart.js</span></div>
-      <div class="stack-badge"><span>GitHub Pages</span></div>
+      <div class="stack-badge"><span>GitHub</span></div>
+      <div class="stack-badge"><span>Web Hosting</span></div>
       <div class="stack-badge"><span>Workflow Automation</span></div>
       <div class="stack-badge"><span>Internal Portal</span></div>
     </div>
@@ -1072,22 +1107,22 @@
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SIBER Report Dashboard</strong>
+          <strong>Internal Reporting Dashboard</strong>
           <p>Building weekly reporting dashboard concepts with upload templates, charts, filters, and unified Excel structure.</p>
         </div>
       </div>
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SMART Mutation Workflow v2.0</strong>
-          <p>Improving approval flow, resend email action, BAST visibility, sender/receiver evidence, and IT validation.</p>
+          <strong>Asset Mutation Workflow v2.0</strong>
+          <p>Improving approval flow, resend email action, handover document visibility, sender/receiver evidence, and IT validation.</p>
         </div>
       </div>
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SIN Drive Portal v2.0</strong>
-          <p>Windows Explorer-style file portal with drag-and-drop, Ctrl+V paste upload, double-click navigation, and breadcrumb.</p>
+          <strong>Document &amp; File Service v2.0</strong>
+          <p>Windows Explorer-style file portal with drag-and-drop, paste upload, double-click navigation, and breadcrumb.</p>
         </div>
       </div>
     </div>
@@ -1115,7 +1150,7 @@
 <footer>
   <span class="footer-brand">LISWAN.DEV</span>
   <span>© <span id="year"></span> Liswan Susanto · Internal System Builder</span>
-  <span>WordPress · PHP · Apps Script · Dashboard</span>
+  <span>WordPress · PHP · Apps Script · Internal Systems</span>
 </footer>
 
 <script>
@@ -1453,7 +1488,7 @@ window.toggleCamera = async function () {
     stopHandTracking();
     stopScrollLoop();
     camBtn.classList.remove('active');
-    camLabel.textContent = '◉ CAM';
+    camLabel.textContent = 'LAB';
     camPopup.classList.remove('active');
     hCanvas.classList.remove('active');
     setTimeout(() => hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height), 450);

@@ -93,8 +93,8 @@
     .btn-secondary:hover{border-color:var(--cyan);background:rgba(0,245,255,.09)}
     .panel{position:relative;border:1px solid var(--border);background:linear-gradient(135deg,rgba(18,18,46,.86),rgba(9,9,26,.9));border-radius:22px;padding:30px;box-shadow:var(--shadow);overflow:hidden}
     .panel::before{content:'';position:absolute;inset:-1px;background:linear-gradient(135deg,rgba(0,245,255,.25),rgba(123,47,255,.25),rgba(255,45,107,.09));z-index:-1;border-radius:23px}
-    .logo-mark{width:112px;height:112px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(123,47,255,.95),rgba(60,32,150,.95));box-shadow:0 20px 60px rgba(123,47,255,.24);margin-bottom:24px}
-    .logo-mark img{width:72px;height:72px;object-fit:contain}
+    .logo-mark{width:112px;height:112px;border-radius:24px;padding:3px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(123,47,255,.95),rgba(60,32,150,.95));box-shadow:0 20px 60px rgba(123,47,255,.24);margin-bottom:24px;overflow:hidden}
+    .logo-mark img{width:100%;height:100%;object-fit:cover;border-radius:21px;display:block;background:var(--surface)}
     .profile-name{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px}
     .profile-role{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12px;letter-spacing:.09em;margin-bottom:18px}
     .terminal{margin-top:24px;border:1px solid rgba(0,245,255,.16);background:rgba(0,0,0,.42);border-radius:12px;overflow:hidden}
@@ -190,7 +190,7 @@
       </div>
     </div>
     <aside class="panel">
-      <div class="logo-mark"><img src="/liswan-dev-logo.svg" alt="Liswan.dev logo" onerror="this.style.display='none'"></div>
+      <div class="logo-mark"><img src="/avatar.png" alt="Liswan Susanto" onerror="this.style.display='none'"></div>
       <div class="profile-name">Liswan Susanto</div>
       <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
       <p class="lead" style="font-size:14px">Focused on internal portals, operational dashboards, asset workflows, employee systems, and automation tools.</p>

@@ -2,126 +2,162 @@
 
 Personal portfolio of **Liswan Susanto** — IT Developer & Internal System Builder.
 
-I build internal business systems for operational workflows, reporting dashboards, approval processes, asset management, and Google Drive-based file services.
+I build internal business systems for operational workflows, reporting dashboards, approval processes, asset management, document management, and business automation.
 
-Website: [https://liswan.dev](https://liswan.dev)
+Website: https://liswan.dev
 
 ---
 
 ## About
 
-I focus on building practical internal tools that help companies manage daily operations more efficiently.
+I focus on building practical internal tools that help companies manage daily operations more efficiently, accurately, and transparently.
 
-My work includes systems for asset tracking, employee portals, approval workflows, reporting dashboards, file management, and automation using WordPress, PHP, JavaScript, MySQL, Google Apps Script, and Google Drive integration.
+My work includes systems for asset management, employee portals, approval workflows, reporting dashboards, sales activity monitoring, file management, and automation using WordPress, PHP, JavaScript, MySQL, Google Apps Script, and Google Drive integration.
 
 ---
 
 ## Focus Areas
 
-- Internal business systems
-- WordPress shortcode-based applications
-- Asset management workflow
-- Approval and document flow
-- Dashboard and reporting system
-- Google Apps Script automation
-- Google Drive file integration
-- MySQL data management
-- UI development for internal portals
+* Internal business systems
+* WordPress shortcode-based applications
+* Asset management workflow
+* Approval and document workflow
+* Dashboard and reporting system
+* Sales activity monitoring
+* Google Apps Script automation
+* Google Drive file integration
+* MySQL database management
+* UI development for internal portals
 
 ---
 
 ## Featured Systems
 
-### SMART Asset Management
+### Asset Management System
 
 Asset management system for recording, tracking, filtering, and monitoring company assets.
 
 Main features:
 
-- Asset master data
-- QR code asset label
-- Asset status control
-- Mutation history
-- Role-based access
-- Document and photo attachment flow
+* Asset master data
+* QR code asset label
+* Asset status control
+* Asset condition tracking
+* Mutation history
+* Role-based access
+* Document and photo attachment flow
 
 ---
 
-### SMART Mutation Workflow
+### Asset Mutation Workflow
 
-Asset mutation workflow system with approval and document generation.
+Asset mutation workflow system for managing asset transfer requests, approval processes, document generation, and validation.
 
 Main features:
 
-- Draft mutation request
-- Area Manager approval via email
-- Approve / reject flow
-- BAST generation
-- Sender and receiver evidence upload
-- IT validation process
+* Draft mutation request
+* Managerial approval via email
+* Approve and reject flow
+* BAST / handover document generation
+* Sender evidence upload
+* Receiver evidence upload
+* IT validation process
+* Mutation history tracking
 
 ---
 
-### SIBER Internal Portal
+### Internal Company Website
 
-Internal company portal for department-based access and business operation support.
+Internal company website for department-based access, operational information, reporting, and internal business support.
 
 Main modules:
 
-- FAT Center
-- HCGA Center
-- IT Center
-- Business Development Center
-- Weekly Report
-- Reporting Dashboard
+* Finance & Accounting Center
+* HCGA Center
+* IT Support Center
+* Business Development Center
+* Weekly Report
+* Reporting Dashboard
+* Internal document access
 
 ---
 
-### Daily Sales Activity Dashboard
+### Daily Sales Activity Report
 
-Sales activity reporting system for monitoring daily sales input and branch performance.
+Sales activity reporting system for monitoring daily sales input, supervisor review, and branch-level performance.
 
 Main features:
 
-- Sales login
-- Supervisor input monitoring
-- Daily report summary
-- Branch-level dashboard
-- Target and achievement tracking
+* Sales login
+* Daily sales input
+* Supervisor input monitoring
+* Daily report summary
+* Branch-level dashboard
+* Target and achievement tracking
+* Sales activity history
 
 ---
 
-### SIN File Service
+### Tracking Sales & Marketing
 
-Google Drive-based file service for internal document storage and upload workflow.
+Sales and marketing tracking system for monitoring field activity, role-based access, and sales performance data.
 
 Main features:
 
-- File portal interface
-- Folder-based access
-- Google Drive upload integration
-- Employee access control
-- Apps Script automation
+* Salesman activity tracking
+* Role-based access
+* Sales performance monitoring
+* Branch and area reporting
+* Target tracking
+* Operational dashboard
+
+---
+
+### Document & File Service
+
+Google Drive-based file service for internal document storage, upload workflow, and controlled employee access.
+
+Main features:
+
+* File portal interface
+* Folder-based access
+* Google Drive upload integration
+* Employee access control
+* Apps Script automation
+* Internal document workflow
 
 ---
 
 ## Tech Stack
 
-- HTML
-- CSS
-- JavaScript
-- PHP
-- WordPress
-- MySQL
-- Google Apps Script
-- Google Drive
-- GitHub Pages
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+### Backend & CMS
+
+* PHP
+* WordPress
+* MySQL
+
+### Automation & Integration
+
+* Google Apps Script
+* Google Drive API / integration
+* Email notification workflow
+
+### Deployment & Version Control
+
+* GitHub
+* GitHub Pages
 
 ---
 
 ## Development Direction
 
-This portfolio is being developed as a public showcase for internal system design, UI experiments, dashboard templates, and workflow automation concepts.
+This portfolio is being developed as a public showcase for internal system design, UI experiments, dashboard templates, reporting workflows, and business process automation concepts.
 
 Some systems shown in this portfolio are recreated using dummy data for demonstration purposes. No confidential company data is published.
 
@@ -129,5 +165,5 @@ Some systems shown in this portfolio are recreated using dummy data for demonstr
 
 ## Contact
 
-- Website: [https://liswan.dev](https://liswan.dev)
-- GitHub: [@liswan-dev](https://github.com/liswan-dev)
+* Website: https://liswan.dev
+* GitHub: [@liswan-dev](https://github.com/liswan-dev)

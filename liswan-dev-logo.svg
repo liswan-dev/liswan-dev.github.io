@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7A3FF3"/>
+      <stop offset="52%" stop-color="#5229C8"/>
+      <stop offset="100%" stop-color="#20146B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="22%" cy="18%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="symbolShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#120846" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1024" height="1024" rx="172" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="172" fill="url(#glow)"/>
+  <rect x="24" y="22" width="976" height="980" rx="150" fill="none" stroke="#FFFFFF" stroke-opacity="0.055" stroke-width="8"/>
+
+  <g filter="url(#symbolShadow)" fill="#FFFFFF">
+    <path d="M184 508 L330 398 L330 462 L248 522 L330 582 L330 672 L184 564 Z"/>
+    <path d="M350 300 L490 216 L490 596 L620 596 L752 728 L350 728 Z"/>
+    <path d="M856 508 L720 398 L720 462 L798 522 L720 582 L720 672 L856 564 Z"/>
+  </g>
+</svg>

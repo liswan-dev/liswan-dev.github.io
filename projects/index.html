@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projects — Liswan.dev</title>
-  <meta name="description" content="Project details and system modules built around internal operations."/>
+  <meta name="description" content="Project details and interactive mini web apps built around internal operations."/>
   <meta name="author" content="Liswan Susanto"/>
 
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -19,16 +19,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    :root{
       --void:#050510;
-      --deep:#0a0a1a;
       --surface:#10102a;
       --card:#12122e;
       --card-h:#1a1a3e;
       --cyan:#00f5ff;
       --violet:#7b2fff;
       --violet2:#5b3fd6;
-      --magenta:#ff2d6b;
       --green:#33e29b;
       --yellow:#ffd166;
       --red:#ff5f57;
@@ -36,12 +34,11 @@
       --muted:#8b8db7;
       --muted2:#55577d;
       --border:rgba(0,245,255,.12);
-      --border-h:rgba(0,245,255,.32);
+      --border-h:rgba(0,245,255,.34);
       --shadow:0 24px 80px rgba(0,0,0,.42);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
-
     html{scroll-behavior:smooth}
 
     body{
@@ -78,11 +75,7 @@
     }
 
     body.modal-open{overflow:hidden}
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
+    a{color:inherit;text-decoration:none}
 
     .nav{
       position:fixed;
@@ -141,14 +134,8 @@
       transition:color .2s,transform .2s;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active{
-      color:var(--cyan);
-    }
-
-    .nav-links a:hover{
-      transform:translateY(-1px);
-    }
+    .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
+    .nav-links a:hover{transform:translateY(-1px)}
 
     .page{
       position:relative;
@@ -161,9 +148,7 @@
       margin:0 auto;
     }
 
-    .section{
-      padding:86px 0;
-    }
+    .section{padding:86px 0}
 
     .section-head{
       display:flex;
@@ -310,8 +295,7 @@
       transition:transform .2s,background .2s,border-color .2s;
     }
 
-    .floating-dev-menu a:hover,
-    .floating-dev-menu a.active{
+    .floating-dev-menu a:hover,.floating-dev-menu a.active{
       transform:translateY(-2px);
       background:var(--violet2);
       border-color:rgba(255,255,255,.24);
@@ -354,8 +338,8 @@
 
     .modal-panel{
       position:relative;
-      width:min(1180px,94vw);
-      max-height:88vh;
+      width:min(1220px,94vw);
+      max-height:90vh;
       overflow:auto;
       border:1px solid rgba(0,245,255,.24);
       background:linear-gradient(135deg,rgba(18,18,46,.97),rgba(5,5,16,.99));
@@ -390,7 +374,7 @@
     }
 
     .modal-desc{
-      max-width:820px;
+      max-width:860px;
       color:var(--muted);
       font-size:14px;
       line-height:1.75;
@@ -457,7 +441,7 @@
     }
 
     .mini-app{
-      min-height:540px;
+      min-height:570px;
       background:
         radial-gradient(circle at 10% 0%,rgba(123,47,255,.16),transparent 30%),
         radial-gradient(circle at 90% 10%,rgba(0,245,255,.12),transparent 32%),
@@ -467,7 +451,7 @@
     .app-shell{
       display:grid;
       grid-template-columns:230px 1fr;
-      min-height:540px;
+      min-height:570px;
     }
 
     .app-side{
@@ -495,7 +479,9 @@
       gap:10px;
     }
 
-    .app-menu span{
+    .app-menu button{
+      text-align:left;
+      cursor:pointer;
       padding:11px 12px;
       border-radius:10px;
       border:1px solid rgba(255,255,255,.08);
@@ -503,9 +489,16 @@
       color:var(--muted);
       font-size:12px;
       font-family:'JetBrains Mono',monospace;
+      transition:.18s ease;
     }
 
-    .app-menu span.active{
+    .app-menu button:hover{
+      color:#fff;
+      border-color:rgba(0,245,255,.24);
+      transform:translateX(2px);
+    }
+
+    .app-menu button.active{
       color:#fff;
       border-color:rgba(0,245,255,.3);
       background:rgba(0,245,255,.1);
@@ -576,16 +569,71 @@
       gap:14px;
     }
 
+    .panel-grid.equal{
+      grid-template-columns:1fr 1fr;
+    }
+
     .mini-panel{
       border:1px solid rgba(0,245,255,.12);
       background:rgba(18,18,46,.72);
       border-radius:16px;
       padding:16px;
+      min-width:0;
     }
 
     .mini-panel h5{
       font-size:14px;
       margin-bottom:14px;
+    }
+
+    .control-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:14px;
+    }
+
+    .search-input,
+    .select-input,
+    .text-input,
+    .number-input,
+    .textarea-input{
+      min-width:0;
+      border:1px solid rgba(0,245,255,.13);
+      background:rgba(0,0,0,.26);
+      color:var(--text);
+      border-radius:10px;
+      padding:11px 12px;
+      font:inherit;
+      font-size:12px;
+      outline:none;
+    }
+
+    .search-input{flex:1;min-width:180px}
+    .select-input{min-width:150px}
+    .textarea-input{min-height:86px;resize:none;width:100%}
+
+    .action-btn{
+      cursor:pointer;
+      border:1px solid rgba(0,245,255,.2);
+      background:linear-gradient(135deg,rgba(0,245,255,.16),rgba(123,47,255,.18));
+      color:#fff;
+      border-radius:10px;
+      padding:11px 13px;
+      font-size:12px;
+      font-weight:700;
+      transition:.18s ease;
+    }
+
+    .action-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(0,245,255,.36);
+    }
+
+    .action-btn.subtle{
+      background:rgba(255,255,255,.045);
+      color:var(--muted);
     }
 
     .mini-table{
@@ -603,38 +651,70 @@
       background:rgba(255,255,255,.045);
       font-size:12px;
       color:var(--muted);
+      cursor:pointer;
+      border:1px solid transparent;
+      transition:.16s ease;
+    }
+
+    .mini-row:hover{
+      border-color:rgba(0,245,255,.22);
+      background:rgba(0,245,255,.06);
     }
 
     .mini-row strong{
       color:var(--text);
     }
 
+    .mini-row small{
+      display:block;
+      color:var(--muted2);
+      margin-top:4px;
+      line-height:1.45;
+    }
+
     .status{
       display:inline-flex;
       justify-content:center;
-      min-width:62px;
+      min-width:66px;
       padding:5px 8px;
       border-radius:999px;
       background:rgba(0,245,255,.09);
       color:var(--cyan);
       font-family:'JetBrains Mono',monospace;
       font-size:10px;
+      text-transform:uppercase;
     }
 
-    .status.green{
-      background:rgba(51,226,155,.1);
-      color:var(--green);
+    .status.green{background:rgba(51,226,155,.1);color:var(--green)}
+    .status.yellow{background:rgba(255,209,102,.1);color:var(--yellow)}
+    .status.red{background:rgba(255,95,87,.1);color:var(--red)}
+
+    .detail-card{
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(0,245,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      line-height:1.65;
+      font-size:12px;
     }
 
-    .status.yellow{
-      background:rgba(255,209,102,.1);
-      color:var(--yellow);
+    .detail-card b{
+      display:block;
+      color:var(--text);
+      font-size:15px;
+      margin-bottom:6px;
     }
 
-    .status.red{
-      background:rgba(255,95,87,.1);
-      color:var(--red);
+    .kv{
+      display:grid;
+      grid-template-columns:110px 1fr;
+      gap:8px;
+      margin-top:8px;
     }
+
+    .kv span:nth-child(odd){color:var(--muted2)}
+    .kv span:nth-child(even){color:var(--text)}
 
     .bars{
       display:grid;
@@ -661,6 +741,7 @@
       height:100%;
       border-radius:999px;
       background:linear-gradient(90deg,var(--cyan),var(--violet));
+      transition:width .25s ease;
     }
 
     .form-grid{
@@ -699,23 +780,7 @@
       resize:none;
     }
 
-    .field.full{
-      grid-column:1/-1;
-    }
-
-    .fake-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:11px 14px;
-      border-radius:10px;
-      border:1px solid rgba(0,245,255,.2);
-      background:linear-gradient(135deg,rgba(0,245,255,.16),rgba(123,47,255,.18));
-      color:#fff;
-      font-size:12px;
-      font-weight:700;
-      margin-top:12px;
-    }
+    .field.full{grid-column:1/-1}
 
     .tile-grid{
       display:grid;
@@ -729,6 +794,15 @@
       background:rgba(255,255,255,.045);
       border-radius:14px;
       padding:14px;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .module-tile:hover,
+    .module-tile.active{
+      border-color:rgba(0,245,255,.32);
+      background:rgba(0,245,255,.08);
+      transform:translateY(-2px);
     }
 
     .module-tile b{
@@ -749,8 +823,7 @@
       gap:14px;
     }
 
-    .folder-tree,
-    .file-area{
+    .folder-tree,.file-area{
       border:1px solid rgba(0,245,255,.12);
       background:rgba(18,18,46,.72);
       border-radius:16px;
@@ -758,6 +831,10 @@
     }
 
     .tree-item{
+      width:100%;
+      text-align:left;
+      cursor:pointer;
+      border:0;
       padding:10px;
       border-radius:10px;
       color:var(--muted);
@@ -783,6 +860,14 @@
       background:rgba(255,255,255,.045);
       border-radius:14px;
       padding:14px;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .file-card:hover{
+      border-color:rgba(0,245,255,.32);
+      background:rgba(0,245,255,.07);
+      transform:translateY(-2px);
     }
 
     .file-icon{
@@ -812,12 +897,12 @@
 
     .route-map{
       display:grid;
-      grid-template-columns:1fr 190px;
+      grid-template-columns:1fr 220px;
       gap:14px;
     }
 
     .map-box{
-      min-height:285px;
+      min-height:320px;
       border:1px solid rgba(0,245,255,.12);
       background:
         linear-gradient(rgba(0,245,255,.055) 1px,transparent 1px),
@@ -831,11 +916,18 @@
 
     .map-pin{
       position:absolute;
-      width:14px;
-      height:14px;
+      width:18px;
+      height:18px;
+      border:0;
       border-radius:999px;
       background:var(--cyan);
       box-shadow:0 0 22px rgba(0,245,255,.8);
+      cursor:pointer;
+    }
+
+    .map-pin.active{
+      background:var(--yellow);
+      box-shadow:0 0 26px rgba(255,209,102,.8);
     }
 
     .map-pin::after{
@@ -851,7 +943,7 @@
       height:2px;
       background:linear-gradient(90deg,var(--cyan),var(--violet));
       transform-origin:left center;
-      opacity:.8;
+      opacity:.75;
     }
 
     .notice{
@@ -865,23 +957,36 @@
       font-size:12.5px;
     }
 
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:28px;
+      transform:translateX(-50%) translateY(20px);
+      z-index:5000;
+      opacity:0;
+      pointer-events:none;
+      padding:12px 16px;
+      border-radius:999px;
+      border:1px solid rgba(0,245,255,.22);
+      background:rgba(5,5,16,.92);
+      color:#fff;
+      font-size:12px;
+      box-shadow:0 18px 60px rgba(0,0,0,.42);
+      transition:.22s ease;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
     @media(max-width:980px){
-      .grid-2,
-      .section-head,
-      .app-shell,
-      .panel-grid,
-      .file-explorer,
-      .route-map{
+      .grid-2,.section-head,.app-shell,.panel-grid,.file-explorer,.route-map{
         grid-template-columns:1fr;
       }
 
-      .section-head{
-        display:block;
-      }
-
-      .section-desc{
-        margin-top:16px;
-      }
+      .section-head{display:block}
+      .section-desc{margin-top:16px}
 
       .app-side{
         border-right:0;
@@ -908,9 +1013,7 @@
         font-size:11.5px;
       }
 
-      .page{
-        padding-top:118px;
-      }
+      .page{padding-top:118px}
 
       .floating-dev-menu{
         right:14px;
@@ -925,34 +1028,29 @@
     }
 
     @media(max-width:720px){
-      .modal{
-        padding:14px;
-      }
+      .modal{padding:14px}
+      .modal-panel{padding:18px}
 
-      .modal-panel{
-        padding:18px;
-      }
-
-      .stat-grid,
-      .form-grid,
-      .tile-grid,
-      .file-grid{
+      .stat-grid,.form-grid,.tile-grid,.file-grid{
         grid-template-columns:1fr;
       }
 
       .app-top{
         flex-direction:column;
       }
+
+      .mini-row{
+        grid-template-columns:1fr;
+      }
+
+      .status{
+        width:max-content;
+      }
     }
 
     @media(max-width:560px){
-      .container{
-        width:min(92vw,1120px);
-      }
-
-      .section{
-        padding:62px 0;
-      }
+      .container{width:min(92vw,1120px)}
+      .section{padding:62px 0}
 
       .floating-dev-menu{
         display:grid;
@@ -998,7 +1096,7 @@
           <h2>Project details<br>and system modules.</h2>
         </div>
         <p class="section-desc">
-          Systems are presented as portfolio concepts using recreated flows and non-confidential descriptions.
+          Click a project to open an interactive mini web app preview. Each preview is recreated using dummy data only.
         </p>
       </div>
 
@@ -1007,66 +1105,42 @@
           <div class="badge">AM</div>
           <h3>Asset Management</h3>
           <p>Internal asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, mutation history, and role-based access.</p>
-          <div class="tags">
-            <span class="tag">Asset Tracking</span>
-            <span class="tag">QR Label</span>
-            <span class="tag">Role Access</span>
-          </div>
+          <div class="tags"><span class="tag">Asset Tracking</span><span class="tag">QR Label</span><span class="tag">Role Access</span></div>
         </article>
 
         <article class="card" tabindex="0" role="button" data-project="siber">
           <div class="badge">SIB</div>
           <h3>Internal Company Website</h3>
           <p>Internal company portal for department-based access, operational information, reporting dashboards, weekly reports, and business support modules.</p>
-          <div class="tags">
-            <span class="tag">Internal Website</span>
-            <span class="tag">Department Access</span>
-            <span class="tag">Dashboard</span>
-          </div>
+          <div class="tags"><span class="tag">Internal Website</span><span class="tag">Department Access</span><span class="tag">Dashboard</span></div>
         </article>
 
         <article class="card" tabindex="0" role="button" data-project="dsa">
           <div class="badge">DSA</div>
           <h3>Daily Sales Activity Report</h3>
           <p>Sales activity reporting system for daily input, supervisor monitoring, branch-level summaries, target tracking, and performance review.</p>
-          <div class="tags">
-            <span class="tag">Sales Report</span>
-            <span class="tag">Monitoring</span>
-            <span class="tag">Branch View</span>
-          </div>
+          <div class="tags"><span class="tag">Sales Report</span><span class="tag">Monitoring</span><span class="tag">Branch View</span></div>
         </article>
 
         <article class="card" tabindex="0" role="button" data-project="sfa">
           <div class="badge">SFA</div>
           <h3>Tracking Sales & Marketing</h3>
           <p>Sales and marketing tracking system for monitoring field activity, role access, branch reporting, target progress, and operational activity.</p>
-          <div class="tags">
-            <span class="tag">Sales Tracking</span>
-            <span class="tag">Marketing Activity</span>
-            <span class="tag">Performance</span>
-          </div>
+          <div class="tags"><span class="tag">Sales Tracking</span><span class="tag">Marketing Activity</span><span class="tag">Performance</span></div>
         </article>
 
         <article class="card" tabindex="0" role="button" data-project="sfs">
           <div class="badge">SFS</div>
           <h3>Document & File Service</h3>
           <p>Google Drive-based document and file service with portal interface, folder hierarchy, employee access control, drag-and-drop upload, and automation.</p>
-          <div class="tags">
-            <span class="tag">Google Drive</span>
-            <span class="tag">Apps Script</span>
-            <span class="tag">File Portal</span>
-          </div>
+          <div class="tags"><span class="tag">Google Drive</span><span class="tag">Apps Script</span><span class="tag">File Portal</span></div>
         </article>
 
         <article class="card" tabindex="0" role="button" data-project="hc">
           <div class="badge">HC</div>
           <h3>Employee Resource Center</h3>
           <p>Internal resource center for employee information, SOP, job descriptions, forms, announcements, and department-facing resources.</p>
-          <div class="tags">
-            <span class="tag">Employee Portal</span>
-            <span class="tag">Resources</span>
-            <span class="tag">Forms</span>
-          </div>
+          <div class="tags"><span class="tag">Employee Portal</span><span class="tag">Resources</span><span class="tag">Forms</span></div>
         </article>
       </div>
     </section>
@@ -1077,11 +1151,10 @@
       <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-head">
           <div>
-            <div class="modal-kicker" id="modalKicker">// mini web app</div>
+            <div class="modal-kicker">// interactive mini web app</div>
             <h3 class="modal-title" id="modalTitle">Project Preview</h3>
             <p class="modal-desc" id="modalDesc"></p>
           </div>
-
           <button class="modal-close" type="button" aria-label="Close preview" data-close>×</button>
         </div>
 
@@ -1092,12 +1165,11 @@
             <span class="browser-dot"></span>
             <div class="browser-url" id="browserUrl">liswan.dev/projects/preview</div>
           </div>
-
           <div class="mini-app" id="miniApp"></div>
         </div>
 
         <div class="notice">
-          Preview ini adalah mini web app dummy untuk portofolio. Tidak memakai data asli, tidak menampilkan data rahasia, dan hanya berfungsi sebagai representasi visual dari konsep sistem.
+          Interaksi di preview ini berjalan di sisi browser saja. Data bersifat dummy, tidak tersambung database, dan aman untuk portofolio publik.
         </div>
       </div>
     </div>
@@ -1109,6 +1181,8 @@
     <span>WordPress · PHP · Apps Script · Internal Systems</span>
   </footer>
 
+  <div class="toast" id="toast">Action completed</div>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1117,355 +1191,906 @@
     const modalDesc = document.getElementById('modalDesc');
     const browserUrl = document.getElementById('browserUrl');
     const miniApp = document.getElementById('miniApp');
+    const toast = document.getElementById('toast');
 
-    const projects = {
-      asset: {
-        title: 'Asset Management',
-        desc: 'Mini app preview for asset registry, QR label control, condition tracking, and mutation monitoring.',
-        url: 'liswan.dev/projects/asset-management',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">AM</div>
-              <div class="app-menu">
-                <span class="active">Asset Registry</span>
-                <span>QR Label</span>
-                <span>Mutation Request</span>
-                <span>Asset Report</span>
-              </div>
-            </aside>
+    let currentProject = null;
+    let currentTab = null;
 
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Asset Registry</h4>
-                  <p>Monitoring company assets by location, category, condition, and ownership status.</p>
-                </div>
-                <div class="app-pill">ASSET CONTROL</div>
-              </div>
+    const state = {
+      assetFilter:'ALL',
+      assetSearch:'',
+      assetSelected:0,
+      siberSelected:'HCGA',
+      dsaEntries:[
+        {branch:'AO Madiun', sales:'Demo Salesman A', visits:18, effective:14, status:'Approved'},
+        {branch:'OU Jember', sales:'Demo Salesman B', visits:21, effective:17, status:'Submitted'},
+        {branch:'OU Probolinggo', sales:'Demo Salesman C', visits:15, effective:9, status:'Review'}
+      ],
+      sfaSelected:0,
+      sfsFolder:'HO Documents',
+      hcCategory:'SOP',
+      hcSearch:''
+    };
 
-              <div class="stat-grid">
-                <div class="stat-card"><b>1,284</b><span>Total Assets</span></div>
-                <div class="stat-card"><b>96%</b><span>QR Label Coverage</span></div>
-                <div class="stat-card"><b>38</b><span>Mutation Requests</span></div>
-              </div>
+    const assetRows = [
+      {name:'Notebook IT-042', code:'AST-IT-042', location:'HO Surabaya', category:'Laptop', condition:'GOOD', status:'ACTIVE'},
+      {name:'Printer Thermal BR-017', code:'AST-BR-017', location:'OU Jember', category:'Printer', condition:'CHECK', status:'CHECK'},
+      {name:'Vehicle Unit VH-009', code:'AST-VH-009', location:'AO Madiun', category:'Vehicle', condition:'GOOD', status:'USED'},
+      {name:'Router AO-021', code:'AST-NW-021', location:'AO Probolinggo', category:'Network', condition:'REPAIR', status:'REPAIR'},
+      {name:'Monitor HO-088', code:'AST-MN-088', location:'HO Surabaya', category:'Monitor', condition:'GOOD', status:'READY'},
+      {name:'Scanner WH-014', code:'AST-SC-014', location:'Warehouse', category:'Scanner', condition:'CHECK', status:'CHECK'}
+    ];
 
-              <div class="panel-grid">
-                <div class="mini-panel">
-                  <h5>Asset List</h5>
-                  <div class="mini-table">
-                    <div class="mini-row"><strong>Notebook IT-042</strong><span class="status green">ACTIVE</span></div>
-                    <div class="mini-row"><strong>Printer Thermal BR-017</strong><span class="status yellow">CHECK</span></div>
-                    <div class="mini-row"><strong>Vehicle Unit VH-009</strong><span class="status green">USED</span></div>
-                    <div class="mini-row"><strong>Router AO-021</strong><span class="status red">REPAIR</span></div>
-                    <div class="mini-row"><strong>Monitor HO-088</strong><span class="status green">READY</span></div>
-                  </div>
-                </div>
+    const siberModules = [
+      {name:'HCGA', desc:'Employee resources, SOP, forms, and personnel support.', users:142, modules:9, status:'Live'},
+      {name:'FAT', desc:'Finance, accounting, tax documents, and internal report references.', users:24, modules:7, status:'Live'},
+      {name:'BusDev', desc:'Sales support files, target achievement, and area monitoring resources.', users:32, modules:11, status:'Beta'},
+      {name:'IT', desc:'System tools, file services, technical notes, and maintenance logs.', users:6, modules:13, status:'Live'},
+      {name:'Weekly Report', desc:'Weekly report submission, approval, revision, and management review flow.', users:89, modules:4, status:'Live'},
+      {name:'Dashboard', desc:'Sales performance, stock report, piutang, and operational monitoring.', users:18, modules:8, status:'Preview'}
+    ];
 
-                <div class="mini-panel">
-                  <h5>Condition Summary</h5>
-                  <div class="bars">
-                    <div class="bar-item"><label><span>Good</span><span>82%</span></label><div class="bar"><span style="width:82%"></span></div></div>
-                    <div class="bar-item"><label><span>Need Check</span><span>44%</span></label><div class="bar"><span style="width:44%"></span></div></div>
-                    <div class="bar-item"><label><span>Mutation</span><span>61%</span></label><div class="bar"><span style="width:61%"></span></div></div>
-                    <div class="bar-item"><label><span>QR Printed</span><span>96%</span></label><div class="bar"><span style="width:96%"></span></div></div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        `
+    const sfaPins = [
+      {name:'Outlet A', left:'18%', top:'34%', status:'DONE', visit:'08:45', note:'Stock checked and display verified.'},
+      {name:'Outlet B', left:'47%', top:'48%', status:'DONE', visit:'10:10', note:'Order submitted and owner confirmed.'},
+      {name:'Outlet C', left:'73%', top:'30%', status:'VISIT', visit:'13:25', note:'Current active visit in route.'},
+      {name:'Outlet D', left:'62%', top:'72%', status:'NEXT', visit:'15:00', note:'Scheduled next outlet.'}
+    ];
+
+    const sfsFiles = {
+      'HO Documents':[
+        ['PDF','Company Policy','Updated today'],
+        ['XLS','Weekly Report','Synced 2 hours ago'],
+        ['DOC','SOP Access','Shared file'],
+        ['IMG','Brand Assets','12 files'],
+        ['ZIP','Backup Export','Auto generated'],
+        ['CSV','Master Data','Restricted']
+      ],
+      'Sales Reports':[
+        ['XLS','Daily Sales Week 27','Updated 10:30'],
+        ['CSV','Outlet Coverage','Auto sync'],
+        ['PDF','Area Review','Manager access']
+      ],
+      'HCGA Forms':[
+        ['DOC','Leave Request Form','Ready'],
+        ['PDF','Employee SOP','Updated'],
+        ['XLS','MPP Summary','Restricted']
+      ],
+      'Finance Files':[
+        ['XLS','Invoice Monitoring','Restricted'],
+        ['PDF','Tax Reference','Shared'],
+        ['CSV','Payment Export','Auto generated']
+      ],
+      'IT References':[
+        ['TXT','Deployment Notes','Internal'],
+        ['PDF','System Architecture','Draft'],
+        ['ZIP','Backup Config','Restricted']
+      ]
+    };
+
+    const hcResources = {
+      SOP:[
+        ['SOP Attendance','Operational attendance and approval procedure.'],
+        ['SOP Asset Request','Asset request and approval procedure.'],
+        ['SOP File Access','Internal document access procedure.']
+      ],
+      Forms:[
+        ['Leave Request Form','Form for employee leave submission.'],
+        ['Asset Request Form','Form for internal asset request.'],
+        ['Data Change Form','Employee data update form.']
+      ],
+      Jobs:[
+        ['IT Developer','Internal system builder and maintenance responsibility.'],
+        ['HCGA Staff','Human capital and general affairs operational duties.'],
+        ['Sales Supervisor','Sales activity review and branch monitoring.']
+      ],
+      Announcements:[
+        ['System Maintenance','Scheduled maintenance notice for internal portal.'],
+        ['Policy Update','New internal policy document available.'],
+        ['Training Schedule','Application training schedule for branches.']
+      ]
+    };
+
+    const projectMeta = {
+      asset:{
+        title:'Asset Management',
+        desc:'Interactive preview for asset registry, QR label control, status filtering, condition tracking, and mutation monitoring.',
+        url:'liswan.dev/projects/asset-management',
+        code:'AM',
+        tabs:['Registry','QR Label','Mutation']
       },
+      siber:{
+        title:'Internal Company Website',
+        desc:'Interactive preview for internal portal, department modules, dashboard access, weekly reports, and business support.',
+        url:'liswan.dev/projects/internal-company-website',
+        code:'SIB',
+        tabs:['Portal','Modules','Dashboard']
+      },
+      dsa:{
+        title:'Daily Sales Activity Report',
+        desc:'Interactive preview for daily sales input, branch summary, supervisor review, and activity history.',
+        url:'liswan.dev/projects/daily-sales-activity-report',
+        code:'DSA',
+        tabs:['Input','Summary','Review']
+      },
+      sfa:{
+        title:'Tracking Sales & Marketing',
+        desc:'Interactive preview for field route tracking, outlet visit status, target progress, and marketing activity monitoring.',
+        url:'liswan.dev/projects/tracking-sales-marketing',
+        code:'SFA',
+        tabs:['Route','Visits','Performance']
+      },
+      sfs:{
+        title:'Document & File Service',
+        desc:'Interactive preview for Drive-style file portal, folder switching, dummy upload, and document access.',
+        url:'liswan.dev/projects/document-file-service',
+        code:'SFS',
+        tabs:['Explorer','Upload','Access']
+      },
+      hc:{
+        title:'Employee Resource Center',
+        desc:'Interactive preview for employee resources, SOP, forms, job descriptions, and announcements.',
+        url:'liswan.dev/projects/employee-resource-center',
+        code:'HC',
+        tabs:['Resources','Forms','Updates']
+      }
+    };
 
-      siber: {
-        title: 'Internal Company Website',
-        desc: 'Mini app preview for internal portal, department-based modules, dashboards, weekly reports, and file access.',
-        url: 'liswan.dev/projects/internal-company-website',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">SIB</div>
-              <div class="app-menu">
-                <span class="active">Portal Home</span>
-                <span>Departments</span>
-                <span>Reports</span>
-                <span>Business Support</span>
+    function statusClass(value){
+      const v = String(value).toLowerCase();
+      if(v.includes('good') || v.includes('active') || v.includes('ready') || v.includes('used') || v.includes('done') || v.includes('approved') || v.includes('live')) return 'green';
+      if(v.includes('check') || v.includes('review') || v.includes('visit') || v.includes('beta') || v.includes('submitted') || v.includes('update')) return 'yellow';
+      if(v.includes('repair') || v.includes('blocked')) return 'red';
+      return '';
+    }
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+
+    function appShell(projectKey, content){
+      const meta = projectMeta[projectKey];
+
+      return `
+        <div class="app-shell">
+          <aside class="app-side">
+            <div class="app-logo">${meta.code}</div>
+            <div class="app-menu">
+              ${meta.tabs.map(tab => `
+                <button type="button" class="${currentTab === tab ? 'active' : ''}" data-tab="${tab}">${tab}</button>
+              `).join('')}
+            </div>
+          </aside>
+          <section class="app-main">
+            ${content}
+          </section>
+        </div>
+      `;
+    }
+
+    function appHeader(title, desc, pill){
+      return `
+        <div class="app-top">
+          <div>
+            <h4>${title}</h4>
+            <p>${desc}</p>
+          </div>
+          <div class="app-pill">${pill}</div>
+        </div>
+      `;
+    }
+
+    function renderAsset(){
+      let content = '';
+
+      if(currentTab === 'Registry'){
+        const filtered = assetRows.filter(row => {
+          const byFilter = state.assetFilter === 'ALL' || row.status === state.assetFilter || row.condition === state.assetFilter;
+          const q = state.assetSearch.toLowerCase();
+          const bySearch = !q || Object.values(row).join(' ').toLowerCase().includes(q);
+          return byFilter && bySearch;
+        });
+
+        const selected = filtered[state.assetSelected] || filtered[0] || assetRows[0];
+
+        content = `
+          ${appHeader('Asset Registry','Search, filter, and inspect dummy asset records. Click a row to show its details.','INTERACTIVE')}
+          <div class="stat-grid">
+            <div class="stat-card"><b>${assetRows.length}</b><span>Total Assets</span></div>
+            <div class="stat-card"><b>${assetRows.filter(x => x.condition === 'GOOD').length}</b><span>Good Condition</span></div>
+            <div class="stat-card"><b>${assetRows.filter(x => x.status === 'CHECK' || x.condition === 'CHECK').length}</b><span>Need Check</span></div>
+          </div>
+          <div class="panel-grid">
+            <div class="mini-panel">
+              <h5>Asset List</h5>
+              <div class="control-row">
+                <input class="search-input" id="assetSearch" value="${state.assetSearch}" placeholder="Search asset, code, location...">
+                <select class="select-input" id="assetFilter">
+                  ${['ALL','ACTIVE','READY','CHECK','REPAIR','GOOD'].map(v => `<option ${state.assetFilter === v ? 'selected' : ''}>${v}</option>`).join('')}
+                </select>
               </div>
-            </aside>
-
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Internal Portal</h4>
-                  <p>Centralized company portal for department access, operational modules, reporting, and internal information.</p>
+              <div class="mini-table">
+                ${filtered.map((row,index) => `
+                  <div class="mini-row" data-asset-row="${index}">
+                    <div><strong>${row.name}</strong><small>${row.code} · ${row.location} · ${row.category}</small></div>
+                    <span class="status ${statusClass(row.status)}">${row.status}</span>
+                  </div>
+                `).join('') || '<div class="detail-card">No asset found.</div>'}
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h5>Selected Asset</h5>
+              <div class="detail-card">
+                <b>${selected.name}</b>
+                ${selected.code}
+                <div class="kv">
+                  <span>Location</span><span>${selected.location}</span>
+                  <span>Category</span><span>${selected.category}</span>
+                  <span>Condition</span><span>${selected.condition}</span>
+                  <span>Status</span><span>${selected.status}</span>
                 </div>
-                <div class="app-pill">PORTAL ACCESS</div>
               </div>
+              <div class="control-row" style="margin-top:14px;margin-bottom:0">
+                <button class="action-btn" id="generateQr">Generate QR Label</button>
+                <button class="action-btn subtle" id="requestMutation">Request Mutation</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
 
+      if(currentTab === 'QR Label'){
+        content = `
+          ${appHeader('QR Label Center','Simulate QR label generation for selected asset batches.','QR LABEL')}
+          <div class="panel-grid equal">
+            <div class="mini-panel">
+              <h5>Label Batch</h5>
+              <div class="mini-table">
+                <div class="mini-row"><div><strong>Batch HO-0726</strong><small>32 labels · Head Office</small></div><span class="status green">READY</span></div>
+                <div class="mini-row"><div><strong>Batch AO-MDI</strong><small>18 labels · AO Madiun</small></div><span class="status yellow">PRINT</span></div>
+                <div class="mini-row"><div><strong>Batch OU-JBR</strong><small>21 labels · OU Jember</small></div><span class="status">QUEUE</span></div>
+              </div>
+              <button class="action-btn" id="printLabels" style="margin-top:14px">Print Dummy Labels</button>
+            </div>
+            <div class="mini-panel">
+              <h5>QR Preview</h5>
+              <div class="detail-card" style="display:grid;place-items:center;min-height:230px;text-align:center">
+                <div>
+                  <div style="width:130px;height:130px;margin:0 auto 14px;border-radius:12px;background:repeating-linear-gradient(45deg,#fff,#fff 6px,#050510 6px,#050510 12px);box-shadow:0 0 0 10px rgba(255,255,255,.06)"></div>
+                  <b>AST-DEMO-042</b>
+                  Dummy QR label preview
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Mutation'){
+        content = `
+          ${appHeader('Asset Mutation Flow','Preview request status, approval, and delivery validation workflow.','MUTATION')}
+          <div class="panel-grid">
+            <div class="mini-panel">
+              <h5>Mutation Requests</h5>
+              <div class="mini-table">
+                <div class="mini-row"><div><strong>Notebook IT-042</strong><small>HO Surabaya → AO Madiun</small></div><span class="status yellow">AM REVIEW</span></div>
+                <div class="mini-row"><div><strong>Printer BR-017</strong><small>OU Jember → Service Center</small></div><span class="status green">VALIDATED</span></div>
+                <div class="mini-row"><div><strong>Router AO-021</strong><small>AO Probolinggo → HO IT</small></div><span class="status">DRAFT</span></div>
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h5>Approval Progress</h5>
+              <div class="bars">
+                <div class="bar-item"><label><span>Draft</span><span>100%</span></label><div class="bar"><span style="width:100%"></span></div></div>
+                <div class="bar-item"><label><span>AM Approval</span><span>76%</span></label><div class="bar"><span style="width:76%"></span></div></div>
+                <div class="bar-item"><label><span>Delivery Proof</span><span>58%</span></label><div class="bar"><span style="width:58%"></span></div></div>
+                <div class="bar-item"><label><span>IT Validation</span><span>42%</span></label><div class="bar"><span style="width:42%"></span></div></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      miniApp.innerHTML = appShell('asset', content);
+
+      const search = document.getElementById('assetSearch');
+      if(search){
+        search.addEventListener('input', e => {
+          state.assetSearch = e.target.value;
+          state.assetSelected = 0;
+          renderAsset();
+        });
+      }
+
+      const filter = document.getElementById('assetFilter');
+      if(filter){
+        filter.addEventListener('change', e => {
+          state.assetFilter = e.target.value;
+          state.assetSelected = 0;
+          renderAsset();
+        });
+      }
+
+      document.querySelectorAll('[data-asset-row]').forEach(row => {
+        row.addEventListener('click', () => {
+          state.assetSelected = Number(row.dataset.assetRow);
+          renderAsset();
+          showToast('Asset detail opened');
+        });
+      });
+
+      const qr = document.getElementById('generateQr');
+      if(qr) qr.addEventListener('click', () => showToast('Dummy QR label generated'));
+
+      const mut = document.getElementById('requestMutation');
+      if(mut) mut.addEventListener('click', () => showToast('Dummy mutation request created'));
+
+      const print = document.getElementById('printLabels');
+      if(print) print.addEventListener('click', () => showToast('Dummy label batch sent to print'));
+
+      bindTabButtons();
+    }
+
+    function renderSiber(){
+      const selected = siberModules.find(m => m.name === state.siberSelected) || siberModules[0];
+      let content = '';
+
+      if(currentTab === 'Portal'){
+        content = `
+          ${appHeader('Internal Portal','Click a department module to preview its access summary and status.','PORTAL')}
+          <div class="stat-grid">
+            <div class="stat-card"><b>${siberModules.length}</b><span>Portal Modules</span></div>
+            <div class="stat-card"><b>${siberModules.reduce((a,b)=>a+b.users,0)}</b><span>Simulated Users</span></div>
+            <div class="stat-card"><b>${siberModules.reduce((a,b)=>a+b.modules,0)}</b><span>Sub Modules</span></div>
+          </div>
+          <div class="panel-grid">
+            <div class="mini-panel">
+              <h5>Department Modules</h5>
               <div class="tile-grid">
-                <div class="module-tile"><b>HCGA</b><span>Employee resources, forms, SOP, and personnel data access.</span></div>
-                <div class="module-tile"><b>FAT</b><span>Finance, accounting, tax support, and document references.</span></div>
-                <div class="module-tile"><b>BusDev</b><span>Sales support files, targets, achievements, and area monitoring.</span></div>
-                <div class="module-tile"><b>IT</b><span>System tools, service access, technical references, and maintenance logs.</span></div>
-                <div class="module-tile"><b>Weekly Report</b><span>Weekly submission, approval, revision, and management review.</span></div>
-                <div class="module-tile"><b>Dashboard</b><span>Sales performance, stock, piutang, and operational monitoring.</span></div>
-              </div>
-
-              <div class="notice">
-                Portal preview dibuat seperti halaman internal berbasis modul, bukan sekadar dashboard generik.
-              </div>
-            </section>
-          </div>
-        `
-      },
-
-      dsa: {
-        title: 'Daily Sales Activity Report',
-        desc: 'Mini app preview for daily sales input, supervisor monitoring, branch summaries, and activity review.',
-        url: 'liswan.dev/projects/daily-sales-activity-report',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">DSA</div>
-              <div class="app-menu">
-                <span class="active">Sales Input</span>
-                <span>Supervisor Review</span>
-                <span>Branch Summary</span>
-                <span>History</span>
-              </div>
-            </aside>
-
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Daily Sales Input</h4>
-                  <p>Sales activity form with outlet visit, daily activity, target information, and supervisor monitoring.</p>
-                </div>
-                <div class="app-pill">DAILY REPORT</div>
-              </div>
-
-              <div class="panel-grid">
-                <div class="mini-panel">
-                  <h5>Input Activity</h5>
-                  <div class="form-grid">
-                    <div class="field">
-                      <label>Sales Name</label>
-                      <input value="Demo Salesman" readonly>
-                    </div>
-                    <div class="field">
-                      <label>Branch</label>
-                      <select>
-                        <option>AO Madiun</option>
-                        <option>OU Jember</option>
-                        <option>OU Probolinggo</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label>Visit Count</label>
-                      <input value="18" readonly>
-                    </div>
-                    <div class="field">
-                      <label>Effective Call</label>
-                      <input value="14" readonly>
-                    </div>
-                    <div class="field full">
-                      <label>Daily Notes</label>
-                      <textarea readonly>Outlet visit completed, stock checked, and sales progress updated.</textarea>
-                    </div>
+                ${siberModules.map(item => `
+                  <div class="module-tile ${state.siberSelected === item.name ? 'active' : ''}" data-siber-module="${item.name}">
+                    <b>${item.name}</b>
+                    <span>${item.desc}</span>
                   </div>
-                  <div class="fake-btn">Submit Daily Report</div>
-                </div>
-
-                <div class="mini-panel">
-                  <h5>Today Summary</h5>
-                  <div class="mini-table">
-                    <div class="mini-row"><strong>AO Madiun</strong><span class="status green">89%</span></div>
-                    <div class="mini-row"><strong>OU Jember</strong><span class="status green">92%</span></div>
-                    <div class="mini-row"><strong>OU Probolinggo</strong><span class="status yellow">74%</span></div>
-                    <div class="mini-row"><strong>OU Nganjuk</strong><span class="status green">86%</span></div>
-                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h5>Selected Module</h5>
+              <div class="detail-card">
+                <b>${selected.name}</b>
+                ${selected.desc}
+                <div class="kv">
+                  <span>Users</span><span>${selected.users}</span>
+                  <span>Modules</span><span>${selected.modules}</span>
+                  <span>Status</span><span>${selected.status}</span>
                 </div>
               </div>
-            </section>
+              <button class="action-btn" id="openSiberModule" style="margin-top:14px">Open Module</button>
+            </div>
           </div>
-        `
-      },
+        `;
+      }
 
-      sfa: {
-        title: 'Tracking Sales & Marketing',
-        desc: 'Mini app preview for field tracking, outlet visit monitoring, target progress, and marketing activity.',
-        url: 'liswan.dev/projects/tracking-sales-marketing',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">SFA</div>
-              <div class="app-menu">
-                <span class="active">Field Tracking</span>
-                <span>Outlet Visit</span>
-                <span>Target Progress</span>
-                <span>Performance</span>
-              </div>
-            </aside>
-
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Field Activity Tracking</h4>
-                  <p>Monitoring route activity, outlet visit, sales performance, and marketing execution.</p>
-                </div>
-                <div class="app-pill">LIVE TRACKING</div>
-              </div>
-
-              <div class="route-map">
-                <div class="map-box">
-                  <div class="map-pin" style="left:18%;top:34%"></div>
-                  <div class="map-pin" style="left:47%;top:48%"></div>
-                  <div class="map-pin" style="left:73%;top:30%"></div>
-                  <div class="map-pin" style="left:62%;top:72%"></div>
-                  <div class="map-line" style="left:20%;top:37%;width:190px;transform:rotate(18deg)"></div>
-                  <div class="map-line" style="left:48%;top:50%;width:160px;transform:rotate(-18deg)"></div>
-                  <div class="map-line" style="left:61%;top:58%;width:110px;transform:rotate(68deg)"></div>
-                </div>
-
-                <div class="mini-panel">
-                  <h5>Visit Status</h5>
-                  <div class="mini-table">
-                    <div class="mini-row"><strong>Outlet A</strong><span class="status green">DONE</span></div>
-                    <div class="mini-row"><strong>Outlet B</strong><span class="status green">DONE</span></div>
-                    <div class="mini-row"><strong>Outlet C</strong><span class="status yellow">VISIT</span></div>
-                    <div class="mini-row"><strong>Outlet D</strong><span class="status">NEXT</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="notice">
-                Tampilan ini sengaja dibuat seperti tracking field activity, bukan hanya tabel laporan biasa.
-              </div>
-            </section>
+      if(currentTab === 'Modules'){
+        content = `
+          ${appHeader('Business Support Modules','Preview internal module groups used by department users.','MODULES')}
+          <div class="tile-grid">
+            <div class="module-tile"><b>Weekly Report</b><span>Submission, approval, revision, and weekly monitoring.</span></div>
+            <div class="module-tile"><b>Sales Performance</b><span>Area, branch, brand, and weekly dashboard view.</span></div>
+            <div class="module-tile"><b>Daily Stock</b><span>Stock in, stock out, and branch stock summary.</span></div>
+            <div class="module-tile"><b>File Portal</b><span>Operational file access and support documents.</span></div>
+            <div class="module-tile"><b>User Access</b><span>Role-based access and user mapping.</span></div>
+            <div class="module-tile"><b>Maintenance Log</b><span>Internal update notes and development log.</span></div>
           </div>
-        `
-      },
+        `;
+      }
 
-      sfs: {
-        title: 'Document & File Service',
-        desc: 'Mini app preview for Drive-like file portal, folder access, upload area, department folders, and automation.',
-        url: 'liswan.dev/projects/document-file-service',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">SFS</div>
-              <div class="app-menu">
-                <span class="active">My Drive</span>
-                <span>Department Files</span>
-                <span>Shared Folder</span>
-                <span>Upload Center</span>
+      if(currentTab === 'Dashboard'){
+        content = `
+          ${appHeader('Portal Dashboard','Dummy dashboard for internal reporting overview.','DASHBOARD')}
+          <div class="panel-grid equal">
+            <div class="mini-panel">
+              <h5>Usage by Module</h5>
+              <div class="bars">
+                <div class="bar-item"><label><span>Weekly Report</span><span>92%</span></label><div class="bar"><span style="width:92%"></span></div></div>
+                <div class="bar-item"><label><span>File Portal</span><span>76%</span></label><div class="bar"><span style="width:76%"></span></div></div>
+                <div class="bar-item"><label><span>Dashboard</span><span>68%</span></label><div class="bar"><span style="width:68%"></span></div></div>
               </div>
-            </aside>
-
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Document & File Service</h4>
-                  <p>Drive-style file service with folder hierarchy, employee access, upload control, and automated file management.</p>
-                </div>
-                <div class="app-pill">FILE PORTAL</div>
+            </div>
+            <div class="mini-panel">
+              <h5>Recent Access</h5>
+              <div class="mini-table">
+                <div class="mini-row"><div><strong>HCGA Portal</strong><small>Viewed employee resources</small></div><span class="status green">LIVE</span></div>
+                <div class="mini-row"><div><strong>BusDev Files</strong><small>Opened sales support folder</small></div><span class="status yellow">BETA</span></div>
+                <div class="mini-row"><div><strong>Weekly Report</strong><small>Submitted week report</small></div><span class="status green">DONE</span></div>
               </div>
-
-              <div class="file-explorer">
-                <div class="folder-tree">
-                  <div class="tree-item active">▸ HO Documents</div>
-                  <div class="tree-item">▸ Sales Reports</div>
-                  <div class="tree-item">▸ HCGA Forms</div>
-                  <div class="tree-item">▸ Finance Files</div>
-                  <div class="tree-item">▸ IT References</div>
-                </div>
-
-                <div class="file-area">
-                  <h5 style="margin-bottom:14px;">HO Documents</h5>
-                  <div class="file-grid">
-                    <div class="file-card"><div class="file-icon">PDF</div><b>Company Policy</b><span>Updated today</span></div>
-                    <div class="file-card"><div class="file-icon">XLS</div><b>Weekly Report</b><span>Synced 2 hours ago</span></div>
-                    <div class="file-card"><div class="file-icon">DOC</div><b>SOP Access</b><span>Shared file</span></div>
-                    <div class="file-card"><div class="file-icon">IMG</div><b>Brand Assets</b><span>12 files</span></div>
-                    <div class="file-card"><div class="file-icon">ZIP</div><b>Backup Export</b><span>Auto generated</span></div>
-                    <div class="file-card"><div class="file-icon">CSV</div><b>Master Data</b><span>Restricted</span></div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            </div>
           </div>
-        `
-      },
+        `;
+      }
 
-      hc: {
-        title: 'Employee Resource Center',
-        desc: 'Mini app preview for employee information, SOP, forms, job descriptions, and resource access.',
-        url: 'liswan.dev/projects/employee-resource-center',
-        html: `
-          <div class="app-shell">
-            <aside class="app-side">
-              <div class="app-logo">HC</div>
-              <div class="app-menu">
-                <span class="active">Employee Center</span>
-                <span>SOP Library</span>
-                <span>Forms</span>
-                <span>Job Description</span>
-              </div>
-            </aside>
+      miniApp.innerHTML = appShell('siber', content);
 
-            <section class="app-main">
-              <div class="app-top">
-                <div>
-                  <h4>Employee Resource Center</h4>
-                  <p>Employee-facing center for internal information, resources, SOP, forms, and department documents.</p>
+      document.querySelectorAll('[data-siber-module]').forEach(tile => {
+        tile.addEventListener('click', () => {
+          state.siberSelected = tile.dataset.siberModule;
+          renderSiber();
+          showToast(`${state.siberSelected} selected`);
+        });
+      });
+
+      const open = document.getElementById('openSiberModule');
+      if(open) open.addEventListener('click', () => showToast(`${state.siberSelected} module opened`));
+
+      bindTabButtons();
+    }
+
+    function renderDsa(){
+      let content = '';
+
+      const totalVisits = state.dsaEntries.reduce((a,b) => a + Number(b.visits), 0);
+      const totalEffective = state.dsaEntries.reduce((a,b) => a + Number(b.effective), 0);
+      const rate = totalVisits ? Math.round(totalEffective / totalVisits * 100) : 0;
+
+      if(currentTab === 'Input'){
+        content = `
+          ${appHeader('Daily Sales Input','Fill the dummy form and submit it to update the history and summary inside this preview.','SALES INPUT')}
+          <div class="panel-grid">
+            <div class="mini-panel">
+              <h5>Activity Form</h5>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Sales Name</label>
+                  <input id="dsaSales" value="Demo Salesman">
                 </div>
-                <div class="app-pill">HC RESOURCE</div>
+                <div class="field">
+                  <label>Branch</label>
+                  <select id="dsaBranch">
+                    <option>AO Madiun</option>
+                    <option>OU Jember</option>
+                    <option>OU Probolinggo</option>
+                    <option>OU Nganjuk</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Visit Count</label>
+                  <input id="dsaVisits" type="number" value="18">
+                </div>
+                <div class="field">
+                  <label>Effective Call</label>
+                  <input id="dsaEffective" type="number" value="14">
+                </div>
+                <div class="field full">
+                  <label>Daily Notes</label>
+                  <textarea id="dsaNotes">Outlet visit completed, stock checked, and sales progress updated.</textarea>
+                </div>
               </div>
+              <button class="action-btn" id="submitDsa" style="margin-top:12px">Submit Daily Report</button>
+            </div>
+            <div class="mini-panel">
+              <h5>Latest Entries</h5>
+              <div class="mini-table">
+                ${state.dsaEntries.slice().reverse().map(row => `
+                  <div class="mini-row">
+                    <div><strong>${row.branch}</strong><small>${row.sales} · ${row.visits} visits · ${row.effective} effective</small></div>
+                    <span class="status ${statusClass(row.status)}">${row.status}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
 
-              <div class="stat-grid">
+      if(currentTab === 'Summary'){
+        content = `
+          ${appHeader('Branch Summary','Summary changes when you submit new dummy DSA input.','SUMMARY')}
+          <div class="stat-grid">
+            <div class="stat-card"><b>${state.dsaEntries.length}</b><span>Submitted Reports</span></div>
+            <div class="stat-card"><b>${totalVisits}</b><span>Total Visits</span></div>
+            <div class="stat-card"><b>${rate}%</b><span>Effective Rate</span></div>
+          </div>
+          <div class="mini-panel">
+            <h5>Performance Ratio</h5>
+            <div class="bars">
+              <div class="bar-item"><label><span>Effective Calls</span><span>${rate}%</span></label><div class="bar"><span style="width:${rate}%"></span></div></div>
+              <div class="bar-item"><label><span>Supervisor Review</span><span>74%</span></label><div class="bar"><span style="width:74%"></span></div></div>
+              <div class="bar-item"><label><span>Branch Completion</span><span>86%</span></label><div class="bar"><span style="width:86%"></span></div></div>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Review'){
+        content = `
+          ${appHeader('Supervisor Review','Click approve/revision buttons to simulate supervisor review actions.','REVIEW')}
+          <div class="mini-panel">
+            <h5>Pending Review</h5>
+            <div class="mini-table">
+              ${state.dsaEntries.map((row,index) => `
+                <div class="mini-row">
+                  <div><strong>${row.branch}</strong><small>${row.sales} · ${row.visits} visits · ${row.effective} effective</small></div>
+                  <span class="status ${statusClass(row.status)}">${row.status}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="control-row" style="margin-top:14px;margin-bottom:0">
+              <button class="action-btn" id="approveDsa">Approve Selected</button>
+              <button class="action-btn subtle" id="reviseDsa">Request Revision</button>
+            </div>
+          </div>
+        `;
+      }
+
+      miniApp.innerHTML = appShell('dsa', content);
+
+      const submit = document.getElementById('submitDsa');
+      if(submit){
+        submit.addEventListener('click', () => {
+          const entry = {
+            branch:document.getElementById('dsaBranch').value,
+            sales:document.getElementById('dsaSales').value || 'Demo Salesman',
+            visits:Number(document.getElementById('dsaVisits').value || 0),
+            effective:Number(document.getElementById('dsaEffective').value || 0),
+            status:'Submitted'
+          };
+          state.dsaEntries.push(entry);
+          showToast('Daily report submitted');
+          renderDsa();
+        });
+      }
+
+      const approve = document.getElementById('approveDsa');
+      if(approve) approve.addEventListener('click', () => showToast('Selected report approved'));
+
+      const revise = document.getElementById('reviseDsa');
+      if(revise) revise.addEventListener('click', () => showToast('Revision request sent'));
+
+      bindTabButtons();
+    }
+
+    function renderSfa(){
+      const selected = sfaPins[state.sfaSelected] || sfaPins[0];
+      let content = '';
+
+      if(currentTab === 'Route'){
+        content = `
+          ${appHeader('Field Route Tracking','Click map pins to inspect outlet visit status and activity detail.','LIVE TRACKING')}
+          <div class="route-map">
+            <div class="map-box">
+              <div class="map-line" style="left:20%;top:37%;width:190px;transform:rotate(18deg)"></div>
+              <div class="map-line" style="left:48%;top:50%;width:160px;transform:rotate(-18deg)"></div>
+              <div class="map-line" style="left:61%;top:58%;width:110px;transform:rotate(68deg)"></div>
+              ${sfaPins.map((pin,index) => `
+                <button class="map-pin ${state.sfaSelected === index ? 'active' : ''}" style="left:${pin.left};top:${pin.top}" data-pin="${index}" title="${pin.name}"></button>
+              `).join('')}
+            </div>
+            <div class="mini-panel">
+              <h5>Selected Outlet</h5>
+              <div class="detail-card">
+                <b>${selected.name}</b>
+                ${selected.note}
+                <div class="kv">
+                  <span>Status</span><span>${selected.status}</span>
+                  <span>Visit Time</span><span>${selected.visit}</span>
+                  <span>Route</span><span>Route Demo 01</span>
+                </div>
+              </div>
+              <button class="action-btn" id="checkInOutlet" style="margin-top:14px">Check In</button>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Visits'){
+        content = `
+          ${appHeader('Outlet Visit List','Dummy outlet visit monitoring with real-time style status.','VISITS')}
+          <div class="mini-panel">
+            <h5>Visit Status</h5>
+            <div class="mini-table">
+              ${sfaPins.map(pin => `
+                <div class="mini-row">
+                  <div><strong>${pin.name}</strong><small>${pin.visit} · ${pin.note}</small></div>
+                  <span class="status ${statusClass(pin.status)}">${pin.status}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Performance'){
+        content = `
+          ${appHeader('Sales & Marketing Performance','Preview target progress and field coverage metrics.','PERFORMANCE')}
+          <div class="stat-grid">
+            <div class="stat-card"><b>842</b><span>Field Visits</span></div>
+            <div class="stat-card"><b>72%</b><span>Target Progress</span></div>
+            <div class="stat-card"><b>118</b><span>Active Users</span></div>
+          </div>
+          <div class="mini-panel">
+            <h5>Coverage Progress</h5>
+            <div class="bars">
+              <div class="bar-item"><label><span>Outlet Coverage</span><span>79%</span></label><div class="bar"><span style="width:79%"></span></div></div>
+              <div class="bar-item"><label><span>Target Achievement</span><span>72%</span></label><div class="bar"><span style="width:72%"></span></div></div>
+              <div class="bar-item"><label><span>Marketing Activity</span><span>64%</span></label><div class="bar"><span style="width:64%"></span></div></div>
+            </div>
+          </div>
+        `;
+      }
+
+      miniApp.innerHTML = appShell('sfa', content);
+
+      document.querySelectorAll('[data-pin]').forEach(pin => {
+        pin.addEventListener('click', () => {
+          state.sfaSelected = Number(pin.dataset.pin);
+          renderSfa();
+          showToast(`${sfaPins[state.sfaSelected].name} selected`);
+        });
+      });
+
+      const checkIn = document.getElementById('checkInOutlet');
+      if(checkIn) checkIn.addEventListener('click', () => showToast(`Checked in at ${selected.name}`));
+
+      bindTabButtons();
+    }
+
+    function renderSfs(){
+      let content = '';
+
+      if(currentTab === 'Explorer'){
+        const folders = Object.keys(sfsFiles);
+        const files = sfsFiles[state.sfsFolder] || [];
+
+        content = `
+          ${appHeader('Document & File Service','Switch folders, open files, and add dummy uploaded files in this preview.','FILE PORTAL')}
+          <div class="file-explorer">
+            <div class="folder-tree">
+              ${folders.map(folder => `
+                <button class="tree-item ${state.sfsFolder === folder ? 'active' : ''}" data-folder="${folder}">▸ ${folder}</button>
+              `).join('')}
+            </div>
+            <div class="file-area">
+              <div class="control-row">
+                <h5 style="margin-right:auto;margin-bottom:0">${state.sfsFolder}</h5>
+                <button class="action-btn" id="addDummyFile">Upload Dummy File</button>
+              </div>
+              <div class="file-grid">
+                ${files.map((file,index) => `
+                  <div class="file-card" data-file="${index}">
+                    <div class="file-icon">${file[0]}</div>
+                    <b>${file[1]}</b>
+                    <span>${file[2]}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Upload'){
+        content = `
+          ${appHeader('Upload Center','Simulate upload validation and folder target selection.','UPLOAD')}
+          <div class="panel-grid equal">
+            <div class="mini-panel">
+              <h5>Upload Form</h5>
+              <div class="form-grid">
+                <div class="field">
+                  <label>Target Folder</label>
+                  <select id="uploadFolder">
+                    ${Object.keys(sfsFiles).map(folder => `<option>${folder}</option>`).join('')}
+                  </select>
+                </div>
+                <div class="field">
+                  <label>File Type</label>
+                  <select id="uploadType"><option>PDF</option><option>XLS</option><option>DOC</option><option>CSV</option></select>
+                </div>
+                <div class="field full">
+                  <label>File Name</label>
+                  <input id="uploadName" value="New Uploaded Document">
+                </div>
+              </div>
+              <button class="action-btn" id="submitUpload" style="margin-top:12px">Upload to Preview</button>
+            </div>
+            <div class="mini-panel">
+              <h5>Automation Status</h5>
+              <div class="mini-table">
+                <div class="mini-row"><div><strong>Folder validation</strong><small>Check allowed destination folder.</small></div><span class="status green">OK</span></div>
+                <div class="mini-row"><div><strong>Access control</strong><small>Apply folder access rules.</small></div><span class="status green">OK</span></div>
+                <div class="mini-row"><div><strong>Drive sync</strong><small>Push document metadata.</small></div><span class="status yellow">SYNC</span></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Access'){
+        content = `
+          ${appHeader('Access Control','Preview folder access groups and document permission logic.','ACCESS')}
+          <div class="mini-panel">
+            <h5>Folder Permission</h5>
+            <div class="mini-table">
+              <div class="mini-row"><div><strong>HO Documents</strong><small>HO users and department managers.</small></div><span class="status green">VIEW</span></div>
+              <div class="mini-row"><div><strong>Finance Files</strong><small>Restricted to authorized finance users.</small></div><span class="status red">LOCKED</span></div>
+              <div class="mini-row"><div><strong>Sales Reports</strong><small>Branch users, area managers, and head office.</small></div><span class="status green">SHARED</span></div>
+            </div>
+          </div>
+        `;
+      }
+
+      miniApp.innerHTML = appShell('sfs', content);
+
+      document.querySelectorAll('[data-folder]').forEach(folder => {
+        folder.addEventListener('click', () => {
+          state.sfsFolder = folder.dataset.folder;
+          renderSfs();
+          showToast(`${state.sfsFolder} opened`);
+        });
+      });
+
+      document.querySelectorAll('[data-file]').forEach(file => {
+        file.addEventListener('click', () => showToast('Dummy file preview opened'));
+      });
+
+      const add = document.getElementById('addDummyFile');
+      if(add){
+        add.addEventListener('click', () => {
+          sfsFiles[state.sfsFolder].unshift(['TXT','Uploaded Dummy File','Just now']);
+          renderSfs();
+          showToast('Dummy file uploaded');
+        });
+      }
+
+      const submit = document.getElementById('submitUpload');
+      if(submit){
+        submit.addEventListener('click', () => {
+          const folder = document.getElementById('uploadFolder').value;
+          const type = document.getElementById('uploadType').value;
+          const name = document.getElementById('uploadName').value || 'New Uploaded Document';
+          sfsFiles[folder].unshift([type,name,'Just now']);
+          state.sfsFolder = folder;
+          currentTab = 'Explorer';
+          renderSfs();
+          showToast('Upload added to folder');
+        });
+      }
+
+      bindTabButtons();
+    }
+
+    function renderHc(){
+      let content = '';
+
+      if(currentTab === 'Resources'){
+        const q = state.hcSearch.toLowerCase();
+        const items = (hcResources[state.hcCategory] || []).filter(item => !q || item.join(' ').toLowerCase().includes(q));
+
+        content = `
+          ${appHeader('Employee Resource Center','Switch categories and search dummy resources.','RESOURCE')}
+          <div class="control-row">
+            ${Object.keys(hcResources).map(cat => `<button class="action-btn ${state.hcCategory === cat ? '' : 'subtle'}" data-hc-cat="${cat}">${cat}</button>`).join('')}
+            <input class="search-input" id="hcSearch" value="${state.hcSearch}" placeholder="Search resource...">
+          </div>
+          <div class="panel-grid">
+            <div class="mini-panel">
+              <h5>${state.hcCategory} Library</h5>
+              <div class="tile-grid">
+                ${items.map(item => `<div class="module-tile"><b>${item[0]}</b><span>${item[1]}</span></div>`).join('') || '<div class="detail-card">No resource found.</div>'}
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h5>Resource Stats</h5>
+              <div class="stat-grid" style="grid-template-columns:1fr">
                 <div class="stat-card"><b>142</b><span>Employees</span></div>
                 <div class="stat-card"><b>58</b><span>Resources</span></div>
                 <div class="stat-card"><b>19</b><span>Forms</span></div>
               </div>
-
-              <div class="panel-grid">
-                <div class="mini-panel">
-                  <h5>Resource Library</h5>
-                  <div class="tile-grid">
-                    <div class="module-tile"><b>SOP</b><span>Operational guidelines and internal procedures.</span></div>
-                    <div class="module-tile"><b>Forms</b><span>Employee forms and request documents.</span></div>
-                    <div class="module-tile"><b>Job Desk</b><span>Role descriptions and responsibility matrix.</span></div>
-                  </div>
-                </div>
-
-                <div class="mini-panel">
-                  <h5>Recent Updates</h5>
-                  <div class="mini-table">
-                    <div class="mini-row"><strong>Leave Request Form</strong><span class="status green">LIVE</span></div>
-                    <div class="mini-row"><strong>SOP Attendance</strong><span class="status yellow">UPDATE</span></div>
-                    <div class="mini-row"><strong>Job Description</strong><span class="status">REVIEW</span></div>
-                    <div class="mini-row"><strong>Announcement</strong><span class="status green">POST</span></div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            </div>
           </div>
-        `
+        `;
       }
-    };
+
+      if(currentTab === 'Forms'){
+        content = `
+          ${appHeader('Employee Forms','Preview form request actions for employee service center.','FORMS')}
+          <div class="panel-grid equal">
+            <div class="mini-panel">
+              <h5>Available Forms</h5>
+              <div class="mini-table">
+                <div class="mini-row"><div><strong>Leave Request Form</strong><small>Employee leave submission.</small></div><span class="status green">READY</span></div>
+                <div class="mini-row"><div><strong>Asset Request Form</strong><small>Request working equipment.</small></div><span class="status green">READY</span></div>
+                <div class="mini-row"><div><strong>Data Change Form</strong><small>Employee data update.</small></div><span class="status yellow">UPDATE</span></div>
+              </div>
+            </div>
+            <div class="mini-panel">
+              <h5>Request Form</h5>
+              <div class="form-grid">
+                <div class="field full"><label>Employee Name</label><input value="Demo Employee"></div>
+                <div class="field"><label>Form Type</label><select><option>Leave Request</option><option>Asset Request</option><option>Data Change</option></select></div>
+                <div class="field"><label>Status</label><input value="Draft" readonly></div>
+              </div>
+              <button class="action-btn" id="submitHcForm" style="margin-top:12px">Submit Dummy Form</button>
+            </div>
+          </div>
+        `;
+      }
+
+      if(currentTab === 'Updates'){
+        content = `
+          ${appHeader('Employee Updates','Preview announcement and internal resource update feed.','UPDATES')}
+          <div class="mini-panel">
+            <h5>Recent Updates</h5>
+            <div class="mini-table">
+              <div class="mini-row"><div><strong>SOP Attendance Updated</strong><small>New attendance procedure available.</small></div><span class="status yellow">UPDATE</span></div>
+              <div class="mini-row"><div><strong>Training Schedule</strong><small>Application training schedule for branch users.</small></div><span class="status green">POST</span></div>
+              <div class="mini-row"><div><strong>Job Description Review</strong><small>Role descriptions under review.</small></div><span class="status">REVIEW</span></div>
+            </div>
+          </div>
+        `;
+      }
+
+      miniApp.innerHTML = appShell('hc', content);
+
+      document.querySelectorAll('[data-hc-cat]').forEach(button => {
+        button.addEventListener('click', () => {
+          state.hcCategory = button.dataset.hcCat;
+          renderHc();
+          showToast(`${state.hcCategory} opened`);
+        });
+      });
+
+      const search = document.getElementById('hcSearch');
+      if(search){
+        search.addEventListener('input', e => {
+          state.hcSearch = e.target.value;
+          renderHc();
+        });
+      }
+
+      const submit = document.getElementById('submitHcForm');
+      if(submit) submit.addEventListener('click', () => showToast('Dummy employee form submitted'));
+
+      bindTabButtons();
+    }
+
+    function bindTabButtons(){
+      miniApp.querySelectorAll('[data-tab]').forEach(button => {
+        button.addEventListener('click', () => {
+          currentTab = button.dataset.tab;
+          renderCurrentProject();
+        });
+      });
+    }
+
+    function renderCurrentProject(){
+      if(currentProject === 'asset') renderAsset();
+      if(currentProject === 'siber') renderSiber();
+      if(currentProject === 'dsa') renderDsa();
+      if(currentProject === 'sfa') renderSfa();
+      if(currentProject === 'sfs') renderSfs();
+      if(currentProject === 'hc') renderHc();
+    }
 
     function openProject(projectKey){
-      const project = projects[projectKey];
-      if(!project) return;
+      const meta = projectMeta[projectKey];
+      if(!meta) return;
 
-      modalTitle.textContent = project.title;
-      modalDesc.textContent = project.desc;
-      browserUrl.textContent = project.url;
-      miniApp.innerHTML = project.html;
+      currentProject = projectKey;
+      currentTab = meta.tabs[0];
+
+      modalTitle.textContent = meta.title;
+      modalDesc.textContent = meta.desc;
+      browserUrl.textContent = meta.url;
 
       modal.classList.add('active');
       modal.setAttribute('aria-hidden','false');
       document.body.classList.add('modal-open');
+
+      renderCurrentProject();
     }
 
     function closeProject(){
@@ -1473,11 +2098,12 @@
       modal.setAttribute('aria-hidden','true');
       document.body.classList.remove('modal-open');
       miniApp.innerHTML = '';
+      currentProject = null;
+      currentTab = null;
     }
 
     document.querySelectorAll('[data-project]').forEach(card => {
       card.addEventListener('click', () => openProject(card.dataset.project));
-
       card.addEventListener('keydown', event => {
         if(event.key === 'Enter' || event.key === ' '){
           event.preventDefault();
@@ -1486,14 +2112,10 @@
       });
     });
 
-    document.querySelectorAll('[data-close]').forEach(item => {
-      item.addEventListener('click', closeProject);
-    });
+    document.querySelectorAll('[data-close]').forEach(item => item.addEventListener('click', closeProject));
 
     document.addEventListener('keydown', event => {
-      if(event.key === 'Escape' && modal.classList.contains('active')){
-        closeProject();
-      }
+      if(event.key === 'Escape' && modal.classList.contains('active')) closeProject();
     });
   </script>
 </body>

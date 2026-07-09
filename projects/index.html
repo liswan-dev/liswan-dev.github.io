@@ -866,14 +866,17 @@
 
     /*
       IMPORTANT:
-      Upload the mockup PNG files into the same /projects/ folder as this index.html.
+      Upload all mockup PNG files into the same /projects/ folder as this index.html.
+
       Because this page is /projects/index.html, the image paths below use relative file names.
 
-      Recommended file names:
+      Required file names inside /projects/:
       mockup-asset-management.png
       mockup-internal-company-website.png
       mockup-daily-sales-activity-report.png
       mockup-tracking-sales-marketing.png
+      mockup-document-file-service.png
+      mockup-employee-resource-center.png
     */
 
     const PROJECT_MOCKUPS = {
@@ -961,7 +964,7 @@
       modalTags.innerHTML = project.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
 
       fallbackTitle.textContent = project.title;
-      fallbackText.textContent = project.fallback || 'Mockup image is not available yet.';
+      fallbackText.textContent = project.fallback || 'Mockup image is not available yet. Check the file name and folder path inside /projects/.';
 
       currentImageUrl = project.image || '';
       modalImage.alt = `${project.title} mockup preview`;

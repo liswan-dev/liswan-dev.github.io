@@ -6,13 +6,7 @@
   <title>Projects — Liswan.dev</title>
   <meta name="description" content="Project details and system modules built around internal operations."/>
   <meta name="author" content="Liswan Susanto"/>
-  <meta property="og:title" content="Projects — Liswan.dev"/>
-  <meta property="og:description" content="Project details and system modules built around internal operations."/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://liswan.dev"/>
-  <meta name="twitter:card" content="summary_large_image"/>
 
-  <!-- LISWAN.DEV favicon -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -35,20 +29,27 @@
       --violet:#7b2fff;
       --violet2:#5b3fd6;
       --magenta:#ff2d6b;
+      --green:#33e29b;
+      --yellow:#ffd166;
+      --red:#ff5f57;
       --text:#e8eaf6;
       --muted:#8b8db7;
       --muted2:#55577d;
       --border:rgba(0,245,255,.12);
       --border-h:rgba(0,245,255,.32);
-      --glass:rgba(5,5,16,.76);
       --shadow:0 24px 80px rgba(0,0,0,.42);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
+
     html{scroll-behavior:smooth}
+
     body{
       font-family:'Inter',system-ui,sans-serif;
-      background:radial-gradient(circle at 20% 10%,rgba(123,47,255,.18),transparent 28%),radial-gradient(circle at 80% 15%,rgba(0,245,255,.12),transparent 26%),var(--void);
+      background:
+        radial-gradient(circle at 20% 10%,rgba(123,47,255,.18),transparent 28%),
+        radial-gradient(circle at 80% 15%,rgba(0,245,255,.12),transparent 26%),
+        var(--void);
       color:var(--text);
       overflow-x:hidden;
     }
@@ -59,7 +60,9 @@
       inset:0;
       z-index:-2;
       pointer-events:none;
-      background-image:linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);
+      background-image:
+        linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);
       background-size:64px 64px;
       mask-image:linear-gradient(to bottom,rgba(0,0,0,.95),rgba(0,0,0,.15));
     }
@@ -74,11 +77,12 @@
       opacity:.55;
     }
 
-    body.modal-open{
-      overflow:hidden;
-    }
+    body.modal-open{overflow:hidden}
 
-    a{color:inherit;text-decoration:none}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
     .nav{
       position:fixed;
@@ -205,6 +209,7 @@
       border-radius:16px;
       padding:26px;
       overflow:hidden;
+      cursor:pointer;
       transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;
     }
 
@@ -227,15 +232,9 @@
       transition:opacity .2s;
     }
 
-    .card:hover::after{
-      opacity:1;
-    }
+    .card:hover::after{opacity:1}
 
-    .card.project-card{
-      cursor:pointer;
-    }
-
-    .card.project-card:focus{
+    .card:focus{
       outline:2px solid var(--cyan);
       outline-offset:4px;
     }
@@ -334,8 +333,7 @@
       color:var(--muted2);
     }
 
-    /* PROJECT MODAL */
-    .project-modal{
+    .modal{
       position:fixed;
       inset:0;
       z-index:3000;
@@ -345,38 +343,36 @@
       padding:28px;
     }
 
-    .project-modal.active{
-      display:flex;
-    }
+    .modal.active{display:flex}
 
-    .project-modal-backdrop{
+    .modal-backdrop{
       position:absolute;
       inset:0;
-      background:rgba(0,0,0,.72);
-      backdrop-filter:blur(12px);
+      background:rgba(0,0,0,.74);
+      backdrop-filter:blur(14px);
     }
 
-    .project-modal-panel{
+    .modal-panel{
       position:relative;
-      width:min(1080px,94vw);
+      width:min(1180px,94vw);
       max-height:88vh;
       overflow:auto;
       border:1px solid rgba(0,245,255,.24);
-      background:linear-gradient(135deg,rgba(18,18,46,.96),rgba(5,5,16,.98));
+      background:linear-gradient(135deg,rgba(18,18,46,.97),rgba(5,5,16,.99));
       border-radius:24px;
-      box-shadow:0 34px 110px rgba(0,0,0,.62);
-      padding:26px;
+      box-shadow:0 34px 110px rgba(0,0,0,.64);
+      padding:24px;
     }
 
-    .project-modal-head{
+    .modal-head{
       display:grid;
       grid-template-columns:1fr auto;
       gap:20px;
       align-items:start;
-      margin-bottom:22px;
+      margin-bottom:20px;
     }
 
-    .project-modal-kicker{
+    .modal-kicker{
       font-family:'JetBrains Mono',monospace;
       font-size:11px;
       letter-spacing:.2em;
@@ -385,22 +381,22 @@
       margin-bottom:10px;
     }
 
-    .project-modal-title{
+    .modal-title{
       font-family:'Orbitron',sans-serif;
       font-size:clamp(24px,3vw,38px);
       line-height:1.05;
       letter-spacing:-.035em;
-      margin-bottom:12px;
+      margin-bottom:10px;
     }
 
-    .project-modal-desc{
-      max-width:760px;
+    .modal-desc{
+      max-width:820px;
       color:var(--muted);
       font-size:14px;
       line-height:1.75;
     }
 
-    .project-modal-close{
+    .modal-close{
       width:42px;
       height:42px;
       border-radius:12px;
@@ -413,20 +409,20 @@
       transition:transform .2s,background .2s,border-color .2s;
     }
 
-    .project-modal-close:hover{
+    .modal-close:hover{
       transform:translateY(-2px);
       background:rgba(0,245,255,.1);
       border-color:var(--border-h);
     }
 
-    .project-preview{
+    .mini-browser{
       border:1px solid rgba(0,245,255,.18);
       background:#080817;
       border-radius:18px;
       overflow:hidden;
     }
 
-    .preview-browser{
+    .mini-browser-bar{
       display:flex;
       align-items:center;
       gap:8px;
@@ -435,18 +431,17 @@
       background:rgba(255,255,255,.035);
     }
 
-    .preview-dot{
+    .browser-dot{
       width:10px;
       height:10px;
       border-radius:999px;
-      background:rgba(255,255,255,.25);
     }
 
-    .preview-dot:nth-child(1){background:#ff5f57}
-    .preview-dot:nth-child(2){background:#febc2e}
-    .preview-dot:nth-child(3){background:#28c840}
+    .browser-dot:nth-child(1){background:#ff5f57}
+    .browser-dot:nth-child(2){background:#febc2e}
+    .browser-dot:nth-child(3){background:#28c840}
 
-    .preview-url{
+    .browser-url{
       margin-left:10px;
       flex:1;
       padding:8px 12px;
@@ -461,39 +456,46 @@
       white-space:nowrap;
     }
 
-    .preview-screen{
+    .mini-app{
+      min-height:540px;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(123,47,255,.16),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(0,245,255,.12),transparent 32%),
+        #080817;
+    }
+
+    .app-shell{
       display:grid;
-      grid-template-columns:220px 1fr;
-      min-height:520px;
+      grid-template-columns:230px 1fr;
+      min-height:540px;
     }
 
-    .preview-sidebar{
-      padding:22px 18px;
+    .app-side{
       border-right:1px solid rgba(0,245,255,.12);
-      background:linear-gradient(180deg,rgba(123,47,255,.18),rgba(0,245,255,.04));
+      padding:22px 18px;
+      background:linear-gradient(180deg,rgba(123,47,255,.16),rgba(0,245,255,.04));
     }
 
-    .preview-logo{
+    .app-logo{
       width:48px;
       height:48px;
+      border-radius:14px;
       display:grid;
       place-items:center;
-      margin-bottom:24px;
-      border-radius:14px;
+      margin-bottom:22px;
       background:linear-gradient(135deg,var(--cyan),var(--violet));
+      box-shadow:0 14px 36px rgba(0,245,255,.18);
       font-family:'Orbitron',sans-serif;
-      font-size:14px;
       font-weight:900;
       color:#fff;
-      box-shadow:0 14px 32px rgba(0,245,255,.16);
     }
 
-    .preview-menu{
+    .app-menu{
       display:grid;
       gap:10px;
     }
 
-    .preview-menu span{
+    .app-menu span{
       padding:11px 12px;
       border-radius:10px;
       border:1px solid rgba(255,255,255,.08);
@@ -503,35 +505,36 @@
       font-family:'JetBrains Mono',monospace;
     }
 
-    .preview-menu span.active{
+    .app-menu span.active{
       color:#fff;
-      border-color:rgba(0,245,255,.28);
+      border-color:rgba(0,245,255,.3);
       background:rgba(0,245,255,.1);
     }
 
-    .preview-main{
+    .app-main{
       padding:24px;
     }
 
-    .preview-topbar{
+    .app-top{
       display:flex;
       justify-content:space-between;
-      align-items:center;
+      align-items:flex-start;
       gap:18px;
-      margin-bottom:22px;
+      margin-bottom:20px;
     }
 
-    .preview-heading h4{
-      font-size:22px;
+    .app-top h4{
+      font-size:23px;
       margin-bottom:6px;
     }
 
-    .preview-heading p{
-      font-size:13px;
+    .app-top p{
       color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
     }
 
-    .preview-pill{
+    .app-pill{
       padding:9px 12px;
       border-radius:999px;
       border:1px solid rgba(0,245,255,.18);
@@ -542,91 +545,74 @@
       white-space:nowrap;
     }
 
-    .preview-stats{
+    .stat-grid{
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:14px;
-      margin-bottom:18px;
+      margin-bottom:16px;
     }
 
-    .preview-stat{
-      padding:18px;
-      border-radius:16px;
+    .stat-card{
+      padding:16px;
       border:1px solid rgba(0,245,255,.12);
       background:rgba(18,18,46,.82);
+      border-radius:16px;
     }
 
-    .preview-stat b{
+    .stat-card b{
       display:block;
       font-size:24px;
       margin-bottom:6px;
     }
 
-    .preview-stat span{
+    .stat-card span{
       color:var(--muted);
       font-size:12px;
     }
 
-    .preview-content{
+    .panel-grid{
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:1.1fr .9fr;
       gap:14px;
     }
 
-    .preview-card{
+    .mini-panel{
       border:1px solid rgba(0,245,255,.12);
-      background:rgba(18,18,46,.7);
+      background:rgba(18,18,46,.72);
       border-radius:16px;
-      padding:18px;
+      padding:16px;
     }
 
-    .preview-card-title{
-      font-weight:700;
+    .mini-panel h5{
+      font-size:14px;
       margin-bottom:14px;
     }
 
-    .preview-bars{
+    .mini-table{
       display:grid;
-      gap:10px;
+      gap:9px;
     }
 
-    .preview-bar{
-      height:11px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      overflow:hidden;
-    }
-
-    .preview-bar span{
-      display:block;
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--cyan),var(--violet));
-    }
-
-    .preview-table{
+    .mini-row{
       display:grid;
-      gap:10px;
-    }
-
-    .preview-row{
-      display:grid;
-      grid-template-columns:1fr 72px;
+      grid-template-columns:1fr auto;
       gap:10px;
       align-items:center;
       padding:10px;
       border-radius:10px;
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
+      background:rgba(255,255,255,.045);
       font-size:12px;
+      color:var(--muted);
     }
 
-    .preview-row strong{
+    .mini-row strong{
       color:var(--text);
     }
 
-    .preview-status{
-      text-align:center;
+    .status{
+      display:inline-flex;
+      justify-content:center;
+      min-width:62px;
       padding:5px 8px;
       border-radius:999px;
       background:rgba(0,245,255,.09);
@@ -635,8 +621,241 @@
       font-size:10px;
     }
 
-    .preview-disclaimer{
-      margin-top:16px;
+    .status.green{
+      background:rgba(51,226,155,.1);
+      color:var(--green);
+    }
+
+    .status.yellow{
+      background:rgba(255,209,102,.1);
+      color:var(--yellow);
+    }
+
+    .status.red{
+      background:rgba(255,95,87,.1);
+      color:var(--red);
+    }
+
+    .bars{
+      display:grid;
+      gap:12px;
+    }
+
+    .bar-item label{
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:7px;
+    }
+
+    .bar{
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;
+    }
+
+    .bar span{
+      display:block;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .field{
+      display:grid;
+      gap:7px;
+    }
+
+    .field label{
+      color:var(--muted);
+      font-size:11px;
+      font-family:'JetBrains Mono',monospace;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid rgba(0,245,255,.13);
+      background:rgba(0,0,0,.26);
+      color:var(--text);
+      border-radius:10px;
+      padding:11px 12px;
+      font:inherit;
+      font-size:12px;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:82px;
+      resize:none;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    .fake-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:11px 14px;
+      border-radius:10px;
+      border:1px solid rgba(0,245,255,.2);
+      background:linear-gradient(135deg,rgba(0,245,255,.16),rgba(123,47,255,.18));
+      color:#fff;
+      font-size:12px;
+      font-weight:700;
+      margin-top:12px;
+    }
+
+    .tile-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .module-tile{
+      min-height:96px;
+      border:1px solid rgba(0,245,255,.12);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .module-tile b{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+    }
+
+    .module-tile span{
+      color:var(--muted);
+      font-size:11.5px;
+      line-height:1.55;
+    }
+
+    .file-explorer{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:14px;
+    }
+
+    .folder-tree,
+    .file-area{
+      border:1px solid rgba(0,245,255,.12);
+      background:rgba(18,18,46,.72);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    .tree-item{
+      padding:10px;
+      border-radius:10px;
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:6px;
+      background:rgba(255,255,255,.035);
+    }
+
+    .tree-item.active{
+      color:#fff;
+      background:rgba(0,245,255,.1);
+    }
+
+    .file-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .file-card{
+      min-height:108px;
+      border:1px solid rgba(0,245,255,.12);
+      background:rgba(255,255,255,.045);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .file-icon{
+      width:38px;
+      height:38px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      background:rgba(0,245,255,.1);
+      color:var(--cyan);
+      margin-bottom:12px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .file-card b{
+      display:block;
+      font-size:12px;
+      margin-bottom:6px;
+    }
+
+    .file-card span{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .route-map{
+      display:grid;
+      grid-template-columns:1fr 190px;
+      gap:14px;
+    }
+
+    .map-box{
+      min-height:285px;
+      border:1px solid rgba(0,245,255,.12);
+      background:
+        linear-gradient(rgba(0,245,255,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,245,255,.055) 1px,transparent 1px),
+        rgba(18,18,46,.72);
+      background-size:38px 38px;
+      border-radius:16px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .map-pin{
+      position:absolute;
+      width:14px;
+      height:14px;
+      border-radius:999px;
+      background:var(--cyan);
+      box-shadow:0 0 22px rgba(0,245,255,.8);
+    }
+
+    .map-pin::after{
+      content:'';
+      position:absolute;
+      inset:-9px;
+      border:1px solid rgba(0,245,255,.25);
+      border-radius:999px;
+    }
+
+    .map-line{
+      position:absolute;
+      height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      transform-origin:left center;
+      opacity:.8;
+    }
+
+    .notice{
+      margin-top:14px;
       padding:13px 15px;
       border:1px solid rgba(123,47,255,.25);
       background:rgba(123,47,255,.08);
@@ -647,7 +866,12 @@
     }
 
     @media(max-width:980px){
-      .grid-2{
+      .grid-2,
+      .section-head,
+      .app-shell,
+      .panel-grid,
+      .file-explorer,
+      .route-map{
         grid-template-columns:1fr;
       }
 
@@ -657,6 +881,11 @@
 
       .section-desc{
         margin-top:16px;
+      }
+
+      .app-side{
+        border-right:0;
+        border-bottom:1px solid rgba(0,245,255,.12);
       }
 
       .nav{
@@ -695,31 +924,23 @@
       }
     }
 
-    @media(max-width:780px){
-      .project-modal{
+    @media(max-width:720px){
+      .modal{
         padding:14px;
       }
 
-      .project-modal-panel{
+      .modal-panel{
         padding:18px;
       }
 
-      .preview-screen{
+      .stat-grid,
+      .form-grid,
+      .tile-grid,
+      .file-grid{
         grid-template-columns:1fr;
       }
 
-      .preview-sidebar{
-        border-right:0;
-        border-bottom:1px solid rgba(0,245,255,.12);
-      }
-
-      .preview-stats,
-      .preview-content{
-        grid-template-columns:1fr;
-      }
-
-      .preview-topbar{
-        align-items:flex-start;
+      .app-top{
         flex-direction:column;
       }
     }
@@ -742,22 +963,6 @@
       .floating-dev-menu a{
         font-size:10.5px;
         padding:9px 11px;
-      }
-
-      .project-modal-title{
-        font-size:24px;
-      }
-
-      .preview-main{
-        padding:18px;
-      }
-
-      .preview-row{
-        grid-template-columns:1fr;
-      }
-
-      .preview-status{
-        width:max-content;
       }
     }
   </style>
@@ -798,7 +1003,7 @@
       </div>
 
       <div class="grid-2">
-        <article class="card project-card" tabindex="0" role="button" data-project="asset">
+        <article class="card" tabindex="0" role="button" data-project="asset">
           <div class="badge">AM</div>
           <h3>Asset Management</h3>
           <p>Internal asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, mutation history, and role-based access.</p>
@@ -809,7 +1014,7 @@
           </div>
         </article>
 
-        <article class="card project-card" tabindex="0" role="button" data-project="siber">
+        <article class="card" tabindex="0" role="button" data-project="siber">
           <div class="badge">SIB</div>
           <h3>Internal Company Website</h3>
           <p>Internal company portal for department-based access, operational information, reporting dashboards, weekly reports, and business support modules.</p>
@@ -820,7 +1025,7 @@
           </div>
         </article>
 
-        <article class="card project-card" tabindex="0" role="button" data-project="dsa">
+        <article class="card" tabindex="0" role="button" data-project="dsa">
           <div class="badge">DSA</div>
           <h3>Daily Sales Activity Report</h3>
           <p>Sales activity reporting system for daily input, supervisor monitoring, branch-level summaries, target tracking, and performance review.</p>
@@ -831,7 +1036,7 @@
           </div>
         </article>
 
-        <article class="card project-card" tabindex="0" role="button" data-project="sfa">
+        <article class="card" tabindex="0" role="button" data-project="sfa">
           <div class="badge">SFA</div>
           <h3>Tracking Sales & Marketing</h3>
           <p>Sales and marketing tracking system for monitoring field activity, role access, branch reporting, target progress, and operational activity.</p>
@@ -842,7 +1047,7 @@
           </div>
         </article>
 
-        <article class="card project-card" tabindex="0" role="button" data-project="sfs">
+        <article class="card" tabindex="0" role="button" data-project="sfs">
           <div class="badge">SFS</div>
           <h3>Document & File Service</h3>
           <p>Google Drive-based document and file service with portal interface, folder hierarchy, employee access control, drag-and-drop upload, and automation.</p>
@@ -853,7 +1058,7 @@
           </div>
         </article>
 
-        <article class="card project-card" tabindex="0" role="button" data-project="hc">
+        <article class="card" tabindex="0" role="button" data-project="hc">
           <div class="badge">HC</div>
           <h3>Employee Resource Center</h3>
           <p>Internal resource center for employee information, SOP, job descriptions, forms, announcements, and department-facing resources.</p>
@@ -866,63 +1071,33 @@
       </div>
     </section>
 
-    <div class="project-modal" id="projectModal" aria-hidden="true">
-      <div class="project-modal-backdrop" data-close-modal></div>
+    <div class="modal" id="projectModal" aria-hidden="true">
+      <div class="modal-backdrop" data-close></div>
 
-      <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
-        <div class="project-modal-head">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-head">
           <div>
-            <div class="project-modal-kicker" id="projectModalKicker">// project preview</div>
-            <h3 class="project-modal-title" id="projectModalTitle">Project Preview</h3>
-            <p class="project-modal-desc" id="projectModalDesc"></p>
-            <div class="tags" id="projectModalTags"></div>
+            <div class="modal-kicker" id="modalKicker">// mini web app</div>
+            <h3 class="modal-title" id="modalTitle">Project Preview</h3>
+            <p class="modal-desc" id="modalDesc"></p>
           </div>
 
-          <button class="project-modal-close" type="button" aria-label="Close project preview" data-close-modal>×</button>
+          <button class="modal-close" type="button" aria-label="Close preview" data-close>×</button>
         </div>
 
-        <div class="project-preview">
-          <div class="preview-browser">
-            <span class="preview-dot"></span>
-            <span class="preview-dot"></span>
-            <span class="preview-dot"></span>
-            <div class="preview-url" id="previewUrl">liswan.dev/project-preview</div>
+        <div class="mini-browser">
+          <div class="mini-browser-bar">
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+            <div class="browser-url" id="browserUrl">liswan.dev/projects/preview</div>
           </div>
 
-          <div class="preview-screen">
-            <aside class="preview-sidebar">
-              <div class="preview-logo" id="previewLogo">AM</div>
-              <div class="preview-menu" id="previewMenu"></div>
-            </aside>
+          <div class="mini-app" id="miniApp"></div>
+        </div>
 
-            <section class="preview-main">
-              <div class="preview-topbar">
-                <div class="preview-heading">
-                  <h4 id="previewHeading">Dashboard Overview</h4>
-                  <p id="previewSubheading">Recreated non-confidential interface preview.</p>
-                </div>
-                <div class="preview-pill" id="previewPill">DEMO MODE</div>
-              </div>
-
-              <div class="preview-stats" id="previewStats"></div>
-
-              <div class="preview-content">
-                <div class="preview-card">
-                  <div class="preview-card-title" id="previewChartTitle">Module Progress</div>
-                  <div class="preview-bars" id="previewBars"></div>
-                </div>
-
-                <div class="preview-card">
-                  <div class="preview-card-title" id="previewTableTitle">Recent Activity</div>
-                  <div class="preview-table" id="previewRows"></div>
-                </div>
-              </div>
-
-              <div class="preview-disclaimer">
-                This preview is a recreated dummy interface for portfolio presentation only. No confidential data, real employee data, customer data, or internal company records are displayed.
-              </div>
-            </section>
-          </div>
+        <div class="notice">
+          Preview ini adalah mini web app dummy untuk portofolio. Tidak memakai data asli, tidak menampilkan data rahasia, dan hanya berfungsi sebagai representasi visual dari konsep sistem.
         </div>
       </div>
     </div>
@@ -937,260 +1112,387 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const projectData = {
+    const modal = document.getElementById('projectModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const browserUrl = document.getElementById('browserUrl');
+    const miniApp = document.getElementById('miniApp');
+
+    const projects = {
       asset: {
-        code: 'AM',
         title: 'Asset Management',
-        desc: 'Dummy interface for asset registration, QR label control, mutation tracking, asset condition monitoring, and role-based asset access.',
-        url: 'liswan.dev/projects/asset-management-preview',
-        heading: 'Asset Control Dashboard',
-        subheading: 'Asset registration, QR label monitoring, mutation flow, and condition summary.',
-        pill: 'ASSET MODULE',
-        chartTitle: 'Asset Condition Overview',
-        tableTitle: 'Recent Asset Activity',
-        menu: ['Asset Registry', 'QR Label', 'Mutation', 'Reports'],
-        stats: [
-          ['1,284', 'Registered Assets'],
-          ['96%', 'QR Coverage'],
-          ['38', 'Active Mutations']
-        ],
-        bars: [88, 74, 62, 93],
-        rows: [
-          ['Laptop HO-IT', 'ACTIVE'],
-          ['Vehicle Asset', 'CHECK'],
-          ['Mutation Request', 'OPEN'],
-          ['QR Label Batch', 'DONE']
-        ],
-        tags: ['Asset Tracking', 'QR Label', 'Mutation Flow']
+        desc: 'Mini app preview for asset registry, QR label control, condition tracking, and mutation monitoring.',
+        url: 'liswan.dev/projects/asset-management',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">AM</div>
+              <div class="app-menu">
+                <span class="active">Asset Registry</span>
+                <span>QR Label</span>
+                <span>Mutation Request</span>
+                <span>Asset Report</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Asset Registry</h4>
+                  <p>Monitoring company assets by location, category, condition, and ownership status.</p>
+                </div>
+                <div class="app-pill">ASSET CONTROL</div>
+              </div>
+
+              <div class="stat-grid">
+                <div class="stat-card"><b>1,284</b><span>Total Assets</span></div>
+                <div class="stat-card"><b>96%</b><span>QR Label Coverage</span></div>
+                <div class="stat-card"><b>38</b><span>Mutation Requests</span></div>
+              </div>
+
+              <div class="panel-grid">
+                <div class="mini-panel">
+                  <h5>Asset List</h5>
+                  <div class="mini-table">
+                    <div class="mini-row"><strong>Notebook IT-042</strong><span class="status green">ACTIVE</span></div>
+                    <div class="mini-row"><strong>Printer Thermal BR-017</strong><span class="status yellow">CHECK</span></div>
+                    <div class="mini-row"><strong>Vehicle Unit VH-009</strong><span class="status green">USED</span></div>
+                    <div class="mini-row"><strong>Router AO-021</strong><span class="status red">REPAIR</span></div>
+                    <div class="mini-row"><strong>Monitor HO-088</strong><span class="status green">READY</span></div>
+                  </div>
+                </div>
+
+                <div class="mini-panel">
+                  <h5>Condition Summary</h5>
+                  <div class="bars">
+                    <div class="bar-item"><label><span>Good</span><span>82%</span></label><div class="bar"><span style="width:82%"></span></div></div>
+                    <div class="bar-item"><label><span>Need Check</span><span>44%</span></label><div class="bar"><span style="width:44%"></span></div></div>
+                    <div class="bar-item"><label><span>Mutation</span><span>61%</span></label><div class="bar"><span style="width:61%"></span></div></div>
+                    <div class="bar-item"><label><span>QR Printed</span><span>96%</span></label><div class="bar"><span style="width:96%"></span></div></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        `
       },
 
       siber: {
-        code: 'SIB',
         title: 'Internal Company Website',
-        desc: 'Dummy interface for department portal, business support modules, report access, weekly report submission, and internal information center.',
-        url: 'liswan.dev/projects/internal-company-website-preview',
-        heading: 'Internal Portal Dashboard',
-        subheading: 'Department access, operational content, weekly reports, and business support modules.',
-        pill: 'PORTAL MODULE',
-        chartTitle: 'Department Module Usage',
-        tableTitle: 'Portal Modules',
-        menu: ['Department', 'Reports', 'Support', 'Access'],
-        stats: [
-          ['8', 'Departments'],
-          ['24', 'Active Modules'],
-          ['142', 'Users']
-        ],
-        bars: [76, 68, 85, 71],
-        rows: [
-          ['HCGA Portal', 'LIVE'],
-          ['FAT Module', 'LIVE'],
-          ['BusDev Files', 'BETA'],
-          ['Weekly Report', 'LIVE']
-        ],
-        tags: ['Internal Website', 'Department Access', 'Dashboard']
+        desc: 'Mini app preview for internal portal, department-based modules, dashboards, weekly reports, and file access.',
+        url: 'liswan.dev/projects/internal-company-website',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">SIB</div>
+              <div class="app-menu">
+                <span class="active">Portal Home</span>
+                <span>Departments</span>
+                <span>Reports</span>
+                <span>Business Support</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Internal Portal</h4>
+                  <p>Centralized company portal for department access, operational modules, reporting, and internal information.</p>
+                </div>
+                <div class="app-pill">PORTAL ACCESS</div>
+              </div>
+
+              <div class="tile-grid">
+                <div class="module-tile"><b>HCGA</b><span>Employee resources, forms, SOP, and personnel data access.</span></div>
+                <div class="module-tile"><b>FAT</b><span>Finance, accounting, tax support, and document references.</span></div>
+                <div class="module-tile"><b>BusDev</b><span>Sales support files, targets, achievements, and area monitoring.</span></div>
+                <div class="module-tile"><b>IT</b><span>System tools, service access, technical references, and maintenance logs.</span></div>
+                <div class="module-tile"><b>Weekly Report</b><span>Weekly submission, approval, revision, and management review.</span></div>
+                <div class="module-tile"><b>Dashboard</b><span>Sales performance, stock, piutang, and operational monitoring.</span></div>
+              </div>
+
+              <div class="notice">
+                Portal preview dibuat seperti halaman internal berbasis modul, bukan sekadar dashboard generik.
+              </div>
+            </section>
+          </div>
+        `
       },
 
       dsa: {
-        code: 'DSA',
         title: 'Daily Sales Activity Report',
-        desc: 'Dummy interface for daily sales activity input, supervisor monitoring, branch summary, target tracking, and performance review.',
-        url: 'liswan.dev/projects/daily-sales-activity-preview',
-        heading: 'Daily Sales Activity Monitor',
-        subheading: 'Daily submission, supervisor review, branch summary, and target visibility.',
-        pill: 'REPORT MODULE',
-        chartTitle: 'Submission Performance',
-        tableTitle: 'Branch Activity',
-        menu: ['Daily Input', 'Supervisor', 'Branch', 'Target'],
-        stats: [
-          ['327', 'Daily Inputs'],
-          ['41', 'Branches'],
-          ['89%', 'Submit Rate']
-        ],
-        bars: [81, 72, 66, 90],
-        rows: [
-          ['AO Madiun', 'OK'],
-          ['OU Jember', 'OK'],
-          ['AO Probolinggo', 'CHECK'],
-          ['OU Nganjuk', 'OK']
-        ],
-        tags: ['Sales Report', 'Monitoring', 'Branch View']
+        desc: 'Mini app preview for daily sales input, supervisor monitoring, branch summaries, and activity review.',
+        url: 'liswan.dev/projects/daily-sales-activity-report',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">DSA</div>
+              <div class="app-menu">
+                <span class="active">Sales Input</span>
+                <span>Supervisor Review</span>
+                <span>Branch Summary</span>
+                <span>History</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Daily Sales Input</h4>
+                  <p>Sales activity form with outlet visit, daily activity, target information, and supervisor monitoring.</p>
+                </div>
+                <div class="app-pill">DAILY REPORT</div>
+              </div>
+
+              <div class="panel-grid">
+                <div class="mini-panel">
+                  <h5>Input Activity</h5>
+                  <div class="form-grid">
+                    <div class="field">
+                      <label>Sales Name</label>
+                      <input value="Demo Salesman" readonly>
+                    </div>
+                    <div class="field">
+                      <label>Branch</label>
+                      <select>
+                        <option>AO Madiun</option>
+                        <option>OU Jember</option>
+                        <option>OU Probolinggo</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label>Visit Count</label>
+                      <input value="18" readonly>
+                    </div>
+                    <div class="field">
+                      <label>Effective Call</label>
+                      <input value="14" readonly>
+                    </div>
+                    <div class="field full">
+                      <label>Daily Notes</label>
+                      <textarea readonly>Outlet visit completed, stock checked, and sales progress updated.</textarea>
+                    </div>
+                  </div>
+                  <div class="fake-btn">Submit Daily Report</div>
+                </div>
+
+                <div class="mini-panel">
+                  <h5>Today Summary</h5>
+                  <div class="mini-table">
+                    <div class="mini-row"><strong>AO Madiun</strong><span class="status green">89%</span></div>
+                    <div class="mini-row"><strong>OU Jember</strong><span class="status green">92%</span></div>
+                    <div class="mini-row"><strong>OU Probolinggo</strong><span class="status yellow">74%</span></div>
+                    <div class="mini-row"><strong>OU Nganjuk</strong><span class="status green">86%</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        `
       },
 
       sfa: {
-        code: 'SFA',
         title: 'Tracking Sales & Marketing',
-        desc: 'Dummy interface for field activity tracking, outlet visit monitoring, role-based reporting, sales target progress, and operational review.',
-        url: 'liswan.dev/projects/sales-marketing-tracking-preview',
-        heading: 'Field Activity Tracking',
-        subheading: 'Sales visits, outlet coverage, marketing activity, target progress, and role-based monitoring.',
-        pill: 'TRACKING MODULE',
-        chartTitle: 'Field Coverage Progress',
-        tableTitle: 'Latest Field Updates',
-        menu: ['Visits', 'Outlets', 'Targets', 'Performance'],
-        stats: [
-          ['842', 'Field Visits'],
-          ['72%', 'Target Progress'],
-          ['118', 'Active Users']
-        ],
-        bars: [79, 58, 84, 69],
-        rows: [
-          ['Outlet Visit', 'DONE'],
-          ['Marketing Activity', 'OPEN'],
-          ['Target Review', 'CHECK'],
-          ['Branch Report', 'DONE']
-        ],
-        tags: ['Sales Tracking', 'Marketing Activity', 'Performance']
+        desc: 'Mini app preview for field tracking, outlet visit monitoring, target progress, and marketing activity.',
+        url: 'liswan.dev/projects/tracking-sales-marketing',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">SFA</div>
+              <div class="app-menu">
+                <span class="active">Field Tracking</span>
+                <span>Outlet Visit</span>
+                <span>Target Progress</span>
+                <span>Performance</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Field Activity Tracking</h4>
+                  <p>Monitoring route activity, outlet visit, sales performance, and marketing execution.</p>
+                </div>
+                <div class="app-pill">LIVE TRACKING</div>
+              </div>
+
+              <div class="route-map">
+                <div class="map-box">
+                  <div class="map-pin" style="left:18%;top:34%"></div>
+                  <div class="map-pin" style="left:47%;top:48%"></div>
+                  <div class="map-pin" style="left:73%;top:30%"></div>
+                  <div class="map-pin" style="left:62%;top:72%"></div>
+                  <div class="map-line" style="left:20%;top:37%;width:190px;transform:rotate(18deg)"></div>
+                  <div class="map-line" style="left:48%;top:50%;width:160px;transform:rotate(-18deg)"></div>
+                  <div class="map-line" style="left:61%;top:58%;width:110px;transform:rotate(68deg)"></div>
+                </div>
+
+                <div class="mini-panel">
+                  <h5>Visit Status</h5>
+                  <div class="mini-table">
+                    <div class="mini-row"><strong>Outlet A</strong><span class="status green">DONE</span></div>
+                    <div class="mini-row"><strong>Outlet B</strong><span class="status green">DONE</span></div>
+                    <div class="mini-row"><strong>Outlet C</strong><span class="status yellow">VISIT</span></div>
+                    <div class="mini-row"><strong>Outlet D</strong><span class="status">NEXT</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="notice">
+                Tampilan ini sengaja dibuat seperti tracking field activity, bukan hanya tabel laporan biasa.
+              </div>
+            </section>
+          </div>
+        `
       },
 
       sfs: {
-        code: 'SFS',
         title: 'Document & File Service',
-        desc: 'Dummy interface for Google Drive-based document service, folder hierarchy, employee access control, upload workflow, and file automation.',
-        url: 'liswan.dev/projects/document-file-service-preview',
-        heading: 'Document Service Portal',
-        subheading: 'Drive-based file portal with folder hierarchy, upload access, and document automation.',
-        pill: 'FILE MODULE',
-        chartTitle: 'Storage Distribution',
-        tableTitle: 'Recent File Activity',
-        menu: ['My Drive', 'Departments', 'Upload', 'Automation'],
-        stats: [
-          ['6.8K', 'Managed Files'],
-          ['312', 'Folders'],
-          ['27', 'Access Groups']
-        ],
-        bars: [64, 77, 51, 88],
-        rows: [
-          ['Sales Folder', 'SYNC'],
-          ['HCGA Document', 'NEW'],
-          ['Report Upload', 'DONE'],
-          ['Access Request', 'OPEN']
-        ],
-        tags: ['Google Drive', 'Apps Script', 'File Portal']
+        desc: 'Mini app preview for Drive-like file portal, folder access, upload area, department folders, and automation.',
+        url: 'liswan.dev/projects/document-file-service',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">SFS</div>
+              <div class="app-menu">
+                <span class="active">My Drive</span>
+                <span>Department Files</span>
+                <span>Shared Folder</span>
+                <span>Upload Center</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Document & File Service</h4>
+                  <p>Drive-style file service with folder hierarchy, employee access, upload control, and automated file management.</p>
+                </div>
+                <div class="app-pill">FILE PORTAL</div>
+              </div>
+
+              <div class="file-explorer">
+                <div class="folder-tree">
+                  <div class="tree-item active">▸ HO Documents</div>
+                  <div class="tree-item">▸ Sales Reports</div>
+                  <div class="tree-item">▸ HCGA Forms</div>
+                  <div class="tree-item">▸ Finance Files</div>
+                  <div class="tree-item">▸ IT References</div>
+                </div>
+
+                <div class="file-area">
+                  <h5 style="margin-bottom:14px;">HO Documents</h5>
+                  <div class="file-grid">
+                    <div class="file-card"><div class="file-icon">PDF</div><b>Company Policy</b><span>Updated today</span></div>
+                    <div class="file-card"><div class="file-icon">XLS</div><b>Weekly Report</b><span>Synced 2 hours ago</span></div>
+                    <div class="file-card"><div class="file-icon">DOC</div><b>SOP Access</b><span>Shared file</span></div>
+                    <div class="file-card"><div class="file-icon">IMG</div><b>Brand Assets</b><span>12 files</span></div>
+                    <div class="file-card"><div class="file-icon">ZIP</div><b>Backup Export</b><span>Auto generated</span></div>
+                    <div class="file-card"><div class="file-icon">CSV</div><b>Master Data</b><span>Restricted</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        `
       },
 
       hc: {
-        code: 'HC',
         title: 'Employee Resource Center',
-        desc: 'Dummy interface for employee resource center, internal information, SOP, job descriptions, forms, announcements, and department-facing resources.',
-        url: 'liswan.dev/projects/employee-resource-center-preview',
-        heading: 'Employee Resource Center',
-        subheading: 'Employee information center for SOP, forms, job descriptions, announcements, and HR resources.',
-        pill: 'RESOURCE MODULE',
-        chartTitle: 'Resource Access Summary',
-        tableTitle: 'Resource Updates',
-        menu: ['Employees', 'SOP', 'Forms', 'Announcement'],
-        stats: [
-          ['142', 'Employees'],
-          ['58', 'Resources'],
-          ['19', 'Forms']
-        ],
-        bars: [73, 60, 82, 54],
-        rows: [
-          ['SOP Update', 'NEW'],
-          ['Employee Form', 'LIVE'],
-          ['Job Description', 'CHECK'],
-          ['Announcement', 'POST']
-        ],
-        tags: ['Employee Portal', 'Resources', 'Forms']
+        desc: 'Mini app preview for employee information, SOP, forms, job descriptions, and resource access.',
+        url: 'liswan.dev/projects/employee-resource-center',
+        html: `
+          <div class="app-shell">
+            <aside class="app-side">
+              <div class="app-logo">HC</div>
+              <div class="app-menu">
+                <span class="active">Employee Center</span>
+                <span>SOP Library</span>
+                <span>Forms</span>
+                <span>Job Description</span>
+              </div>
+            </aside>
+
+            <section class="app-main">
+              <div class="app-top">
+                <div>
+                  <h4>Employee Resource Center</h4>
+                  <p>Employee-facing center for internal information, resources, SOP, forms, and department documents.</p>
+                </div>
+                <div class="app-pill">HC RESOURCE</div>
+              </div>
+
+              <div class="stat-grid">
+                <div class="stat-card"><b>142</b><span>Employees</span></div>
+                <div class="stat-card"><b>58</b><span>Resources</span></div>
+                <div class="stat-card"><b>19</b><span>Forms</span></div>
+              </div>
+
+              <div class="panel-grid">
+                <div class="mini-panel">
+                  <h5>Resource Library</h5>
+                  <div class="tile-grid">
+                    <div class="module-tile"><b>SOP</b><span>Operational guidelines and internal procedures.</span></div>
+                    <div class="module-tile"><b>Forms</b><span>Employee forms and request documents.</span></div>
+                    <div class="module-tile"><b>Job Desk</b><span>Role descriptions and responsibility matrix.</span></div>
+                  </div>
+                </div>
+
+                <div class="mini-panel">
+                  <h5>Recent Updates</h5>
+                  <div class="mini-table">
+                    <div class="mini-row"><strong>Leave Request Form</strong><span class="status green">LIVE</span></div>
+                    <div class="mini-row"><strong>SOP Attendance</strong><span class="status yellow">UPDATE</span></div>
+                    <div class="mini-row"><strong>Job Description</strong><span class="status">REVIEW</span></div>
+                    <div class="mini-row"><strong>Announcement</strong><span class="status green">POST</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        `
       }
     };
 
-    const modal = document.getElementById('projectModal');
-    const modalTitle = document.getElementById('projectModalTitle');
-    const modalDesc = document.getElementById('projectModalDesc');
-    const modalTags = document.getElementById('projectModalTags');
-    const previewUrl = document.getElementById('previewUrl');
-    const previewLogo = document.getElementById('previewLogo');
-    const previewMenu = document.getElementById('previewMenu');
-    const previewHeading = document.getElementById('previewHeading');
-    const previewSubheading = document.getElementById('previewSubheading');
-    const previewPill = document.getElementById('previewPill');
-    const previewStats = document.getElementById('previewStats');
-    const previewBars = document.getElementById('previewBars');
-    const previewRows = document.getElementById('previewRows');
-    const previewChartTitle = document.getElementById('previewChartTitle');
-    const previewTableTitle = document.getElementById('previewTableTitle');
+    function openProject(projectKey){
+      const project = projects[projectKey];
+      if(!project) return;
 
-    function renderProject(projectKey){
-      const data = projectData[projectKey];
-      if(!data) return;
+      modalTitle.textContent = project.title;
+      modalDesc.textContent = project.desc;
+      browserUrl.textContent = project.url;
+      miniApp.innerHTML = project.html;
 
-      modalTitle.textContent = data.title;
-      modalDesc.textContent = data.desc;
-      previewUrl.textContent = data.url;
-      previewLogo.textContent = data.code;
-      previewHeading.textContent = data.heading;
-      previewSubheading.textContent = data.subheading;
-      previewPill.textContent = data.pill;
-      previewChartTitle.textContent = data.chartTitle;
-      previewTableTitle.textContent = data.tableTitle;
-
-      modalTags.innerHTML = data.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-
-      previewMenu.innerHTML = data.menu.map((item, index) => {
-        return `<span class="${index === 0 ? 'active' : ''}">${item}</span>`;
-      }).join('');
-
-      previewStats.innerHTML = data.stats.map(stat => {
-        return `
-          <div class="preview-stat">
-            <b>${stat[0]}</b>
-            <span>${stat[1]}</span>
-          </div>
-        `;
-      }).join('');
-
-      previewBars.innerHTML = data.bars.map(value => {
-        return `
-          <div class="preview-bar">
-            <span style="width:${value}%"></span>
-          </div>
-        `;
-      }).join('');
-
-      previewRows.innerHTML = data.rows.map(row => {
-        return `
-          <div class="preview-row">
-            <strong>${row[0]}</strong>
-            <span class="preview-status">${row[1]}</span>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function openModal(projectKey){
-      renderProject(projectKey);
       modal.classList.add('active');
       modal.setAttribute('aria-hidden','false');
       document.body.classList.add('modal-open');
     }
 
-    function closeModal(){
+    function closeProject(){
       modal.classList.remove('active');
       modal.setAttribute('aria-hidden','true');
       document.body.classList.remove('modal-open');
+      miniApp.innerHTML = '';
     }
 
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('click', () => {
-        openModal(card.dataset.project);
-      });
+    document.querySelectorAll('[data-project]').forEach(card => {
+      card.addEventListener('click', () => openProject(card.dataset.project));
 
       card.addEventListener('keydown', event => {
         if(event.key === 'Enter' || event.key === ' '){
           event.preventDefault();
-          openModal(card.dataset.project);
+          openProject(card.dataset.project);
         }
       });
     });
 
-    document.querySelectorAll('[data-close-modal]').forEach(button => {
-      button.addEventListener('click', closeModal);
+    document.querySelectorAll('[data-close]').forEach(item => {
+      item.addEventListener('click', closeProject);
     });
 
     document.addEventListener('keydown', event => {
       if(event.key === 'Escape' && modal.classList.contains('active')){
-        closeModal();
+        closeProject();
       }
     });
   </script>

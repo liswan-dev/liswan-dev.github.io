@@ -1,160 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Liswan Susanto — IT Developer &amp; Internal System Builder</title>
-  <meta name="description" content="Personal portfolio of Liswan Susanto — IT Developer &amp; Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
   <meta name="author" content="Liswan Susanto"/>
-  <meta property="og:title" content="Liswan Susanto — IT Developer &amp; Internal System Builder"/>
-  <meta property="og:description" content="Personal portfolio of Liswan Susanto — IT Developer &amp; Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://liswan.dev"/>
   <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- LISWAN.DEV favicon -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#5B3FD6">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --void:#050510;
-      --deep:#0a0a1a;
-      --surface:#10102a;
-      --card:#12122e;
-      --card-h:#1a1a3e;
-      --cyan:#00f5ff;
-      --violet:#7b2fff;
-      --violet2:#5b3fd6;
-      --magenta:#ff2d6b;
-      --text:#e8eaf6;
-      --muted:#8b8db7;
-      --muted2:#55577d;
-      --border:rgba(0,245,255,.12);
-      --border-h:rgba(0,245,255,.32);
-      --glass:rgba(5,5,16,.76);
-      --shadow:0 24px 80px rgba(0,0,0,.42);
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Inter',system-ui,sans-serif;
-      background:radial-gradient(circle at 20% 10%,rgba(123,47,255,.18),transparent 28%),radial-gradient(circle at 80% 15%,rgba(0,245,255,.12),transparent 26%),var(--void);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    body::before{
-      content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
-      background-image:linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);
-      background-size:64px 64px;
-      mask-image:linear-gradient(to bottom,rgba(0,0,0,.95),rgba(0,0,0,.15));
-    }
-    body::after{
-      content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
-      opacity:.55;
-    }
-    a{color:inherit;text-decoration:none}
-    .nav{
-      position:fixed;top:0;left:0;right:0;z-index:1000;
-      height:72px;padding:0 5vw;
-      display:flex;align-items:center;justify-content:space-between;gap:24px;
-      background:rgba(5,5,16,.72);backdrop-filter:blur(22px);
-      border-bottom:1px solid var(--border);
-    }
-    .brand{display:inline-flex;align-items:center;gap:12px;min-width:max-content}
-    .brand img{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(123,47,255,.55))}
-    .brand span{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;letter-spacing:.08em;background:linear-gradient(90deg,#fff,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .nav-links{display:flex;align-items:center;gap:24px}
-    .nav-links a{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;letter-spacing:.06em;color:var(--muted);transition:color .2s,transform .2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
-    .nav-links a:hover{transform:translateY(-1px)}
-    .page{position:relative;z-index:1;padding-top:72px}
-    .container{width:min(1120px,90vw);margin:0 auto}
-    .hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:56px;padding:72px 0}
-    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:.11em;margin-bottom:26px}
-    .dot{width:8px;height:8px;border-radius:999px;background:var(--cyan);box-shadow:0 0 18px var(--cyan),0 0 38px rgba(0,245,255,.55)}
-    h1{font-family:'Orbitron',sans-serif;font-size:clamp(38px,6vw,76px);line-height:.97;letter-spacing:-.04em;margin-bottom:24px}
-    h1 .dim{display:block;font-family:'JetBrains Mono',monospace;font-size:.34em;font-weight:500;letter-spacing:.18em;color:var(--muted2);margin-bottom:14px}
-    .gradient-text{background:linear-gradient(135deg,#fff 18%,var(--cyan) 52%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .lead{max-width:620px;color:var(--muted);font-size:16px;line-height:1.8}
-    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:10px;font-size:14px;font-weight:700;border:1px solid transparent;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s}
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;box-shadow:0 0 36px rgba(0,245,255,.24)}
-    .btn-secondary{background:rgba(0,245,255,.045);border-color:var(--border-h);color:var(--text)}
-    .btn-secondary:hover{border-color:var(--cyan);background:rgba(0,245,255,.09)}
-    .panel{position:relative;border:1px solid var(--border);background:linear-gradient(135deg,rgba(18,18,46,.86),rgba(9,9,26,.9));border-radius:22px;padding:30px;box-shadow:var(--shadow);overflow:hidden}
-    .panel::before{content:'';position:absolute;inset:-1px;background:linear-gradient(135deg,rgba(0,245,255,.25),rgba(123,47,255,.25),rgba(255,45,107,.09));z-index:-1;border-radius:23px}
-    .logo-mark{width:112px;height:112px;border-radius:24px;padding:3px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(123,47,255,.95),rgba(60,32,150,.95));box-shadow:0 20px 60px rgba(123,47,255,.24);margin-bottom:24px;overflow:hidden}
-    .logo-mark img{width:100%;height:100%;object-fit:cover;border-radius:21px;display:block;background:var(--surface)}
-    .profile-name{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:900;margin-bottom:8px}
-    .profile-role{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12px;letter-spacing:.09em;margin-bottom:18px}
-    .terminal{margin-top:24px;border:1px solid rgba(0,245,255,.16);background:rgba(0,0,0,.42);border-radius:12px;overflow:hidden}
-    .terminal-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:rgba(0,245,255,.04);border-bottom:1px solid rgba(0,245,255,.12)}
-    .tdot{width:9px;height:9px;border-radius:999px}.tdot:nth-child(1){background:#ff5f57}.tdot:nth-child(2){background:#febc2e}.tdot:nth-child(3){background:#28c840}
-    .terminal-body{padding:16px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.85;color:var(--muted)}
-    .tc{color:var(--cyan)}.to{color:#a8f0a0}.tv{color:#b9a7ff}
-    .section{padding:86px 0}
-    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:34px}
-    .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--cyan);text-transform:uppercase;margin-bottom:12px}
-    h2{font-family:'Orbitron',sans-serif;font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-.035em}
-    .section-desc{max-width:560px;color:var(--muted);font-size:15px;line-height:1.75}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .card{position:relative;border:1px solid var(--border);background:rgba(18,18,46,.82);border-radius:16px;padding:26px;overflow:hidden;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s}
-    .card:hover{transform:translateY(-5px);border-color:var(--border-h);background:rgba(26,26,62,.9);box-shadow:0 20px 60px rgba(0,0,0,.32)}
-    .card::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));opacity:0;transition:opacity .2s}
-    .card:hover::after{opacity:1}
-    .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;background:linear-gradient(135deg,rgba(0,245,255,.12),rgba(123,47,255,.12));border:1px solid var(--border);font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:var(--cyan)}
-    .card h3{font-size:18px;margin-bottom:10px;letter-spacing:-.02em}
-    .card p{color:var(--muted);font-size:13.8px;line-height:1.7}
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-    .tag{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(0,245,255,.04);font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted)}
-    .stack-grid{display:flex;flex-wrap:wrap;gap:10px}
-    .stack{padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(18,18,46,.8);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--text)}
-    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-    .flow .card{padding:20px}
-    .num{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--cyan);margin-bottom:10px}
-    .log-list{display:grid;gap:14px}
-    .log-item{display:grid;grid-template-columns:150px 1fr;gap:24px;border:1px solid var(--border);background:rgba(18,18,46,.82);border-radius:14px;padding:20px 22px}
-    .log-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);font-weight:700}
-    footer{border-top:1px solid var(--border);padding:26px 5vw;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;background:rgba(0,0,0,.24)}
-    footer span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted2)}
-    .floating-dev-menu{position:fixed;right:24px;bottom:24px;z-index:1100;display:flex;flex-direction:column;gap:10px}
-    .floating-dev-menu a{min-width:142px;text-align:center;padding:11px 16px;border-radius:999px;background:rgba(12,10,28,.86);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.13);box-shadow:0 14px 34px rgba(0,0,0,.28);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.04em;transition:transform .2s,background .2s,border-color .2s}
-    .floating-dev-menu a:hover,.floating-dev-menu a.active{transform:translateY(-2px);background:var(--violet2);border-color:rgba(255,255,255,.24)}
-    .mini-note{margin-top:24px;padding:18px 20px;border:1px solid rgba(123,47,255,.25);background:rgba(123,47,255,.08);border-radius:14px;color:var(--muted);line-height:1.7;font-size:14px}
-    .contact-box{display:grid;grid-template-columns:1fr auto;align-items:center;gap:28px;border:1px solid rgba(0,245,255,.2);background:linear-gradient(135deg,rgba(0,245,255,.08),rgba(123,47,255,.06));border-radius:22px;padding:44px}
-    @media(max-width:980px){
-      .hero{grid-template-columns:1fr;padding:54px 0}
-      .grid-3,.grid-2,.flow{grid-template-columns:1fr}
-      .section-head,.contact-box{grid-template-columns:1fr;display:block}
-      .section-desc{margin-top:16px}
-      .nav{height:auto;min-height:72px;padding:14px 4vw;align-items:flex-start;flex-direction:column}
-      .nav-links{width:100%;gap:10px;overflow-x:auto;padding-bottom:2px}
-      .nav-links a{white-space:nowrap;font-size:11.5px}
-      .page{padding-top:118px}
-      .floating-dev-menu{right:14px;bottom:14px}
-      .floating-dev-menu a{min-width:auto;padding:10px 13px;font-size:11px}
-      .log-item{grid-template-columns:1fr}
-    }
-    @media(max-width:560px){
-      .container{width:min(92vw,1120px)}
-      .hero{padding:36px 0}
-      .section{padding:62px 0}
-      .panel{padding:22px}
-      .floating-dev-menu{display:grid;grid-template-columns:repeat(2,auto);gap:8px}
-      .floating-dev-menu a{font-size:10.5px;padding:9px 11px}
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <title>Liswan Susanto — IT Developer & Internal System Builder</title>
+  <meta name="description" content="Personal portfolio of Liswan Susanto — IT Developer & Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
+  <meta property="og:title" content="Liswan Susanto — IT Developer & Internal System Builder"/>
+  <meta property="og:description" content="Personal portfolio of Liswan Susanto — IT Developer & Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
 </head>
 <body>
 <nav class="nav">
@@ -163,19 +30,20 @@
     <span>LISWAN.DEV</span>
   </a>
   <div class="nav-links">
-      <a href="/profile/" class="">Profile</a>
-      <a href="/portfolio/" class="">Portofolio</a>
-      <a href="/custom-apps/" class="">Custom Apps</a>
-      <a href="/contact/" class="">Contact</a>
+    <a href="/profile/">Profile</a>
+    <a href="/portfolio/">Portfolio</a>
+    <a href="/custom-apps/">Custom Apps</a>
+    <a href="/contact/">Contact</a>
   </div>
 </nav>
 
 <div class="floating-dev-menu" aria-label="Developer quick menu">
-    <a href="/projects/" class="">Projects</a>
-    <a href="/stack/" class="">Stack</a>
-    <a href="/architecture/" class="">Architecture</a>
-    <a href="/log/" class="">Log</a>
+  <a href="/projects/">Projects</a>
+  <a href="/stack/">Stack</a>
+  <a href="/architecture/">Architecture</a>
+  <a href="/log/">Log</a>
 </div>
+
 <main class="page">
 
   <section class="container hero">
@@ -190,7 +58,7 @@
       </div>
     </div>
     <aside class="panel">
-      <div class="logo-mark"><img src="/avatar.png" alt="Liswan Susanto" onerror="this.style.display='none'"></div>
+      <div class="logo-mark"><img src="/avatar.svg" alt="Liswan Susanto" onerror="this.style.display='none'"></div>
       <div class="profile-name">Liswan Susanto</div>
       <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
       <p class="lead" style="font-size:14px">Focused on internal portals, operational dashboards, asset workflows, employee systems, and automation tools.</p>
@@ -215,7 +83,7 @@
         <div class="kicker">// focus</div>
         <h2>Operational tools,<br>not just landing pages.</h2>
       </div>
-      <p class="section-desc">The main structure is now page-based. The top menu moves visitors to core profile pages, while the floating menu keeps technical sections available without crowding the navbar.</p>
+      <p class="section-desc">The main structure is page-based. The top menu moves visitors to core profile pages, while the floating menu keeps technical sections available without crowding the navbar.</p>
     </div>
     <div class="grid-3">
       <article class="card"><div class="badge">01</div><h3>Workflow Systems</h3><p>Approval flows, validation stages, evidence uploads, and document generation.</p></article>
@@ -228,11 +96,9 @@
 
 <footer>
   <span>LISWAN.DEV</span>
-  <span>© <span id="year"></span> Liswan Susanto · IT Developer & Internal System Builder</span>
+  <span>© <span id="year"></span> Liswan Susanto · IT Developer &amp; Internal System Builder</span>
   <span>WordPress · PHP · Apps Script · Internal Systems</span>
 </footer>
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+<script src="/assets/js/main.js" defer></script>
 </body>
 </html>

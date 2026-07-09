@@ -1,0 +1,11 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="g" x1="60" y1="40" x2="460" y2="470"><stop stop-color="#00F5FF"/><stop offset=".55" stop-color="#7B2FFF"/><stop offset="1" stop-color="#FF2D6B"/></linearGradient>
+  <filter id="s"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-opacity=".36"/></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="#060612"/>
+<circle cx="256" cy="210" r="92" fill="url(#g)" opacity=".24"/>
+<path d="M122 408c24-78 78-122 134-122s110 44 134 122" fill="url(#g)" opacity=".28"/>
+<text x="256" y="290" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="116" font-weight="800" fill="#FFFFFF" filter="url(#s)">LS</text>
+<path d="M128 126l-46 52 46 52M384 126l46 52-46 52" stroke="#00F5FF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+</svg>

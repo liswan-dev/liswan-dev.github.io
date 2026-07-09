@@ -1,27 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7A3FF3"/>
-      <stop offset="52%" stop-color="#5229C8"/>
-      <stop offset="100%" stop-color="#20146B"/>
+    <linearGradient id="bg" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00F5FF"/>
+      <stop offset="0.52" stop-color="#7B2FFF"/>
+      <stop offset="1" stop-color="#FF2D6B"/>
     </linearGradient>
-    <radialGradient id="glow" cx="22%" cy="18%" r="70%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.18"/>
-      <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0.04"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="symbolShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#120846" flood-opacity="0.28"/>
+    <linearGradient id="mark" x1="128" y1="128" x2="390" y2="402" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#DFFBFF"/>
+      <stop offset="1" stop-color="#B9A7FF"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
   </defs>
-
-  <rect x="0" y="0" width="1024" height="1024" rx="172" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1024" height="1024" rx="172" fill="url(#glow)"/>
-  <rect x="24" y="22" width="976" height="980" rx="150" fill="none" stroke="#FFFFFF" stroke-opacity="0.055" stroke-width="8"/>
-
-  <g filter="url(#symbolShadow)" fill="#FFFFFF">
-    <path d="M184 508 L330 398 L330 462 L248 522 L330 582 L330 672 L184 564 Z"/>
-    <path d="M350 300 L490 216 L490 596 L620 596 L752 728 L350 728 Z"/>
-    <path d="M856 508 L720 398 L720 462 L798 522 L720 582 L720 672 L856 564 Z"/>
-  </g>
+  <rect x="36" y="36" width="440" height="440" rx="96" fill="#060612"/>
+  <rect x="48" y="48" width="416" height="416" rx="88" fill="url(#bg)" opacity="0.22"/>
+  <rect x="68" y="68" width="376" height="376" rx="72" stroke="url(#bg)" stroke-width="12" opacity="0.95"/>
+  <path d="M166 186L104 256L166 326" stroke="#00F5FF" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#glow)"/>
+  <path d="M346 186L408 256L346 326" stroke="#7B2FFF" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#glow)"/>
+  <path d="M214 132V330H322V384H154V132H214Z" fill="url(#mark)" filter="url(#glow)"/>
+  <path d="M276 180L236 332" stroke="#00F5FF" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
 </svg>

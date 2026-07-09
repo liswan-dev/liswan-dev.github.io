@@ -1,960 +1,869 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Projects — Liswan.dev</title>
-  <meta name="description" content="Project details and interactive mini web apps built around internal operations."/>
-  <meta name="author" content="Liswan Susanto"/>
-
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#5B3FD6">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <title>SMART Master Asset — Mini Web App Prototype</title>
+  <meta name="description" content="Interactive mini version of SMART Master Asset for liswan.dev portfolio."/>
   <style>
     :root{
-      --void:#050510;
-      --surface:#10102a;
-      --card:#12122e;
-      --card-h:#1a1a3e;
-      --cyan:#00f5ff;
-      --violet:#7b2fff;
-      --violet2:#5b3fd6;
-      --green:#33e29b;
-      --yellow:#ffd166;
-      --red:#ff5f57;
-      --text:#e8eaf6;
-      --muted:#8b8db7;
-      --muted2:#55577d;
-      --border:rgba(0,245,255,.12);
-      --border-h:rgba(0,245,255,.34);
-      --shadow:0 24px 80px rgba(0,0,0,.42);
+      --navy:#16263f;
+      --navy2:#22416e;
+      --blue:#2f6bd6;
+      --red:#e23744;
+      --green:#1a8f63;
+      --orange:#c2410c;
+      --bg:#f5f7fb;
+      --surface:#fff;
+      --border:#eaeef6;
+      --border2:#dde4f0;
+      --text:#28323f;
+      --muted:#7a8699;
+      --shadow:0 1px 2px rgba(16,24,40,.04),0 12px 30px rgba(16,24,40,.05);
+      --shadow-lg:0 18px 40px rgba(22,38,63,.18);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-
     body{
-      font-family:'Inter',system-ui,sans-serif;
+      min-height:100vh;
       background:
-        radial-gradient(circle at 20% 10%,rgba(123,47,255,.18),transparent 28%),
-        radial-gradient(circle at 80% 15%,rgba(0,245,255,.12),transparent 26%),
-        var(--void);
+        radial-gradient(circle at top left,rgba(47,107,214,.11),transparent 34%),
+        radial-gradient(circle at bottom right,rgba(226,55,68,.09),transparent 34%),
+        var(--bg);
       color:var(--text);
+      font-family:"Plus Jakarta Sans","Inter","Segoe UI",Arial,sans-serif;
       overflow-x:hidden;
     }
 
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      background-image:
-        linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);
-      background-size:64px 64px;
-      mask-image:linear-gradient(to bottom,rgba(0,0,0,.95),rgba(0,0,0,.15));
-    }
-
-    body::after{
-      content:'';
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
-      opacity:.55;
-    }
-
-    body.modal-open{overflow:hidden}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
     a{color:inherit;text-decoration:none}
 
-    .nav{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      z-index:1000;
-      height:72px;
-      padding:0 5vw;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:24px;
-      background:rgba(5,5,16,.72);
-      backdrop-filter:blur(22px);
-      border-bottom:1px solid var(--border);
-    }
-
-    .brand{
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      min-width:max-content;
-    }
-
-    .brand img{
-      width:34px;
-      height:34px;
-      object-fit:contain;
-      filter:drop-shadow(0 0 18px rgba(123,47,255,.55));
-    }
-
-    .brand span{
-      font-family:'Orbitron',sans-serif;
-      font-size:17px;
-      font-weight:900;
-      letter-spacing:.08em;
-      background:linear-gradient(90deg,#fff,var(--cyan),var(--violet));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:24px;
-    }
-
-    .nav-links a{
-      font-family:'JetBrains Mono',monospace;
-      font-size:12.5px;
-      font-weight:600;
-      letter-spacing:.06em;
-      color:var(--muted);
-      transition:color .2s,transform .2s;
-    }
-
-    .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
-    .nav-links a:hover{transform:translateY(-1px)}
-
-    .page{
-      position:relative;
-      z-index:1;
-      padding-top:72px;
-    }
-
-    .container{
-      width:min(1120px,90vw);
+    .wrap{
+      max-width:1400px;
       margin:0 auto;
+      padding:22px 14px 44px;
     }
 
-    .section{padding:86px 0}
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:24px;
+      padding:26px 28px;
+      color:#fff;
+      background:linear-gradient(135deg,#1a2f52 0%,#22416e 56%,#2b5594 100%);
+      border-top:4px solid var(--red);
+      box-shadow:var(--shadow-lg);
+      margin-bottom:16px;
+    }
 
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:28px;
-      margin-bottom:34px;
+    .hero:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 18% 20%,rgba(255,255,255,.11),transparent 42%),
+        radial-gradient(circle at 82% 120%,rgba(226,55,68,.23),transparent 44%);
+      pointer-events:none;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-90px;
+      top:-90px;
+      width:270px;
+      height:270px;
+      border-radius:50%;
+      background:rgba(255,255,255,.06);
     }
 
     .kicker{
-      font-family:'JetBrains Mono',monospace;
+      position:relative;
+      z-index:2;
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      letter-spacing:.15em;
       font-size:11px;
-      letter-spacing:.22em;
-      color:var(--cyan);
+      font-weight:800;
+      color:#ffd5d9;
       text-transform:uppercase;
-      margin-bottom:12px;
+      margin-bottom:10px;
     }
 
-    h2{
-      font-family:'Orbitron',sans-serif;
-      font-size:clamp(28px,4vw,46px);
-      line-height:1.05;
+    .kicker:before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--red);
+      box-shadow:0 0 0 4px rgba(226,55,68,.25);
+    }
+
+    .hero h1{
+      position:relative;
+      z-index:2;
+      font-size:clamp(29px,4vw,44px);
+      line-height:1.04;
+      font-weight:900;
       letter-spacing:-.035em;
+      margin-bottom:8px;
     }
 
-    .section-desc{
-      max-width:560px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.75;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
+    .hero p{
+      position:relative;
+      z-index:2;
+      max-width:930px;
+      color:#d9e8fa;
+      font-weight:500;
+      font-size:14px;
+      line-height:1.65;
     }
 
     .card{
-      position:relative;
+      background:var(--surface);
       border:1px solid var(--border);
-      background:rgba(18,18,46,.82);
-      border-radius:16px;
-      padding:26px;
-      overflow:hidden;
-      cursor:pointer;
-      transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:16px;
+      animation:fadeUp .35s ease both;
     }
 
-    .card:hover{
-      transform:translateY(-5px);
-      border-color:var(--border-h);
-      background:rgba(26,26,62,.9);
-      box-shadow:0 20px 60px rgba(0,0,0,.32);
+    .card.soft{
+      border-top:3px solid var(--red);
     }
 
-    .card::after{
-      content:'';
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:2px;
-      background:linear-gradient(90deg,var(--cyan),var(--violet));
-      opacity:0;
-      transition:opacity .2s;
+    .title-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
     }
 
-    .card:hover::after{opacity:1}
+    .title h2{
+      color:var(--navy);
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.02em;
+      margin-bottom:4px;
+    }
 
-    .card:focus{
-      outline:2px solid var(--cyan);
-      outline-offset:4px;
+    .title p{
+      color:var(--muted);
+      line-height:1.6;
+      font-size:13px;
+      font-weight:500;
+    }
+
+    .badge,.chip,.stat{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      font-weight:900;
+      white-space:nowrap;
     }
 
     .badge{
-      width:44px;
-      height:44px;
-      border-radius:12px;
+      padding:8px 12px;
+      background:#eef3ff;
+      border:1px solid #dbe6ff;
+      color:var(--navy);
+      font-size:12px;
+    }
+
+    .chip{
+      padding:5px 8px;
+      font-size:10.5px;
+      border:1px solid;
+      text-transform:uppercase;
+    }
+
+    .chip.blue{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+    .chip.green{color:#15803d;background:#ecfdf3;border-color:#bbf7d0}
+    .chip.orange{color:#c2410c;background:#fff7ed;border-color:#fed7aa}
+    .chip.red{color:#b91c1c;background:#fef2f2;border-color:#fecaca}
+    .chip.gray{color:#475569;background:#f8fafc;border-color:#e2e8f0}
+
+    .user-grid{
       display:grid;
-      place-items:center;
-      margin-bottom:18px;
-      background:linear-gradient(135deg,rgba(0,245,255,.12),rgba(123,47,255,.12));
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .user-box{
+      position:relative;
+      overflow:hidden;
       border:1px solid var(--border);
-      font-family:'Orbitron',sans-serif;
-      font-size:13px;
-      font-weight:900;
-      color:var(--cyan);
+      background:linear-gradient(180deg,#fff 0%,#fbfcff 100%);
+      border-radius:16px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
     }
 
-    .card h3{
-      font-size:18px;
-      margin-bottom:10px;
-      letter-spacing:-.02em;
+    .user-box:after{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:4px;
+      background:var(--blue);
     }
 
-    .card p{
+    .user-box span{
+      display:block;
       color:var(--muted);
-      font-size:13.8px;
-      line-height:1.7;
+      font-size:11px;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+      font-weight:900;
+      margin-bottom:6px;
     }
 
-    .tags{
+    .user-box strong{
+      display:block;
+      color:var(--navy);
+      font-size:15px;
+      font-weight:900;
+      margin-bottom:2px;
+    }
+
+    .user-box small{
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .toolbar{
       display:flex;
       flex-wrap:wrap;
-      gap:8px;
-      margin-top:18px;
-    }
-
-    .tag{
-      padding:5px 10px;
-      border-radius:6px;
-      border:1px solid var(--border);
-      background:rgba(0,245,255,.04);
-      font-family:'JetBrains Mono',monospace;
-      font-size:10.5px;
-      color:var(--muted);
-    }
-
-    .floating-dev-menu{
-      position:fixed;
-      right:24px;
-      bottom:24px;
-      z-index:1100;
-      display:flex;
-      flex-direction:column;
       gap:10px;
+      margin:14px 0;
+      align-items:center;
     }
 
-    .floating-dev-menu a{
-      min-width:142px;
-      text-align:center;
+    .toolbar.between{
+      justify-content:space-between;
+    }
+
+    .btn{
+      border:0;
+      border-radius:10px;
       padding:11px 16px;
-      border-radius:999px;
-      background:rgba(12,10,28,.86);
-      backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,.13);
-      box-shadow:0 14px 34px rgba(0,0,0,.28);
-      font-family:'JetBrains Mono',monospace;
-      font-size:12px;
-      font-weight:700;
+      background:var(--navy);
       color:#fff;
-      letter-spacing:.04em;
-      transition:transform .2s,background .2s,border-color .2s;
+      font-weight:800;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:40px;
+      line-height:1.1;
+      box-shadow:0 1px 2px rgba(16,24,40,.06);
+      transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease;
+      text-decoration:none;
     }
 
-    .floating-dev-menu a:hover,.floating-dev-menu a.active{
-      transform:translateY(-2px);
-      background:var(--violet2);
-      border-color:rgba(255,255,255,.24);
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 18px rgba(16,24,40,.10);
     }
 
-    footer{
-      border-top:1px solid var(--border);
-      padding:26px 5vw;
+    .btn.secondary{
+      background:#fff;
+      border:1px solid var(--border2);
+      color:var(--navy);
+    }
+
+    .btn.green{background:var(--green)}
+    .btn.red{background:var(--red)}
+    .btn.orange{background:var(--orange)}
+    .btn.small{padding:8px 11px;min-height:34px;font-size:12px}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+    .alert{
+      border-radius:14px;
+      padding:12px 14px;
+      margin:12px 0;
+      font-size:13px;
+      font-weight:850;
+      border:1px solid;
+    }
+
+    .alert.success{color:#166534;background:#ecfdf3;border-color:#bbf7d0}
+    .alert.error{color:#991b1b;background:#fef2f2;border-color:#fecaca}
+    .alert.info{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+
+    .qr-center-wrap{
+      margin-top:10px;
+      margin-bottom:12px;
+      padding:10px 12px;
+      border-left:4px solid var(--red);
+      border-radius:18px;
+    }
+
+    .qr-compactbar{
       display:flex;
+      align-items:center;
       justify-content:space-between;
       gap:12px;
-      flex-wrap:wrap;
-      background:rgba(0,0,0,.24);
     }
 
-    footer span{
-      font-family:'JetBrains Mono',monospace;
+    .qr-compact-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .qr-dot{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff1f2;
+      color:var(--red);
+      border:1px solid rgba(185,28,28,.16);
       font-size:12px;
-      color:var(--muted2);
+      font-weight:950;
+      letter-spacing:.4px;
+      flex:0 0 auto;
+    }
+
+    .qr-compact-title h2{
+      margin:0;
+      color:#071b4d;
+      font-size:15px;
+      font-weight:950;
+      line-height:1.15;
+    }
+
+    .qr-compact-title p{
+      margin:2px 0 0;
+      color:#64748b;
+      font-size:11px;
+      line-height:1.25;
+    }
+
+    .qr-center{
+      display:grid;
+      grid-template-columns:1fr 1.25fr;
+      gap:10px;
+      align-items:stretch;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid #e5eaf4;
+    }
+
+    .qr-center-card{
+      border:1px solid rgba(37,99,235,.12);
+      background:linear-gradient(135deg,#ffffff 0%,#f8fbff 100%);
+      border-radius:14px;
+      padding:12px;
+    }
+
+    .qr-center-card h3{
+      margin:0 0 4px;
+      color:#071b4d;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .qr-center-card p{
+      margin:0;
+      color:#64748b;
+      font-size:11px;
+      line-height:1.45;
+    }
+
+    .qr-instruction{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .qr-instruction .step{
+      display:flex;
+      gap:7px;
+      align-items:flex-start;
+      padding:9px 10px;
+      border-radius:12px;
+      background:#f1f5f9;
+      color:#334155;
+      font-size:11px;
+      line-height:1.32;
+    }
+
+    .qr-instruction .step b{
+      color:#071b4d;
+      min-width:16px;
+    }
+
+    .mutasi-panel{
+      border-color:#fed7aa;
+      background:linear-gradient(135deg,#fff 0%,#fff7ed 100%);
+    }
+
+    .mutasi-list{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .mutasi-card{
+      border:1px solid #fed7aa;
+      background:#fff;
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 10px 20px rgba(7,27,77,.06);
+    }
+
+    .mutasi-card h4{
+      margin:0 0 6px;
+      color:var(--navy);
+      font-size:15px;
+      font-weight:950;
+    }
+
+    .mutasi-card p{
+      margin:4px 0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .filter-layout{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .filter-col{
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:linear-gradient(180deg,#ffffff,#f8fbff);
+      padding:14px;
+      display:grid;
+      gap:10px;
+      align-content:start;
+    }
+
+    .filter-col-title{
+      color:var(--navy);
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      margin-bottom:2px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field label{
+      color:var(--navy);
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:2px;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+    }
+
+    .field input,.field select,.field textarea{
+      width:100%;
+      border:1px solid var(--border2);
+      border-radius:10px;
+      background:#fff;
+      color:var(--text);
+      font-size:13px;
+      font-weight:650;
+      min-height:42px;
+      padding:10px 12px;
+      outline:none;
+      transition:border-color .15s ease,box-shadow .15s ease;
+    }
+
+    .field textarea{min-height:86px;resize:vertical}
+
+    .field input:focus,.field select:focus,.field textarea:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 4px rgba(47,107,214,.10);
+    }
+
+    .field.full{grid-column:1/-1}
+    .field.half{grid-column:span 2}
+
+    .help{
+      color:var(--muted);
+      font-weight:600;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .filter-utility{
+      display:grid;
+      grid-template-columns:minmax(220px,1fr) minmax(140px,180px);
+      gap:10px;
+      align-items:end;
+      margin-top:12px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .stat{
+      display:flex;
+      align-items:center;
+      min-height:52px;
+      padding:12px 14px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--navy);
+      box-shadow:var(--shadow);
+      border-left:4px solid var(--blue);
+      font-size:12px;
+    }
+
+    .live-tools{
+      display:grid;
+      grid-template-columns:minmax(260px,1fr) auto auto;
+      gap:10px;
+      align-items:center;
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:#fbfcff;
+      margin:0 0 14px;
+    }
+
+    .live-search{
+      position:relative;
+    }
+
+    .live-search:before{
+      content:"⌕";
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+      font-size:17px;
+      font-weight:800;
+      pointer-events:none;
+    }
+
+    .live-search input{
+      width:100%;
+      min-height:42px;
+      border:1px solid var(--border2);
+      border-radius:12px;
+      background:#fff;
+      color:var(--text);
+      padding:8px 12px 8px 38px;
+      font-size:13.5px;
+      font-weight:650;
+      outline:none;
+    }
+
+    .live-count,.live-hint{
+      min-height:36px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--border2);
+      background:#fff;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      max-height:640px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:#fff;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
+    }
+
+    table{
+      width:100%;
+      min-width:1780px;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:12px;
+    }
+
+    th,td{
+      border-bottom:1px solid #eef2f7;
+      border-right:1px solid var(--border);
+      padding:10px 11px;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      z-index:2;
+      background:#f8fafc;
+      color:var(--navy);
+      font-size:11.5px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      font-weight:950;
+      white-space:nowrap;
+    }
+
+    td{
+      background:#fff;
+      color:#334155;
+      font-weight:650;
+    }
+
+    tbody tr:hover td{
+      background:#fbfdff;
+    }
+
+    tbody tr.selected td{
+      background:#eef4ff!important;
+    }
+
+    th.action-col,td.action-col{
+      position:sticky;
+      right:178px;
+      z-index:4;
+      background:#fff;
+      min-width:178px;
+      box-shadow:-8px 0 18px rgba(16,24,40,.05);
+    }
+
+    th.action-col{
+      z-index:7;
+      background:#f8fafc;
+    }
+
+    th.qr-col,td.qr-col{
+      position:sticky;
+      right:0;
+      z-index:5;
+      background:#fff;
+      min-width:178px;
+      width:178px;
+      box-shadow:-8px 0 18px rgba(16,24,40,.08);
+    }
+
+    th.qr-col{
+      z-index:8;
+      background:#f8fafc;
+    }
+
+    .actions,.qr-actions{
+      display:flex;
+      gap:7px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .qr-actions{
+      display:grid;
+      grid-template-columns:1fr;
+      min-width:150px;
+    }
+
+    .qr-ready{
+      display:none;
+      margin-top:4px;
+      font-size:10px;
+      font-weight:900;
+      color:#15803d;
+    }
+
+    .qr-actions.ready .qr-ready{display:inline-flex}
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(160px,1fr));
+      gap:12px;
+    }
+
+    .evidence-box{
+      border:1px solid #d7dfef;
+      border-radius:16px;
+      padding:14px;
+      background:#f8fafc;
+    }
+
+    .relation-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .relation-card{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      background:#fbfcff;
+    }
+
+    .relation-card h4{
+      margin:0 0 6px;
+      color:var(--navy);
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .relation-card p{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
     }
 
     .modal{
       position:fixed;
       inset:0;
-      z-index:3000;
+      z-index:9999;
       display:none;
-      align-items:center;
-      justify-content:center;
-      padding:28px;
+      background:rgba(15,23,42,.42);
+      backdrop-filter:blur(3px);
+      padding:24px;
+      overflow:auto;
     }
 
-    .modal.active{display:flex}
-
-    .modal-backdrop{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,.74);
-      backdrop-filter:blur(14px);
-    }
+    .modal.active{display:block}
 
     .modal-panel{
-      position:relative;
-      width:min(1220px,94vw);
-      max-height:90vh;
-      overflow:auto;
-      border:1px solid rgba(0,245,255,.24);
-      background:linear-gradient(135deg,rgba(18,18,46,.97),rgba(5,5,16,.99));
-      border-radius:24px;
-      box-shadow:0 34px 110px rgba(0,0,0,.64);
-      padding:24px;
+      max-width:1120px;
+      margin:28px auto;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:0 22px 60px rgba(15,23,42,.28);
+      overflow:hidden;
     }
 
     .modal-head{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:20px;
-      align-items:start;
-      margin-bottom:20px;
-    }
-
-    .modal-kicker{
-      font-family:'JetBrains Mono',monospace;
-      font-size:11px;
-      letter-spacing:.2em;
-      color:var(--cyan);
-      text-transform:uppercase;
-      margin-bottom:10px;
-    }
-
-    .modal-title{
-      font-family:'Orbitron',sans-serif;
-      font-size:clamp(24px,3vw,38px);
-      line-height:1.05;
-      letter-spacing:-.035em;
-      margin-bottom:10px;
-    }
-
-    .modal-desc{
-      max-width:860px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.75;
-    }
-
-    .modal-close{
-      width:42px;
-      height:42px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:#fff;
-      font-size:24px;
-      line-height:1;
-      cursor:pointer;
-      transition:transform .2s,background .2s,border-color .2s;
-    }
-
-    .modal-close:hover{
-      transform:translateY(-2px);
-      background:rgba(0,245,255,.1);
-      border-color:var(--border-h);
-    }
-
-    .mini-browser{
-      border:1px solid rgba(0,245,255,.18);
-      background:#080817;
-      border-radius:18px;
-      overflow:hidden;
-    }
-
-    .mini-browser-bar{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:12px 16px;
-      border-bottom:1px solid rgba(0,245,255,.12);
-      background:rgba(255,255,255,.035);
-    }
-
-    .browser-dot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-    }
-
-    .browser-dot:nth-child(1){background:#ff5f57}
-    .browser-dot:nth-child(2){background:#febc2e}
-    .browser-dot:nth-child(3){background:#28c840}
-
-    .browser-url{
-      margin-left:10px;
-      flex:1;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(0,0,0,.32);
-      border:1px solid rgba(255,255,255,.08);
-      font-family:'JetBrains Mono',monospace;
-      font-size:11px;
-      color:var(--muted);
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-
-    .mini-app{
-      min-height:570px;
-      background:
-        radial-gradient(circle at 10% 0%,rgba(123,47,255,.16),transparent 30%),
-        radial-gradient(circle at 90% 10%,rgba(0,245,255,.12),transparent 32%),
-        #080817;
-    }
-
-    .app-shell{
-      display:grid;
-      grid-template-columns:230px 1fr;
-      min-height:570px;
-    }
-
-    .app-side{
-      border-right:1px solid rgba(0,245,255,.12);
-      padding:22px 18px;
-      background:linear-gradient(180deg,rgba(123,47,255,.16),rgba(0,245,255,.04));
-    }
-
-    .app-logo{
-      width:48px;
-      height:48px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      margin-bottom:22px;
-      background:linear-gradient(135deg,var(--cyan),var(--violet));
-      box-shadow:0 14px 36px rgba(0,245,255,.18);
-      font-family:'Orbitron',sans-serif;
-      font-weight:900;
-      color:#fff;
-    }
-
-    .app-menu{
-      display:grid;
-      gap:10px;
-    }
-
-    .app-menu button{
-      text-align:left;
-      cursor:pointer;
-      padding:11px 12px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.045);
-      color:var(--muted);
-      font-size:12px;
-      font-family:'JetBrains Mono',monospace;
-      transition:.18s ease;
-    }
-
-    .app-menu button:hover{
-      color:#fff;
-      border-color:rgba(0,245,255,.24);
-      transform:translateX(2px);
-    }
-
-    .app-menu button.active{
-      color:#fff;
-      border-color:rgba(0,245,255,.3);
-      background:rgba(0,245,255,.1);
-    }
-
-    .app-main{
-      padding:24px;
-    }
-
-    .app-top{
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
-      gap:18px;
-      margin-bottom:20px;
+      gap:16px;
+      padding:20px 22px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,#fff 0%,#fbfcff 100%);
     }
 
-    .app-top h4{
-      font-size:23px;
-      margin-bottom:6px;
-    }
-
-    .app-top p{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-
-    .app-pill{
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(0,245,255,.18);
-      background:rgba(0,245,255,.07);
-      color:var(--cyan);
-      font-family:'JetBrains Mono',monospace;
-      font-size:11px;
-      white-space:nowrap;
-    }
-
-    .stat-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin-bottom:16px;
-    }
-
-    .stat-card{
-      padding:16px;
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(18,18,46,.82);
-      border-radius:16px;
-    }
-
-    .stat-card b{
-      display:block;
+    .modal-head h3{
+      margin:0 0 4px;
       font-size:24px;
-      margin-bottom:6px;
+      color:var(--navy);
+      font-weight:950;
     }
 
-    .stat-card span{
-      color:var(--muted);
-      font-size:12px;
+    .modal-body{
+      padding:22px;
     }
 
-    .panel-grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:14px;
+    .close{
+      border:1px solid var(--border);
+      background:#fff1f2;
+      color:var(--red);
+      border-radius:999px;
+      padding:8px 11px;
+      cursor:pointer;
+      font-weight:950;
     }
 
-    .panel-grid.equal{
-      grid-template-columns:1fr 1fr;
-    }
-
-    .mini-panel{
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(18,18,46,.72);
-      border-radius:16px;
-      padding:16px;
-      min-width:0;
-    }
-
-    .mini-panel h5{
-      font-size:14px;
-      margin-bottom:14px;
-    }
-
-    .control-row{
+    .qr-preview-stage{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom:14px;
-    }
-
-    .search-input,
-    .select-input,
-    .text-input,
-    .number-input,
-    .textarea-input{
-      min-width:0;
-      border:1px solid rgba(0,245,255,.13);
-      background:rgba(0,0,0,.26);
-      color:var(--text);
-      border-radius:10px;
-      padding:11px 12px;
-      font:inherit;
-      font-size:12px;
-      outline:none;
-    }
-
-    .search-input{flex:1;min-width:180px}
-    .select-input{min-width:150px}
-    .textarea-input{min-height:86px;resize:none;width:100%}
-
-    .action-btn{
-      cursor:pointer;
-      border:1px solid rgba(0,245,255,.2);
-      background:linear-gradient(135deg,rgba(0,245,255,.16),rgba(123,47,255,.18));
-      color:#fff;
-      border-radius:10px;
-      padding:11px 13px;
-      font-size:12px;
-      font-weight:700;
-      transition:.18s ease;
-    }
-
-    .action-btn:hover{
-      transform:translateY(-1px);
-      border-color:rgba(0,245,255,.36);
-    }
-
-    .action-btn.subtle{
-      background:rgba(255,255,255,.045);
-      color:var(--muted);
-    }
-
-    .mini-table{
-      display:grid;
-      gap:9px;
-    }
-
-    .mini-row{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:10px;
-      align-items:center;
-      padding:10px;
-      border-radius:10px;
-      background:rgba(255,255,255,.045);
-      font-size:12px;
-      color:var(--muted);
-      cursor:pointer;
-      border:1px solid transparent;
-      transition:.16s ease;
-    }
-
-    .mini-row:hover{
-      border-color:rgba(0,245,255,.22);
-      background:rgba(0,245,255,.06);
-    }
-
-    .mini-row strong{
-      color:var(--text);
-    }
-
-    .mini-row small{
-      display:block;
-      color:var(--muted2);
-      margin-top:4px;
-      line-height:1.45;
-    }
-
-    .status{
-      display:inline-flex;
       justify-content:center;
-      min-width:66px;
-      padding:5px 8px;
-      border-radius:999px;
-      background:rgba(0,245,255,.09);
-      color:var(--cyan);
-      font-family:'JetBrains Mono',monospace;
-      font-size:10px;
-      text-transform:uppercase;
-    }
-
-    .status.green{background:rgba(51,226,155,.1);color:var(--green)}
-    .status.yellow{background:rgba(255,209,102,.1);color:var(--yellow)}
-    .status.red{background:rgba(255,95,87,.1);color:var(--red)}
-
-    .detail-card{
-      padding:14px;
-      border-radius:14px;
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      line-height:1.65;
-      font-size:12px;
-    }
-
-    .detail-card b{
-      display:block;
-      color:var(--text);
-      font-size:15px;
-      margin-bottom:6px;
-    }
-
-    .kv{
-      display:grid;
-      grid-template-columns:110px 1fr;
-      gap:8px;
-      margin-top:8px;
-    }
-
-    .kv span:nth-child(odd){color:var(--muted2)}
-    .kv span:nth-child(even){color:var(--text)}
-
-    .bars{
-      display:grid;
-      gap:12px;
-    }
-
-    .bar-item label{
-      display:flex;
-      justify-content:space-between;
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:7px;
-    }
-
-    .bar{
-      height:10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      overflow:hidden;
-    }
-
-    .bar span{
-      display:block;
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--cyan),var(--violet));
-      transition:width .25s ease;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-    }
-
-    .field{
-      display:grid;
-      gap:7px;
-    }
-
-    .field label{
-      color:var(--muted);
-      font-size:11px;
-      font-family:'JetBrains Mono',monospace;
-    }
-
-    .field input,
-    .field select,
-    .field textarea{
-      width:100%;
-      border:1px solid rgba(0,245,255,.13);
-      background:rgba(0,0,0,.26);
-      color:var(--text);
-      border-radius:10px;
-      padding:11px 12px;
-      font:inherit;
-      font-size:12px;
-      outline:none;
-    }
-
-    .field textarea{
-      min-height:82px;
-      resize:none;
-    }
-
-    .field.full{grid-column:1/-1}
-
-    .tile-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-
-    .module-tile{
-      min-height:96px;
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(255,255,255,.045);
-      border-radius:14px;
-      padding:14px;
-      cursor:pointer;
-      transition:.16s ease;
-    }
-
-    .module-tile:hover,
-    .module-tile.active{
-      border-color:rgba(0,245,255,.32);
-      background:rgba(0,245,255,.08);
-      transform:translateY(-2px);
-    }
-
-    .module-tile b{
-      display:block;
-      margin-bottom:8px;
-      font-size:13px;
-    }
-
-    .module-tile span{
-      color:var(--muted);
-      font-size:11.5px;
-      line-height:1.55;
-    }
-
-    .file-explorer{
-      display:grid;
-      grid-template-columns:220px 1fr;
-      gap:14px;
-    }
-
-    .folder-tree,.file-area{
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(18,18,46,.72);
-      border-radius:16px;
       padding:16px;
+      border:1px dashed #cbd5e1;
+      border-radius:18px;
+      background:linear-gradient(180deg,#f8fafc,#ffffff);
     }
 
-    .tree-item{
-      width:100%;
-      text-align:left;
-      cursor:pointer;
-      border:0;
-      padding:10px;
+    .qr-label{
+      width:150px;
+      height:310px;
       border-radius:10px;
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:6px;
-      background:rgba(255,255,255,.035);
+      background:#fff;
+      box-shadow:0 14px 30px rgba(7,27,77,.16);
+      border:1px solid #e2e8f0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:12px 10px;
+      text-align:center;
     }
 
-    .tree-item.active{
+    .qr-label-logo{
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--navy),var(--red));
       color:#fff;
-      background:rgba(0,245,255,.1);
-    }
-
-    .file-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-
-    .file-card{
-      min-height:108px;
-      border:1px solid rgba(0,245,255,.12);
-      background:rgba(255,255,255,.045);
-      border-radius:14px;
-      padding:14px;
-      cursor:pointer;
-      transition:.16s ease;
-    }
-
-    .file-card:hover{
-      border-color:rgba(0,245,255,.32);
-      background:rgba(0,245,255,.07);
-      transform:translateY(-2px);
-    }
-
-    .file-icon{
-      width:38px;
-      height:38px;
-      border-radius:10px;
       display:grid;
       place-items:center;
-      background:rgba(0,245,255,.1);
-      color:var(--cyan);
-      margin-bottom:12px;
-      font-family:'JetBrains Mono',monospace;
+      font-weight:950;
+      margin-bottom:8px;
+    }
+
+    .qr-label-title{
+      color:var(--navy);
       font-size:11px;
-      font-weight:700;
+      font-weight:950;
+      margin-bottom:8px;
     }
 
-    .file-card b{
-      display:block;
-      font-size:12px;
-      margin-bottom:6px;
-    }
-
-    .file-card span{
-      color:var(--muted);
-      font-size:11px;
-    }
-
-    .route-map{
-      display:grid;
-      grid-template-columns:1fr 220px;
-      gap:14px;
-    }
-
-    .map-box{
-      min-height:320px;
-      border:1px solid rgba(0,245,255,.12);
+    .fake-qr{
+      width:96px;
+      height:96px;
       background:
-        linear-gradient(rgba(0,245,255,.055) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,245,255,.055) 1px,transparent 1px),
-        rgba(18,18,46,.72);
-      background-size:38px 38px;
-      border-radius:16px;
-      position:relative;
-      overflow:hidden;
+        linear-gradient(90deg,#111 10px,transparent 10px) 0 0/18px 18px,
+        linear-gradient(#111 10px,transparent 10px) 0 0/18px 18px,
+        linear-gradient(45deg,transparent 48%,#111 49%,#111 56%,transparent 57%) 0 0/14px 14px,
+        #fff;
+      border:8px solid #fff;
+      outline:2px solid #111;
+      margin-bottom:12px;
     }
 
-    .map-pin{
-      position:absolute;
-      width:18px;
-      height:18px;
-      border:0;
-      border-radius:999px;
-      background:var(--cyan);
-      box-shadow:0 0 22px rgba(0,245,255,.8);
-      cursor:pointer;
+    .qr-label-code{
+      color:#111827;
+      font-size:12px;
+      font-weight:950;
+      word-break:break-word;
+      margin-bottom:8px;
     }
 
-    .map-pin.active{
-      background:var(--yellow);
-      box-shadow:0 0 26px rgba(255,209,102,.8);
-    }
-
-    .map-pin::after{
-      content:'';
-      position:absolute;
-      inset:-9px;
-      border:1px solid rgba(0,245,255,.25);
-      border-radius:999px;
-    }
-
-    .map-line{
-      position:absolute;
-      height:2px;
-      background:linear-gradient(90deg,var(--cyan),var(--violet));
-      transform-origin:left center;
-      opacity:.75;
-    }
-
-    .notice{
-      margin-top:14px;
-      padding:13px 15px;
-      border:1px solid rgba(123,47,255,.25);
-      background:rgba(123,47,255,.08);
-      border-radius:14px;
-      color:var(--muted);
-      line-height:1.65;
-      font-size:12.5px;
+    .qr-label-name{
+      color:#475569;
+      font-size:10px;
+      line-height:1.2;
+      font-weight:800;
     }
 
     .toast{
@@ -962,16 +871,16 @@
       left:50%;
       bottom:28px;
       transform:translateX(-50%) translateY(20px);
-      z-index:5000;
+      z-index:15000;
       opacity:0;
       pointer-events:none;
       padding:12px 16px;
       border-radius:999px;
-      border:1px solid rgba(0,245,255,.22);
-      background:rgba(5,5,16,.92);
+      border:1px solid rgba(47,107,214,.22);
+      background:rgba(22,38,63,.96);
       color:#fff;
       font-size:12px;
-      box-shadow:0 18px 60px rgba(0,0,0,.42);
+      box-shadow:0 18px 60px rgba(0,0,0,.22);
       transition:.22s ease;
     }
 
@@ -980,1143 +889,1552 @@
       transform:translateX(-50%) translateY(0);
     }
 
-    @media(max-width:980px){
-      .grid-2,.section-head,.app-shell,.panel-grid,.file-explorer,.route-map{
-        grid-template-columns:1fr;
-      }
+    .hidden{display:none!important}
 
-      .section-head{display:block}
-      .section-desc{margin-top:16px}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:none}
+    }
 
-      .app-side{
-        border-right:0;
-        border-bottom:1px solid rgba(0,245,255,.12);
-      }
-
-      .nav{
-        height:auto;
-        min-height:72px;
-        padding:14px 4vw;
-        align-items:flex-start;
-        flex-direction:column;
-      }
-
-      .nav-links{
-        width:100%;
-        gap:10px;
-        overflow-x:auto;
-        padding-bottom:2px;
-      }
-
-      .nav-links a{
-        white-space:nowrap;
-        font-size:11.5px;
-      }
-
-      .page{padding-top:118px}
-
-      .floating-dev-menu{
-        right:14px;
-        bottom:14px;
-      }
-
-      .floating-dev-menu a{
-        min-width:auto;
-        padding:10px 13px;
-        font-size:11px;
-      }
+    @media(max-width:1180px){
+      .user-grid,.stats,.filter-layout,.form-grid,.relation-grid{grid-template-columns:1fr 1fr}
+      .live-tools{grid-template-columns:1fr}
+      .qr-center{grid-template-columns:1fr}
     }
 
     @media(max-width:720px){
-      .modal{padding:14px}
-      .modal-panel{padding:18px}
-
-      .stat-grid,.form-grid,.tile-grid,.file-grid{
-        grid-template-columns:1fr;
-      }
-
-      .app-top{
-        flex-direction:column;
-      }
-
-      .mini-row{
-        grid-template-columns:1fr;
-      }
-
-      .status{
-        width:max-content;
-      }
-    }
-
-    @media(max-width:560px){
-      .container{width:min(92vw,1120px)}
-      .section{padding:62px 0}
-
-      .floating-dev-menu{
-        display:grid;
-        grid-template-columns:repeat(2,auto);
-        gap:8px;
-      }
-
-      .floating-dev-menu a{
-        font-size:10.5px;
-        padding:9px 11px;
-      }
+      .wrap{padding:14px 12px 32px}
+      .hero{padding:22px;border-radius:20px}
+      .title-row,.qr-compactbar{flex-direction:column}
+      .user-grid,.stats,.filter-layout,.filter-utility,.form-grid,.relation-grid,.qr-instruction{grid-template-columns:1fr}
+      .field.half{grid-column:1/-1}
+      .modal{padding:12px}
+      .modal-panel{margin:10px auto}
     }
   </style>
 </head>
 
 <body>
-  <nav class="nav">
-    <a href="/" class="brand" aria-label="Liswan.dev Home">
-      <img src="/liswan-dev-logo.svg" alt="" onerror="this.style.display='none'">
-      <span>LISWAN.DEV</span>
-    </a>
+<div class="wrap">
+  <section class="hero">
+    <div class="kicker">SMART MASTER ASSET</div>
+    <h1>Database Induk Asset Perusahaan</h1>
+    <p>
+      Mini web app prototype dari SMART Master Asset. Preview ini meniru flow utama: panel user, filter, master asset, tambah/edit data, QR label, relasi asset, dan batch mutasi. Semua data bersifat dummy dan berjalan di browser.
+    </p>
+  </section>
 
-    <div class="nav-links">
-      <a href="/profile/">Profile</a>
-      <a href="/portfolio/">Portofolio</a>
-      <a href="/custom-apps/">Custom Apps</a>
-      <a href="/contact/">Contact</a>
+  <section class="card soft">
+    <div class="title-row">
+      <div class="title">
+        <h2>Panel User & Akses</h2>
+        <p>Identitas dibuat sebagai simulasi login aktif untuk kebutuhan portofolio.</p>
+      </div>
+      <span class="badge">SMART V1 • Mini Prototype • PGA Sync</span>
     </div>
-  </nav>
 
-  <div class="floating-dev-menu" aria-label="Developer quick menu">
-    <a href="/projects/" class="active">Projects</a>
-    <a href="/stack/">Stack</a>
-    <a href="/architecture/">Architecture</a>
-    <a href="/log/">Log</a>
-  </div>
+    <div class="user-grid">
+      <div class="user-box">
+        <span>User Login</span>
+        <strong>Liswan Susanto</strong>
+        <small>NIK: 000010</small>
+      </div>
+      <div class="user-box">
+        <span>Departemen / Posisi</span>
+        <strong>IT</strong>
+        <small>Internal System Builder</small>
+      </div>
+      <div class="user-box">
+        <span>AO / OU</span>
+        <strong>HEAD OFFICE</strong>
+        <small>Surabaya</small>
+      </div>
+    </div>
 
-  <main class="page">
-    <section class="container section">
-      <div class="section-head">
+    <div class="toolbar">
+      <button class="btn" id="openFormBtn">+ Tambah Asset Manual</button>
+      <button class="btn green" id="exportBtn">Export Asset</button>
+      <button class="btn orange" id="openMutationCenterBtn">Lihat Mutasi</button>
+      <button class="btn secondary" id="templateBtn">Download Template XLSX</button>
+      <button class="btn orange" id="toggleImportBtn">Import CSV / XLSX</button>
+      <button class="btn secondary" id="resetDemoBtn">Reset Demo Data</button>
+    </div>
+
+    <div class="alert info hidden" id="importBox">
+      <strong>Import Dummy:</strong> tombol ini meniru upload CSV/XLSX. Klik “Proses Import Dummy” untuk menambahkan beberapa asset sample ke tabel.
+      <div class="toolbar" style="margin-bottom:0">
+        <button class="btn green small" id="processImportBtn">Proses Import Dummy</button>
+        <button class="btn secondary small" id="closeImportBtn">Tutup</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card qr-center-wrap">
+    <div class="qr-compactbar">
+      <div class="qr-compact-title">
+        <span class="qr-dot">QR</span>
         <div>
-          <div class="kicker">// projects</div>
-          <h2>Project details<br>and system modules.</h2>
+          <h2>QR Label Center</h2>
+          <p>Label berisi Nomor SMART Asset, bukan URL. Gunakan tombol QR pada baris asset.</p>
         </div>
-        <p class="section-desc">
-          Click a project to open an interactive mini web app preview. Each preview is recreated using dummy data only.
-        </p>
       </div>
-
-      <div class="grid-2">
-        <article class="card" tabindex="0" role="button" data-project="asset">
-          <div class="badge">AM</div>
-          <h3>Asset Management</h3>
-          <p>Internal asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, mutation history, and role-based access.</p>
-          <div class="tags"><span class="tag">Asset Tracking</span><span class="tag">QR Label</span><span class="tag">Role Access</span></div>
-        </article>
-
-        <article class="card" tabindex="0" role="button" data-project="siber">
-          <div class="badge">SIB</div>
-          <h3>Internal Company Website</h3>
-          <p>Internal company portal for department-based access, operational information, reporting dashboards, weekly reports, and business support modules.</p>
-          <div class="tags"><span class="tag">Internal Website</span><span class="tag">Department Access</span><span class="tag">Dashboard</span></div>
-        </article>
-
-        <article class="card" tabindex="0" role="button" data-project="dsa">
-          <div class="badge">DSA</div>
-          <h3>Daily Sales Activity Report</h3>
-          <p>Sales activity reporting system for daily input, supervisor monitoring, branch-level summaries, target tracking, and performance review.</p>
-          <div class="tags"><span class="tag">Sales Report</span><span class="tag">Monitoring</span><span class="tag">Branch View</span></div>
-        </article>
-
-        <article class="card" tabindex="0" role="button" data-project="sfa">
-          <div class="badge">SFA</div>
-          <h3>Tracking Sales & Marketing</h3>
-          <p>Sales and marketing tracking system for monitoring field activity, role access, branch reporting, target progress, and operational activity.</p>
-          <div class="tags"><span class="tag">Sales Tracking</span><span class="tag">Marketing Activity</span><span class="tag">Performance</span></div>
-        </article>
-
-        <article class="card" tabindex="0" role="button" data-project="sfs">
-          <div class="badge">SFS</div>
-          <h3>Document & File Service</h3>
-          <p>Google Drive-based document and file service with portal interface, folder hierarchy, employee access control, drag-and-drop upload, and automation.</p>
-          <div class="tags"><span class="tag">Google Drive</span><span class="tag">Apps Script</span><span class="tag">File Portal</span></div>
-        </article>
-
-        <article class="card" tabindex="0" role="button" data-project="hc">
-          <div class="badge">HC</div>
-          <h3>Employee Resource Center</h3>
-          <p>Internal resource center for employee information, SOP, job descriptions, forms, announcements, and department-facing resources.</p>
-          <div class="tags"><span class="tag">Employee Portal</span><span class="tag">Resources</span><span class="tag">Forms</span></div>
-        </article>
+      <div class="toolbar" style="margin:0">
+        <button class="btn orange small" id="downloadGuidanceBtn">Download Guidance Label</button>
+        <button class="btn secondary small" id="toggleQrGuideBtn">Buka Panduan</button>
       </div>
-    </section>
+    </div>
 
-    <div class="modal" id="projectModal" aria-hidden="true">
-      <div class="modal-backdrop" data-close></div>
-
-      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-head">
-          <div>
-            <div class="modal-kicker">// interactive mini web app</div>
-            <h3 class="modal-title" id="modalTitle">Project Preview</h3>
-            <p class="modal-desc" id="modalDesc"></p>
-          </div>
-          <button class="modal-close" type="button" aria-label="Close preview" data-close>×</button>
+    <div id="qrGuideBody" class="hidden">
+      <div class="qr-center">
+        <div class="qr-center-card">
+          <h3>Guidance Cetak QR Code</h3>
+          <p>Mini guide ini mengikuti konsep label kecil: logo, SMART ASSET, QR Code, nomor asset, dan nama barang.</p>
         </div>
-
-        <div class="mini-browser">
-          <div class="mini-browser-bar">
-            <span class="browser-dot"></span>
-            <span class="browser-dot"></span>
-            <span class="browser-dot"></span>
-            <div class="browser-url" id="browserUrl">liswan.dev/projects/preview</div>
-          </div>
-          <div class="mini-app" id="miniApp"></div>
-        </div>
-
-        <div class="notice">
-          Interaksi di preview ini berjalan di sisi browser saja. Data bersifat dummy, tidak tersambung database, dan aman untuk portofolio publik.
+        <div class="qr-center-card qr-instruction">
+          <div class="step"><b>1.</b><span>Generate label dari kolom QR pada asset.</span></div>
+          <div class="step"><b>2.</b><span>Preview label untuk memastikan kode dan nama barang benar.</span></div>
+          <div class="step"><b>3.</b><span>Download label dummy sebagai simulasi file JPG.</span></div>
+          <div class="step"><b>4.</b><span>Print dengan Scale 100% / Actual Size.</span></div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
-  <footer>
-    <span>LISWAN.DEV</span>
-    <span>© <span id="year"></span> Liswan Susanto · IT Developer & Internal System Builder</span>
-    <span>WordPress · PHP · Apps Script · Internal Systems</span>
-  </footer>
+  <section class="card mutasi-panel hidden" id="mutationPanel">
+    <div class="title-row">
+      <div class="title">
+        <h2>Mutasi Asset Aktif</h2>
+        <p>Panel ini menampilkan batch mutasi aktif, bukan daftar asset satu per satu.</p>
+      </div>
+      <span class="chip orange" id="mutationCountBadge">0 Batch Aktif</span>
+    </div>
+    <div class="mutasi-list" id="mutationList"></div>
+  </section>
 
-  <div class="toast" id="toast">Action completed</div>
+  <section class="card">
+    <div class="title-row">
+      <div class="title">
+        <h2>Filter Data Asset</h2>
+        <p>Gunakan filter untuk monitoring master asset per kelas, kategori, barang, AO, OU, kondisi, status, dan nomor pembiayaan.</p>
+      </div>
+      <button class="btn secondary small" id="toggleFilterBtn">Hide / Show Filter</button>
+    </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const modal = document.getElementById('projectModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    const browserUrl = document.getElementById('browserUrl');
-    const miniApp = document.getElementById('miniApp');
-    const toast = document.getElementById('toast');
-
-    let currentProject = null;
-    let currentTab = null;
-
-    const state = {
-      assetFilter:'ALL',
-      assetSearch:'',
-      assetSelected:0,
-      siberSelected:'HCGA',
-      dsaEntries:[
-        {branch:'AO Madiun', sales:'Demo Salesman A', visits:18, effective:14, status:'Approved'},
-        {branch:'OU Jember', sales:'Demo Salesman B', visits:21, effective:17, status:'Submitted'},
-        {branch:'OU Probolinggo', sales:'Demo Salesman C', visits:15, effective:9, status:'Review'}
-      ],
-      sfaSelected:0,
-      sfsFolder:'HO Documents',
-      hcCategory:'SOP',
-      hcSearch:''
-    };
-
-    const assetRows = [
-      {name:'Notebook IT-042', code:'AST-IT-042', location:'HO Surabaya', category:'Laptop', condition:'GOOD', status:'ACTIVE'},
-      {name:'Printer Thermal BR-017', code:'AST-BR-017', location:'OU Jember', category:'Printer', condition:'CHECK', status:'CHECK'},
-      {name:'Vehicle Unit VH-009', code:'AST-VH-009', location:'AO Madiun', category:'Vehicle', condition:'GOOD', status:'USED'},
-      {name:'Router AO-021', code:'AST-NW-021', location:'AO Probolinggo', category:'Network', condition:'REPAIR', status:'REPAIR'},
-      {name:'Monitor HO-088', code:'AST-MN-088', location:'HO Surabaya', category:'Monitor', condition:'GOOD', status:'READY'},
-      {name:'Scanner WH-014', code:'AST-SC-014', location:'Warehouse', category:'Scanner', condition:'CHECK', status:'CHECK'}
-    ];
-
-    const siberModules = [
-      {name:'HCGA', desc:'Employee resources, SOP, forms, and personnel support.', users:142, modules:9, status:'Live'},
-      {name:'FAT', desc:'Finance, accounting, tax documents, and internal report references.', users:24, modules:7, status:'Live'},
-      {name:'BusDev', desc:'Sales support files, target achievement, and area monitoring resources.', users:32, modules:11, status:'Beta'},
-      {name:'IT', desc:'System tools, file services, technical notes, and maintenance logs.', users:6, modules:13, status:'Live'},
-      {name:'Weekly Report', desc:'Weekly report submission, approval, revision, and management review flow.', users:89, modules:4, status:'Live'},
-      {name:'Dashboard', desc:'Sales performance, stock report, piutang, and operational monitoring.', users:18, modules:8, status:'Preview'}
-    ];
-
-    const sfaPins = [
-      {name:'Outlet A', left:'18%', top:'34%', status:'DONE', visit:'08:45', note:'Stock checked and display verified.'},
-      {name:'Outlet B', left:'47%', top:'48%', status:'DONE', visit:'10:10', note:'Order submitted and owner confirmed.'},
-      {name:'Outlet C', left:'73%', top:'30%', status:'VISIT', visit:'13:25', note:'Current active visit in route.'},
-      {name:'Outlet D', left:'62%', top:'72%', status:'NEXT', visit:'15:00', note:'Scheduled next outlet.'}
-    ];
-
-    const sfsFiles = {
-      'HO Documents':[
-        ['PDF','Company Policy','Updated today'],
-        ['XLS','Weekly Report','Synced 2 hours ago'],
-        ['DOC','SOP Access','Shared file'],
-        ['IMG','Brand Assets','12 files'],
-        ['ZIP','Backup Export','Auto generated'],
-        ['CSV','Master Data','Restricted']
-      ],
-      'Sales Reports':[
-        ['XLS','Daily Sales Week 27','Updated 10:30'],
-        ['CSV','Outlet Coverage','Auto sync'],
-        ['PDF','Area Review','Manager access']
-      ],
-      'HCGA Forms':[
-        ['DOC','Leave Request Form','Ready'],
-        ['PDF','Employee SOP','Updated'],
-        ['XLS','MPP Summary','Restricted']
-      ],
-      'Finance Files':[
-        ['XLS','Invoice Monitoring','Restricted'],
-        ['PDF','Tax Reference','Shared'],
-        ['CSV','Payment Export','Auto generated']
-      ],
-      'IT References':[
-        ['TXT','Deployment Notes','Internal'],
-        ['PDF','System Architecture','Draft'],
-        ['ZIP','Backup Config','Restricted']
-      ]
-    };
-
-    const hcResources = {
-      SOP:[
-        ['SOP Attendance','Operational attendance and approval procedure.'],
-        ['SOP Asset Request','Asset request and approval procedure.'],
-        ['SOP File Access','Internal document access procedure.']
-      ],
-      Forms:[
-        ['Leave Request Form','Form for employee leave submission.'],
-        ['Asset Request Form','Form for internal asset request.'],
-        ['Data Change Form','Employee data update form.']
-      ],
-      Jobs:[
-        ['IT Developer','Internal system builder and maintenance responsibility.'],
-        ['HCGA Staff','Human capital and general affairs operational duties.'],
-        ['Sales Supervisor','Sales activity review and branch monitoring.']
-      ],
-      Announcements:[
-        ['System Maintenance','Scheduled maintenance notice for internal portal.'],
-        ['Policy Update','New internal policy document available.'],
-        ['Training Schedule','Application training schedule for branches.']
-      ]
-    };
-
-    const projectMeta = {
-      asset:{
-        title:'Asset Management',
-        desc:'Interactive preview for asset registry, QR label control, status filtering, condition tracking, and mutation monitoring.',
-        url:'liswan.dev/projects/asset-management',
-        code:'AM',
-        tabs:['Registry','QR Label','Mutation']
-      },
-      siber:{
-        title:'Internal Company Website',
-        desc:'Interactive preview for internal portal, department modules, dashboard access, weekly reports, and business support.',
-        url:'liswan.dev/projects/internal-company-website',
-        code:'SIB',
-        tabs:['Portal','Modules','Dashboard']
-      },
-      dsa:{
-        title:'Daily Sales Activity Report',
-        desc:'Interactive preview for daily sales input, branch summary, supervisor review, and activity history.',
-        url:'liswan.dev/projects/daily-sales-activity-report',
-        code:'DSA',
-        tabs:['Input','Summary','Review']
-      },
-      sfa:{
-        title:'Tracking Sales & Marketing',
-        desc:'Interactive preview for field route tracking, outlet visit status, target progress, and marketing activity monitoring.',
-        url:'liswan.dev/projects/tracking-sales-marketing',
-        code:'SFA',
-        tabs:['Route','Visits','Performance']
-      },
-      sfs:{
-        title:'Document & File Service',
-        desc:'Interactive preview for Drive-style file portal, folder switching, dummy upload, and document access.',
-        url:'liswan.dev/projects/document-file-service',
-        code:'SFS',
-        tabs:['Explorer','Upload','Access']
-      },
-      hc:{
-        title:'Employee Resource Center',
-        desc:'Interactive preview for employee resources, SOP, forms, job descriptions, and announcements.',
-        url:'liswan.dev/projects/employee-resource-center',
-        code:'HC',
-        tabs:['Resources','Forms','Updates']
-      }
-    };
-
-    function statusClass(value){
-      const v = String(value).toLowerCase();
-      if(v.includes('good') || v.includes('active') || v.includes('ready') || v.includes('used') || v.includes('done') || v.includes('approved') || v.includes('live')) return 'green';
-      if(v.includes('check') || v.includes('review') || v.includes('visit') || v.includes('beta') || v.includes('submitted') || v.includes('update')) return 'yellow';
-      if(v.includes('repair') || v.includes('blocked')) return 'red';
-      return '';
-    }
-
-    function showToast(message){
-      toast.textContent = message;
-      toast.classList.add('show');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
-    }
-
-    function appShell(projectKey, content){
-      const meta = projectMeta[projectKey];
-
-      return `
-        <div class="app-shell">
-          <aside class="app-side">
-            <div class="app-logo">${meta.code}</div>
-            <div class="app-menu">
-              ${meta.tabs.map(tab => `
-                <button type="button" class="${currentTab === tab ? 'active' : ''}" data-tab="${tab}">${tab}</button>
-              `).join('')}
-            </div>
-          </aside>
-          <section class="app-main">
-            ${content}
-          </section>
+    <div id="filterBody">
+      <div class="filter-layout">
+        <div class="filter-col">
+          <div class="filter-col-title">Struktur Barang</div>
+          <div class="field">
+            <label>Kelas</label>
+            <select id="filterKelas"></select>
+          </div>
+          <div class="field">
+            <label>Kategori</label>
+            <select id="filterKategori"></select>
+          </div>
+          <div class="field">
+            <label>Nama Barang</label>
+            <select id="filterBarang"></select>
+          </div>
         </div>
-      `;
-    }
 
-    function appHeader(title, desc, pill){
-      return `
-        <div class="app-top">
-          <div>
-            <h4>${title}</h4>
-            <p>${desc}</p>
+        <div class="filter-col">
+          <div class="filter-col-title">Area Asset</div>
+          <div class="field">
+            <label>AO</label>
+            <select id="filterAo"></select>
           </div>
-          <div class="app-pill">${pill}</div>
+          <div class="field">
+            <label>OU</label>
+            <select id="filterOu"></select>
+          </div>
         </div>
-      `;
-    }
 
-    function renderAsset(){
-      let content = '';
-
-      if(currentTab === 'Registry'){
-        const filtered = assetRows.filter(row => {
-          const byFilter = state.assetFilter === 'ALL' || row.status === state.assetFilter || row.condition === state.assetFilter;
-          const q = state.assetSearch.toLowerCase();
-          const bySearch = !q || Object.values(row).join(' ').toLowerCase().includes(q);
-          return byFilter && bySearch;
-        });
-
-        const selected = filtered[state.assetSelected] || filtered[0] || assetRows[0];
-
-        content = `
-          ${appHeader('Asset Registry','Search, filter, and inspect dummy asset records. Click a row to show its details.','INTERACTIVE')}
-          <div class="stat-grid">
-            <div class="stat-card"><b>${assetRows.length}</b><span>Total Assets</span></div>
-            <div class="stat-card"><b>${assetRows.filter(x => x.condition === 'GOOD').length}</b><span>Good Condition</span></div>
-            <div class="stat-card"><b>${assetRows.filter(x => x.status === 'CHECK' || x.condition === 'CHECK').length}</b><span>Need Check</span></div>
+        <div class="filter-col">
+          <div class="filter-col-title">Status Asset</div>
+          <div class="field">
+            <label>Kondisi</label>
+            <select id="filterKondisi"></select>
           </div>
-          <div class="panel-grid">
-            <div class="mini-panel">
-              <h5>Asset List</h5>
-              <div class="control-row">
-                <input class="search-input" id="assetSearch" value="${state.assetSearch}" placeholder="Search asset, code, location...">
-                <select class="select-input" id="assetFilter">
-                  ${['ALL','ACTIVE','READY','CHECK','REPAIR','GOOD'].map(v => `<option ${state.assetFilter === v ? 'selected' : ''}>${v}</option>`).join('')}
-                </select>
-              </div>
-              <div class="mini-table">
-                ${filtered.map((row,index) => `
-                  <div class="mini-row" data-asset-row="${index}">
-                    <div><strong>${row.name}</strong><small>${row.code} · ${row.location} · ${row.category}</small></div>
-                    <span class="status ${statusClass(row.status)}">${row.status}</span>
-                  </div>
-                `).join('') || '<div class="detail-card">No asset found.</div>'}
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Selected Asset</h5>
-              <div class="detail-card">
-                <b>${selected.name}</b>
-                ${selected.code}
-                <div class="kv">
-                  <span>Location</span><span>${selected.location}</span>
-                  <span>Category</span><span>${selected.category}</span>
-                  <span>Condition</span><span>${selected.condition}</span>
-                  <span>Status</span><span>${selected.status}</span>
-                </div>
-              </div>
-              <div class="control-row" style="margin-top:14px;margin-bottom:0">
-                <button class="action-btn" id="generateQr">Generate QR Label</button>
-                <button class="action-btn subtle" id="requestMutation">Request Mutation</button>
-              </div>
-            </div>
+          <div class="field">
+            <label>Buffer / Digunakan</label>
+            <select id="filterPemakaian"></select>
           </div>
-        `;
-      }
-
-      if(currentTab === 'QR Label'){
-        content = `
-          ${appHeader('QR Label Center','Simulate QR label generation for selected asset batches.','QR LABEL')}
-          <div class="panel-grid equal">
-            <div class="mini-panel">
-              <h5>Label Batch</h5>
-              <div class="mini-table">
-                <div class="mini-row"><div><strong>Batch HO-0726</strong><small>32 labels · Head Office</small></div><span class="status green">READY</span></div>
-                <div class="mini-row"><div><strong>Batch AO-MDI</strong><small>18 labels · AO Madiun</small></div><span class="status yellow">PRINT</span></div>
-                <div class="mini-row"><div><strong>Batch OU-JBR</strong><small>21 labels · OU Jember</small></div><span class="status">QUEUE</span></div>
-              </div>
-              <button class="action-btn" id="printLabels" style="margin-top:14px">Print Dummy Labels</button>
-            </div>
-            <div class="mini-panel">
-              <h5>QR Preview</h5>
-              <div class="detail-card" style="display:grid;place-items:center;min-height:230px;text-align:center">
-                <div>
-                  <div style="width:130px;height:130px;margin:0 auto 14px;border-radius:12px;background:repeating-linear-gradient(45deg,#fff,#fff 6px,#050510 6px,#050510 12px);box-shadow:0 0 0 10px rgba(255,255,255,.06)"></div>
-                  <b>AST-DEMO-042</b>
-                  Dummy QR label preview
-                </div>
-              </div>
-            </div>
+          <div class="field">
+            <label>Status Nomor Pembiayaan</label>
+            <select id="filterFaa">
+              <option value="">Semua</option>
+              <option value="filled">Sudah Ada Nomor Pembiayaan</option>
+              <option value="missing">Belum Ada Nomor Pembiayaan</option>
+            </select>
           </div>
-        `;
-      }
+        </div>
+      </div>
 
-      if(currentTab === 'Mutation'){
-        content = `
-          ${appHeader('Asset Mutation Flow','Preview request status, approval, and delivery validation workflow.','MUTATION')}
-          <div class="panel-grid">
-            <div class="mini-panel">
-              <h5>Mutation Requests</h5>
-              <div class="mini-table">
-                <div class="mini-row"><div><strong>Notebook IT-042</strong><small>HO Surabaya → AO Madiun</small></div><span class="status yellow">AM REVIEW</span></div>
-                <div class="mini-row"><div><strong>Printer BR-017</strong><small>OU Jember → Service Center</small></div><span class="status green">VALIDATED</span></div>
-                <div class="mini-row"><div><strong>Router AO-021</strong><small>AO Probolinggo → HO IT</small></div><span class="status">DRAFT</span></div>
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Approval Progress</h5>
-              <div class="bars">
-                <div class="bar-item"><label><span>Draft</span><span>100%</span></label><div class="bar"><span style="width:100%"></span></div></div>
-                <div class="bar-item"><label><span>AM Approval</span><span>76%</span></label><div class="bar"><span style="width:76%"></span></div></div>
-                <div class="bar-item"><label><span>Delivery Proof</span><span>58%</span></label><div class="bar"><span style="width:58%"></span></div></div>
-                <div class="bar-item"><label><span>IT Validation</span><span>42%</span></label><div class="bar"><span style="width:42%"></span></div></div>
-              </div>
-            </div>
+      <div class="filter-utility">
+        <div class="field">
+          <label>Search</label>
+          <input id="filterSearch" type="text" placeholder="Kode, detail, merk, serial, nopol, PIC">
+        </div>
+        <div class="field">
+          <label>Jumlah Tampil</label>
+          <select id="perPage">
+            <option>50 data</option>
+            <option selected>100 data</option>
+            <option>250 data</option>
+            <option>500 data</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn" id="applyFilterBtn">Filter</button>
+        <button class="btn secondary" id="resetFilterBtn">Reset</button>
+      </div>
+
+      <div class="stats">
+        <span class="stat" id="statTotal">Total data: 0</span>
+        <span class="stat" id="statShown">Ditampilkan: 0</span>
+        <span class="stat">Halaman: 1 / 1</span>
+        <span class="stat">Area akses: HEAD OFFICE</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="title-row">
+      <div class="title">
+        <h2>Daftar Master Asset</h2>
+        <p>Tabel bisa discroll ke samping. Kolom Aksi dan QR dibuat sticky seperti konsep SMART asli.</p>
+      </div>
+    </div>
+
+    <div class="toolbar between">
+      <div class="toolbar" style="margin:0">
+        <button class="btn red small" id="deleteSelectedBtn">Hapus Terpilih</button>
+      </div>
+      <div class="toolbar" style="margin:0">
+        <span class="help" id="batchInfo">0 asset dipilih</span>
+        <button class="btn orange small" id="batchMutationBtn" disabled>Mutasi Terpilih</button>
+      </div>
+    </div>
+
+    <div class="live-tools">
+      <div class="live-search">
+        <input id="liveSearch" placeholder="Live search di tabel...">
+      </div>
+      <span class="live-count" id="liveCount">0 data tampil</span>
+      <span class="live-hint">Klik baris untuk detail cepat</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="checkAll"></th>
+            <th>Kode Asset</th>
+            <th>Kelas</th>
+            <th>Kategori</th>
+            <th>Nama Barang</th>
+            <th>Detail</th>
+            <th>Merk</th>
+            <th>Serial</th>
+            <th>No Polisi</th>
+            <th>AO</th>
+            <th>OU</th>
+            <th>Lokasi</th>
+            <th>PIC</th>
+            <th>Nomor Pembiayaan</th>
+            <th>Kondisi</th>
+            <th>Status</th>
+            <th>Buffer/Digunakan</th>
+            <th>Sumber</th>
+            <th>Dibuat Oleh</th>
+            <th>Tanggal</th>
+            <th>Relasi</th>
+            <th class="action-col">Aksi</th>
+            <th class="qr-col">QR</th>
+          </tr>
+        </thead>
+        <tbody id="assetTbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="assetModal" aria-hidden="true">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div>
+        <h3 id="assetModalTitle">Tambah Asset Manual</h3>
+        <div class="help">Nama barang wajib dari dropdown. Detail barang bebas untuk spesifikasi, warna, ukuran, tipe, atau catatan unit.</div>
+      </div>
+      <button class="close" id="closeAssetModal">Tutup</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="assetForm">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <div class="field">
+            <label>Kode Asset</label>
+            <input id="kodeAsset" readonly value="Otomatis saat disimpan">
           </div>
-        `;
-      }
 
-      miniApp.innerHTML = appShell('asset', content);
-
-      const search = document.getElementById('assetSearch');
-      if(search){
-        search.addEventListener('input', e => {
-          state.assetSearch = e.target.value;
-          state.assetSelected = 0;
-          renderAsset();
-        });
-      }
-
-      const filter = document.getElementById('assetFilter');
-      if(filter){
-        filter.addEventListener('change', e => {
-          state.assetFilter = e.target.value;
-          state.assetSelected = 0;
-          renderAsset();
-        });
-      }
-
-      document.querySelectorAll('[data-asset-row]').forEach(row => {
-        row.addEventListener('click', () => {
-          state.assetSelected = Number(row.dataset.assetRow);
-          renderAsset();
-          showToast('Asset detail opened');
-        });
-      });
-
-      const qr = document.getElementById('generateQr');
-      if(qr) qr.addEventListener('click', () => showToast('Dummy QR label generated'));
-
-      const mut = document.getElementById('requestMutation');
-      if(mut) mut.addEventListener('click', () => showToast('Dummy mutation request created'));
-
-      const print = document.getElementById('printLabels');
-      if(print) print.addEventListener('click', () => showToast('Dummy label batch sent to print'));
-
-      bindTabButtons();
-    }
-
-    function renderSiber(){
-      const selected = siberModules.find(m => m.name === state.siberSelected) || siberModules[0];
-      let content = '';
-
-      if(currentTab === 'Portal'){
-        content = `
-          ${appHeader('Internal Portal','Click a department module to preview its access summary and status.','PORTAL')}
-          <div class="stat-grid">
-            <div class="stat-card"><b>${siberModules.length}</b><span>Portal Modules</span></div>
-            <div class="stat-card"><b>${siberModules.reduce((a,b)=>a+b.users,0)}</b><span>Simulated Users</span></div>
-            <div class="stat-card"><b>${siberModules.reduce((a,b)=>a+b.modules,0)}</b><span>Sub Modules</span></div>
+          <div class="field">
+            <label>Kelas Barang *</label>
+            <select id="formKelas" required></select>
           </div>
-          <div class="panel-grid">
-            <div class="mini-panel">
-              <h5>Department Modules</h5>
-              <div class="tile-grid">
-                ${siberModules.map(item => `
-                  <div class="module-tile ${state.siberSelected === item.name ? 'active' : ''}" data-siber-module="${item.name}">
-                    <b>${item.name}</b>
-                    <span>${item.desc}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Selected Module</h5>
-              <div class="detail-card">
-                <b>${selected.name}</b>
-                ${selected.desc}
-                <div class="kv">
-                  <span>Users</span><span>${selected.users}</span>
-                  <span>Modules</span><span>${selected.modules}</span>
-                  <span>Status</span><span>${selected.status}</span>
-                </div>
-              </div>
-              <button class="action-btn" id="openSiberModule" style="margin-top:14px">Open Module</button>
-            </div>
+
+          <div class="field">
+            <label>Kategori Barang *</label>
+            <select id="formKategori" required></select>
           </div>
-        `;
-      }
 
-      if(currentTab === 'Modules'){
-        content = `
-          ${appHeader('Business Support Modules','Preview internal module groups used by department users.','MODULES')}
-          <div class="tile-grid">
-            <div class="module-tile"><b>Weekly Report</b><span>Submission, approval, revision, and weekly monitoring.</span></div>
-            <div class="module-tile"><b>Sales Performance</b><span>Area, branch, brand, and weekly dashboard view.</span></div>
-            <div class="module-tile"><b>Daily Stock</b><span>Stock in, stock out, and branch stock summary.</span></div>
-            <div class="module-tile"><b>File Portal</b><span>Operational file access and support documents.</span></div>
-            <div class="module-tile"><b>User Access</b><span>Role-based access and user mapping.</span></div>
-            <div class="module-tile"><b>Maintenance Log</b><span>Internal update notes and development log.</span></div>
+          <div class="field">
+            <label>Nama Barang *</label>
+            <select id="formBarang" required></select>
           </div>
-        `;
-      }
 
-      if(currentTab === 'Dashboard'){
-        content = `
-          ${appHeader('Portal Dashboard','Dummy dashboard for internal reporting overview.','DASHBOARD')}
-          <div class="panel-grid equal">
-            <div class="mini-panel">
-              <h5>Usage by Module</h5>
-              <div class="bars">
-                <div class="bar-item"><label><span>Weekly Report</span><span>92%</span></label><div class="bar"><span style="width:92%"></span></div></div>
-                <div class="bar-item"><label><span>File Portal</span><span>76%</span></label><div class="bar"><span style="width:76%"></span></div></div>
-                <div class="bar-item"><label><span>Dashboard</span><span>68%</span></label><div class="bar"><span style="width:68%"></span></div></div>
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Recent Access</h5>
-              <div class="mini-table">
-                <div class="mini-row"><div><strong>HCGA Portal</strong><small>Viewed employee resources</small></div><span class="status green">LIVE</span></div>
-                <div class="mini-row"><div><strong>BusDev Files</strong><small>Opened sales support folder</small></div><span class="status yellow">BETA</span></div>
-                <div class="mini-row"><div><strong>Weekly Report</strong><small>Submitted week report</small></div><span class="status green">DONE</span></div>
-              </div>
-            </div>
+          <div class="field full">
+            <label>Detail Barang</label>
+            <textarea id="detailBarang" placeholder="Contoh: Thinkpad Core i5 RAM 8GB SSD 256GB / Grandmax putih / Kursi lipat biru"></textarea>
           </div>
-        `;
-      }
 
-      miniApp.innerHTML = appShell('siber', content);
+          <div class="field">
+            <label>Merk</label>
+            <input id="merk" placeholder="Lenovo / Daihatsu / Hikvision">
+          </div>
 
-      document.querySelectorAll('[data-siber-module]').forEach(tile => {
-        tile.addEventListener('click', () => {
-          state.siberSelected = tile.dataset.siberModule;
-          renderSiber();
-          showToast(`${state.siberSelected} selected`);
-        });
-      });
+          <div class="field">
+            <label>Serial Number</label>
+            <input id="serialNumber" placeholder="Serial number jika ada">
+          </div>
 
-      const open = document.getElementById('openSiberModule');
-      if(open) open.addEventListener('click', () => showToast(`${state.siberSelected} module opened`));
+          <div class="field">
+            <label>Nomor Polisi</label>
+            <input id="nomorPolisi" placeholder="Khusus kendaraan">
+          </div>
 
-      bindTabButtons();
-    }
+          <div class="field">
+            <label>Kondisi</label>
+            <select id="formKondisi"></select>
+            <div class="help">RUSAK BERAT / HILANG / DISPOSAL membutuhkan dokumen pernyataan. RUSAK RINGAN / RUSAK BERAT / DISPOSAL membutuhkan foto kondisi barang.</div>
+          </div>
 
-    function renderDsa(){
-      let content = '';
+          <div class="field">
+            <label>Status Asset</label>
+            <input id="statusAsset" readonly>
+            <div class="help">Otomatis berdasarkan kondisi.</div>
+          </div>
 
-      const totalVisits = state.dsaEntries.reduce((a,b) => a + Number(b.visits), 0);
-      const totalEffective = state.dsaEntries.reduce((a,b) => a + Number(b.effective), 0);
-      const rate = totalVisits ? Math.round(totalEffective / totalVisits * 100) : 0;
+          <div class="field">
+            <label>Buffer / Digunakan</label>
+            <select id="statusPemakaian"></select>
+          </div>
 
-      if(currentTab === 'Input'){
-        content = `
-          ${appHeader('Daily Sales Input','Fill the dummy form and submit it to update the history and summary inside this preview.','SALES INPUT')}
-          <div class="panel-grid">
-            <div class="mini-panel">
-              <h5>Activity Form</h5>
+          <div class="field">
+            <label>AO</label>
+            <select id="formAo"></select>
+          </div>
+
+          <div class="field">
+            <label>OU</label>
+            <select id="formOu"></select>
+          </div>
+
+          <div class="field">
+            <label>Lokasi Barang</label>
+            <select id="lokasiBarang"></select>
+          </div>
+
+          <div class="field">
+            <label>PIC NIK</label>
+            <input id="picNik" placeholder="Isi NIK karyawan, contoh 000010">
+            <div class="help" id="picHelp">PIC Nama akan otomatis mengikuti Master Karyawan dummy.</div>
+          </div>
+
+          <div class="field">
+            <label>PIC Nama</label>
+            <input id="picNama" readonly placeholder="Auto dari NIK">
+          </div>
+
+          <div class="field">
+            <label>Nomor Pembiayaan</label>
+            <input id="nomorPembiayaan" placeholder="Contoh: nomor kontrak / nomor pembiayaan asset">
+          </div>
+
+          <div class="field full hidden" id="conditionEvidenceBox">
+            <div class="evidence-box">
+              <h4 style="margin-bottom:6px;color:#0f2147;">Lampiran Kondisi Asset</h4>
+              <div class="help" style="margin-bottom:12px;">
+                Untuk kondisi RUSAK BERAT / HILANG / DISPOSAL, upload dokumen pernyataan. Untuk RUSAK RINGAN / RUSAK BERAT / DISPOSAL, upload foto kondisi barang.
+              </div>
               <div class="form-grid">
-                <div class="field">
-                  <label>Sales Name</label>
-                  <input id="dsaSales" value="Demo Salesman">
+                <div class="field half">
+                  <label>Upload Dokumen Pernyataan</label>
+                  <input type="file" id="conditionStatement">
+                  <div class="help">Simulasi upload dokumen.</div>
                 </div>
-                <div class="field">
-                  <label>Branch</label>
-                  <select id="dsaBranch">
-                    <option>AO Madiun</option>
-                    <option>OU Jember</option>
-                    <option>OU Probolinggo</option>
-                    <option>OU Nganjuk</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Visit Count</label>
-                  <input id="dsaVisits" type="number" value="18">
-                </div>
-                <div class="field">
-                  <label>Effective Call</label>
-                  <input id="dsaEffective" type="number" value="14">
-                </div>
-                <div class="field full">
-                  <label>Daily Notes</label>
-                  <textarea id="dsaNotes">Outlet visit completed, stock checked, and sales progress updated.</textarea>
+                <div class="field half">
+                  <label>Upload Foto Kondisi Barang</label>
+                  <input type="file" id="conditionPhoto">
+                  <div class="help">Simulasi upload foto kondisi.</div>
                 </div>
               </div>
-              <button class="action-btn" id="submitDsa" style="margin-top:12px">Submit Daily Report</button>
-            </div>
-            <div class="mini-panel">
-              <h5>Latest Entries</h5>
-              <div class="mini-table">
-                ${state.dsaEntries.slice().reverse().map(row => `
-                  <div class="mini-row">
-                    <div><strong>${row.branch}</strong><small>${row.sales} · ${row.visits} visits · ${row.effective} effective</small></div>
-                    <span class="status ${statusClass(row.status)}">${row.status}</span>
-                  </div>
-                `).join('')}
-              </div>
             </div>
           </div>
-        `;
-      }
 
-      if(currentTab === 'Summary'){
-        content = `
-          ${appHeader('Branch Summary','Summary changes when you submit new dummy DSA input.','SUMMARY')}
-          <div class="stat-grid">
-            <div class="stat-card"><b>${state.dsaEntries.length}</b><span>Submitted Reports</span></div>
-            <div class="stat-card"><b>${totalVisits}</b><span>Total Visits</span></div>
-            <div class="stat-card"><b>${rate}%</b><span>Effective Rate</span></div>
+          <div class="field half">
+            <label>Upload Foto Asset</label>
+            <input type="file" id="fotoAsset" accept="image/jpeg,image/png,image/webp">
+            <div class="help">Simulasi upload foto utama asset.</div>
           </div>
-          <div class="mini-panel">
-            <h5>Performance Ratio</h5>
-            <div class="bars">
-              <div class="bar-item"><label><span>Effective Calls</span><span>${rate}%</span></label><div class="bar"><span style="width:${rate}%"></span></div></div>
-              <div class="bar-item"><label><span>Supervisor Review</span><span>74%</span></label><div class="bar"><span style="width:74%"></span></div></div>
-              <div class="bar-item"><label><span>Branch Completion</span><span>86%</span></label><div class="bar"><span style="width:86%"></span></div></div>
-            </div>
+
+          <div class="field half">
+            <label>Catatan</label>
+            <textarea id="catatan" placeholder="Catatan tambahan"></textarea>
           </div>
-        `;
-      }
+        </div>
 
-      if(currentTab === 'Review'){
-        content = `
-          ${appHeader('Supervisor Review','Click approve/revision buttons to simulate supervisor review actions.','REVIEW')}
-          <div class="mini-panel">
-            <h5>Pending Review</h5>
-            <div class="mini-table">
-              ${state.dsaEntries.map((row,index) => `
-                <div class="mini-row">
-                  <div><strong>${row.branch}</strong><small>${row.sales} · ${row.visits} visits · ${row.effective} effective</small></div>
-                  <span class="status ${statusClass(row.status)}">${row.status}</span>
-                </div>
-              `).join('')}
-            </div>
-            <div class="control-row" style="margin-top:14px;margin-bottom:0">
-              <button class="action-btn" id="approveDsa">Approve Selected</button>
-              <button class="action-btn subtle" id="reviseDsa">Request Revision</button>
-            </div>
+        <div class="toolbar">
+          <button type="submit" class="btn green" id="saveAssetBtn">Simpan Asset</button>
+          <button type="button" class="btn secondary" id="cancelAssetBtn">Batal</button>
+        </div>
+      </form>
+
+      <div id="relationPanel" class="hidden">
+        <hr style="border:0;border-top:1px solid var(--border);margin:18px 0;">
+        <div class="title-row">
+          <div class="title">
+            <h2>Relasi Asset</h2>
+            <p>Simulasi paket relasi komputer/CCTV untuk asset yang sedang diedit.</p>
           </div>
-        `;
+          <button class="btn secondary small" id="addRelationBtn">+ Tambah Relasi Dummy</button>
+        </div>
+        <div class="relation-grid" id="relationGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal" aria-hidden="true">
+  <div class="modal-panel" style="max-width:820px">
+    <div class="modal-head">
+      <div>
+        <h3 id="detailTitle">Detail Asset</h3>
+        <div class="help">Ringkasan asset dummy.</div>
+      </div>
+      <button class="close" id="closeDetailModal">Tutup</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="qrModal" aria-hidden="true">
+  <div class="modal-panel" style="max-width:520px">
+    <div class="modal-head">
+      <div>
+        <h3>Preview Label QR Asset</h3>
+        <div class="help">QR hanya berisi kode asset, bukan URL.</div>
+      </div>
+      <button class="close" id="closeQrModal">Tutup</button>
+    </div>
+    <div class="modal-body">
+      <div class="qr-preview-stage" id="qrPreviewStage"></div>
+      <div class="toolbar" style="justify-content:flex-end">
+        <button class="btn secondary small" id="downloadQrBtn">Download JPG Dummy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="mutationModal" aria-hidden="true">
+  <div class="modal-panel" style="max-width:920px">
+    <div class="modal-head">
+      <div>
+        <h3>SMART Asset Mutation Center</h3>
+        <div class="help">Simulasi batch mutasi ke AO/OU tujuan.</div>
+      </div>
+      <button class="close" id="closeMutationModal">Tutup</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert info" id="mutationSelectedInfo">Belum ada asset dipilih.</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Tujuan AO</label>
+          <select id="mutationAo"></select>
+        </div>
+        <div class="field">
+          <label>Tujuan OU</label>
+          <select id="mutationOu"></select>
+        </div>
+        <div class="field half">
+          <label>Catatan Request</label>
+          <textarea id="mutationNote" placeholder="Contoh: Mutasi perangkat untuk operasional cabang."></textarea>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn orange" id="createMutationBtn">Buat Batch Mutasi</button>
+        <button class="btn secondary" id="cancelMutationBtn">Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Action completed</div>
+
+<script>
+(function(){
+  const LS_KEY = "liswan_smart_mini_assets_v3";
+  const LS_MUT = "liswan_smart_mini_mutasi_v3";
+
+  const master = {
+    kelas:[
+      {id:"ASET_TETAP", name:"Aset Tetap"},
+      {id:"INVENTARIS_KANTOR", name:"Inventaris Kantor"},
+      {id:"PERLENGKAPAN_OPERASIONAL", name:"Perlengkapan Operasional"},
+      {id:"ELEKTRONIK_KANTOR", name:"Elektronik Kantor"},
+      {id:"KEAMANAN_INFRASTRUKTUR", name:"Keamanan & Infrastruktur"}
+    ],
+    kategori:{
+      ASET_TETAP:["IT & Digital","Kendaraan","CCTV System"],
+      INVENTARIS_KANTOR:["Furniture","Perlengkapan Kantor"],
+      PERLENGKAPAN_OPERASIONAL:["Gudang & Operasional","Perlengkapan Sales","Maintenance"],
+      ELEKTRONIK_KANTOR:["Elektronik Umum"],
+      KEAMANAN_INFRASTRUKTUR:["Keamanan","Infrastruktur Jaringan"]
+    },
+    barang:{
+      "IT & Digital":["Laptop","CPU","Monitor","Printer","Printer Thermal","Scanner","Handphone","UPS"],
+      "Kendaraan":["Mobil Blindvan","Mobil Box","Mobil Operasional","Motor Operasional"],
+      "CCTV System":["CCTV Indoor","CCTV Outdoor","NVR","Monitor CCTV","Harddisk CCTV / NVR","PoE / PoE Switch"],
+      "Furniture":["Meja Kantor","Meja Admin","Meja Meeting","Kursi Kantor","Kursi Admin","Kursi Lipat","Lemari Dokumen","Rak Barang","Rak Helm"],
+      "Perlengkapan Kantor":["Papan Tulis","Jam Dinding","Tempat Sampah","Kotak P3K","Galon"],
+      "Gudang & Operasional":["Pallet","Hand Pallet","Tangga Lipat","Trolley","Timbangan"],
+      "Perlengkapan Sales":["Saddle Bag Motor","Tas Sales"],
+      "Maintenance":["Guntacker","Toolkit","Waterpass","Bor Cas","Bor","Kunci Pas","Palu","Krimping","Headlamp","Kabel Tis","Kapi","Mata Bor","Kunci L","Kabel Olor"],
+      "Elektronik Umum":["Kipas Angin","Dispenser","AC","TV","Proyektor","Speaker","Mesin Hitung Uang","Money Detector"],
+      "Keamanan":["APAR","Brankas","Gembok"],
+      "Infrastruktur Jaringan":["Router","Switch","Access Point"]
+    },
+    ao:{
+      "HEAD OFFICE":["Surabaya"],
+      "AO Madiun":["MDI","NWI","SBY"],
+      "AO Jember":["JBR","STB","BWI"],
+      "AO Probolinggo":["PBL","KRAKSAAN"],
+      "AO Malang":["MLG","BATU","GONDOLEGI"],
+      "AO Semarang":["SMG","PATI","TEGAL"]
+    },
+    kondisi:["BAIK","RUSAK RINGAN","SERVICE","RUSAK BERAT","HILANG","DISPOSAL"],
+    pemakaian:["DIGUNAKAN","BUFFER","DIPINJAMKAN"],
+    lokasi:["Kantor","Gudang","Area Sales","Ruang Meeting","Ruang IT","Kendaraan","Lainnya"],
+    pic:{
+      "000010":"Liswan Susanto",
+      "000013":"Hendrick",
+      "000021":"Ardian Pangestu",
+      "000104":"Demo PGA",
+      "000208":"Demo Supervisor"
+    }
+  };
+
+  let assets = loadAssets();
+  let mutations = loadMutations();
+  let selectedIds = new Set();
+  let lastQrAssetId = null;
+  let liveQuery = "";
+  let filters = {
+    kelas:"",
+    kategori:"",
+    barang:"",
+    ao:"",
+    ou:"",
+    kondisi:"",
+    pemakaian:"",
+    faa:"",
+    search:""
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function seedAssets(){
+    return [
+      {
+        id:uid(), kode:"SMART-IT-0001", kelas:"ASET_TETAP", kelasName:"Aset Tetap", kategori:"IT & Digital", barang:"Laptop",
+        detail:"ThinkPad Core i5 RAM 8GB SSD 256GB", merk:"Lenovo", serial:"SN-LTP-88421", nopol:"",
+        ao:"HEAD OFFICE", ou:"Surabaya", lokasi:"Ruang IT", picNik:"000010", picNama:"Liswan Susanto",
+        pembiayaan:"FAA-IT-2026-001", kondisi:"BAIK", status:"AKTIF", pemakaian:"DIGUNAKAN", sumber:"MANUAL",
+        createdBy:"Liswan Susanto", createdNik:"000010", createdAt:"2026-07-08 10:20", relasi:["Monitor SMART-MN-0042","UPS SMART-UPS-0003"], qr:false, catatan:"Unit developer."
+      },
+      {
+        id:uid(), kode:"SMART-PR-0017", kelas:"ASET_TETAP", kelasName:"Aset Tetap", kategori:"IT & Digital", barang:"Printer Thermal",
+        detail:"Printer kasir thermal untuk operasional sales", merk:"Rongta", serial:"RT-3321-XX", nopol:"",
+        ao:"AO Jember", ou:"JBR", lokasi:"Gudang", picNik:"000208", picNama:"Demo Supervisor",
+        pembiayaan:"", kondisi:"RUSAK RINGAN", status:"AKTIF", pemakaian:"DIGUNAKAN", sumber:"IMPORT",
+        createdBy:"Demo PGA", createdNik:"000104", createdAt:"2026-07-07 14:44", relasi:[], qr:false, catatan:"Perlu pengecekan roll paper."
+      },
+      {
+        id:uid(), kode:"SMART-VH-0009", kelas:"ASET_TETAP", kelasName:"Aset Tetap", kategori:"Kendaraan", barang:"Mobil Operasional",
+        detail:"Unit operasional area", merk:"Daihatsu", serial:"", nopol:"L 1234 SIN",
+        ao:"AO Madiun", ou:"MDI", lokasi:"Kendaraan", picNik:"000021", picNama:"Ardian Pangestu",
+        pembiayaan:"FAA-VH-2025-019", kondisi:"BAIK", status:"AKTIF", pemakaian:"DIGUNAKAN", sumber:"IMPORT",
+        createdBy:"Liswan Susanto", createdNik:"000010", createdAt:"2026-07-01 09:11", relasi:["GPS SMART-GPS-0009"], qr:false, catatan:"Kelengkapan STNK aman."
+      },
+      {
+        id:uid(), kode:"SMART-CCTV-0021", kelas:"ASET_TETAP", kelasName:"Aset Tetap", kategori:"CCTV System", barang:"NVR",
+        detail:"NVR 16 channel area gudang", merk:"Hikvision", serial:"HK-NVR-2219", nopol:"",
+        ao:"AO Probolinggo", ou:"PBL", lokasi:"Gudang", picNik:"000104", picNama:"Demo PGA",
+        pembiayaan:"", kondisi:"SERVICE", status:"AKTIF", pemakaian:"DIGUNAKAN", sumber:"MANUAL",
+        createdBy:"Liswan Susanto", createdNik:"000010", createdAt:"2026-06-28 16:30", relasi:["CCTV Indoor 01","CCTV Outdoor 02","Monitor CCTV"], qr:false, catatan:"Perlu monitoring harddisk."
+      },
+      {
+        id:uid(), kode:"SMART-FUR-0088", kelas:"INVENTARIS_KANTOR", kelasName:"Inventaris Kantor", kategori:"Furniture", barang:"Kursi Kantor",
+        detail:"Kursi kerja admin warna hitam", merk:"Chitose", serial:"", nopol:"",
+        ao:"HEAD OFFICE", ou:"Surabaya", lokasi:"Kantor", picNik:"000013", picNama:"Hendrick",
+        pembiayaan:"", kondisi:"BAIK", status:"AKTIF", pemakaian:"BUFFER", sumber:"MANUAL",
+        createdBy:"Demo PGA", createdNik:"000104", createdAt:"2026-06-20 11:00", relasi:[], qr:false, catatan:"Buffer HO."
       }
+    ];
+  }
 
-      miniApp.innerHTML = appShell('dsa', content);
+  function uid(){
+    return "id" + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+  }
 
-      const submit = document.getElementById('submitDsa');
-      if(submit){
-        submit.addEventListener('click', () => {
-          const entry = {
-            branch:document.getElementById('dsaBranch').value,
-            sales:document.getElementById('dsaSales').value || 'Demo Salesman',
-            visits:Number(document.getElementById('dsaVisits').value || 0),
-            effective:Number(document.getElementById('dsaEffective').value || 0),
-            status:'Submitted'
-          };
-          state.dsaEntries.push(entry);
-          showToast('Daily report submitted');
-          renderDsa();
-        });
+  function loadAssets(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+      if(Array.isArray(saved) && saved.length) return saved;
+    }catch(e){}
+    return seedAssets();
+  }
+
+  function saveAssets(){
+    localStorage.setItem(LS_KEY, JSON.stringify(assets));
+  }
+
+  function loadMutations(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(LS_MUT) || "null");
+      if(Array.isArray(saved)) return saved;
+    }catch(e){}
+    return [
+      {
+        id:uid(),
+        nomor:"BAST-SMART-2026-0007",
+        status:"REQUESTED",
+        total:2,
+        dari:"HEAD OFFICE / Surabaya",
+        tujuan:"AO Madiun / MDI",
+        by:"Liswan Susanto",
+        at:"2026-07-08 10:54",
+        ids:[]
       }
+    ];
+  }
 
-      const approve = document.getElementById('approveDsa');
-      if(approve) approve.addEventListener('click', () => showToast('Selected report approved'));
+  function saveMutations(){
+    localStorage.setItem(LS_MUT, JSON.stringify(mutations));
+  }
 
-      const revise = document.getElementById('reviseDsa');
-      if(revise) revise.addEventListener('click', () => showToast('Revision request sent'));
+  function statusByCondition(kondisi){
+    return ["RUSAK BERAT","HILANG","DISPOSAL"].includes(kondisi) ? "NONAKTIF" : "AKTIF";
+  }
 
-      bindTabButtons();
+  function conditionClass(kondisi){
+    if(["RUSAK BERAT","HILANG","DISPOSAL"].includes(kondisi)) return "red";
+    if(["RUSAK RINGAN","SERVICE"].includes(kondisi)) return "orange";
+    return "green";
+  }
+
+  function statusClass(status){
+    if(["AKTIF","DONE","APPROVED","READY"].includes(status)) return "green";
+    if(["SERVICE","MUTASI","DIPINJAMKAN","REQUESTED","PENDING"].includes(status)) return "orange";
+    if(["NONAKTIF","DISPOSAL","REJECTED"].includes(status)) return "red";
+    return "blue";
+  }
+
+  function fillSelect(el, items, firstLabel, valueKey, labelKey){
+    el.innerHTML = "";
+    const first = document.createElement("option");
+    first.value = "";
+    first.textContent = firstLabel;
+    el.appendChild(first);
+    items.forEach(item => {
+      const opt = document.createElement("option");
+      if(typeof item === "string"){
+        opt.value = item;
+        opt.textContent = item;
+      }else{
+        opt.value = item[valueKey || "id"];
+        opt.textContent = item[labelKey || "name"];
+      }
+      el.appendChild(opt);
+    });
+  }
+
+  function initMasterSelects(){
+    fillSelect($("filterKelas"), master.kelas, "Semua Kelas");
+    fillSelect($("filterKategori"), [], "Semua Kategori");
+    fillSelect($("filterBarang"), [], "Semua Barang");
+    fillSelect($("filterAo"), Object.keys(master.ao), "Semua AO");
+    fillSelect($("filterOu"), [], "Semua OU");
+    fillSelect($("filterKondisi"), master.kondisi, "Semua Kondisi");
+    fillSelect($("filterPemakaian"), master.pemakaian, "Semua");
+
+    fillSelect($("formKelas"), master.kelas, "Pilih Kelas");
+    fillSelect($("formKategori"), [], "Pilih Kategori");
+    fillSelect($("formBarang"), [], "Pilih Nama Barang");
+    fillSelect($("formKondisi"), master.kondisi, "Pilih Kondisi");
+    $("formKondisi").value = "BAIK";
+    fillSelect($("statusPemakaian"), master.pemakaian, "Pilih Status");
+    $("statusPemakaian").value = "DIGUNAKAN";
+    fillSelect($("formAo"), Object.keys(master.ao), "Pilih AO");
+    fillSelect($("formOu"), [], "Pilih OU");
+    fillSelect($("lokasiBarang"), master.lokasi, "Pilih Lokasi");
+
+    fillSelect($("mutationAo"), Object.keys(master.ao).filter(x => x !== "HEAD OFFICE"), "Pilih AO Tujuan");
+    fillSelect($("mutationOu"), [], "Pilih OU Tujuan");
+  }
+
+  function updateKategori(kelasEl, kategoriEl, barangEl, defaultText){
+    const kelas = kelasEl.value;
+    const list = master.kategori[kelas] || [];
+    fillSelect(kategoriEl, list, defaultText || "Pilih Kategori");
+    fillSelect(barangEl, [], barangEl.id.includes("filter") ? "Semua Barang" : "Pilih Nama Barang");
+  }
+
+  function updateBarang(kategoriEl, barangEl, defaultText){
+    const kategori = kategoriEl.value;
+    const list = master.barang[kategori] || [];
+    fillSelect(barangEl, list, defaultText || "Pilih Nama Barang");
+  }
+
+  function updateOu(aoEl, ouEl, defaultText){
+    const ao = aoEl.value;
+    const list = master.ao[ao] || [];
+    fillSelect(ouEl, list, defaultText || "Pilih OU");
+  }
+
+  function currentFilteredAssets(){
+    const q = (filters.search + " " + liveQuery).toLowerCase().trim();
+    return assets.filter(a => {
+      if(filters.kelas && a.kelas !== filters.kelas) return false;
+      if(filters.kategori && a.kategori !== filters.kategori) return false;
+      if(filters.barang && a.barang !== filters.barang) return false;
+      if(filters.ao && a.ao !== filters.ao) return false;
+      if(filters.ou && a.ou !== filters.ou) return false;
+      if(filters.kondisi && a.kondisi !== filters.kondisi) return false;
+      if(filters.pemakaian && a.pemakaian !== filters.pemakaian) return false;
+      if(filters.faa === "filled" && !a.pembiayaan) return false;
+      if(filters.faa === "missing" && a.pembiayaan) return false;
+      if(q){
+        const hay = Object.values(a).join(" ").toLowerCase();
+        return q.split(/\s+/).every(word => hay.includes(word));
+      }
+      return true;
+    });
+  }
+
+  function render(){
+    renderMutations();
+    renderTable();
+    updateStats();
+    updateBatchInfo();
+  }
+
+  function renderMutations(){
+    const panel = $("mutationPanel");
+    const list = $("mutationList");
+    $("mutationCountBadge").textContent = mutations.length + " Batch Aktif";
+    panel.classList.toggle("hidden", !mutations.length);
+
+    list.innerHTML = mutations.map(m => `
+      <div class="mutasi-card">
+        <h4>${escapeHtml(m.nomor)}</h4>
+        <p>Status: <strong>${escapeHtml(m.status)}</strong></p>
+        <p>Jumlah Asset: <strong>${m.total} item</strong></p>
+        <p>Asal: ${escapeHtml(m.dari)}</p>
+        <p>Tujuan: ${escapeHtml(m.tujuan)}</p>
+        <p>Diajukan oleh: ${escapeHtml(m.by)} • ${escapeHtml(m.at)}</p>
+        <div class="toolbar" style="margin-bottom:0">
+          <button class="btn orange small" data-mut-detail="${m.id}">Lihat Detail Mutasi</button>
+          <button class="btn green small" data-mut-approve="${m.id}">Approve</button>
+          <button class="btn red small" data-mut-reject="${m.id}">Reject</button>
+        </div>
+      </div>
+    `).join("");
+
+    list.querySelectorAll("[data-mut-detail]").forEach(btn => btn.addEventListener("click", () => toast("Detail mutasi dummy dibuka")));
+    list.querySelectorAll("[data-mut-approve]").forEach(btn => btn.addEventListener("click", () => {
+      const m = mutations.find(x => x.id === btn.dataset.mutApprove);
+      if(m) m.status = "APPROVED";
+      saveMutations();
+      renderMutations();
+      toast("Mutasi dummy approved");
+    }));
+    list.querySelectorAll("[data-mut-reject]").forEach(btn => btn.addEventListener("click", () => {
+      const m = mutations.find(x => x.id === btn.dataset.mutReject);
+      if(m) m.status = "REJECTED";
+      saveMutations();
+      renderMutations();
+      toast("Mutasi dummy rejected");
+    }));
+  }
+
+  function renderTable(){
+    const rows = currentFilteredAssets();
+    $("liveCount").textContent = rows.length + " data tampil";
+    const tbody = $("assetTbody");
+
+    if(!rows.length){
+      tbody.innerHTML = `<tr><td colspan="23">Belum ada data asset. Klik Tambah Asset Manual atau sesuaikan filter.</td></tr>`;
+      return;
     }
 
-    function renderSfa(){
-      const selected = sfaPins[state.sfaSelected] || sfaPins[0];
-      let content = '';
-
-      if(currentTab === 'Route'){
-        content = `
-          ${appHeader('Field Route Tracking','Click map pins to inspect outlet visit status and activity detail.','LIVE TRACKING')}
-          <div class="route-map">
-            <div class="map-box">
-              <div class="map-line" style="left:20%;top:37%;width:190px;transform:rotate(18deg)"></div>
-              <div class="map-line" style="left:48%;top:50%;width:160px;transform:rotate(-18deg)"></div>
-              <div class="map-line" style="left:61%;top:58%;width:110px;transform:rotate(68deg)"></div>
-              ${sfaPins.map((pin,index) => `
-                <button class="map-pin ${state.sfaSelected === index ? 'active' : ''}" style="left:${pin.left};top:${pin.top}" data-pin="${index}" title="${pin.name}"></button>
-              `).join('')}
-            </div>
-            <div class="mini-panel">
-              <h5>Selected Outlet</h5>
-              <div class="detail-card">
-                <b>${selected.name}</b>
-                ${selected.note}
-                <div class="kv">
-                  <span>Status</span><span>${selected.status}</span>
-                  <span>Visit Time</span><span>${selected.visit}</span>
-                  <span>Route</span><span>Route Demo 01</span>
-                </div>
-              </div>
-              <button class="action-btn" id="checkInOutlet" style="margin-top:14px">Check In</button>
-            </div>
+    tbody.innerHTML = rows.map(a => `
+      <tr class="${selectedIds.has(a.id) ? 'selected' : ''}" data-row="${a.id}">
+        <td><input type="checkbox" data-check="${a.id}" ${selectedIds.has(a.id) ? 'checked' : ''}></td>
+        <td><strong>${escapeHtml(a.kode)}</strong></td>
+        <td>${escapeHtml(a.kelasName)}</td>
+        <td>${escapeHtml(a.kategori)}</td>
+        <td><strong>${escapeHtml(a.barang)}</strong></td>
+        <td>${escapeHtml(a.detail || "-")}</td>
+        <td>${escapeHtml(a.merk || "-")}</td>
+        <td>${escapeHtml(a.serial || "-")}</td>
+        <td>${escapeHtml(a.nopol || "-")}</td>
+        <td>${escapeHtml(a.ao || "-")}</td>
+        <td>${escapeHtml(a.ou || "-")}</td>
+        <td>${escapeHtml(a.lokasi || "-")}</td>
+        <td><strong>${escapeHtml(a.picNama || "-")}</strong><br><small>${escapeHtml(a.picNik || "-")}</small></td>
+        <td>${a.pembiayaan ? escapeHtml(a.pembiayaan) : '<span class="chip orange">Belum Ada Nomor Pembiayaan</span>'}</td>
+        <td><span class="chip ${conditionClass(a.kondisi)}">${escapeHtml(a.kondisi)}</span></td>
+        <td><span class="chip ${statusClass(a.status)}">${escapeHtml(a.status)}</span></td>
+        <td><span class="chip blue">${escapeHtml(a.pemakaian)}</span></td>
+        <td>${escapeHtml(a.sumber)}</td>
+        <td>${escapeHtml(a.createdBy)}<br><small>${escapeHtml(a.createdNik)}</small></td>
+        <td>${escapeHtml(a.createdAt)}</td>
+        <td><span class="chip blue">${a.relasi.length} Relasi</span></td>
+        <td class="action-col">
+          <div class="actions">
+            <button class="btn small secondary" data-edit="${a.id}">Edit</button>
+            <button class="btn small secondary" data-detail="${a.id}">Detail</button>
+            <button class="btn small orange" data-mutasi="${a.id}">Mutasi</button>
+            <button class="btn small red" data-delete="${a.id}">Hapus</button>
           </div>
-        `;
-      }
-
-      if(currentTab === 'Visits'){
-        content = `
-          ${appHeader('Outlet Visit List','Dummy outlet visit monitoring with real-time style status.','VISITS')}
-          <div class="mini-panel">
-            <h5>Visit Status</h5>
-            <div class="mini-table">
-              ${sfaPins.map(pin => `
-                <div class="mini-row">
-                  <div><strong>${pin.name}</strong><small>${pin.visit} · ${pin.note}</small></div>
-                  <span class="status ${statusClass(pin.status)}">${pin.status}</span>
-                </div>
-              `).join('')}
-            </div>
+        </td>
+        <td class="qr-col">
+          <div class="qr-actions ${a.qr ? 'ready' : ''}">
+            <button class="btn small orange" data-generate-qr="${a.id}">Generate Label QR</button>
+            <button class="btn small secondary" data-preview-qr="${a.id}" ${a.qr ? '' : 'disabled'}>Preview Label QR</button>
+            <button class="btn small secondary" data-download-qr="${a.id}" ${a.qr ? '' : 'disabled'}>Download Label QR</button>
+            <span class="qr-ready">QR ready</span>
           </div>
-        `;
-      }
+        </td>
+      </tr>
+    `).join("");
 
-      if(currentTab === 'Performance'){
-        content = `
-          ${appHeader('Sales & Marketing Performance','Preview target progress and field coverage metrics.','PERFORMANCE')}
-          <div class="stat-grid">
-            <div class="stat-card"><b>842</b><span>Field Visits</span></div>
-            <div class="stat-card"><b>72%</b><span>Target Progress</span></div>
-            <div class="stat-card"><b>118</b><span>Active Users</span></div>
-          </div>
-          <div class="mini-panel">
-            <h5>Coverage Progress</h5>
-            <div class="bars">
-              <div class="bar-item"><label><span>Outlet Coverage</span><span>79%</span></label><div class="bar"><span style="width:79%"></span></div></div>
-              <div class="bar-item"><label><span>Target Achievement</span><span>72%</span></label><div class="bar"><span style="width:72%"></span></div></div>
-              <div class="bar-item"><label><span>Marketing Activity</span><span>64%</span></label><div class="bar"><span style="width:64%"></span></div></div>
-            </div>
-          </div>
-        `;
-      }
-
-      miniApp.innerHTML = appShell('sfa', content);
-
-      document.querySelectorAll('[data-pin]').forEach(pin => {
-        pin.addEventListener('click', () => {
-          state.sfaSelected = Number(pin.dataset.pin);
-          renderSfa();
-          showToast(`${sfaPins[state.sfaSelected].name} selected`);
-        });
+    tbody.querySelectorAll("[data-check]").forEach(cb => {
+      cb.addEventListener("click", e => {
+        e.stopPropagation();
+        const id = cb.dataset.check;
+        if(cb.checked) selectedIds.add(id);
+        else selectedIds.delete(id);
+        renderTable();
+        updateBatchInfo();
       });
+    });
 
-      const checkIn = document.getElementById('checkInOutlet');
-      if(checkIn) checkIn.addEventListener('click', () => showToast(`Checked in at ${selected.name}`));
-
-      bindTabButtons();
-    }
-
-    function renderSfs(){
-      let content = '';
-
-      if(currentTab === 'Explorer'){
-        const folders = Object.keys(sfsFiles);
-        const files = sfsFiles[state.sfsFolder] || [];
-
-        content = `
-          ${appHeader('Document & File Service','Switch folders, open files, and add dummy uploaded files in this preview.','FILE PORTAL')}
-          <div class="file-explorer">
-            <div class="folder-tree">
-              ${folders.map(folder => `
-                <button class="tree-item ${state.sfsFolder === folder ? 'active' : ''}" data-folder="${folder}">▸ ${folder}</button>
-              `).join('')}
-            </div>
-            <div class="file-area">
-              <div class="control-row">
-                <h5 style="margin-right:auto;margin-bottom:0">${state.sfsFolder}</h5>
-                <button class="action-btn" id="addDummyFile">Upload Dummy File</button>
-              </div>
-              <div class="file-grid">
-                ${files.map((file,index) => `
-                  <div class="file-card" data-file="${index}">
-                    <div class="file-icon">${file[0]}</div>
-                    <b>${file[1]}</b>
-                    <span>${file[2]}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      if(currentTab === 'Upload'){
-        content = `
-          ${appHeader('Upload Center','Simulate upload validation and folder target selection.','UPLOAD')}
-          <div class="panel-grid equal">
-            <div class="mini-panel">
-              <h5>Upload Form</h5>
-              <div class="form-grid">
-                <div class="field">
-                  <label>Target Folder</label>
-                  <select id="uploadFolder">
-                    ${Object.keys(sfsFiles).map(folder => `<option>${folder}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field">
-                  <label>File Type</label>
-                  <select id="uploadType"><option>PDF</option><option>XLS</option><option>DOC</option><option>CSV</option></select>
-                </div>
-                <div class="field full">
-                  <label>File Name</label>
-                  <input id="uploadName" value="New Uploaded Document">
-                </div>
-              </div>
-              <button class="action-btn" id="submitUpload" style="margin-top:12px">Upload to Preview</button>
-            </div>
-            <div class="mini-panel">
-              <h5>Automation Status</h5>
-              <div class="mini-table">
-                <div class="mini-row"><div><strong>Folder validation</strong><small>Check allowed destination folder.</small></div><span class="status green">OK</span></div>
-                <div class="mini-row"><div><strong>Access control</strong><small>Apply folder access rules.</small></div><span class="status green">OK</span></div>
-                <div class="mini-row"><div><strong>Drive sync</strong><small>Push document metadata.</small></div><span class="status yellow">SYNC</span></div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      if(currentTab === 'Access'){
-        content = `
-          ${appHeader('Access Control','Preview folder access groups and document permission logic.','ACCESS')}
-          <div class="mini-panel">
-            <h5>Folder Permission</h5>
-            <div class="mini-table">
-              <div class="mini-row"><div><strong>HO Documents</strong><small>HO users and department managers.</small></div><span class="status green">VIEW</span></div>
-              <div class="mini-row"><div><strong>Finance Files</strong><small>Restricted to authorized finance users.</small></div><span class="status red">LOCKED</span></div>
-              <div class="mini-row"><div><strong>Sales Reports</strong><small>Branch users, area managers, and head office.</small></div><span class="status green">SHARED</span></div>
-            </div>
-          </div>
-        `;
-      }
-
-      miniApp.innerHTML = appShell('sfs', content);
-
-      document.querySelectorAll('[data-folder]').forEach(folder => {
-        folder.addEventListener('click', () => {
-          state.sfsFolder = folder.dataset.folder;
-          renderSfs();
-          showToast(`${state.sfsFolder} opened`);
-        });
+    tbody.querySelectorAll("[data-row]").forEach(row => {
+      row.addEventListener("click", e => {
+        if(e.target.closest("button") || e.target.closest("input")) return;
+        openDetail(row.dataset.row);
       });
+    });
 
-      document.querySelectorAll('[data-file]').forEach(file => {
-        file.addEventListener('click', () => showToast('Dummy file preview opened'));
+    tbody.querySelectorAll("[data-edit]").forEach(btn => btn.addEventListener("click", () => openForm(btn.dataset.edit)));
+    tbody.querySelectorAll("[data-detail]").forEach(btn => btn.addEventListener("click", () => openDetail(btn.dataset.detail)));
+    tbody.querySelectorAll("[data-mutasi]").forEach(btn => btn.addEventListener("click", () => openMutation([btn.dataset.mutasi])));
+    tbody.querySelectorAll("[data-delete]").forEach(btn => btn.addEventListener("click", () => deleteAsset(btn.dataset.delete)));
+    tbody.querySelectorAll("[data-generate-qr]").forEach(btn => btn.addEventListener("click", () => generateQr(btn.dataset.generateQr)));
+    tbody.querySelectorAll("[data-preview-qr]").forEach(btn => btn.addEventListener("click", () => previewQr(btn.dataset.previewQr)));
+    tbody.querySelectorAll("[data-download-qr]").forEach(btn => btn.addEventListener("click", () => downloadQr(btn.dataset.downloadQr)));
+  }
+
+  function updateStats(){
+    const rows = currentFilteredAssets();
+    $("statTotal").textContent = "Total data: " + assets.length.toLocaleString("id-ID");
+    $("statShown").textContent = "Ditampilkan: " + rows.length.toLocaleString("id-ID");
+  }
+
+  function updateBatchInfo(){
+    const count = selectedIds.size;
+    $("batchInfo").textContent = count + " asset dipilih" + (count === 1 ? ". Minimal 2 untuk batch mutasi" : "");
+    $("batchMutationBtn").disabled = count < 2;
+    $("checkAll").checked = currentFilteredAssets().length > 0 && currentFilteredAssets().every(a => selectedIds.has(a.id));
+  }
+
+  function applyFilter(){
+    filters = {
+      kelas:$("filterKelas").value,
+      kategori:$("filterKategori").value,
+      barang:$("filterBarang").value,
+      ao:$("filterAo").value,
+      ou:$("filterOu").value,
+      kondisi:$("filterKondisi").value,
+      pemakaian:$("filterPemakaian").value,
+      faa:$("filterFaa").value,
+      search:$("filterSearch").value.trim()
+    };
+    render();
+    toast("Filter diterapkan");
+  }
+
+  function resetFilter(){
+    ["filterKelas","filterKategori","filterBarang","filterAo","filterOu","filterKondisi","filterPemakaian","filterFaa","filterSearch","liveSearch"].forEach(id => {
+      const el = $(id);
+      if(el) el.value = "";
+    });
+    fillSelect($("filterKategori"), [], "Semua Kategori");
+    fillSelect($("filterBarang"), [], "Semua Barang");
+    fillSelect($("filterOu"), [], "Semua OU");
+    liveQuery = "";
+    filters = {kelas:"",kategori:"",barang:"",ao:"",ou:"",kondisi:"",pemakaian:"",faa:"",search:""};
+    render();
+    toast("Filter direset");
+  }
+
+  function openForm(id){
+    const edit = id ? assets.find(a => a.id === id) : null;
+    $("assetModalTitle").textContent = edit ? "Edit Asset" : "Tambah Asset Manual";
+    $("saveAssetBtn").textContent = edit ? "Simpan Perubahan" : "Simpan Asset";
+    $("editId").value = edit ? edit.id : "";
+    $("kodeAsset").value = edit ? edit.kode : "Otomatis saat disimpan";
+
+    $("formKelas").value = edit ? edit.kelas : "";
+    updateKategori($("formKelas"), $("formKategori"), $("formBarang"), "Pilih Kategori");
+    $("formKategori").value = edit ? edit.kategori : "";
+    updateBarang($("formKategori"), $("formBarang"), "Pilih Nama Barang");
+    $("formBarang").value = edit ? edit.barang : "";
+
+    $("detailBarang").value = edit ? edit.detail : "";
+    $("merk").value = edit ? edit.merk : "";
+    $("serialNumber").value = edit ? edit.serial : "";
+    $("nomorPolisi").value = edit ? edit.nopol : "";
+    $("formKondisi").value = edit ? edit.kondisi : "BAIK";
+    $("statusPemakaian").value = edit ? edit.pemakaian : "DIGUNAKAN";
+    $("formAo").value = edit ? edit.ao : "";
+    updateOu($("formAo"), $("formOu"), "Pilih OU");
+    $("formOu").value = edit ? edit.ou : "";
+    $("lokasiBarang").value = edit ? edit.lokasi : "";
+    $("picNik").value = edit ? edit.picNik : "";
+    $("picNama").value = edit ? edit.picNama : "";
+    $("nomorPembiayaan").value = edit ? edit.pembiayaan : "";
+    $("catatan").value = edit ? edit.catatan : "";
+    updateCondition();
+
+    $("relationPanel").classList.toggle("hidden", !edit);
+    renderRelations(edit);
+    openModal("assetModal");
+  }
+
+  function closeForm(){
+    closeModal("assetModal");
+    $("assetForm").reset();
+  }
+
+  function saveAsset(e){
+    e.preventDefault();
+
+    const kelas = $("formKelas").value;
+    const kelasObj = master.kelas.find(k => k.id === kelas);
+    const id = $("editId").value || uid();
+    const existing = assets.find(a => a.id === id);
+    const kode = existing ? existing.kode : generateKode($("formBarang").value);
+
+    const asset = {
+      id,
+      kode,
+      kelas,
+      kelasName: kelasObj ? kelasObj.name : "",
+      kategori:$("formKategori").value,
+      barang:$("formBarang").value,
+      detail:$("detailBarang").value.trim(),
+      merk:$("merk").value.trim(),
+      serial:$("serialNumber").value.trim(),
+      nopol:$("nomorPolisi").value.trim(),
+      ao:$("formAo").value,
+      ou:$("formOu").value,
+      lokasi:$("lokasiBarang").value,
+      picNik:$("picNik").value.trim(),
+      picNama:$("picNama").value.trim(),
+      pembiayaan:$("nomorPembiayaan").value.trim(),
+      kondisi:$("formKondisi").value,
+      status:statusByCondition($("formKondisi").value),
+      pemakaian:$("statusPemakaian").value,
+      sumber:existing ? existing.sumber : "MANUAL",
+      createdBy:existing ? existing.createdBy : "Liswan Susanto",
+      createdNik:existing ? existing.createdNik : "000010",
+      createdAt:existing ? existing.createdAt : nowText(),
+      relasi:existing ? existing.relasi : [],
+      qr:existing ? existing.qr : false,
+      catatan:$("catatan").value.trim()
+    };
+
+    if(!asset.kelas || !asset.kategori || !asset.barang){
+      toast("Kelas, kategori, dan nama barang wajib diisi");
+      return;
+    }
+
+    if(existing){
+      assets = assets.map(a => a.id === id ? asset : a);
+      toast("Asset berhasil diperbarui");
+    }else{
+      assets.unshift(asset);
+      toast("Asset baru berhasil ditambahkan");
+    }
+
+    saveAssets();
+    closeForm();
+    render();
+  }
+
+  function generateKode(barang){
+    const prefix = String(barang || "ASSET").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,4) || "AST";
+    const n = String(assets.length + 1).padStart(4,"0");
+    return "SMART-" + prefix + "-" + n;
+  }
+
+  function updateCondition(){
+    const kondisi = $("formKondisi").value;
+    $("statusAsset").value = statusByCondition(kondisi);
+    const severe = ["RUSAK BERAT","HILANG","DISPOSAL"].includes(kondisi);
+    const photo = ["RUSAK RINGAN","RUSAK BERAT","DISPOSAL"].includes(kondisi);
+    $("conditionEvidenceBox").classList.toggle("hidden", !(severe || photo));
+  }
+
+  function lookupPic(){
+    const nik = $("picNik").value.trim();
+    if(!nik){
+      $("picNama").value = "";
+      $("picHelp").textContent = "PIC Nama akan otomatis mengikuti Master Karyawan dummy.";
+      return;
+    }
+
+    if(master.pic[nik]){
+      $("picNama").value = master.pic[nik];
+      $("picHelp").textContent = "PIC ditemukan: " + master.pic[nik];
+    }else{
+      $("picNama").value = "";
+      $("picHelp").textContent = "NIK tidak ditemukan di Master Karyawan dummy.";
+    }
+  }
+
+  function renderRelations(asset){
+    const grid = $("relationGrid");
+    if(!asset){
+      grid.innerHTML = "";
+      return;
+    }
+    if(!asset.relasi.length){
+      grid.innerHTML = `<div class="alert info" style="grid-column:1/-1;margin:0">Belum ada relasi asset.</div>`;
+      return;
+    }
+    grid.innerHTML = asset.relasi.map((r,index) => `
+      <div class="relation-card">
+        <h4>Relasi ${index + 1}</h4>
+        <p>${escapeHtml(r)}</p>
+        <button class="btn red small" data-remove-relation="${index}" style="margin-top:10px">Hapus Relasi</button>
+      </div>
+    `).join("");
+
+    grid.querySelectorAll("[data-remove-relation]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const current = assets.find(a => a.id === $("editId").value);
+        if(!current) return;
+        current.relasi.splice(Number(btn.dataset.removeRelation),1);
+        saveAssets();
+        renderRelations(current);
+        render();
+        toast("Relasi asset dihapus");
       });
+    });
+  }
 
-      const add = document.getElementById('addDummyFile');
-      if(add){
-        add.addEventListener('click', () => {
-          sfsFiles[state.sfsFolder].unshift(['TXT','Uploaded Dummy File','Just now']);
-          renderSfs();
-          showToast('Dummy file uploaded');
-        });
-      }
+  function addRelation(){
+    const current = assets.find(a => a.id === $("editId").value);
+    if(!current) return;
+    current.relasi.push("Relasi Dummy " + (current.relasi.length + 1));
+    saveAssets();
+    renderRelations(current);
+    render();
+    toast("Relasi dummy ditambahkan");
+  }
 
-      const submit = document.getElementById('submitUpload');
-      if(submit){
-        submit.addEventListener('click', () => {
-          const folder = document.getElementById('uploadFolder').value;
-          const type = document.getElementById('uploadType').value;
-          const name = document.getElementById('uploadName').value || 'New Uploaded Document';
-          sfsFiles[folder].unshift([type,name,'Just now']);
-          state.sfsFolder = folder;
-          currentTab = 'Explorer';
-          renderSfs();
-          showToast('Upload added to folder');
-        });
-      }
+  function openDetail(id){
+    const a = assets.find(x => x.id === id);
+    if(!a) return;
 
-      bindTabButtons();
+    $("detailTitle").textContent = a.kode + " — " + a.barang;
+    $("detailBody").innerHTML = `
+      <div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:0;margin-bottom:14px">
+        <span class="stat">Kondisi: ${escapeHtml(a.kondisi)}</span>
+        <span class="stat">Status: ${escapeHtml(a.status)}</span>
+        <span class="stat">Relasi: ${a.relasi.length}</span>
+      </div>
+      <div class="filter-layout">
+        <div class="filter-col">
+          <div class="filter-col-title">Identitas Asset</div>
+          <div class="help"><strong>Kode:</strong> ${escapeHtml(a.kode)}</div>
+          <div class="help"><strong>Kelas:</strong> ${escapeHtml(a.kelasName)}</div>
+          <div class="help"><strong>Kategori:</strong> ${escapeHtml(a.kategori)}</div>
+          <div class="help"><strong>Nama Barang:</strong> ${escapeHtml(a.barang)}</div>
+          <div class="help"><strong>Detail:</strong> ${escapeHtml(a.detail || "-")}</div>
+        </div>
+        <div class="filter-col">
+          <div class="filter-col-title">Area & PIC</div>
+          <div class="help"><strong>AO:</strong> ${escapeHtml(a.ao || "-")}</div>
+          <div class="help"><strong>OU:</strong> ${escapeHtml(a.ou || "-")}</div>
+          <div class="help"><strong>Lokasi:</strong> ${escapeHtml(a.lokasi || "-")}</div>
+          <div class="help"><strong>PIC:</strong> ${escapeHtml(a.picNama || "-")} (${escapeHtml(a.picNik || "-")})</div>
+        </div>
+        <div class="filter-col">
+          <div class="filter-col-title">Administrasi</div>
+          <div class="help"><strong>Pembiayaan:</strong> ${escapeHtml(a.pembiayaan || "Belum Ada")}</div>
+          <div class="help"><strong>Sumber:</strong> ${escapeHtml(a.sumber)}</div>
+          <div class="help"><strong>Dibuat:</strong> ${escapeHtml(a.createdAt)}</div>
+          <div class="help"><strong>Catatan:</strong> ${escapeHtml(a.catatan || "-")}</div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn secondary" data-detail-edit="${a.id}">Edit Asset</button>
+        <button class="btn orange" data-detail-mutasi="${a.id}">Ajukan Mutasi</button>
+        <button class="btn green" data-detail-qr="${a.id}">Generate QR</button>
+      </div>
+    `;
+
+    $("detailBody").querySelector("[data-detail-edit]").addEventListener("click", () => {
+      closeModal("detailModal");
+      openForm(a.id);
+    });
+    $("detailBody").querySelector("[data-detail-mutasi]").addEventListener("click", () => openMutation([a.id]));
+    $("detailBody").querySelector("[data-detail-qr]").addEventListener("click", () => generateQr(a.id));
+
+    openModal("detailModal");
+  }
+
+  function deleteAsset(id){
+    const a = assets.find(x => x.id === id);
+    if(!a) return;
+    if(!confirm("Yakin hapus asset ini dari Master Asset?\n\n" + a.kode + " - " + a.barang + "\n\nRiwayat penghapusan tetap dicatat di log dummy.")) return;
+    assets = assets.filter(x => x.id !== id);
+    selectedIds.delete(id);
+    saveAssets();
+    render();
+    toast("Asset berhasil dihapus");
+  }
+
+  function deleteSelected(){
+    if(!selectedIds.size){
+      toast("Belum ada asset dicentang");
+      return;
+    }
+    if(!confirm("Hapus " + selectedIds.size + " asset terpilih dari Master Asset dummy?")) return;
+    assets = assets.filter(a => !selectedIds.has(a.id));
+    selectedIds.clear();
+    saveAssets();
+    render();
+    toast("Asset terpilih dihapus");
+  }
+
+  function generateQr(id){
+    const a = assets.find(x => x.id === id);
+    if(!a) return;
+    a.qr = true;
+    saveAssets();
+    renderTable();
+    toast("QR label generated");
+  }
+
+  function makeQrLabel(a){
+    return `
+      <div class="qr-label" id="qrLabelDownloadTarget">
+        <div class="qr-label-logo">SIN</div>
+        <div class="qr-label-title">SMART ASSET</div>
+        <div class="fake-qr"></div>
+        <div class="qr-label-code">${escapeHtml(a.kode)}</div>
+        <div class="qr-label-name">${escapeHtml(a.barang)}<br>${escapeHtml(a.detail || "")}</div>
+      </div>
+    `;
+  }
+
+  function previewQr(id){
+    const a = assets.find(x => x.id === id);
+    if(!a || !a.qr){
+      toast("Generate QR dulu");
+      return;
+    }
+    lastQrAssetId = id;
+    $("qrPreviewStage").innerHTML = makeQrLabel(a);
+    openModal("qrModal");
+  }
+
+  function downloadQr(id){
+    const a = assets.find(x => x.id === id);
+    if(!a || !a.qr){
+      toast("Generate QR dulu");
+      return;
     }
 
-    function renderHc(){
-      let content = '';
+    const canvas = document.createElement("canvas");
+    canvas.width = 300;
+    canvas.height = 620;
+    const ctx = canvas.getContext("2d");
 
-      if(currentTab === 'Resources'){
-        const q = state.hcSearch.toLowerCase();
-        const items = (hcResources[state.hcCategory] || []).filter(item => !q || item.join(' ').toLowerCase().includes(q));
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,300,620);
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 3;
+    roundRect(ctx,10,10,280,600,20);
+    ctx.stroke();
 
-        content = `
-          ${appHeader('Employee Resource Center','Switch categories and search dummy resources.','RESOURCE')}
-          <div class="control-row">
-            ${Object.keys(hcResources).map(cat => `<button class="action-btn ${state.hcCategory === cat ? '' : 'subtle'}" data-hc-cat="${cat}">${cat}</button>`).join('')}
-            <input class="search-input" id="hcSearch" value="${state.hcSearch}" placeholder="Search resource...">
-          </div>
-          <div class="panel-grid">
-            <div class="mini-panel">
-              <h5>${state.hcCategory} Library</h5>
-              <div class="tile-grid">
-                ${items.map(item => `<div class="module-tile"><b>${item[0]}</b><span>${item[1]}</span></div>`).join('') || '<div class="detail-card">No resource found.</div>'}
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Resource Stats</h5>
-              <div class="stat-grid" style="grid-template-columns:1fr">
-                <div class="stat-card"><b>142</b><span>Employees</span></div>
-                <div class="stat-card"><b>58</b><span>Resources</span></div>
-                <div class="stat-card"><b>19</b><span>Forms</span></div>
-              </div>
-            </div>
-          </div>
-        `;
+    const grad = ctx.createLinearGradient(100,20,200,100);
+    grad.addColorStop(0,"#16263f");
+    grad.addColorStop(1,"#e23744");
+    ctx.fillStyle = grad;
+    roundRect(ctx,114,36,72,72,20);
+    ctx.fill();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 22px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("SIN",150,82);
+
+    ctx.fillStyle = "#16263f";
+    ctx.font = "bold 22px Arial";
+    ctx.fillText("SMART ASSET",150,140);
+
+    drawFakeQr(ctx,74,166,152);
+
+    ctx.fillStyle = "#111827";
+    ctx.font = "bold 20px Arial";
+    wrapCanvasText(ctx,a.kode,150,365,250,24);
+
+    ctx.fillStyle = "#475569";
+    ctx.font = "bold 16px Arial";
+    wrapCanvasText(ctx,a.barang + " " + (a.detail || ""),150,430,240,20);
+
+    const link = document.createElement("a");
+    link.download = safeName(a.kode) + "-QR-LABEL.jpg";
+    link.href = canvas.toDataURL("image/jpeg", .92);
+    link.click();
+    toast("Label QR dummy downloaded");
+  }
+
+  function openMutation(ids){
+    selectedIds = new Set(ids);
+    updateBatchInfo();
+    const selected = assets.filter(a => selectedIds.has(a.id));
+    $("mutationSelectedInfo").textContent = selected.length
+      ? selected.length + " asset dipilih: " + selected.map(a => a.kode).join(", ")
+      : "Belum ada asset dipilih.";
+    openModal("mutationModal");
+  }
+
+  function createMutation(){
+    const selected = assets.filter(a => selectedIds.has(a.id));
+    if(selected.length < 1){
+      toast("Belum ada asset dipilih");
+      return;
+    }
+
+    const ao = $("mutationAo").value;
+    const ou = $("mutationOu").value;
+    if(!ao || !ou){
+      toast("Tujuan AO dan OU wajib diisi");
+      return;
+    }
+
+    const nomor = "BAST-SMART-" + new Date().getFullYear() + "-" + String(mutations.length + 1).padStart(4,"0");
+    const from = selected[0].ao + " / " + selected[0].ou;
+
+    mutations.unshift({
+      id:uid(),
+      nomor,
+      status:"REQUESTED",
+      total:selected.length,
+      dari:from,
+      tujuan:ao + " / " + ou,
+      by:"Liswan Susanto",
+      at:nowText(),
+      ids:selected.map(a => a.id)
+    });
+
+    selected.forEach(a => {
+      a.status = "MUTASI";
+      a.catatan = (a.catatan ? a.catatan + " | " : "") + "Mutasi requested: " + nomor;
+    });
+
+    saveMutations();
+    saveAssets();
+    closeModal("mutationModal");
+    render();
+    toast("Batch mutasi berhasil dibuat");
+  }
+
+  function openMutationCenter(){
+    if(!mutations.length){
+      toast("Belum ada mutasi aktif");
+      return;
+    }
+    $("mutationPanel").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function importDummy(){
+    const extra = [
+      {
+        id:uid(), kode:generateKode("Access Point"), kelas:"KEAMANAN_INFRASTRUKTUR", kelasName:"Keamanan & Infrastruktur", kategori:"Infrastruktur Jaringan", barang:"Access Point",
+        detail:"Access point cabang demo", merk:"TP-Link", serial:"AP-DEMO-" + Math.floor(Math.random()*9999), nopol:"",
+        ao:"AO Semarang", ou:"SMG", lokasi:"Kantor", picNik:"000104", picNama:"Demo PGA",
+        pembiayaan:"", kondisi:"BAIK", status:"AKTIF", pemakaian:"DIGUNAKAN", sumber:"IMPORT",
+        createdBy:"Liswan Susanto", createdNik:"000010", createdAt:nowText(), relasi:[], qr:false, catatan:"Imported dummy."
+      },
+      {
+        id:uid(), kode:generateKode("Galon"), kelas:"INVENTARIS_KANTOR", kelasName:"Inventaris Kantor", kategori:"Perlengkapan Kantor", barang:"Galon",
+        detail:"Galon inventaris kantor", merk:"Demo", serial:"", nopol:"",
+        ao:"AO Probolinggo", ou:"PBL", lokasi:"Kantor", picNik:"000208", picNama:"Demo Supervisor",
+        pembiayaan:"", kondisi:"BAIK", status:"AKTIF", pemakaian:"BUFFER", sumber:"IMPORT",
+        createdBy:"Liswan Susanto", createdNik:"000010", createdAt:nowText(), relasi:[], qr:false, catatan:"Imported dummy."
       }
+    ];
+    assets = extra.concat(assets);
+    saveAssets();
+    render();
+    toast("Import dummy selesai: " + extra.length + " asset");
+  }
 
-      if(currentTab === 'Forms'){
-        content = `
-          ${appHeader('Employee Forms','Preview form request actions for employee service center.','FORMS')}
-          <div class="panel-grid equal">
-            <div class="mini-panel">
-              <h5>Available Forms</h5>
-              <div class="mini-table">
-                <div class="mini-row"><div><strong>Leave Request Form</strong><small>Employee leave submission.</small></div><span class="status green">READY</span></div>
-                <div class="mini-row"><div><strong>Asset Request Form</strong><small>Request working equipment.</small></div><span class="status green">READY</span></div>
-                <div class="mini-row"><div><strong>Data Change Form</strong><small>Employee data update.</small></div><span class="status yellow">UPDATE</span></div>
-              </div>
-            </div>
-            <div class="mini-panel">
-              <h5>Request Form</h5>
-              <div class="form-grid">
-                <div class="field full"><label>Employee Name</label><input value="Demo Employee"></div>
-                <div class="field"><label>Form Type</label><select><option>Leave Request</option><option>Asset Request</option><option>Data Change</option></select></div>
-                <div class="field"><label>Status</label><input value="Draft" readonly></div>
-              </div>
-              <button class="action-btn" id="submitHcForm" style="margin-top:12px">Submit Dummy Form</button>
-            </div>
-          </div>
-        `;
-      }
+  function resetDemo(){
+    if(!confirm("Reset semua data dummy ke kondisi awal?")) return;
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LS_MUT);
+    assets = seedAssets();
+    mutations = loadMutations();
+    selectedIds.clear();
+    render();
+    toast("Demo data direset");
+  }
 
-      if(currentTab === 'Updates'){
-        content = `
-          ${appHeader('Employee Updates','Preview announcement and internal resource update feed.','UPDATES')}
-          <div class="mini-panel">
-            <h5>Recent Updates</h5>
-            <div class="mini-table">
-              <div class="mini-row"><div><strong>SOP Attendance Updated</strong><small>New attendance procedure available.</small></div><span class="status yellow">UPDATE</span></div>
-              <div class="mini-row"><div><strong>Training Schedule</strong><small>Application training schedule for branch users.</small></div><span class="status green">POST</span></div>
-              <div class="mini-row"><div><strong>Job Description Review</strong><small>Role descriptions under review.</small></div><span class="status">REVIEW</span></div>
-            </div>
-          </div>
-        `;
-      }
+  function exportCsv(){
+    const rows = currentFilteredAssets();
+    const header = ["kode_asset","kelas","kategori","nama_barang","detail","merk","serial","nopol","ao","ou","lokasi","pic_nik","pic_nama","nomor_pembiayaan","kondisi","status","pemakaian","sumber","created_at"];
+    const csv = [
+      header.join(","),
+      ...rows.map(a => [
+        a.kode,a.kelasName,a.kategori,a.barang,a.detail,a.merk,a.serial,a.nopol,a.ao,a.ou,a.lokasi,a.picNik,a.picNama,a.pembiayaan,a.kondisi,a.status,a.pemakaian,a.sumber,a.createdAt
+      ].map(csvCell).join(","))
+    ].join("\n");
 
-      miniApp.innerHTML = appShell('hc', content);
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "smart-master-asset-dummy.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Export CSV dummy downloaded");
+  }
 
-      document.querySelectorAll('[data-hc-cat]').forEach(button => {
-        button.addEventListener('click', () => {
-          state.hcCategory = button.dataset.hcCat;
-          renderHc();
-          showToast(`${state.hcCategory} opened`);
-        });
-      });
+  function downloadTemplate(){
+    const csv = "kode_asset,kelas,kategori,nama_barang,detail,merk,serial,nopol,ao,ou,lokasi,pic_nik,pic_nama,nomor_pembiayaan,kondisi,status_pemakaian\n";
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "template-smart-master-asset-dummy.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Template dummy downloaded");
+  }
 
-      const search = document.getElementById('hcSearch');
-      if(search){
-        search.addEventListener('input', e => {
-          state.hcSearch = e.target.value;
-          renderHc();
-        });
-      }
+  function downloadGuidance(){
+    const text = "GUIDANCE CETAK QR CODE SMART ASSET\n\n1. Generate label QR dari kolom QR.\n2. Preview label.\n3. Download label JPG.\n4. Print scale 100% / actual size.\n\nFile ini adalah dummy guidance untuk portfolio preview.";
+    const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "guidance-cetak-qr-smart-asset-dummy.txt";
+    link.click();
+    URL.revokeObjectURL(url);
+    toast("Guidance dummy downloaded");
+  }
 
-      const submit = document.getElementById('submitHcForm');
-      if(submit) submit.addEventListener('click', () => showToast('Dummy employee form submitted'));
+  function openModal(id){
+    $(id).classList.add("active");
+    $(id).setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+  }
 
-      bindTabButtons();
+  function closeModal(id){
+    $(id).classList.remove("active");
+    $(id).setAttribute("aria-hidden","true");
+    if(!document.querySelector(".modal.active")) document.body.style.overflow = "";
+  }
+
+  function toast(message){
+    $("toast").textContent = message;
+    $("toast").classList.add("show");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1700);
+  }
+
+  function nowText(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2,"0");
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function csvCell(value){
+    const v = String(value ?? "");
+    if(/[",\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
+    return v;
+  }
+
+  function safeName(text){
+    return String(text || "SMART-ASSET").replace(/[^A-Za-z0-9\-_]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"") || "SMART-ASSET";
+  }
+
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  function drawFakeQr(ctx,x,y,size){
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(x,y,size,size);
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(x,y,size,size);
+
+    function square(px,py,s){
+      ctx.fillStyle = "#111";
+      ctx.fillRect(x+px,y+py,s,s);
     }
 
-    function bindTabButtons(){
-      miniApp.querySelectorAll('[data-tab]').forEach(button => {
-        button.addEventListener('click', () => {
-          currentTab = button.dataset.tab;
-          renderCurrentProject();
-        });
-      });
-    }
-
-    function renderCurrentProject(){
-      if(currentProject === 'asset') renderAsset();
-      if(currentProject === 'siber') renderSiber();
-      if(currentProject === 'dsa') renderDsa();
-      if(currentProject === 'sfa') renderSfa();
-      if(currentProject === 'sfs') renderSfs();
-      if(currentProject === 'hc') renderHc();
-    }
-
-    function openProject(projectKey){
-      const meta = projectMeta[projectKey];
-      if(!meta) return;
-
-      currentProject = projectKey;
-      currentTab = meta.tabs[0];
-
-      modalTitle.textContent = meta.title;
-      modalDesc.textContent = meta.desc;
-      browserUrl.textContent = meta.url;
-
-      modal.classList.add('active');
-      modal.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-
-      renderCurrentProject();
-    }
-
-    function closeProject(){
-      modal.classList.remove('active');
-      modal.setAttribute('aria-hidden','true');
-      document.body.classList.remove('modal-open');
-      miniApp.innerHTML = '';
-      currentProject = null;
-      currentTab = null;
-    }
-
-    document.querySelectorAll('[data-project]').forEach(card => {
-      card.addEventListener('click', () => openProject(card.dataset.project));
-      card.addEventListener('keydown', event => {
-        if(event.key === 'Enter' || event.key === ' '){
-          event.preventDefault();
-          openProject(card.dataset.project);
+    square(12,12,36); square(104,12,36); square(12,104,36);
+    for(let r=0;r<9;r++){
+      for(let c=0;c<9;c++){
+        if((r*c + r + c) % 3 === 0){
+          square(58 + c*9, 58 + r*9, 6);
         }
+      }
+    }
+  }
+
+  function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
+    const words = String(text || "").split(" ");
+    let line = "";
+    for(let i=0;i<words.length;i++){
+      const test = line + words[i] + " ";
+      if(ctx.measureText(test).width > maxWidth && i > 0){
+        ctx.fillText(line.trim(),x,y);
+        line = words[i] + " ";
+        y += lineHeight;
+      }else{
+        line = test;
+      }
+    }
+    ctx.fillText(line.trim(),x,y);
+  }
+
+  function bind(){
+    $("openFormBtn").addEventListener("click", () => openForm());
+    $("closeAssetModal").addEventListener("click", closeForm);
+    $("cancelAssetBtn").addEventListener("click", closeForm);
+    $("assetForm").addEventListener("submit", saveAsset);
+
+    $("formKelas").addEventListener("change", () => updateKategori($("formKelas"), $("formKategori"), $("formBarang"), "Pilih Kategori"));
+    $("formKategori").addEventListener("change", () => updateBarang($("formKategori"), $("formBarang"), "Pilih Nama Barang"));
+    $("formAo").addEventListener("change", () => updateOu($("formAo"), $("formOu"), "Pilih OU"));
+    $("formKondisi").addEventListener("change", updateCondition);
+    $("picNik").addEventListener("input", lookupPic);
+    $("addRelationBtn").addEventListener("click", addRelation);
+
+    $("filterKelas").addEventListener("change", () => updateKategori($("filterKelas"), $("filterKategori"), $("filterBarang"), "Semua Kategori"));
+    $("filterKategori").addEventListener("change", () => updateBarang($("filterKategori"), $("filterBarang"), "Semua Barang"));
+    $("filterAo").addEventListener("change", () => updateOu($("filterAo"), $("filterOu"), "Semua OU"));
+    $("applyFilterBtn").addEventListener("click", applyFilter);
+    $("resetFilterBtn").addEventListener("click", resetFilter);
+    $("toggleFilterBtn").addEventListener("click", () => $("filterBody").classList.toggle("hidden"));
+
+    $("liveSearch").addEventListener("input", e => {
+      liveQuery = e.target.value;
+      renderTable();
+      updateStats();
+    });
+
+    $("checkAll").addEventListener("change", e => {
+      const rows = currentFilteredAssets();
+      rows.forEach(a => e.target.checked ? selectedIds.add(a.id) : selectedIds.delete(a.id));
+      renderTable();
+      updateBatchInfo();
+    });
+
+    $("deleteSelectedBtn").addEventListener("click", deleteSelected);
+    $("batchMutationBtn").addEventListener("click", () => openMutation(Array.from(selectedIds)));
+    $("openMutationCenterBtn").addEventListener("click", openMutationCenter);
+    $("closeMutationModal").addEventListener("click", () => closeModal("mutationModal"));
+    $("cancelMutationBtn").addEventListener("click", () => closeModal("mutationModal"));
+    $("createMutationBtn").addEventListener("click", createMutation);
+    $("mutationAo").addEventListener("change", () => updateOu($("mutationAo"), $("mutationOu"), "Pilih OU Tujuan"));
+
+    $("closeDetailModal").addEventListener("click", () => closeModal("detailModal"));
+    $("closeQrModal").addEventListener("click", () => closeModal("qrModal"));
+    $("downloadQrBtn").addEventListener("click", () => {
+      if(lastQrAssetId) downloadQr(lastQrAssetId);
+    });
+
+    $("exportBtn").addEventListener("click", exportCsv);
+    $("templateBtn").addEventListener("click", downloadTemplate);
+    $("downloadGuidanceBtn").addEventListener("click", downloadGuidance);
+    $("toggleQrGuideBtn").addEventListener("click", () => $("qrGuideBody").classList.toggle("hidden"));
+    $("toggleImportBtn").addEventListener("click", () => $("importBox").classList.toggle("hidden"));
+    $("closeImportBtn").addEventListener("click", () => $("importBox").classList.add("hidden"));
+    $("processImportBtn").addEventListener("click", importDummy);
+    $("resetDemoBtn").addEventListener("click", resetDemo);
+
+    document.addEventListener("keydown", e => {
+      if(e.key === "Escape"){
+        document.querySelectorAll(".modal.active").forEach(m => closeModal(m.id));
+      }
+    });
+
+    document.querySelectorAll(".modal").forEach(m => {
+      m.addEventListener("click", e => {
+        if(e.target === m) closeModal(m.id);
       });
     });
+  }
 
-    document.querySelectorAll('[data-close]').forEach(item => item.addEventListener('click', closeProject));
-
-    document.addEventListener('keydown', event => {
-      if(event.key === 'Escape' && modal.classList.contains('active')) closeProject();
-    });
-  </script>
+  initMasterSelects();
+  updateCondition();
+  bind();
+  saveAssets();
+  saveMutations();
+  render();
+})();
+</script>
 </body>
 </html>

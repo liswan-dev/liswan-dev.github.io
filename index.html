@@ -1,104 +1,1672 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="author" content="Liswan Susanto"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://liswan.dev"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#5B3FD6">
+  <title>Liswan Susanto — Internal System Builder</title>
+  <meta name="description" content="Portfolio of Liswan Susanto — IT Developer & Internal System Builder."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <title>Liswan Susanto — IT Developer & Internal System Builder</title>
-  <meta name="description" content="Personal portfolio of Liswan Susanto — IT Developer & Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
-  <meta property="og:title" content="Liswan Susanto — IT Developer & Internal System Builder"/>
-  <meta property="og:description" content="Personal portfolio of Liswan Susanto — IT Developer & Internal System Builder focused on internal systems, dashboards, asset management, file services, and workflow automation."/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --void: #050510;
+      --deep: #0a0a1a;
+      --surface: #10102a;
+      --card: #12122e;
+      --card-h: #1a1a3e;
+      --cyan: #00f5ff;
+      --violet: #7b2fff;
+      --magenta: #ff2d6b;
+      --cyan-dim: rgba(0,245,255,0.12);
+      --violet-dim: rgba(123,47,255,0.12);
+      --text: #e8eaf6;
+      --muted: #7b7da8;
+      --muted2: #4a4c72;
+      --border: rgba(0,245,255,0.1);
+      --border-h: rgba(0,245,255,0.3);
+      --glow-c: 0 0 40px rgba(0,245,255,0.4);
+      --glow-v: 0 0 40px rgba(123,47,255,0.4);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      background:var(--void);
+      color:var(--text);
+      overflow-x:hidden;
+      cursor:none;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* CUSTOM CURSOR */
+    #cursor{
+      position:fixed;width:12px;height:12px;
+      background:var(--cyan);border-radius:50%;
+      pointer-events:none;z-index:9999;
+      transform:translate(-50%,-50%);
+      transition:transform 0.1s,width 0.2s,height 0.2s,background 0.2s;
+      box-shadow:0 0 20px var(--cyan),0 0 40px rgba(0,245,255,0.4);
+      mix-blend-mode:screen;
+    }
+    #cursor-ring{
+      position:fixed;width:36px;height:36px;
+      border:1.5px solid rgba(0,245,255,0.5);
+      border-radius:50%;pointer-events:none;z-index:9998;
+      transform:translate(-50%,-50%);
+      transition:transform 0.08s,width 0.25s,height 0.25s,border-color 0.2s;
+    }
+    body.hovering #cursor{width:6px;height:6px;background:var(--magenta);box-shadow:0 0 20px var(--magenta)}
+    body.hovering #cursor-ring{width:52px;height:52px;border-color:rgba(255,45,107,0.5)}
+
+    /* PARTICLES BG */
+    #particles-js{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:0;pointer-events:none;
+    }
+    /* GRID OVERLAY */
+    #grid-overlay{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:0;pointer-events:none;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,245,255,0.03) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+
+    /* NAV */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:0 5vw;height:70px;
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(5,5,16,0.7);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+    .brand{
+      font-family:'Orbitron',sans-serif;
+      font-weight:900;font-size:18px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      letter-spacing:0.08em;
+    }
+    .nav-links{display:flex;gap:28px;align-items:center}
+    .nav-links a{
+      font-size:13px;font-weight:500;color:var(--muted);
+      letter-spacing:0.05em;transition:color 0.2s;
+      font-family:'JetBrains Mono',monospace;
+    }
+    .nav-links a:hover{color:var(--cyan)}
+    .nav-cta{
+      padding:9px 20px;
+      background:transparent;
+      border:1px solid var(--cyan);
+      color:var(--cyan)!important;
+      border-radius:4px;
+      position:relative;overflow:hidden;
+    }
+    .nav-cta::before{
+      content:'';position:absolute;inset:0;
+      background:var(--cyan);opacity:0;
+      transition:opacity 0.2s;
+    }
+    .nav-cta:hover::before{opacity:0.12}
+
+    /* MAIN WRAPPER */
+    .page{position:relative;z-index:1}
+
+    /* ─── HERO ─── */
+    .hero{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:60px;
+      padding:100px 5vw 60px;
+    }
+    .hero-copy{}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;color:var(--cyan);
+      margin-bottom:28px;letter-spacing:0.1em;
+    }
+    .eyebrow-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--cyan);
+      box-shadow:0 0 14px var(--cyan),0 0 28px rgba(0,245,255,0.6);
+      animation:pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot{
+      0%,100%{transform:scale(1);opacity:1}
+      50%{transform:scale(1.4);opacity:0.7}
+    }
+    .hero h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(36px,5.5vw,72px);
+      line-height:1;
+      letter-spacing:-0.02em;
+      margin-bottom:6px;
+    }
+    .hero h1 .line-dim{
+      color:var(--muted2);font-size:0.55em;
+      font-weight:400;display:block;
+      letter-spacing:0.15em;margin-bottom:8px;
+      font-family:'JetBrains Mono',monospace;
+    }
+    .glitch{
+      position:relative;display:inline-block;
+      background:linear-gradient(135deg,#fff 20%,var(--cyan) 50%,var(--violet));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .glitch::before,.glitch::after{
+      content:attr(data-text);
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      background:linear-gradient(135deg,#fff 20%,var(--cyan) 50%,var(--violet));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .glitch::before{
+      animation:glitch-1 4s infinite;
+      clip-path:polygon(0 25%,100% 25%,100% 35%,0 35%);
+    }
+    .glitch::after{
+      animation:glitch-2 4s infinite;
+      clip-path:polygon(0 65%,100% 65%,100% 75%,0 75%);
+    }
+    @keyframes glitch-1{
+      0%,90%,100%{transform:translate(0)}
+      92%{transform:translate(-3px,1px)}
+      94%{transform:translate(3px,-1px)}
+      96%{transform:translate(-2px,0)}
+    }
+    @keyframes glitch-2{
+      0%,88%,100%{transform:translate(0)}
+      90%{transform:translate(3px,2px)}
+      93%{transform:translate(-3px,-1px)}
+      95%{transform:translate(2px,0)}
+    }
+    .hero-desc{
+      color:var(--muted);font-size:16px;line-height:1.75;
+      max-width:520px;margin:28px 0 36px;
+    }
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 28px;border-radius:4px;
+      font-weight:600;font-size:14px;
+      font-family:'Inter',sans-serif;
+      border:1px solid transparent;
+      position:relative;overflow:hidden;
+      transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#fff;
+      box-shadow:0 0 30px rgba(0,245,255,0.3);
+    }
+    .btn-primary:hover{box-shadow:0 0 50px rgba(0,245,255,0.5)}
+    .btn-secondary{
+      border-color:var(--border-h);
+      color:var(--text);
+      background:rgba(0,245,255,0.04);
+    }
+    .btn-secondary:hover{background:rgba(0,245,255,0.1);border-color:var(--cyan)}
+    .btn-icon{font-size:16px}
+
+    /* QUICK STATS */
+    .quick-stats{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:12px;margin-top:48px;max-width:480px;
+    }
+    .stat{
+      padding:16px;
+      border:1px solid var(--border);
+      background:rgba(0,245,255,0.03);
+      border-radius:6px;
+      position:relative;overflow:hidden;
+      transition:border-color 0.3s,background 0.3s;
+    }
+    .stat::before{
+      content:'';position:absolute;
+      top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+      opacity:0;transition:opacity 0.3s;
+    }
+    .stat:hover{border-color:var(--border-h);background:rgba(0,245,255,0.07)}
+    .stat:hover::before{opacity:1}
+    .stat strong{
+      display:block;
+      font-family:'Orbitron',sans-serif;
+      font-size:22px;font-weight:900;
+      color:var(--cyan);letter-spacing:-0.02em;margin-bottom:4px;
+    }
+    .stat span{color:var(--muted2);font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase}
+
+    /* HERO PANEL — 3D CARD */
+    .hero-panel{
+      perspective:1200px;
+    }
+    .panel-3d{
+      position:relative;
+      background:linear-gradient(135deg,rgba(123,47,255,0.08),rgba(0,245,255,0.05));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:32px;
+      transform-style:preserve-3d;
+      transition:transform 0.1s ease-out,box-shadow 0.3s;
+      box-shadow:0 0 60px rgba(123,47,255,0.15),inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .panel-3d::before{
+      content:'';position:absolute;inset:-1px;
+      background:linear-gradient(135deg,rgba(0,245,255,0.25),rgba(123,47,255,0.25),rgba(255,45,107,0.1));
+      border-radius:17px;z-index:-1;
+      animation:border-glow 4s ease-in-out infinite;
+    }
+    @keyframes border-glow{
+      0%,100%{opacity:0.5}50%{opacity:1}
+    }
+    .panel-scan{
+      position:absolute;top:0;left:0;right:0;
+      height:2px;
+      background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+      border-radius:2px;
+      animation:scan 3s ease-in-out infinite;
+    }
+    @keyframes scan{
+      0%{top:0;opacity:0}
+      10%{opacity:1}
+      90%{opacity:1}
+      100%{top:calc(100% - 2px);opacity:0}
+    }
+    .avatar-wrap{
+      width:100px;height:100px;border-radius:12px;
+      padding:2px;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      margin-bottom:20px;display:inline-block;
+    }
+    .avatar{
+      width:100%;height:100%;border-radius:10px;
+      background:var(--surface);display:block;object-fit:cover;
+    }
+    .profile-name{
+      font-family:'Orbitron',sans-serif;
+      font-size:22px;font-weight:900;
+      letter-spacing:-0.02em;margin-bottom:6px;
+    }
+    .profile-role{
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;color:var(--cyan);letter-spacing:0.08em;margin-bottom:18px;
+    }
+    .profile-bio{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:24px}
+
+    .terminal{
+      border:1px solid rgba(0,245,255,0.15);
+      background:rgba(0,0,0,0.5);
+      border-radius:8px;overflow:hidden;
+    }
+    .terminal-bar{
+      display:flex;align-items:center;gap:7px;
+      padding:10px 14px;
+      background:rgba(0,245,255,0.04);
+      border-bottom:1px solid rgba(0,245,255,0.1);
+    }
+    .t-dot{width:9px;height:9px;border-radius:50%}
+    .t-dot:nth-child(1){background:#ff5f57}
+    .t-dot:nth-child(2){background:#febc2e}
+    .t-dot:nth-child(3){background:#28c840}
+    .terminal-title{
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;color:var(--muted2);margin-left:4px;
+    }
+    .terminal-body{
+      padding:16px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;line-height:1.8;
+    }
+    .t-prompt{color:var(--muted2)}
+    .t-cmd{color:var(--cyan)}
+    .t-out{color:#a8f0a0}
+    .t-out2{color:var(--violet);opacity:0.9}
+    .t-cursor{
+      display:inline-block;width:8px;height:14px;
+      background:var(--cyan);vertical-align:middle;
+      animation:blink 1s step-end infinite;
+    }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+    /* BADGE CHIPS (floating on panel) */
+    .chip{
+      position:absolute;
+      padding:8px 14px;
+      border:1px solid var(--border-h);
+      background:rgba(10,10,26,0.9);
+      border-radius:999px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;color:var(--cyan);
+      backdrop-filter:blur(10px);
+      animation:float-chip 3s ease-in-out infinite;
+    }
+    .chip-1{top:-18px;right:40px;animation-delay:0s}
+    .chip-2{bottom:-16px;left:30px;animation-delay:1s}
+    .chip-3{top:40%;right:-24px;animation-delay:2s}
+    @keyframes float-chip{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+
+    /* ─── SECTIONS ─── */
+    .section{padding:90px 5vw}
+    .section-kicker{
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;color:var(--cyan);letter-spacing:0.2em;
+      text-transform:uppercase;margin-bottom:12px;
+    }
+    .section-title{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(26px,3.5vw,44px);
+      font-weight:900;letter-spacing:-0.03em;
+      line-height:1.05;margin-bottom:12px;
+    }
+    .section-desc{color:var(--muted);font-size:15px;max-width:500px;line-height:1.7}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:42px}
+
+    /* CARDS — 3D TILT */
+    .card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .card-3d{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:12px;
+      padding:26px;
+      position:relative;overflow:hidden;
+      transform-style:preserve-3d;
+      transition:transform 0.15s ease,border-color 0.3s,box-shadow 0.3s;
+    }
+    .card-3d::after{
+      content:'';position:absolute;
+      top:-50%;left:-50%;width:200%;height:200%;
+      background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,245,255,0.08),transparent 55%);
+      pointer-events:none;opacity:0;transition:opacity 0.3s;
+    }
+    .card-3d:hover{
+      border-color:rgba(0,245,255,0.3);
+      box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 30px rgba(0,245,255,0.1);
+    }
+    .card-3d:hover::after{opacity:1}
+    .card-corner{
+      position:absolute;top:12px;right:12px;
+      width:20px;height:20px;
+      border-top:2px solid var(--cyan);
+      border-right:2px solid var(--cyan);
+      opacity:0.4;transition:opacity 0.3s;
+    }
+    .card-3d:hover .card-corner{opacity:1}
+    .card-icon-badge{
+      width:44px;height:44px;border-radius:10px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--cyan-dim),var(--violet-dim));
+      border:1px solid var(--border);
+      font-family:'Orbitron',sans-serif;
+      font-size:13px;font-weight:900;color:var(--cyan);
+      margin-bottom:18px;letter-spacing:0.05em;
+    }
+    .card-3d h4{
+      font-size:17px;font-weight:600;
+      letter-spacing:-0.02em;margin-bottom:10px;
+    }
+    .card-3d p{color:var(--muted);font-size:13.5px;line-height:1.65}
+    .card-line{
+      position:absolute;bottom:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      opacity:0;transition:opacity 0.3s;
+    }
+    .card-3d:hover .card-line{opacity:1}
+
+    /* PROJECT CARDS */
+    .project-card{
+      min-height:300px;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tag{
+      padding:5px 12px;border-radius:3px;
+      border:1px solid var(--border);
+      color:var(--muted);font-size:11px;font-weight:600;
+      background:rgba(0,245,255,0.03);
+      font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;
+    }
+    .project-link{
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;color:var(--cyan);font-weight:700;
+      letter-spacing:0.05em;display:inline-flex;align-items:center;gap:6px;
+      margin-top:20px;opacity:0.7;transition:opacity 0.2s;
+    }
+    .project-link:hover{opacity:1}
+
+    /* STACK SECTION */
+    .stack-grid{
+      display:flex;flex-wrap:wrap;gap:10px;
+    }
+    .stack-badge{
+      padding:12px 18px;
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:6px;
+      font-weight:600;font-size:13px;
+      font-family:'JetBrains Mono',monospace;
+      color:var(--text);letter-spacing:0.04em;
+      transition:border-color 0.2s,background 0.2s,color 0.2s,box-shadow 0.2s;
+      position:relative;overflow:hidden;
+    }
+    .stack-badge::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,var(--cyan-dim),var(--violet-dim));
+      opacity:0;transition:opacity 0.3s;
+    }
+    .stack-badge:hover{
+      border-color:var(--cyan);color:var(--cyan);
+      box-shadow:0 0 20px rgba(0,245,255,0.15);
+    }
+    .stack-badge:hover::before{opacity:1}
+    .stack-badge span{position:relative;z-index:1}
+
+    /* ARCHITECTURE */
+    .arch-card{
+      border:1px solid var(--border);
+      background:linear-gradient(135deg,rgba(0,245,255,0.04),rgba(123,47,255,0.04));
+      border-radius:16px;padding:36px;
+    }
+    .flow-grid{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px;
+    }
+    .flow-node{
+      border:1px solid var(--border);
+      background:rgba(0,0,0,0.3);
+      border-radius:10px;padding:18px;
+      position:relative;
+      transition:border-color 0.3s,background 0.3s;
+    }
+    .flow-node:hover{
+      border-color:rgba(0,245,255,0.4);
+      background:rgba(0,245,255,0.05);
+    }
+    .flow-node::after{
+      content:'→';
+      position:absolute;right:-18px;top:50%;transform:translateY(-50%);
+      color:var(--muted2);font-size:14px;
+    }
+    .flow-node:last-child::after{content:none}
+    .flow-num{
+      font-family:'Orbitron',sans-serif;
+      font-size:10px;font-weight:900;color:var(--cyan);
+      letter-spacing:0.15em;margin-bottom:10px;display:block;
+    }
+    .flow-node strong{
+      display:block;font-size:14px;font-weight:600;
+      margin-bottom:6px;letter-spacing:-0.01em;
+    }
+    .flow-node p{color:var(--muted);font-size:11.5px;line-height:1.6}
+
+    /* LOG */
+    .log-list{display:grid;gap:14px}
+    .log-item{
+      display:grid;grid-template-columns:160px 1fr;gap:24px;
+      padding:20px 24px;
+      border:1px solid var(--border);
+      background:var(--card);border-radius:10px;
+      transition:border-color 0.2s,background 0.2s;
+    }
+    .log-item:hover{
+      border-color:rgba(0,245,255,0.25);
+      background:var(--card-h);
+    }
+    .log-date{
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;color:var(--cyan);font-weight:700;
+      letter-spacing:0.05em;padding-top:2px;
+    }
+    .log-item strong{display:block;font-size:15px;font-weight:600;margin-bottom:5px}
+    .log-item p{color:var(--muted);font-size:13.5px;line-height:1.6}
+
+    /* CONTACT */
+    .contact-card{
+      border:1px solid rgba(0,245,255,0.18);
+      background:linear-gradient(135deg,rgba(0,245,255,0.06),rgba(123,47,255,0.04));
+      border-radius:16px;padding:48px;
+      display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
+      position:relative;overflow:hidden;
+    }
+    .contact-card::before{
+      content:'';position:absolute;
+      width:500px;height:500px;border-radius:50%;
+      background:radial-gradient(circle,rgba(0,245,255,0.08),transparent 60%);
+      top:-200px;right:-100px;pointer-events:none;
+    }
+    .contact-card p{color:var(--muted);margin-top:10px;line-height:1.7}
+
+    /* FOOTER */
+    footer{
+      border-top:1px solid var(--border);
+      padding:26px 5vw;
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:12px;
+      background:rgba(0,0,0,0.3);
+    }
+    .footer-brand{
+      font-family:'Orbitron',sans-serif;
+      font-size:13px;font-weight:900;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    footer span{color:var(--muted2);font-size:12px;font-family:'JetBrains Mono',monospace}
+
+    /* SECTION DIVIDER */
+    .divider{
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--border-h),transparent);
+      margin:0 5vw;
+    }
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+
+    /* ── CAMERA MODE ── */
+    #cam-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 18px;
+      border:1px solid rgba(255,45,107,0.5);
+      background:rgba(255,45,107,0.08);
+      color:#ff2d6b;
+      border-radius:4px;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;font-weight:700;letter-spacing:0.06em;
+      cursor:pointer;transition:background 0.2s,box-shadow 0.2s,border-color 0.2s;
+      position:relative;overflow:hidden;
+    }
+    #cam-btn:hover{background:rgba(255,45,107,0.18);box-shadow:0 0 20px rgba(255,45,107,0.3);border-color:rgba(255,45,107,0.8)}
+    #cam-btn.active{
+      background:rgba(255,45,107,0.22);
+      border-color:#ff2d6b;
+      box-shadow:0 0 30px rgba(255,45,107,0.4),0 0 60px rgba(255,45,107,0.15);
+      animation:cam-pulse 2s ease-in-out infinite;
+    }
+    @keyframes cam-pulse{0%,100%{box-shadow:0 0 20px rgba(255,45,107,0.3)}50%{box-shadow:0 0 40px rgba(255,45,107,0.6)}}
+    #cam-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#ff2d6b;
+      box-shadow:0 0 8px #ff2d6b;
+      transition:background 0.2s;
+    }
+    #cam-btn.active #cam-dot{animation:cam-dot-blink 1s step-end infinite}
+    @keyframes cam-dot-blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+    /* CAMERA OVERLAY CANVAS — full screen hand drawing layer */
+    #hand-canvas{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:9000;pointer-events:none;
+      opacity:0;transition:opacity 0.5s ease;
+    }
+    #hand-canvas.active{opacity:1}
+
+    /* CAMERA POPUP WRAPPER */
+    #cam-popup{
+      position:fixed;bottom:32px;right:32px;
+      z-index:9010;
+      display:flex;flex-direction:column;
+      background:rgba(5,5,16,0.92);
+      border:1px solid rgba(255,45,107,0.4);
+      border-radius:18px;
+      overflow:hidden;
+      backdrop-filter:blur(24px);
+      box-shadow:0 0 0 1px rgba(255,45,107,0.1),
+                 0 24px 80px rgba(0,0,0,0.7),
+                 0 0 60px rgba(255,45,107,0.12);
+      /* smooth pop-up animation */
+      opacity:0;
+      transform:translateY(30px) scale(0.95);
+      pointer-events:none;
+      transition:opacity 0.45s cubic-bezier(0.22,1,0.36,1),
+                 transform 0.45s cubic-bezier(0.22,1,0.36,1),
+                 box-shadow 0.3s ease;
+    }
+    #cam-popup.active{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      pointer-events:auto;
+      box-shadow:0 0 0 1px rgba(255,45,107,0.25),
+                 0 32px 100px rgba(0,0,0,0.8),
+                 0 0 80px rgba(255,45,107,0.2);
+    }
+
+    /* POPUP HEADER BAR */
+    #cam-popup-bar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 16px;
+      background:rgba(255,45,107,0.07);
+      border-bottom:1px solid rgba(255,45,107,0.18);
+      cursor:move;user-select:none;
+      flex-shrink:0;
+    }
+    .cam-bar-left{display:flex;align-items:center;gap:10px}
+    .cam-bar-dots{display:flex;gap:6px}
+    .cam-bar-dot{
+      width:10px;height:10px;border-radius:50%;
+    }
+    .cbd-red{background:#ff5f57}
+    .cbd-yellow{background:#febc2e}
+    .cbd-green{background:#28c840}
+    #cam-bar-title{
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;color:rgba(255,45,107,0.8);
+      letter-spacing:0.1em;
+    }
+    #cam-rec-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:#ff2d6b;
+      box-shadow:0 0 6px #ff2d6b;
+      animation:cam-dot-blink 1.2s step-end infinite;
+    }
+    @keyframes cam-dot-blink{0%,100%{opacity:1}50%{opacity:0.15}}
+    #cam-close-btn{
+      width:26px;height:26px;border-radius:6px;
+      border:1px solid rgba(255,45,107,0.3);
+      background:rgba(255,45,107,0.08);
+      color:rgba(255,45,107,0.7);
+      font-size:14px;line-height:1;
+      cursor:pointer;
+      display:grid;place-items:center;
+      transition:background 0.2s,color 0.2s;
+    }
+    #cam-close-btn:hover{background:rgba(255,45,107,0.2);color:#ff2d6b}
+
+    /* VIDEO INSIDE POPUP */
+    #cam-video{
+      display:block;
+      width:360px;height:270px;
+      object-fit:cover;
+      transform:scaleX(-1);
+      background:#000;
+    }
+
+    /* POPUP FOOTER STATUS */
+    #cam-hud{
+      padding:10px 16px;
+      background:rgba(0,0,0,0.4);
+      border-top:1px solid rgba(255,45,107,0.15);
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;color:rgba(255,45,107,0.7);
+      letter-spacing:0.08em;text-align:center;
+      flex-shrink:0;
+    }
+
+    /* SCANLINE OVERLAY */
+    .scanlines{
+      position:fixed;inset:0;z-index:2;pointer-events:none;
+      background:repeating-linear-gradient(
+        0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px
+      );
+    }
+
+    /* MOBILE */
+    @media(max-width:960px){
+      .hero{grid-template-columns:1fr;padding-top:90px}
+      .card-grid-3,.card-grid-2,.flow-grid{grid-template-columns:1fr}
+      .section-head{flex-direction:column;align-items:flex-start}
+      .contact-card{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .flow-node::after{display:none}
+      .chip{display:none}
+    }
+    @media(max-width:560px){
+      .quick-stats{grid-template-columns:1fr}
+      .log-item{grid-template-columns:1fr}
+      .section{padding:60px 4vw}
+    }
+  </style>
 </head>
 <body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="particles-js"></div>
+<div id="grid-overlay"></div>
+<div class="scanlines"></div>
+
+<!-- CAMERA ELEMENTS -->
+<canvas id="hand-canvas"></canvas>
+<div id="cam-popup">
+  <div id="cam-popup-bar">
+    <div class="cam-bar-left">
+      <div class="cam-bar-dots">
+        <span class="cam-bar-dot cbd-red"></span>
+        <span class="cam-bar-dot cbd-yellow"></span>
+        <span class="cam-bar-dot cbd-green"></span>
+      </div>
+      <span id="cam-bar-title">HAND_TRACK.exe</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="cam-rec-dot"></span>
+      <button id="cam-close-btn" onclick="toggleCamera()">✕</button>
+    </div>
+  </div>
+  <video id="cam-video" autoplay playsinline muted></video>
+  <div id="cam-hud">◉ TRACKING ACTIVE — Move your fingers</div>
+</div>
+
+<!-- NAV -->
 <nav class="nav">
-  <a href="/" class="brand" aria-label="Liswan.dev Home">
-    <img src="/liswan-dev-logo.svg" alt="" onerror="this.style.display='none'">
-    <span>LISWAN.DEV</span>
-  </a>
+  <a href="#" class="brand">LISWAN.DEV</a>
   <div class="nav-links">
-    <a href="/profile/">Profile</a>
-    <a href="/portfolio/">Portfolio</a>
-    <a href="/custom-apps/">Custom Apps</a>
-    <a href="/contact/">Contact</a>
+    <a href="#projects">Projects</a>
+    <a href="#stack">Stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#log">Log</a>
+    <a href="mailto:lis.creativework@gmail.com" class="nav-cta">Contact</a>
+    <button id="cam-btn" onclick="toggleCamera()">
+      <span id="cam-dot"></span>
+      <span id="cam-label">◉ CAM</span>
+    </button>
   </div>
 </nav>
 
-<div class="floating-dev-menu" aria-label="Developer quick menu">
-  <a href="/projects/">Projects</a>
-  <a href="/stack/">Stack</a>
-  <a href="/architecture/">Architecture</a>
-  <a href="/log/">Log</a>
-</div>
-
 <main class="page">
 
-  <section class="container hero">
-    <div>
-      <div class="eyebrow"><span class="dot"></span><span>SYS_STATUS: ONLINE · IT Developer · Internal System Builder</span></div>
-      <h1><span class="dim">// BUILDING</span><span class="gradient-text">INTERNAL</span><br><span class="gradient-text">SYSTEMS</span></h1>
-      <p class="lead">I design and ship practical internal tools for operational workflows, reporting dashboards, approval processes, asset management, Google Drive-based file services, and business automation.</p>
-      <div class="actions">
-        <a href="/portfolio/" class="btn btn-primary">View Portfolio</a>
-        <a href="/custom-apps/" class="btn btn-secondary">Custom Apps</a>
-        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-copy reveal">
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>SYS_STATUS: ONLINE · IT Developer · Internal System Builder</span>
       </div>
-    </div>
-    <aside class="panel">
-      <div class="logo-mark"><img src="/avatar.svg" alt="Liswan Susanto" onerror="this.style.display='none'"></div>
-      <div class="profile-name">Liswan Susanto</div>
-      <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
-      <p class="lead" style="font-size:14px">Focused on internal portals, operational dashboards, asset workflows, employee systems, and automation tools.</p>
-      <div class="terminal">
-        <div class="terminal-bar"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>
-        <div class="terminal-body">
-          <div><span class="tc">❯ status --active-build</span></div>
-          <div class="to">▸ Asset Management · Internal Company Website</div>
-          <div class="to">▸ Daily Sales Activity Report · File Service</div>
-          <div class="to">▸ Tracking Sales &amp; Marketing</div>
-          <br>
-          <div><span class="tc">❯ stack --list</span></div>
-          <div class="tv">WordPress · PHP · JavaScript · MySQL · Apps Script</div>
+      <h1>
+        <span class="line-dim">// BUILDING</span>
+        <span class="glitch" data-text="INTERNAL">INTERNAL</span><br>
+        <span class="glitch" data-text="SYSTEMS">SYSTEMS</span>
+      </h1>
+      <p class="hero-desc">
+        I design and ship practical internal tools for asset management, approval workflows,
+        reporting dashboards, employee portals, file services, and automation — using WordPress,
+        PHP, JavaScript, MySQL, and Google Apps Script.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary"><span class="btn-icon">⬡</span> View Systems</a>
+        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-secondary"><span class="btn-icon">⌘</span> GitHub</a>
+      </div>
+      <div class="quick-stats">
+        <div class="stat">
+          <strong>5+</strong>
+          <span>Systems Built</span>
+        </div>
+        <div class="stat">
+          <strong>OPS</strong>
+          <span>Workflow Focus</span>
+        </div>
+        <div class="stat">
+          <strong>WP</strong>
+          <span>Shortcode Apps</span>
         </div>
       </div>
-    </aside>
+    </div>
+
+    <div class="hero-panel reveal" id="hero-panel">
+      <div class="panel-3d" id="panel3d">
+        <div class="panel-scan"></div>
+        <div class="chip chip-1">PHP · MySQL</div>
+        <div class="chip chip-2">Apps Script</div>
+        <div class="chip chip-3">WordPress</div>
+        <div class="card-corner"></div>
+
+        <div class="avatar-wrap">
+          <img src="avatar.png" alt="Liswan Susanto" class="avatar" onerror="this.style.background='linear-gradient(135deg,#10102a,#1a1a3e)'"/>
+        </div>
+        <div class="profile-name">Liswan Susanto</div>
+        <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
+        <p class="profile-bio">IT staff and system builder at PT Solusi Indomitra Nusantara, focused on internal portals, operational dashboards, asset workflows, and automation tools.</p>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="t-dot"></span>
+            <span class="t-dot"></span>
+            <span class="t-dot"></span>
+            <span class="terminal-title">~/systems $ bash</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="t-prompt">❯ </span><span class="t-cmd">status --active-build</span></div>
+            <div class="t-out">▸ SIBER Portal v9.4 · SMART Asset v2.0</div>
+            <div class="t-out">▸ Drive Portal · DSA Dashboard</div>
+            <div>&nbsp;</div>
+            <div><span class="t-prompt">❯ </span><span class="t-cmd">stack --list</span></div>
+            <div class="t-out2">WordPress · PHP · JS · MySQL · Apps Script</div>
+            <div><span class="t-cursor"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">// about</div>
+        <h2 class="section-title">Operational tools,<br>not just landing pages.</h2>
+      </div>
+      <p class="section-desc">My work is centered on building systems that help teams record data, approve requests, monitor activity, generate documents, and reduce manual operational work.</p>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-3d reveal">
+        <div class="card-corner"></div>
+        <div class="card-line"></div>
+        <div class="card-icon-badge">01</div>
+        <h4>Workflow Systems</h4>
+        <p>Approval flows, mutation processes, validation stages, document generation, and evidence uploads — end-to-end.</p>
+      </div>
+      <div class="card-3d reveal">
+        <div class="card-corner"></div>
+        <div class="card-line"></div>
+        <div class="card-icon-badge">02</div>
+        <h4>Dashboards</h4>
+        <p>Weekly reports, sales activity monitoring, branch-level views, target tracking, and operational charts.</p>
+      </div>
+      <div class="card-3d reveal">
+        <div class="card-corner"></div>
+        <div class="card-line"></div>
+        <div class="card-icon-badge">03</div>
+        <h4>File Automation</h4>
+        <p>Google Drive-based upload flows, folder access, Apps Script automation, and file portal interfaces.</p>
+      </div>
+    </div>
   </section>
 
-  <section class="container section">
-    <div class="section-head">
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-head reveal">
       <div>
-        <div class="kicker">// focus</div>
-        <h2>Operational tools,<br>not just landing pages.</h2>
+        <div class="section-kicker">// selected_systems</div>
+        <h2 class="section-title">Built around real<br>operational problems.</h2>
       </div>
-      <p class="section-desc">The main structure is page-based. The top menu moves visitors to core profile pages, while the floating menu keeps technical sections available without crowding the navbar.</p>
+      <p class="section-desc">Systems presented using recreated flows and dummy data for portfolio purposes. No confidential company data published.</p>
     </div>
-    <div class="grid-3">
-      <article class="card"><div class="badge">01</div><h3>Workflow Systems</h3><p>Approval flows, validation stages, evidence uploads, and document generation.</p></article>
-      <article class="card"><div class="badge">02</div><h3>Dashboards</h3><p>Weekly reports, branch monitoring, sales activity summaries, target tracking, and charts.</p></article>
-      <article class="card"><div class="badge">03</div><h3>File Automation</h3><p>Google Drive-based upload flows, folder access, Apps Script automation, and file portals.</p></article>
+    <div class="card-grid-2">
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">SA</div>
+          <h4>SMART Asset Management</h4>
+          <p>Asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, and role-based access.</p>
+          <div class="tags">
+            <span class="tag">Asset Tracking</span>
+            <span class="tag">QR Label</span>
+            <span class="tag">Role Access</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">SM</div>
+          <h4>SMART Mutation Workflow</h4>
+          <p>Asset mutation workflow with draft request, Area Manager email approval, approve/reject flow, BAST generation, upload evidence, and IT validation stages.</p>
+          <div class="tags">
+            <span class="tag">Approval Flow</span>
+            <span class="tag">BAST</span>
+            <span class="tag">Email Action</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">SB</div>
+          <h4>SIBER Internal Portal</h4>
+          <p>Internal portal for department-based access across FAT, HCGA, IT, Business Development, Weekly Report, and reporting dashboard modules.</p>
+          <div class="tags">
+            <span class="tag">Portal</span>
+            <span class="tag">Department Access</span>
+            <span class="tag">Dashboard</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">DS</div>
+          <h4>Daily Sales Activity Dashboard</h4>
+          <p>Sales activity reporting system for daily input, supervisor monitoring, branch summaries, target tracking, and national dashboard views.</p>
+          <div class="tags">
+            <span class="tag">Sales Report</span>
+            <span class="tag">Monitoring</span>
+            <span class="tag">Branch View</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">SF</div>
+          <h4>SIN Drive Portal</h4>
+          <p>Google Drive-based file portal with Windows Explorer-style UI, NIK-based auth, drag-and-drop upload, folder hierarchy, breadcrumb nav, and Apps Script backend.</p>
+          <div class="tags">
+            <span class="tag">Google Drive</span>
+            <span class="tag">Apps Script</span>
+            <span class="tag">File Portal</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+
+      <article class="card-3d project-card reveal">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">HC</div>
+          <h4>HCGA Center</h4>
+          <p>Internal access center for HCGA information, SOP, jobdesk, forms, pop-up announcements, and employee-facing resources.</p>
+          <div class="tags">
+            <span class="tag">HCGA</span>
+            <span class="tag">Internal Portal</span>
+            <span class="tag">Resources</span>
+          </div>
+        </div>
+        <a class="project-link" href="#">[ case study coming soon → ]</a>
+      </article>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STACK -->
+  <section class="section" id="stack">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">// tech_stack</div>
+        <h2 class="section-title">Tools I use to build<br>practical systems.</h2>
+      </div>
+      <p class="section-desc">Focused on fast deployment, operational usability, and integration with tools that companies already use.</p>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-badge"><span>HTML</span></div>
+      <div class="stack-badge"><span>CSS</span></div>
+      <div class="stack-badge"><span>JavaScript</span></div>
+      <div class="stack-badge"><span>PHP</span></div>
+      <div class="stack-badge"><span>WordPress</span></div>
+      <div class="stack-badge"><span>MySQL</span></div>
+      <div class="stack-badge"><span>Google Apps Script</span></div>
+      <div class="stack-badge"><span>Google Drive API</span></div>
+      <div class="stack-badge"><span>Chart.js</span></div>
+      <div class="stack-badge"><span>GitHub Pages</span></div>
+      <div class="stack-badge"><span>Workflow Automation</span></div>
+      <div class="stack-badge"><span>Internal Portal</span></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ARCHITECTURE -->
+  <section class="section" id="architecture">
+    <div class="arch-card reveal">
+      <div class="section-kicker">// system_architecture</div>
+      <h2 class="section-title">Typical internal system flow.</h2>
+      <p class="section-desc">Secure user access → structured input → storage → automation → output. A pattern I repeat across every system.</p>
+      <div class="flow-grid">
+        <div class="flow-node">
+          <span class="flow-num">NODE_01</span>
+          <strong>User Access</strong>
+          <p>Login, role access, NIK, department, branch, or supervisor mapping.</p>
+        </div>
+        <div class="flow-node">
+          <span class="flow-num">NODE_02</span>
+          <strong>Portal Module</strong>
+          <p>WordPress page, shortcode app, form, table, modal, or dashboard view.</p>
+        </div>
+        <div class="flow-node">
+          <span class="flow-num">NODE_03</span>
+          <strong>Data Layer</strong>
+          <p>MySQL, Google Sheet, structured master data, or transaction records.</p>
+        </div>
+        <div class="flow-node">
+          <span class="flow-num">NODE_04</span>
+          <strong>Automation</strong>
+          <p>Email approval, Apps Script, Drive upload, document generation, or validation.</p>
+        </div>
+        <div class="flow-node">
+          <span class="flow-num">NODE_05</span>
+          <strong>Output</strong>
+          <p>Dashboard, report, BAST, file link, activity log, or management summary.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOG -->
+  <section class="section" id="log">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">// dev_log</div>
+        <h2 class="section-title">Current building<br>direction.</h2>
+      </div>
+      <p class="section-desc">A lightweight log to show that the portfolio is active and continuously developed.</p>
+    </div>
+    <div class="log-list">
+      <div class="log-item reveal">
+        <div class="log-date">JUN_2026</div>
+        <div>
+          <strong>SIBER Report Dashboard</strong>
+          <p>Building weekly reporting dashboard concepts with upload templates, charts, filters, and unified Excel structure.</p>
+        </div>
+      </div>
+      <div class="log-item reveal">
+        <div class="log-date">JUN_2026</div>
+        <div>
+          <strong>SMART Mutation Workflow v2.0</strong>
+          <p>Improving approval flow, resend email action, BAST visibility, sender/receiver evidence, and IT validation.</p>
+        </div>
+      </div>
+      <div class="log-item reveal">
+        <div class="log-date">JUN_2026</div>
+        <div>
+          <strong>SIN Drive Portal v2.0</strong>
+          <p>Windows Explorer-style file portal with drag-and-drop, Ctrl+V paste upload, double-click navigation, and breadcrumb.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="contact-card reveal">
+      <div>
+        <div class="section-kicker">// contact</div>
+        <h2 class="section-title">Let's build practical<br>internal systems.</h2>
+        <p>For collaboration, internal tool ideas, dashboard concepts, or workflow automation — reach me via email or GitHub.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="mailto:lis.creativework@gmail.com" class="btn btn-primary">⌁ Email Me</a>
+        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-secondary">⌘ GitHub</a>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <span>LISWAN.DEV</span>
-  <span>© <span id="year"></span> Liswan Susanto · IT Developer &amp; Internal System Builder</span>
-  <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  <span class="footer-brand">LISWAN.DEV</span>
+  <span>© <span id="year"></span> Liswan Susanto · Internal System Builder</span>
+  <span>WordPress · PHP · Apps Script · Dashboard</span>
 </footer>
-<script src="/assets/js/main.js" defer></script>
+
+<script>
+/* ─── YEAR ─── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ─── CURSOR ─── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',(e)=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,.btn,.card-3d,.stat,.stack-badge').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
+
+/* ─── MOUSE GLOW (keep lightweight canvas just for glow) ─── */
+(function(){
+  const c=document.createElement('canvas');
+  c.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none';
+  document.body.appendChild(c);
+  const x=c.getContext('2d');
+  let W,H,pmx=window.innerWidth/2,pmy=window.innerHeight/2;
+  function rs(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  rs();window.addEventListener('resize',rs);
+  document.addEventListener('mousemove',e=>{pmx=e.clientX;pmy=e.clientY});
+  (function loop(){
+    x.clearRect(0,0,W,H);
+    const g=x.createRadialGradient(pmx,pmy,0,pmx,pmy,260);
+    g.addColorStop(0,'rgba(0,245,255,0.06)');
+    g.addColorStop(0.5,'rgba(123,47,255,0.03)');
+    g.addColorStop(1,'transparent');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ─── 3D CARD TILT ─── */
+const panel = document.getElementById('panel3d');
+const panelWrap = document.getElementById('hero-panel');
+panelWrap.addEventListener('mousemove',(e)=>{
+  const r=panelWrap.getBoundingClientRect();
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  const dx=(e.clientX-cx)/(r.width/2);
+  const dy=(e.clientY-cy)/(r.height/2);
+  panel.style.transform=`rotateY(${dx*12}deg) rotateX(${-dy*10}deg) translateZ(20px)`;
+  panel.style.boxShadow=`${-dx*20}px ${dy*20}px 60px rgba(0,0,0,0.5),0 0 60px rgba(123,47,255,0.2)`;
+});
+panelWrap.addEventListener('mouseleave',()=>{
+  panel.style.transform='rotateY(0) rotateX(0) translateZ(0)';
+  panel.style.boxShadow='';
+});
+
+/* ─── CARD LIGHT EFFECT ─── */
+document.querySelectorAll('.card-3d').forEach(card=>{
+  card.addEventListener('mousemove',(e)=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width*100).toFixed(1);
+    const y=((e.clientY-r.top)/r.height*100).toFixed(1);
+    card.style.setProperty('--mx',x+'%');
+    card.style.setProperty('--my',y+'%');
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    card.style.transform=`perspective(800px) rotateY(${dx*6}deg) rotateX(${-dy*5}deg) translateZ(10px)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='perspective(800px) rotateY(0) rotateX(0) translateZ(0)';
+  });
+});
+
+/* ─── SCROLL REVEAL ─── */
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ─── TYPING EFFECT ─── */
+// Subtle: re-type terminal on scroll into view
+</script>
+
+<!-- PARTICLES.JS -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+particlesJS('particles-js', {
+  particles: {
+    number: {
+      value: 90,
+      density: { enable: true, value_area: 900 }
+    },
+    color: {
+      value: ['#00f5ff', '#7b2fff', '#ff2d6b']
+    },
+    shape: {
+      type: 'circle'
+    },
+    opacity: {
+      value: 0.45,
+      random: true,
+      anim: { enable: true, speed: 0.8, opacity_min: 0.08, sync: false }
+    },
+    size: {
+      value: 2.2,
+      random: true,
+      anim: { enable: true, speed: 1.5, size_min: 0.4, sync: false }
+    },
+    line_linked: {
+      enable: true,
+      distance: 130,
+      color: '#00f5ff',
+      opacity: 0.08,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 0.9,
+      direction: 'none',
+      random: true,
+      straight: false,
+      out_mode: 'out',
+      bounce: false,
+      attract: { enable: true, rotateX: 600, rotateY: 1200 }
+    }
+  },
+  interactivity: {
+    detect_on: 'window',
+    events: {
+      onhover: { enable: true, mode: 'grab' },
+      onclick: { enable: true, mode: 'push' },
+      resize: true
+    },
+    modes: {
+      grab: {
+        distance: 160,
+        line_linked: { opacity: 0.35 }
+      },
+      push: { particles_nb: 4 },
+      repulse: { distance: 100, duration: 0.4 }
+    }
+  },
+  retina_detect: true
+});
+</script>
+
+<!-- MEDIAPIPE HANDS -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<script>
+/* ═══════════════════════════════════════════════════
+   HAND TRACKING — Skeleton style + Gesture Scroll
+   ═══════════════════════════════════════════════════ */
+
+const video    = document.getElementById('cam-video');
+const hCanvas  = document.getElementById('hand-canvas');
+const hCtx     = hCanvas.getContext('2d');
+const camBtn   = document.getElementById('cam-btn');
+const camLabel = document.getElementById('cam-label');
+const camPopup = document.getElementById('cam-popup');
+
+let camActive = false;
+let mpCamera  = null;
+let hands     = null;
+
+/* ── MediaPipe 21-landmark connections ── */
+const CONNECTIONS = [
+  // Thumb
+  [0,1],[1,2],[2,3],[3,4],
+  // Index
+  [0,5],[5,6],[6,7],[7,8],
+  // Middle
+  [0,9],[9,10],[10,11],[11,12],
+  // Ring
+  [0,13],[13,14],[14,15],[15,16],
+  // Pinky
+  [0,17],[17,18],[18,19],[19,20],
+  // Palm arc
+  [5,9],[9,13],[13,17],[0,17],
+];
+
+// Fingertip indices
+const TIPS = [4, 8, 12, 16, 20];
+
+/* ── PINCH SCROLL STATE ── */
+let pinchActive  = false;   // currently pinching?
+let pinchStartY  = null;    // normalized Y where pinch began
+let lastPinchY   = null;    // last known pinch Y
+let scrollVel    = 0;
+const VEL_DECAY  = 0.85;
+const VEL_SCALE  = 2800;
+const PINCH_DIST = 0.07;    // normalized distance threshold to trigger pinch
+let rafScroll    = null;
+
+/* rAF scroll loop — smooth momentum */
+function startScrollLoop() {
+  function loop() {
+    if (Math.abs(scrollVel) > 0.3) {
+      window.scrollBy(0, scrollVel);
+      scrollVel *= VEL_DECAY;
+    } else {
+      scrollVel = 0;
+    }
+    rafScroll = requestAnimationFrame(loop);
+  }
+  if (!rafScroll) rafScroll = requestAnimationFrame(loop);
+}
+function stopScrollLoop() {
+  if (rafScroll) { cancelAnimationFrame(rafScroll); rafScroll = null; }
+  scrollVel = 0;
+}
+
+/* ── HUD ── */
+let scrollHudTimeout = null;
+function showScrollHud(msg) {
+  const hud = document.getElementById('cam-hud');
+  hud.textContent = msg;
+  clearTimeout(scrollHudTimeout);
+  scrollHudTimeout = setTimeout(() => {
+    hud.textContent = '👌 Pinch & move up/down to scroll';
+  }, 900);
+}
+
+/* ── PINCH DETECTOR ── */
+function handlePinchScroll(landmarks) {
+  const thumb = landmarks[4];   // thumb tip
+  const index = landmarks[8];   // index tip
+
+  // Euclidean distance in normalized space
+  const dx   = thumb.x - index.x;
+  const dy   = thumb.y - index.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  // Midpoint Y of pinch (average thumb+index)
+  const midY = (thumb.y + index.y) / 2;
+
+  if (dist < PINCH_DIST) {
+    // ── PINCH ACTIVE ──
+    if (!pinchActive) {
+      // Just started pinching — record anchor
+      pinchActive  = true;
+      pinchStartY  = midY;
+      lastPinchY   = midY;
+      showScrollHud('👌 Pinch detected — move up/down');
+    } else {
+      // Already pinching — compute delta from last frame
+      const delta = midY - lastPinchY;  // + = hand moved down = scroll down
+      lastPinchY  = midY;
+
+      if (Math.abs(delta) > 0.001) {
+        scrollVel += delta * VEL_SCALE;
+        scrollVel  = Math.max(-80, Math.min(80, scrollVel));
+        showScrollHud(delta < 0 ? '▲  SCROLL UP' : '▼  SCROLL DOWN');
+      }
+    }
+  } else {
+    // ── PINCH RELEASED ──
+    if (pinchActive) {
+      pinchActive = false;
+      pinchStartY = null;
+      lastPinchY  = null;
+      showScrollHud('✋ Pinch released');
+    }
+  }
+}
+
+/* ── DRAW: pinch indicator on thumb+index tips ── */
+function drawPinchIndicator(pts, isPinching) {
+  const t = pts[4];   // thumb tip
+  const i = pts[8];   // index tip
+  const color = isPinching ? '#facc15' : 'rgba(255,255,255,0.35)';
+  const glow  = isPinching ? '#facc15' : 'transparent';
+
+  // Line between thumb and index
+  hCtx.beginPath();
+  hCtx.moveTo(t.x, t.y);
+  hCtx.lineTo(i.x, i.y);
+  hCtx.strokeStyle = color;
+  hCtx.lineWidth   = isPinching ? 3 : 1.5;
+  hCtx.setLineDash(isPinching ? [] : [5, 4]);
+  hCtx.shadowBlur  = isPinching ? 16 : 0;
+  hCtx.shadowColor = glow;
+  hCtx.stroke();
+  hCtx.setLineDash([]);
+  hCtx.shadowBlur  = 0;
+
+  // Highlight the two tips
+  [t, i].forEach(pt => {
+    hCtx.beginPath();
+    hCtx.arc(pt.x, pt.y, isPinching ? 12 : 9, 0, Math.PI * 2);
+    hCtx.strokeStyle = color;
+    hCtx.lineWidth   = 2.5;
+    hCtx.shadowBlur  = isPinching ? 20 : 0;
+    hCtx.shadowColor = glow;
+    hCtx.stroke();
+    hCtx.shadowBlur  = 0;
+  });
+
+  // Pinch midpoint dot when active
+  if (isPinching) {
+    const mx = (t.x + i.x) / 2;
+    const my = (t.y + i.y) / 2;
+    hCtx.beginPath();
+    hCtx.arc(mx, my, 5, 0, Math.PI * 2);
+    hCtx.fillStyle   = '#facc15';
+    hCtx.shadowBlur  = 14;
+    hCtx.shadowColor = '#facc15';
+    hCtx.fill();
+    hCtx.shadowBlur  = 0;
+  }
+}
+
+/* ── Resize canvas ── */
+function resizeHandCanvas() {
+  hCanvas.width  = window.innerWidth;
+  hCanvas.height = window.innerHeight;
+}
+resizeHandCanvas();
+window.addEventListener('resize', resizeHandCanvas);
+
+/* ── TOGGLE ── */
+window.toggleCamera = async function () {
+  if (!camActive) {
+    camActive   = true;
+    pinchActive = false;
+    pinchStartY = null;
+    lastPinchY  = null;
+    scrollVel   = 0;
+    camBtn.classList.add('active');
+    camLabel.textContent = '◉ STOP';
+    camPopup.classList.add('active');
+    hCanvas.classList.add('active');
+    startScrollLoop();
+    await startHandTracking();
+  } else {
+    camActive = false;
+    stopHandTracking();
+    stopScrollLoop();
+    camBtn.classList.remove('active');
+    camLabel.textContent = '◉ CAM';
+    camPopup.classList.remove('active');
+    hCanvas.classList.remove('active');
+    setTimeout(() => hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height), 450);
+  }
+};
+
+/* ── START ── */
+async function startHandTracking() {
+  hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
+  hands.setOptions({
+    maxNumHands: 1,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.75,
+    minTrackingConfidence: 0.65,
+  });
+  hands.onResults(onResults);
+  mpCamera = new Camera(video, {
+    onFrame: async () => { if (camActive) await hands.send({ image: video }); },
+    width: 640, height: 480,
+  });
+  await mpCamera.start();
+}
+
+/* ── STOP ── */
+function stopHandTracking() {
+  if (mpCamera) { mpCamera.stop(); mpCamera = null; }
+  if (hands)    { hands.close();   hands    = null; }
+  pinchActive = false; pinchStartY = null; lastPinchY = null;
+  stopScrollLoop();
+}
+
+/* ── lm → screen px (mirror X selfie) ── */
+function lm2s(lm) {
+  return {
+    x: (1 - lm.x) * hCanvas.width,
+    y: lm.y        * hCanvas.height,
+  };
+}
+
+/* ── DRAW: bone line with gradient glow ── */
+function drawBone(ax, ay, bx, by) {
+  // Glow
+  hCtx.beginPath();
+  hCtx.moveTo(ax, ay); hCtx.lineTo(bx, by);
+  hCtx.strokeStyle = 'rgba(0,245,255,0.15)';
+  hCtx.lineWidth   = 8;
+  hCtx.lineCap     = 'round';
+  hCtx.stroke();
+  // Core
+  hCtx.beginPath();
+  hCtx.moveTo(ax, ay); hCtx.lineTo(bx, by);
+  hCtx.strokeStyle = 'rgba(200,240,255,0.85)';
+  hCtx.lineWidth   = 2;
+  hCtx.shadowBlur  = 6;
+  hCtx.shadowColor = '#00f5ff';
+  hCtx.stroke();
+  hCtx.shadowBlur  = 0;
+}
+
+/* ── DRAW: joint dot ── */
+function drawJoint(x, y, isTip) {
+  const r = isTip ? 9 : 5;
+  // Outer glow ring
+  hCtx.beginPath();
+  hCtx.arc(x, y, r + 5, 0, Math.PI * 2);
+  hCtx.strokeStyle = isTip ? 'rgba(0,245,255,0.3)' : 'rgba(0,245,255,0.1)';
+  hCtx.lineWidth   = 2;
+  hCtx.stroke();
+  // Fill dot
+  hCtx.beginPath();
+  hCtx.arc(x, y, r, 0, Math.PI * 2);
+  hCtx.fillStyle   = isTip ? '#00f5ff' : '#ffffff';
+  hCtx.shadowBlur  = isTip ? 18 : 8;
+  hCtx.shadowColor = '#00f5ff';
+  hCtx.fill();
+  hCtx.shadowBlur  = 0;
+  // Inner white core for tips
+  if (isTip) {
+    hCtx.beginPath();
+    hCtx.arc(x, y, 3.5, 0, Math.PI * 2);
+    hCtx.fillStyle = '#ffffff';
+    hCtx.fill();
+  }
+}
+
+/* ── DRAW: bounding box around hand ── */
+function drawBoundingBox(pts) {
+  let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
+  pts.forEach(p => {
+    if (p.x < minX) minX = p.x; if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y; if (p.y > maxY) maxY = p.y;
+  });
+  const pad = 18;
+  minX -= pad; minY -= pad; maxX += pad; maxY += pad;
+
+  hCtx.beginPath();
+  hCtx.rect(minX, minY, maxX - minX, maxY - minY);
+  hCtx.strokeStyle = 'rgba(0,245,255,0.25)';
+  hCtx.lineWidth   = 1.5;
+  hCtx.setLineDash([6, 4]);
+  hCtx.stroke();
+  hCtx.setLineDash([]);
+
+  // Corner accents
+  const cLen = 16, cW = 2;
+  [
+    [minX, minY, 1, 1],
+    [maxX, minY,-1, 1],
+    [minX, maxY, 1,-1],
+    [maxX, maxY,-1,-1],
+  ].forEach(([cx, cy, dx, dy]) => {
+    hCtx.beginPath();
+    hCtx.moveTo(cx, cy); hCtx.lineTo(cx + dx*cLen, cy);
+    hCtx.moveTo(cx, cy); hCtx.lineTo(cx, cy + dy*cLen);
+    hCtx.strokeStyle = '#00f5ff';
+    hCtx.lineWidth   = cW;
+    hCtx.shadowBlur  = 8;
+    hCtx.shadowColor = '#00f5ff';
+    hCtx.stroke();
+    hCtx.shadowBlur  = 0;
+  });
+
+  return { minX, minY, maxX, maxY };
+}
+
+/* ── DRAW: label above bounding box ── */
+function drawLabel(text, x, y) {
+  hCtx.font        = 'bold 12px JetBrains Mono, monospace';
+  const w          = hCtx.measureText(text).width + 16;
+  // bg pill
+  hCtx.fillStyle   = 'rgba(0,0,0,0.65)';
+  hCtx.beginPath();
+  hCtx.roundRect(x - w/2, y - 20, w, 22, 4);
+  hCtx.fill();
+  // text
+  hCtx.fillStyle   = '#00f5ff';
+  hCtx.shadowBlur  = 6;
+  hCtx.shadowColor = '#00f5ff';
+  hCtx.fillText(text, x - w/2 + 8, y - 4);
+  hCtx.shadowBlur  = 0;
+}
+
+/* ── GESTURE label ── */
+function detectGesture(landmarks) {
+  const dx   = landmarks[4].x - landmarks[8].x;
+  const dy   = landmarks[4].y - landmarks[8].y;
+  if (Math.sqrt(dx*dx + dy*dy) < PINCH_DIST) return 'Pinch ✓';
+  const ext = [
+    landmarks[8].y  < landmarks[6].y,
+    landmarks[12].y < landmarks[10].y,
+    landmarks[16].y < landmarks[14].y,
+    landmarks[20].y < landmarks[18].y,
+  ].filter(Boolean).length;
+  if (ext >= 3) return 'Open';
+  if (ext === 0) return 'Fist';
+  return `${ext} Finger${ext > 1 ? 's' : ''}`;
+}
+
+/* ── MAIN RESULT HANDLER ── */
+function onResults(results) {
+  if (!camActive) return;
+  hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
+
+  if (!results.multiHandLandmarks || !results.multiHandLandmarks.length) {
+    pinchActive = false; lastPinchY = null;
+    return;
+  }
+
+  results.multiHandLandmarks.forEach((lms, hIdx) => {
+    const handedness = results.multiHandedness?.[hIdx]?.label || 'Hand';
+    const pts = lms.map(lm => lm2s(lm));
+
+    // ── Pinch scroll ──
+    handlePinchScroll(lms);
+
+    // ── Is pinching? ──
+    const dx = lms[4].x - lms[8].x, dy = lms[4].y - lms[8].y;
+    const isPinching = Math.sqrt(dx*dx + dy*dy) < PINCH_DIST;
+
+    // ── Bounding box + label ──
+    const box = drawBoundingBox(pts);
+    drawLabel(`${handedness}: ${detectGesture(lms)}`, (box.minX+box.maxX)/2, box.minY);
+
+    // ── Skeleton ──
+    CONNECTIONS.forEach(([a,b]) => drawBone(pts[a].x, pts[a].y, pts[b].x, pts[b].y));
+    pts.forEach((pt, idx) => drawJoint(pt.x, pt.y, TIPS.includes(idx)));
+
+    // ── Pinch overlay ──
+    drawPinchIndicator(pts, isPinching);
+  });
+}
+
+/* ── DRAGGABLE POPUP ── */
+(function(){
+  const popup = document.getElementById('cam-popup');
+  const bar   = document.getElementById('cam-popup-bar');
+  let dragging=false, ox=0, oy=0;
+  bar.addEventListener('mousedown',(e)=>{
+    dragging=true;
+    const r=popup.getBoundingClientRect();
+    ox=e.clientX-r.left; oy=e.clientY-r.top;
+    popup.style.transition='none';
+  });
+  document.addEventListener('mousemove',(e)=>{
+    if(!dragging)return;
+    popup.style.right='auto'; popup.style.bottom='auto';
+    popup.style.left=(e.clientX-ox)+'px';
+    popup.style.top=(e.clientY-oy)+'px';
+  });
+  document.addEventListener('mouseup',()=>{
+    dragging=false; popup.style.transition='';
+  });
+})();
+</script>
 </body>
 </html>

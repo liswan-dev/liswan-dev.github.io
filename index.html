@@ -443,6 +443,127 @@
       margin-top:20px;opacity:0.7;transition:opacity 0.2s;
     }
     .project-link:hover{opacity:1}
+    .project-card[data-project-url]{cursor:pointer}
+    .project-card:focus-visible{
+      outline:2px solid var(--cyan);
+      outline-offset:4px;
+      border-color:var(--cyan);
+      box-shadow:0 0 35px rgba(0,245,255,0.22);
+    }
+    button.project-link{
+      width:max-content;
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor:pointer;
+      text-align:left;
+    }
+
+    /* PROJECT PREVIEW MODAL */
+    body.modal-open{overflow:hidden}
+    .project-modal{
+      position:fixed;inset:0;z-index:9500;
+      display:grid;place-items:center;
+      padding:24px;
+      opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity 0.3s ease,visibility 0.3s ease;
+    }
+    .project-modal.active{
+      opacity:1;visibility:visible;pointer-events:auto;
+    }
+    .project-modal-backdrop{
+      position:absolute;inset:0;
+      background:rgba(2,2,12,0.82);
+      backdrop-filter:blur(12px);
+    }
+    .project-modal-window{
+      position:relative;z-index:1;
+      width:min(1180px,94vw);
+      height:min(780px,88vh);
+      display:flex;flex-direction:column;
+      overflow:hidden;
+      border:1px solid rgba(0,245,255,0.28);
+      border-radius:16px;
+      background:rgba(8,8,24,0.98);
+      box-shadow:0 32px 120px rgba(0,0,0,0.75),0 0 70px rgba(0,245,255,0.12);
+      transform:translateY(24px) scale(0.97);
+      transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .project-modal.active .project-modal-window{
+      transform:translateY(0) scale(1);
+    }
+    .project-modal-header{
+      min-height:58px;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:18px;padding:10px 12px 10px 18px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(90deg,rgba(0,245,255,0.06),rgba(123,47,255,0.05));
+      flex-shrink:0;
+    }
+    .project-modal-heading{
+      min-width:0;display:flex;align-items:center;gap:12px;
+    }
+    .project-modal-dots{display:flex;gap:6px;flex-shrink:0}
+    .project-modal-dot{width:9px;height:9px;border-radius:50%}
+    .project-modal-dot:nth-child(1){background:#ff5f57}
+    .project-modal-dot:nth-child(2){background:#febc2e}
+    .project-modal-dot:nth-child(3){background:#28c840}
+    .project-modal-title{
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      font-family:'JetBrains Mono',monospace;
+      font-size:12px;font-weight:700;color:var(--cyan);
+      letter-spacing:0.05em;
+    }
+    .project-modal-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .project-modal-action,.project-modal-close{
+      min-height:36px;
+      display:inline-flex;align-items:center;justify-content:center;gap:7px;
+      border:1px solid var(--border-h);
+      border-radius:7px;
+      background:rgba(0,245,255,0.05);
+      color:var(--text);
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;font-weight:700;
+      cursor:pointer;
+      transition:background 0.2s,border-color 0.2s,color 0.2s,box-shadow 0.2s;
+    }
+    .project-modal-action{padding:8px 13px}
+    .project-modal-close{width:36px;padding:0;font-size:16px}
+    .project-modal-action:hover,.project-modal-close:hover{
+      color:var(--cyan);border-color:var(--cyan);
+      background:rgba(0,245,255,0.1);
+      box-shadow:0 0 18px rgba(0,245,255,0.12);
+    }
+    .project-modal-body{
+      position:relative;flex:1;min-height:0;background:#fff;
+    }
+    .project-modal-frame{
+      display:block;width:100%;height:100%;border:0;background:#fff;
+    }
+    .project-modal-loading{
+      position:absolute;inset:0;z-index:2;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+      background:var(--deep);
+      color:var(--muted);
+      font-family:'JetBrains Mono',monospace;font-size:12px;
+      transition:opacity 0.25s ease,visibility 0.25s ease;
+    }
+    .project-modal-loading.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .project-modal-spinner{
+      width:38px;height:38px;border-radius:50%;
+      border:2px solid rgba(0,245,255,0.14);
+      border-top-color:var(--cyan);
+      animation:project-spin 0.8s linear infinite;
+      box-shadow:0 0 20px rgba(0,245,255,0.12);
+    }
+    @keyframes project-spin{to{transform:rotate(360deg)}}
+    .project-modal-note{
+      flex-shrink:0;padding:8px 14px;
+      border-top:1px solid var(--border);
+      background:rgba(0,0,0,0.45);
+      color:var(--muted2);
+      font-family:'JetBrains Mono',monospace;font-size:10px;text-align:center;
+    }
 
     /* STACK SECTION */
     .stack-grid{
@@ -723,6 +844,13 @@
       .quick-stats{grid-template-columns:1fr}
       .log-item{grid-template-columns:1fr}
       .section{padding:60px 4vw}
+      .project-modal{padding:10px}
+      .project-modal-window{width:96vw;height:92vh;border-radius:12px}
+      .project-modal-header{padding-left:12px;gap:8px}
+      .project-modal-title{font-size:10px}
+      .project-modal-action span{display:none}
+      .project-modal-action{width:36px;padding:0;font-size:15px}
+      .project-modal-note{font-size:9px}
     }
   </style>
 </head>
@@ -753,6 +881,35 @@
   </div>
   <video id="cam-video" autoplay playsinline muted></video>
   <div id="cam-hud">◉ TRACKING ACTIVE — Move your fingers</div>
+</div>
+
+<!-- PROJECT PREVIEW MODAL -->
+<div id="project-modal" class="project-modal" aria-hidden="true">
+  <div class="project-modal-backdrop" data-project-close></div>
+  <section class="project-modal-window" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+    <header class="project-modal-header">
+      <div class="project-modal-heading">
+        <div class="project-modal-dots" aria-hidden="true">
+          <span class="project-modal-dot"></span>
+          <span class="project-modal-dot"></span>
+          <span class="project-modal-dot"></span>
+        </div>
+        <span id="project-modal-title" class="project-modal-title">PROJECT_PREVIEW</span>
+      </div>
+      <div class="project-modal-actions">
+        <a id="project-modal-external" class="project-modal-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Open project in a new tab">↗ <span>OPEN FULL PAGE</span></a>
+        <button type="button" class="project-modal-close" data-project-close aria-label="Close project preview">✕</button>
+      </div>
+    </header>
+    <div class="project-modal-body">
+      <div id="project-modal-loading" class="project-modal-loading">
+        <span class="project-modal-spinner"></span>
+        <span>LOADING PROJECT...</span>
+      </div>
+      <iframe id="project-modal-frame" class="project-modal-frame" title="Project preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="project-modal-note">If the embedded preview is restricted, use “Open Full Page”.</div>
+  </section>
 </div>
 
 <!-- NAV -->
@@ -823,7 +980,7 @@
         </div>
         <div class="profile-name">Liswan Susanto</div>
         <div class="profile-role">&gt; IT Staff &amp; Internal System Builder</div>
-        <p class="profile-bio">IT staff and system builder at PT Solusi Indomitra Nusantara, focused on internal portals, operational dashboards, asset workflows, and automation tools.</p>
+        <p class="profile-bio">IT developer and internal system builder focused on operational portals, reporting dashboards, asset workflows, employee resources, and automation tools.</p>
 
         <div class="terminal">
           <div class="terminal-bar">
@@ -834,8 +991,8 @@
           </div>
           <div class="terminal-body">
             <div><span class="t-prompt">❯ </span><span class="t-cmd">status --active-build</span></div>
-            <div class="t-out">▸ SIBER Portal v9.4 · SMART Asset v2.0</div>
-            <div class="t-out">▸ Drive Portal · DSA Dashboard</div>
+            <div class="t-out">▸ Asset Management · Daily Sales Activity</div>
+            <div class="t-out">▸ Document Service · Employee Resource Center</div>
             <div>&nbsp;</div>
             <div><span class="t-prompt">❯ </span><span class="t-cmd">stack --list</span></div>
             <div class="t-out2">WordPress · PHP · JS · MySQL · Apps Script</div>
@@ -894,100 +1051,112 @@
       <p class="section-desc">Systems presented using recreated flows and dummy data for portfolio purposes. No confidential company data published.</p>
     </div>
     <div class="card-grid-2">
-      <article class="card-3d project-card reveal">
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Asset Management"
+        data-project-url="https://script.google.com/macros/s/AKfycbxhDg--Yl4_D118rQMpr2ohOR_WfdFPP0Vr4bgcfUo4fg26940XfGwTxX1Mq8vB3pfX/exec">
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SA</div>
-          <h4>SMART Asset Management</h4>
-          <p>Asset management system for recording, tracking, filtering, and monitoring company assets with QR labels, status control, attachments, and role-based access.</p>
+          <div class="card-icon-badge">AM</div>
+          <h4>Asset Management</h4>
+          <p>Asset management application for recording, tracking, filtering, and monitoring assets with QR labels, condition control, attachments, and role-based access.</p>
           <div class="tags">
             <span class="tag">Asset Tracking</span>
             <span class="tag">QR Label</span>
             <span class="tag">Role Access</span>
           </div>
         </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
+        <button type="button" class="project-link">[ open live preview → ]</button>
       </article>
 
-      <article class="card-3d project-card reveal">
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Daily Sales Activity"
+        data-project-url="https://script.google.com/macros/s/AKfycbwcz87KCa0ZUSodD_6Yd9u0Wn_uk6Zg7DgzcnM9hRsnsRMBuK-fVxPu1SHfFHYxzNN0/exec">
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SM</div>
-          <h4>SMART Mutation Workflow</h4>
-          <p>Asset mutation workflow with draft request, Area Manager email approval, approve/reject flow, BAST generation, upload evidence, and IT validation stages.</p>
+          <div class="card-icon-badge">DA</div>
+          <h4>Daily Sales Activity</h4>
+          <p>Daily activity application for structured sales input, visit records, progress monitoring, supervisor review, and summarized operational reporting.</p>
           <div class="tags">
-            <span class="tag">Approval Flow</span>
-            <span class="tag">BAST</span>
-            <span class="tag">Email Action</span>
+            <span class="tag">Sales Input</span>
+            <span class="tag">Activity Tracking</span>
+            <span class="tag">Supervisor Review</span>
           </div>
         </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
+        <button type="button" class="project-link">[ open live preview → ]</button>
       </article>
 
-      <article class="card-3d project-card reveal">
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Document and File Service"
+        data-project-url="https://script.google.com/macros/s/AKfycbwSG_ttYPmcag5f8GJgct-gX96cZYfBn97Xhy1tMuQq7r1du6_Q59P6NWjZMpB23exbPg/exec">
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">SB</div>
-          <h4>SIBER Internal Portal</h4>
-          <p>Internal portal for department-based access across FAT, HCGA, IT, Business Development, Weekly Report, and reporting dashboard modules.</p>
+          <div class="card-icon-badge">DF</div>
+          <h4>Document and File Service</h4>
+          <p>Document and file service with folder navigation, upload management, structured access, file previews, and a Google Apps Script backend.</p>
           <div class="tags">
-            <span class="tag">Portal</span>
-            <span class="tag">Department Access</span>
-            <span class="tag">Dashboard</span>
-          </div>
-        </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
-      </article>
-
-      <article class="card-3d project-card reveal">
-        <div>
-          <div class="card-corner"></div>
-          <div class="card-line"></div>
-          <div class="card-icon-badge">DS</div>
-          <h4>Daily Sales Activity Dashboard</h4>
-          <p>Sales activity reporting system for daily input, supervisor monitoring, branch summaries, target tracking, and national dashboard views.</p>
-          <div class="tags">
-            <span class="tag">Sales Report</span>
-            <span class="tag">Monitoring</span>
-            <span class="tag">Branch View</span>
-          </div>
-        </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
-      </article>
-
-      <article class="card-3d project-card reveal">
-        <div>
-          <div class="card-corner"></div>
-          <div class="card-line"></div>
-          <div class="card-icon-badge">SF</div>
-          <h4>SIN Drive Portal</h4>
-          <p>Google Drive-based file portal with Windows Explorer-style UI, NIK-based auth, drag-and-drop upload, folder hierarchy, breadcrumb nav, and Apps Script backend.</p>
-          <div class="tags">
+            <span class="tag">File Service</span>
             <span class="tag">Google Drive</span>
             <span class="tag">Apps Script</span>
-            <span class="tag">File Portal</span>
           </div>
         </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
+        <button type="button" class="project-link">[ open live preview → ]</button>
       </article>
 
-      <article class="card-3d project-card reveal">
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Employee Resource Center"
+        data-project-url="https://script.google.com/macros/s/AKfycbyxWDEM9EV9XFVaBk4yr7kwMpVbBQqRPIgZQFkJH8Rv1loM7MLwwtluxdlRoooqczLrRQ/exec">
         <div>
           <div class="card-corner"></div>
           <div class="card-line"></div>
-          <div class="card-icon-badge">HC</div>
-          <h4>HCGA Center</h4>
-          <p>Internal access center for HCGA information, SOP, jobdesk, forms, pop-up announcements, and employee-facing resources.</p>
+          <div class="card-icon-badge">ER</div>
+          <h4>Employee Resource Center</h4>
+          <p>Employee resource center for staff directories, internal information, forms, announcements, and organized employee-facing resources.</p>
           <div class="tags">
-            <span class="tag">HCGA</span>
-            <span class="tag">Internal Portal</span>
+            <span class="tag">Employee Portal</span>
+            <span class="tag">Internal Resources</span>
+            <span class="tag">Information Center</span>
+          </div>
+        </div>
+        <button type="button" class="project-link">[ open live preview → ]</button>
+      </article>
+
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Tracking Sales and Marketing Monitoring"
+        data-project-url="https://script.google.com/macros/s/AKfycbwrbL6tDmTPpKypUvyk2tVZYxGzIRiV2cHNpmgm3b2ZMSAZKLNafUPVv_PloP7WDK6D/exec">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">TM</div>
+          <h4>Tracking Sales and Marketing Monitoring</h4>
+          <p>Tracking and monitoring application for sales and marketing activity, visit progress, achievement summaries, and area-level reporting.</p>
+          <div class="tags">
+            <span class="tag">Sales Tracking</span>
+            <span class="tag">Marketing Activity</span>
+            <span class="tag">Monitoring</span>
+          </div>
+        </div>
+        <button type="button" class="project-link">[ open live preview → ]</button>
+      </article>
+
+      <article class="card-3d project-card reveal" role="button" tabindex="0"
+        data-project-title="Internal Company Website"
+        data-project-url="https://script.google.com/macros/s/AKfycbwrgupOd9YzyhzwWWhw1D0PSJbPIAThZC-c6WNkH-o4e7Vqvy7IjQJTZw32NXQjSB_y/exec">
+        <div>
+          <div class="card-corner"></div>
+          <div class="card-line"></div>
+          <div class="card-icon-badge">IW</div>
+          <h4>Internal Company Website</h4>
+          <p>Internal company website that centralizes department information, operational links, announcements, policies, and internal resources.</p>
+          <div class="tags">
+            <span class="tag">Internal Website</span>
+            <span class="tag">Department Access</span>
             <span class="tag">Resources</span>
           </div>
         </div>
-        <a class="project-link" href="#">[ case study coming soon → ]</a>
+        <button type="button" class="project-link">[ open live preview → ]</button>
       </article>
     </div>
   </section>
@@ -1072,22 +1241,22 @@
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SIBER Report Dashboard</strong>
-          <p>Building weekly reporting dashboard concepts with upload templates, charts, filters, and unified Excel structure.</p>
+          <strong>Employee Resource Center</strong>
+          <p>Building an employee-facing information center with organized resources, forms, announcements, and structured access.</p>
         </div>
       </div>
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SMART Mutation Workflow v2.0</strong>
-          <p>Improving approval flow, resend email action, BAST visibility, sender/receiver evidence, and IT validation.</p>
+          <strong>Daily Sales Activity</strong>
+          <p>Improving daily input flows, activity monitoring, supervisor review, progress summaries, and operational reporting.</p>
         </div>
       </div>
       <div class="log-item reveal">
         <div class="log-date">JUN_2026</div>
         <div>
-          <strong>SIN Drive Portal v2.0</strong>
-          <p>Windows Explorer-style file portal with drag-and-drop, Ctrl+V paste upload, double-click navigation, and breadcrumb.</p>
+          <strong>Document and File Service</strong>
+          <p>Improving document navigation with drag-and-drop upload, structured folders, preview access, and breadcrumb navigation.</p>
         </div>
       </div>
     </div>
@@ -1128,9 +1297,74 @@ const ring = document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',(e)=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
 (function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
-document.querySelectorAll('a,.btn,.card-3d,.stat,.stack-badge').forEach(el=>{
+document.querySelectorAll('a,button,.btn,.card-3d,.stat,.stack-badge').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
+
+/* ─── PROJECT PREVIEW MODAL ─── */
+const projectModal = document.getElementById('project-modal');
+const projectModalTitle = document.getElementById('project-modal-title');
+const projectModalFrame = document.getElementById('project-modal-frame');
+const projectModalExternal = document.getElementById('project-modal-external');
+const projectModalLoading = document.getElementById('project-modal-loading');
+const projectModalClose = projectModal.querySelector('.project-modal-close');
+let lastProjectTrigger = null;
+
+function openProjectModal(card) {
+  const title = card.dataset.projectTitle;
+  const url = card.dataset.projectUrl;
+  if (!title || !url) return;
+
+  lastProjectTrigger = card;
+  projectModalTitle.textContent = title.toUpperCase();
+  projectModalExternal.href = url;
+  projectModalLoading.classList.remove('hidden');
+  projectModalFrame.title = `${title} preview`;
+  projectModalFrame.src = url;
+  projectModal.classList.add('active');
+  projectModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  projectModalClose.focus({ preventScroll: true });
+}
+
+function closeProjectModal() {
+  if (!projectModal.classList.contains('active')) return;
+  projectModal.classList.remove('active');
+  projectModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  projectModalFrame.src = 'about:blank';
+  projectModalExternal.href = '#';
+  if (lastProjectTrigger) lastProjectTrigger.focus({ preventScroll: true });
+}
+
+document.querySelectorAll('.project-card[data-project-url]').forEach(card => {
+  card.addEventListener('click', event => {
+    event.preventDefault();
+    openProjectModal(card);
+  });
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProjectModal(card);
+    }
+  });
+});
+
+document.querySelectorAll('[data-project-close]').forEach(control => {
+  control.addEventListener('click', closeProjectModal);
+});
+
+projectModalFrame.addEventListener('load', () => {
+  if (projectModalFrame.src && projectModalFrame.src !== 'about:blank') {
+    projectModalLoading.classList.add('hidden');
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && projectModal.classList.contains('active')) {
+    closeProjectModal();
+  }
 });
 
 /* ─── MOUSE GLOW (keep lightweight canvas just for glow) ─── */

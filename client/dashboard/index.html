@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Client Portal — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar-brand"><a href="/client/dashboard/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a></div>
+    <div class="dash-sidebar-tag">CLIENT PORTAL</div>
+    <a href="/client/dashboard/" class="dash-nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg> Dashboard</a>
+    <a href="/client/projects/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg> Projects</a>
+    <a href="/client/files/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg> Files</a>
+    <a href="/client/approvals/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> Approvals</a>
+    <a href="/client/revisions/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg> Revisions</a>
+    <a href="/client/invoices/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg> Invoices</a>
+    <a href="/client/messages/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> Messages</a>
+    <a href="/client/new-project/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8"/><path d="M8 12h8"/></svg> New Project</a>
+    <div class="dash-sidebar-foot">
+      <a href="/client/settings/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+    </div>
+  </aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/client/dashboard/">Client Portal</a><span>/</span><span>Dashboard</span></div>
+      <div class="dash-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" placeholder="Search..."></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/client/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head">
+        <h1 id="greeting-title">Good Day</h1>
+        <p id="greeting-sub">Here's what's happening with your projects.</p>
+      </div>
+
+      <div class="dash-grid cols-3" id="stat-row" style="margin-bottom:24px">
+        <div class="dash-card">
+          <div class="dash-stat-label">Active Projects</div>
+          <div class="dash-stat-value" id="stat-projects">—</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-stat-label">Outstanding Balance</div>
+          <div class="dash-stat-value" id="stat-balance">—</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-stat-label">Pending Approvals</div>
+          <div class="dash-stat-value" id="stat-approvals">—</div>
+        </div>
+      </div>
+
+      <div id="overview-wrap" style="margin-bottom:28px"></div>
+
+      <div>
+        <div class="dash-section-title">Action Required</div>
+        <div id="action-required" class="dash-grid cols-2"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Revision request modal -->
+<div class="modal-overlay" id="revision-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Request Revision</h3>
+      <button type="button" class="modal-close" data-modal-close="revision-modal">&times;</button>
+    </div>
+    <form id="revision-form">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="rev-module">Page / Module</label>
+            <input type="text" id="rev-module" class="form-input" placeholder="e.g. Dashboard UI" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="rev-desc">Revision Description</label>
+            <textarea id="rev-desc" class="form-textarea" placeholder="Describe what needs to change..." required></textarea>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="rev-file">Attachment (optional)</label>
+            <input type="file" id="rev-file" class="form-input">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="rev-priority">Priority</label>
+            <select id="rev-priority" class="form-select">
+              <option value="low">Low</option>
+              <option value="normal" selected>Normal</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="revision-modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Revision</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({role:'client'});
+  if (!session) return;
+  const n2 = document.getElementById('profile-name-2'); if (n2) n2.textContent = session.fullName;
+
+  function statusPillClass(status) {
+    var map = { development:'status-progress', completed:'status-success', testing:'status-warning',
+      planning:'status-info', inquiry:'status-info', maintenance:'status-neutral', revision:'status-warning', deployment:'status-progress' };
+    return map[status] || 'status-neutral';
+  }
+
+  let primaryProject = null;
+  let pendingApprovalId = null; // approval currently open in the revision modal
+
+  async function renderStats(projects) {
+    document.getElementById('stat-projects').textContent = projects.length;
+    const invoices = await DB.listInvoices();
+    let outstanding = 0;
+    invoices.forEach(function (inv) { if (inv.status !== 'paid') outstanding += (inv.total_amount - inv.paid_amount); });
+    document.getElementById('stat-balance').textContent = Dash.formatCurrency(outstanding);
+    let pendingCount = 0;
+    for (const p of projects) {
+      const approvals = await DB.listProjectApprovals(p.id);
+      pendingCount += approvals.filter(function (a) { return a.status === 'pending'; }).length;
+    }
+    document.getElementById('stat-approvals').textContent = pendingCount;
+  }
+
+  async function renderOverview(project) {
+    const wrap = document.getElementById('overview-wrap');
+    if (!project) {
+      wrap.innerHTML = '<div class="empty-state"><strong>No projects yet</strong><p>Once a project is created for your account, it will appear here.</p></div>';
+      return;
+    }
+    const stages = await DB.listProjectStages(project.id);
+    wrap.innerHTML =
+      '<div class="dash-section-title">Project Overview</div>' +
+      '<div class="dash-card">' +
+      '  <div class="dash-flex-between" style="margin-bottom:14px">' +
+      '    <div>' +
+      '      <div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px">' + Dash.escapeHtml(project.name) + '</div>' +
+      '      <span class="status-pill ' + statusPillClass(project.status) + '">' + Dash.escapeHtml(project.status) + '</span>' +
+      '    </div>' +
+      '    <a href="/client/project/?id=' + encodeURIComponent(project.id) + '" class="btn btn-secondary">View Project</a>' +
+      '  </div>' +
+      '  <div style="margin-bottom:6px;font-size:12px;color:var(--muted2)">Progress — ' + project.progress + '%</div>' +
+      '  <div class="progress-bar" style="margin-bottom:20px"><div class="progress-bar-fill" style="width:' + project.progress + '%"></div></div>' +
+      (stages.length ? '<div class="stage-list">' + stages.map(function (s) {
+        var cls = s.state === 'done' ? 'done' : (s.state === 'current' ? 'current' : '');
+        var dot = s.state === 'done' ? '&#10003;' : '';
+        return '<div class="stage-item ' + cls + '"><span class="stage-dot">' + dot + '</span>' + Dash.escapeHtml(s.label) + '</div>';
+      }).join('') + '</div>' : '') +
+      '</div>';
+  }
+
+  async function renderActionRequired(project) {
+    const wrap = document.getElementById('action-required');
+    if (!project) { wrap.innerHTML = ''; return; }
+    const approvals = (await DB.listProjectApprovals(project.id)).filter(function (a) { return a.status === 'pending'; });
+    if (!approvals.length) {
+      wrap.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><strong>All caught up</strong><p>There is nothing waiting for your approval right now.</p></div>';
+      return;
+    }
+    wrap.innerHTML = approvals.map(function (a) {
+      return '<div class="dash-card">' +
+        '  <div class="dash-flex-between" style="margin-bottom:12px">' +
+        '    <strong>' + Dash.escapeHtml(a.title) + '</strong>' +
+        '    <span class="status-pill status-warning">Waiting for approval</span>' +
+        '  </div>' +
+        '  <div style="display:flex;gap:10px;flex-wrap:wrap">' +
+        '    <button type="button" class="btn btn-secondary" data-act="preview" data-id="' + a.id + '" data-url="' + Dash.escapeHtml(a.preview_url || '') + '">Preview</button>' +
+        '    <button type="button" class="btn btn-primary" data-act="approve" data-id="' + a.id + '">Approve</button>' +
+        '    <button type="button" class="btn btn-ghost" data-act="revise" data-id="' + a.id + '">Request Revision</button>' +
+        '  </div>' +
+        '</div>';
+    }).join('');
+
+    wrap.querySelectorAll('[data-act="preview"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var url = btn.getAttribute('data-url');
+        if (url) window.open(url, '_blank'); else Dash.toast('Demo preview — no live URL configured yet.');
+      });
+    });
+    wrap.querySelectorAll('[data-act="approve"]').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        var ok = await Dash.confirm('Approve this deliverable?');
+        if (!ok) return;
+        await DB.decideApproval(btn.getAttribute('data-id'), 'approved');
+        Dash.toast('Approved', 'success');
+        await refresh();
+      });
+    });
+    wrap.querySelectorAll('[data-act="revise"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        pendingApprovalId = btn.getAttribute('data-id');
+        document.getElementById('revision-form').reset();
+        Dash.openModal('revision-modal');
+      });
+    });
+  }
+
+  document.getElementById('revision-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!pendingApprovalId || !primaryProject) return;
+    var module = document.getElementById('rev-module').value.trim();
+    var description = document.getElementById('rev-desc').value.trim();
+    var priority = document.getElementById('rev-priority').value;
+    var file = document.getElementById('rev-file').files[0];
+    await DB.decideApproval(pendingApprovalId, 'revision_requested', {
+      projectId: primaryProject.id, description: description, priority: priority,
+      attachmentName: file ? file.name : null
+    });
+    Dash.closeModal('revision-modal');
+    Dash.toast('Revision request submitted', 'success');
+    pendingApprovalId = null;
+    await refresh();
+  });
+
+  async function refresh() {
+    await renderOverview(primaryProject);
+    await renderActionRequired(primaryProject);
+  }
+
+  const client = await DB.getMyClient();
+  const hour = new Date().getHours();
+  const word = hour < 12 ? 'Good Morning' : (hour < 17 ? 'Good Afternoon' : 'Good Evening');
+  document.getElementById('greeting-title').textContent = word + ', ' + (client ? client.company_name : 'there');
+
+  const projects = await DB.listMyProjects();
+  primaryProject = projects[0] || null;
+  await renderStats(projects);
+  await refresh();
+});
+</script>
+</body>
+</html>

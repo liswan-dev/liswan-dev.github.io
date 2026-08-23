@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Liswan.dev</title>
+  <meta name="description" content="Website development, internal business systems, automation, and IT support services by Liswan Susanto."/>
+  <meta name="author" content="Liswan Susanto"/>
+  <meta property="og:title" content="Services — Liswan.dev"/>
+  <meta property="og:description" content="Website development, internal business systems, automation, and IT support services by Liswan Susanto."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://liswan.dev/services/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    /* Page-scoped: .hero-actions exists only in index.html's own <style>, so it is
+       re-declared here (identical rule) since this page cannot edit the shared stylesheet. */
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+    .services-cta{border:1px solid var(--border-h);background:var(--card-glass);border-radius:22px;padding:48px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
+    .services-cta .hero-actions{justify-content:center}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="brand" aria-label="Liswan.dev Home">
+    <img src="/assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer">
+  </a>
+  <div class="nav-end">
+    <div class="nav-links">
+      <a href="/" data-id="Beranda">Home</a>
+      <a href="/services/" class="active">Services</a>
+      <a href="/portfolio/" data-id="Proyek">Projects</a>
+      <a href="/case-studies/" data-id="Studi Kasus">Case Studies</a>
+      <a href="/profile/" data-id="Tentang">About</a>
+    </div>
+    <div class="nav-toggles">
+      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
+      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
+      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
+      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
+    </div>
+  </div>
+</nav>
+
+<div class="floating-dev-menu" aria-label="Developer quick menu">
+  <a href="/portfolio/" data-id="Proyek">Projects</a>
+  <a href="/stack/">Stack</a>
+  <a href="/architecture/" data-id="Arsitektur">Architecture</a>
+  <a href="/log/">Log</a>
+</div>
+
+<main class="page">
+
+  <section class="container section">
+    <div class="section-head reveal">
+      <div>
+        <div class="kicker" data-id="// layanan">// services</div>
+        <h2><span data-id="Layanan untuk">Services for</span><br><span data-id="sistem bisnis yang praktis.">practical business systems.</span></h2>
+      </div>
+      <p class="section-desc" data-id="Dari website perusahaan sampai sistem internal dan otomasi — perangkat lunak yang dibangun sesuai cara kerja bisnismu.">From company websites to internal systems and automation — software built around how your business actually works.</p>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div class="card">
+        <div class="badge">01</div>
+        <h3 data-id="Pengembangan Website">Website Development</h3>
+        <p data-id="Company profile, landing page, atau website bisnis — dibangun cepat, mobile-friendly, dan mudah kamu kelola sendiri.">Company profile, landing page, or business website — built fast, mobile-friendly, and easy for you to maintain.</p>
+      </div>
+      <div class="card">
+        <div class="badge">02</div>
+        <h3 data-id="Sistem Internal Bisnis">Internal Business System</h3>
+        <p data-id="Dashboard, sistem operasional, manajemen aset, dan sistem workflow yang dirancang sesuai proses kerja tim kamu.">Dashboard, operational system, asset management, and workflow system designed around your team's actual process.</p>
+      </div>
+      <div class="card">
+        <div class="badge">03</div>
+        <h3 data-id="Otomasi">Automation</h3>
+        <p data-id="Otomasi proses bisnis dan integrasi — menghubungkan tools yang sudah kamu pakai supaya kerja nggak perlu input ulang manual.">Business process automation and integration — connecting the tools you already use so work moves without manual re-entry.</p>
+      </div>
+      <div class="card">
+        <div class="badge">04</div>
+        <h3 data-id="Dukungan IT">IT Support</h3>
+        <p data-id="Setup infrastruktur, troubleshooting, deployment, dan maintenance rutin supaya sistem kamu tetap berjalan lancar.">Infrastructure, troubleshooting, deployment, and maintenance to keep your systems running smoothly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section slim">
+    <div class="services-cta reveal">
+      <div class="kicker" style="margin-bottom:0" data-id="// mulai dari mana saja">// start anywhere</div>
+      <h2 style="margin:0" data-id="Punya ide sistem?">Have a system in mind?</h2>
+      <p class="section-desc" style="margin:0" data-id="Ceritakan kebutuhanmu lewat form singkat, atau lihat dulu proyek yang sudah pernah dibangun.">Tell me what you need through a short form, or take a look at projects already built first.</p>
+      <div class="hero-actions">
+        <a href="/start-project/" class="btn btn-primary" data-id="Mulai Proyek">Start a Project</a>
+        <a href="/portfolio/" class="btn btn-secondary" data-id="Lihat Proyek">View Projects</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mega-footer">
+  <div class="mega-footer-top reveal">
+    <div class="kicker" style="margin-bottom:0" data-id="// halo">// say hello</div>
+    <div class="mega-footer-links">
+      <a href="/profile/" data-id="Profil">Profile</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/contact/" data-id="Kontak">Contact</a>
+      <a href="/log/">Log</a>
+    </div>
+  </div>
+  <div class="mega-footer-wordmark reveal">LISWAN.DEV</div>
+  <div class="mega-footer-bottom">
+    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
+    <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

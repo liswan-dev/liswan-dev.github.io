@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Start a Project — Liswan.dev</title>
+  <meta name="description" content="Tell me what you need in five short steps — project type, complexity, features, and contact info — and get an instant scope summary."/>
+  <meta name="author" content="Liswan Susanto"/>
+  <meta property="og:title" content="Start a Project — Liswan.dev"/>
+  <meta property="og:description" content="Tell me what you need in five short steps — project type, complexity, features, and contact info — and get an instant scope summary."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://liswan.dev/start-project/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+  <style>
+    /* Page-scoped: step-indicator base layout is missing from dashboard.css (only the
+       nested dot/label rules are defined there), plus the wizard step/panel toggling
+       and validation-warning styles needed only on this page. */
+    #stepIndicator{justify-content:center}
+    #stepIndicator .step{display:flex;align-items:center;gap:8px}
+    .wizard-step{display:none}
+    .wizard-step.active{display:block}
+    .wizard-panel{border:1px solid var(--border);background:var(--card);border-radius:20px;padding:36px}
+    @media(max-width:600px){.wizard-panel{padding:22px}}
+    .wizard-panel h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:var(--text)}
+    .wizard-panel-desc{color:var(--muted);font-size:13.8px;margin-bottom:26px}
+    .wizard-nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
+    .wizard-nav.end{justify-content:flex-end}
+    .wizard-warn{display:none;color:#c2453f;font-size:12.5px;font-weight:600;margin-top:16px}
+    .wizard-warn.show{display:block}
+    .summary-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+    .summary-row:last-child{border-bottom:0}
+    .summary-row>span:first-child{font-weight:700;color:var(--text);font-size:13px;flex-shrink:0}
+    .summary-row>span:last-child{color:var(--muted);font-size:13px;text-align:right}
+    .summary-row .tags{margin-top:0;justify-content:flex-end}
+    .wizard-success{text-align:center;padding:60px 20px}
+    .wizard-success .badge{margin:0 auto 20px;width:52px;height:52px;font-size:22px}
+    .wizard-success p{margin:0 auto 28px;max-width:480px}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="brand" aria-label="Liswan.dev Home">
+    <img src="/assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer">
+  </a>
+  <div class="nav-end">
+    <div class="nav-links">
+      <a href="/" data-id="Beranda">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/portfolio/" data-id="Proyek">Projects</a>
+      <a href="/case-studies/" data-id="Studi Kasus">Case Studies</a>
+      <a href="/profile/" data-id="Tentang">About</a>
+    </div>
+    <div class="nav-toggles">
+      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
+      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
+      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
+      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
+    </div>
+  </div>
+</nav>
+
+<div class="floating-dev-menu" aria-label="Developer quick menu">
+  <a href="/portfolio/" data-id="Proyek">Projects</a>
+  <a href="/stack/">Stack</a>
+  <a href="/architecture/" data-id="Arsitektur">Architecture</a>
+  <a href="/log/">Log</a>
+</div>
+
+<main class="page">
+
+  <section class="container section" id="wizardTop">
+    <div class="section-head reveal" style="margin-bottom:30px">
+      <div>
+        <div class="kicker" data-id="// mulai proyek">// start a project</div>
+        <h2 data-id="Ceritakan kebutuhanmu">Tell me what you need</h2>
+      </div>
+      <p class="section-desc" data-id="Lima langkah singkat untuk menyusun scope awal proyekmu — tanpa perlu spesifikasi lengkap.">Five short steps to sketch out your project's initial scope — no full spec required.</p>
+    </div>
+
+    <div id="wizardContainer">
+      <div class="step-indicator" id="stepIndicator">
+        <div class="step active" data-step-index="1"><div class="step-dot">1</div><span class="step-label" data-id="Kebutuhan">Need</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step-index="2"><div class="step-dot">2</div><span class="step-label" data-id="Kompleksitas">Complexity</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step-index="3"><div class="step-dot">3</div><span class="step-label" data-id="Fitur">Features</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step-index="4"><div class="step-dot">4</div><span class="step-label" data-id="Info">Info</span></div>
+        <div class="step-line"></div>
+        <div class="step" data-step-index="5"><div class="step-dot">5</div><span class="step-label" data-id="Ringkasan">Summary</span></div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="wizard-step active wizard-panel" data-step="1">
+        <h3 data-id="Apa yang kamu butuhkan?">What do you need?</h3>
+        <p class="wizard-panel-desc" data-id="Pilih kategori yang paling mendekati kebutuhanmu.">Pick the category that best matches what you're looking for.</p>
+        <div class="grid-3" id="step1Options">
+          <div class="option-card" data-value="Company Website">
+            <strong data-id="Website Perusahaan">Company Website</strong>
+            <span data-id="Situs publik untuk bisnismu — profil, landing page, atau situs marketing.">A public site for your business — profile, landing page, or marketing site.</span>
+          </div>
+          <div class="option-card" data-value="Internal System">
+            <strong data-id="Sistem Internal">Internal System</strong>
+            <span data-id="Alat internal yang dipakai tim untuk mengelola operasional harian.">A private tool your team uses to manage day-to-day operations.</span>
+          </div>
+          <div class="option-card" data-value="Inventory System">
+            <strong data-id="Sistem Inventaris">Inventory System</strong>
+            <span data-id="Melacak stok, purchase order, dan pergerakan material.">Track stock, purchase orders, and material movement.</span>
+          </div>
+          <div class="option-card" data-value="Dashboard">
+            <strong>Dashboard</strong>
+            <span data-id="Tampilan pelaporan yang menyatukan data untuk pengambilan keputusan.">A reporting view that pulls data together for decision-making.</span>
+          </div>
+          <div class="option-card" data-value="Automation">
+            <strong data-id="Otomasi">Automation</strong>
+            <span data-id="Menghubungkan tools dan menghilangkan langkah manual berulang.">Connect tools and remove repetitive manual steps.</span>
+          </div>
+          <div class="option-card" data-value="IT Support">
+            <strong data-id="Dukungan IT">IT Support</strong>
+            <span data-id="Infrastruktur, troubleshooting, deployment, atau maintenance.">Infrastructure, troubleshooting, deployment, or maintenance.</span>
+          </div>
+          <div class="option-card" data-value="Other">
+            <strong data-id="Lainnya">Other</strong>
+            <span data-id="Belum yakin masuk kategori mana — jelaskan dengan kata-katamu sendiri.">Not sure which category fits — describe it in your own words.</span>
+          </div>
+        </div>
+        <div class="wizard-warn" id="step1Warn"></div>
+        <div class="wizard-nav end">
+          <button type="button" class="btn btn-primary" id="step1Next" data-id="Lanjut">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="wizard-step wizard-panel" data-step="2">
+        <h3 data-id="Kompleksitas Proyek">Project Complexity</h3>
+        <p class="wizard-panel-desc" data-id="Perkiraan kasar seberapa luas cakupan proyek ini.">A rough sense of how broad this project is.</p>
+        <div class="grid-3" id="step2Options">
+          <div class="option-card" data-value="Simple">
+            <strong data-id="Sederhana">Simple</strong>
+            <span data-id="Beberapa halaman atau satu alur inti, integrasi minim.">A few pages or a single core flow, minimal integrations.</span>
+          </div>
+          <div class="option-card" data-value="Medium">
+            <strong data-id="Menengah">Medium</strong>
+            <span data-id="Beberapa modul, akses berbasis peran, beberapa integrasi.">Multiple modules, role-based access, some integrations.</span>
+          </div>
+          <div class="option-card" data-value="Advanced">
+            <strong data-id="Lanjutan">Advanced</strong>
+            <span data-id="Banyak modul, alur kerja kompleks, banyak integrasi, pelaporan custom.">Many modules, complex workflows, multiple integrations, custom reporting.</span>
+          </div>
+        </div>
+        <div class="wizard-warn" id="step2Warn"></div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-secondary" id="step2Back" data-id="Kembali">Back</button>
+          <button type="button" class="btn btn-primary" id="step2Next" data-id="Lanjut">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="wizard-step wizard-panel" data-step="3">
+        <h3 data-id="Fitur yang Dibutuhkan">Required Features</h3>
+        <p class="wizard-panel-desc" data-id="Pilih semua fitur yang relevan. Boleh lebih dari satu, atau kosongkan jika belum yakin.">Select all that apply. More than one is fine, or leave it blank if you're not sure yet.</p>
+        <div class="form-grid cols-2" id="step3Features">
+          <label class="form-check"><input type="checkbox" value="Login"><span data-id="Login">Login</span></label>
+          <label class="form-check"><input type="checkbox" value="Dashboard"><span>Dashboard</span></label>
+          <label class="form-check"><input type="checkbox" value="Database"><span>Database</span></label>
+          <label class="form-check"><input type="checkbox" value="User Management"><span data-id="Manajemen Pengguna">User Management</span></label>
+          <label class="form-check"><input type="checkbox" value="Reporting"><span data-id="Pelaporan">Reporting</span></label>
+          <label class="form-check"><input type="checkbox" value="Approval Workflow"><span data-id="Alur Persetujuan">Approval Workflow</span></label>
+          <label class="form-check"><input type="checkbox" value="File Upload"><span data-id="Unggah File">File Upload</span></label>
+          <label class="form-check"><input type="checkbox" value="WhatsApp Integration"><span data-id="Integrasi WhatsApp">WhatsApp Integration</span></label>
+          <label class="form-check"><input type="checkbox" value="API Integration"><span data-id="Integrasi API">API Integration</span></label>
+          <label class="form-check"><input type="checkbox" value="Export Excel/PDF"><span data-id="Ekspor Excel/PDF">Export Excel/PDF</span></label>
+        </div>
+        <div class="wizard-warn" id="step3Warn"></div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-secondary" id="step3Back" data-id="Kembali">Back</button>
+          <button type="button" class="btn btn-primary" id="step3Next" data-id="Lanjut">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="wizard-step wizard-panel" data-step="4">
+        <h3 data-id="Informasi Proyek">Project Information</h3>
+        <p class="wizard-panel-desc" data-id="Supaya saya bisa menghubungimu kembali dengan tepat.">So I can get back to you with the right details.</p>
+        <div class="form-grid cols-2">
+          <div class="form-field">
+            <label class="form-label" for="companyName" data-id="Nama Perusahaan *">Company Name *</label>
+            <input class="form-input" type="text" id="companyName" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="contactPerson" data-id="Nama Kontak *">Contact Person *</label>
+            <input class="form-input" type="text" id="contactPerson" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="email" data-id="Email *">Email *</label>
+            <input class="form-input" type="email" id="email" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="whatsapp" data-id="WhatsApp *">WhatsApp *</label>
+            <input class="form-input" type="tel" id="whatsapp" required>
+          </div>
+          <div class="form-field" style="grid-column:1/-1">
+            <label class="form-label" for="description" data-id="Deskripsi Proyek">Project Description</label>
+            <textarea class="form-textarea" id="description" rows="4"></textarea>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="targetDate" data-id="Target Tanggal">Target Date</label>
+            <input class="form-input" type="date" id="targetDate">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="budgetRange" data-id="Kisaran Anggaran">Budget Range</label>
+            <select class="form-select" id="budgetRange">
+              <option value="" data-id="Pilih kisaran">Select a range</option>
+              <option value="&lt; Rp 5.000.000">&lt; Rp 5.000.000</option>
+              <option value="Rp 5.000.000 - Rp 10.000.000">Rp 5.000.000 - Rp 10.000.000</option>
+              <option value="Rp 10.000.000 - Rp 25.000.000">Rp 10.000.000 - Rp 25.000.000</option>
+              <option value="Rp 25.000.000 - Rp 50.000.000">Rp 25.000.000 - Rp 50.000.000</option>
+              <option value="&gt; Rp 50.000.000">&gt; Rp 50.000.000</option>
+              <option value="Not sure yet" data-id="Belum yakin">Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="wizard-warn" id="step4Warn"></div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-secondary" id="step4Back" data-id="Kembali">Back</button>
+          <button type="button" class="btn btn-primary" id="step4Next" data-id="Lanjut">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="wizard-step wizard-panel" data-step="5">
+        <h3 data-id="Ringkasan Proyek">Project Summary</h3>
+        <p class="wizard-panel-desc" data-id="Tinjau kembali sebelum mengirim. Ini belum termasuk estimasi biaya — kita bahas itu langsung setelah kamu kirim.">Review before you send. This doesn't include a price estimate — we'll discuss that directly after you submit.</p>
+        <div class="dash-card">
+          <div class="summary-row"><span data-id="Jenis Proyek">Project Type</span><span id="summaryType"></span></div>
+          <div class="summary-row"><span data-id="Kompleksitas">Complexity</span><span id="summaryComplexity"></span></div>
+          <div class="summary-row"><span data-id="Fitur Dipilih">Selected Features</span><div class="tags" id="summaryFeatures"></div></div>
+          <div class="summary-row"><span data-id="Estimasi Waktu Pengembangan">Estimated Development Time</span><span id="summaryEstimate"></span></div>
+          <div class="summary-row"><span data-id="Teknologi yang Direkomendasikan">Recommended Technology</span><span id="summaryTech"></span></div>
+        </div>
+        <div class="wizard-warn" id="step5Warn"></div>
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-secondary" id="step5Back" data-id="Kembali">Back</button>
+          <button type="button" class="btn btn-primary" id="submitBtn" data-id="Kirim Kebutuhan">Submit Requirement</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard-success" id="successBlock" style="display:none">
+      <div class="badge">&#10003;</div>
+      <h2 data-id="Terima kasih!">Thanks!</h2>
+      <p class="section-desc" data-id="Kebutuhan proyekmu sudah diterima — saya akan menghubungimu kembali dalam 1-2 hari kerja.">Thanks — I'll get back to you within 1-2 business days.</p>
+      <a href="/" class="btn btn-primary" data-id="Kembali ke Beranda">Back to Home</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mega-footer">
+  <div class="mega-footer-top reveal">
+    <div class="kicker" style="margin-bottom:0" data-id="// halo">// say hello</div>
+    <div class="mega-footer-links">
+      <a href="/profile/" data-id="Profil">Profile</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/contact/" data-id="Kontak">Contact</a>
+      <a href="/log/">Log</a>
+    </div>
+  </div>
+  <div class="mega-footer-wordmark reveal">LISWAN.DEV</div>
+  <div class="mega-footer-bottom">
+    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
+    <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="/assets/js/supabase-config.js" defer></script>
+<script src="/assets/js/supabase-client.js" defer></script>
+<script src="/assets/js/dummy-data.js" defer></script>
+<script src="/assets/js/data-layer.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var state = { type: null, complexity: null, features: [], estimate: '', tech: '' };
+  var totalSteps = 5;
+
+  function currentLang() { return document.documentElement.getAttribute('lang') === 'id' ? 'id' : 'en'; }
+
+  function goToStep(n) {
+    document.querySelectorAll('.wizard-step').forEach(function (el) {
+      el.classList.toggle('active', Number(el.dataset.step) === n);
+    });
+    document.querySelectorAll('#stepIndicator .step').forEach(function (el) {
+      var idx = Number(el.dataset.stepIndex);
+      el.classList.remove('active', 'done');
+      if (idx < n) el.classList.add('done');
+      else if (idx === n) el.classList.add('active');
+    });
+    var top = document.getElementById('wizardTop');
+    if (top) window.scrollTo({ top: top.offsetTop - 90, behavior: 'smooth' });
+  }
+
+  function showWarn(id, en, idText) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = currentLang() === 'id' ? idText : en;
+    el.classList.add('show');
+  }
+  function hideWarn(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  }
+
+  // STEP 1 — single select
+  var step1Cards = document.querySelectorAll('#step1Options .option-card');
+  step1Cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      step1Cards.forEach(function (c) { c.classList.remove('selected'); });
+      card.classList.add('selected');
+      state.type = card.dataset.value;
+      hideWarn('step1Warn');
+    });
+  });
+
+  // STEP 2 — single select
+  var step2Cards = document.querySelectorAll('#step2Options .option-card');
+  step2Cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      step2Cards.forEach(function (c) { c.classList.remove('selected'); });
+      card.classList.add('selected');
+      state.complexity = card.dataset.value;
+      hideWarn('step2Warn');
+    });
+  });
+
+  // STEP 3 — multi select
+  var featureBoxes = document.querySelectorAll('#step3Features input[type="checkbox"]');
+  function syncFeatures() {
+    state.features = Array.prototype.filter.call(featureBoxes, function (b) { return b.checked; })
+      .map(function (b) { return b.value; });
+  }
+  featureBoxes.forEach(function (box) { box.addEventListener('change', syncFeatures); });
+
+  document.getElementById('step1Next').addEventListener('click', function () {
+    if (!state.type) { showWarn('step1Warn', 'Please select an option to continue.', 'Silakan pilih salah satu opsi untuk melanjutkan.'); return; }
+    goToStep(2);
+  });
+  document.getElementById('step2Back').addEventListener('click', function () { goToStep(1); });
+  document.getElementById('step2Next').addEventListener('click', function () {
+    if (!state.complexity) { showWarn('step2Warn', 'Please select a complexity level to continue.', 'Silakan pilih tingkat kompleksitas untuk melanjutkan.'); return; }
+    goToStep(3);
+  });
+  document.getElementById('step3Back').addEventListener('click', function () { goToStep(2); });
+  document.getElementById('step3Next').addEventListener('click', function () { goToStep(4); });
+  document.getElementById('step4Back').addEventListener('click', function () { goToStep(3); });
+
+  document.getElementById('step4Next').addEventListener('click', function () {
+    var requiredIds = ['companyName', 'contactPerson', 'email', 'whatsapp'];
+    var missing = requiredIds.some(function (id) { return !document.getElementById(id).value.trim(); });
+    if (missing) { showWarn('step4Warn', 'Please fill in all required fields.', 'Silakan lengkapi semua kolom yang wajib diisi.'); return; }
+    var emailVal = document.getElementById('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { showWarn('step4Warn', 'Please enter a valid email address.', 'Silakan masukkan alamat email yang valid.'); return; }
+    hideWarn('step4Warn');
+    buildSummary();
+    goToStep(5);
+  });
+  document.getElementById('step5Back').addEventListener('click', function () { goToStep(4); });
+
+  function estimateDevTime(complexity, featureCount) {
+    var map = { Simple: '2-4 weeks', Medium: '4-8 weeks', Advanced: '8-16 weeks' };
+    var base = map[complexity] || '';
+    if (featureCount > 5) base += ' (may extend depending on final scope)';
+    return base;
+  }
+
+  function recommendedTech(type, features) {
+    var map = {
+      'Company Website': 'WordPress, PHP, MySQL',
+      'Internal System': 'PHP, MySQL, JavaScript',
+      'Inventory System': 'PHP, MySQL, JavaScript, Barcode/QR',
+      'Dashboard': 'JavaScript, Chart.js, MySQL/Supabase',
+      'Automation': 'Google Apps Script, API Integration',
+      'IT Support': 'Infrastructure & Deployment Tooling',
+      'Other': 'PHP, MySQL, JavaScript'
+    };
+    var tech = map[type] || map.Other;
+    if ((features.indexOf('Database') !== -1 || features.indexOf('Login') !== -1) && tech.indexOf('Supabase') === -1) tech += ', Supabase';
+    if (features.indexOf('WhatsApp Integration') !== -1) tech += ', WhatsApp Business API';
+    if (features.indexOf('API Integration') !== -1) tech += ', REST API Integration';
+    return tech;
+  }
+
+  function buildSummary() {
+    document.getElementById('summaryType').textContent = state.type;
+    document.getElementById('summaryComplexity').textContent = state.complexity;
+
+    var tagsEl = document.getElementById('summaryFeatures');
+    tagsEl.innerHTML = '';
+    if (state.features.length) {
+      state.features.forEach(function (f) {
+        var span = document.createElement('span');
+        span.className = 'tag';
+        span.textContent = f;
+        tagsEl.appendChild(span);
+      });
+    } else {
+      var span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = currentLang() === 'id' ? 'Belum ada fitur dipilih' : 'None selected';
+      tagsEl.appendChild(span);
+    }
+
+    state.estimate = estimateDevTime(state.complexity, state.features.length);
+    state.tech = recommendedTech(state.type, state.features);
+    document.getElementById('summaryEstimate').textContent = state.estimate;
+    document.getElementById('summaryTech').textContent = state.tech;
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', async function () {
+    var btn = this;
+    hideWarn('step5Warn');
+    btn.disabled = true;
+    btn.textContent = currentLang() === 'id' ? 'Mengirim...' : 'Submitting...';
+    var payload = {
+      project_type: state.type,
+      complexity: state.complexity,
+      features: state.features,
+      company_name: document.getElementById('companyName').value.trim(),
+      contact_person: document.getElementById('contactPerson').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      whatsapp: document.getElementById('whatsapp').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      target_date: document.getElementById('targetDate').value || null,
+      budget_range: document.getElementById('budgetRange').value || null,
+      estimated_dev_time: state.estimate,
+      recommended_tech: state.tech
+    };
+    try {
+      await window.DB.submitProjectRequest(payload);
+      document.getElementById('wizardContainer').style.display = 'none';
+      document.getElementById('successBlock').style.display = 'block';
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = currentLang() === 'id' ? 'Kirim Kebutuhan' : 'Submit Requirement';
+      showWarn('step5Warn', 'Something went wrong — please try again.', 'Terjadi kesalahan — silakan coba lagi.');
+    }
+  });
+
+  goToStep(1);
+});
+</script>
+</body>
+</html>

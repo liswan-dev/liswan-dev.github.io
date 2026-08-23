@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revisions — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar-brand"><a href="/admin/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a></div>
+    <div class="dash-sidebar-tag">ADMIN PANEL</div>
+    <a href="/admin/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Dashboard</a>
+    <a href="/admin/clients/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Clients</a>
+    <a href="/admin/projects/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
+    <a href="/admin/tasks/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Tasks</a>
+    <a href="/admin/revisions/" class="dash-nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Revisions</a>
+    <a href="/admin/approvals/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Approvals</a>
+    <a href="/admin/files/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Files</a>
+    <a href="/admin/invoices/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg> Invoices</a>
+    <a href="/admin/messages/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Messages</a>
+    <a href="/admin/leads/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Leads</a>
+    <div class="dash-sidebar-foot">
+      <a href="/admin/settings/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+    </div>
+  </aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/">Admin</a><span>/</span><span>Revisions</span></div>
+      <div class="dash-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search revisions..."></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head">
+        <h1>Revisions</h1>
+        <p>All revision requests submitted by clients, across every project.</p>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="dash-table-scroll">
+          <table class="dash-table">
+            <thead>
+              <tr><th>Project</th><th>Module</th><th>Description</th><th>Priority</th><th>Submitted</th><th>Status</th></tr>
+            </thead>
+            <tbody id="revisions-tbody">
+              <tr><td colspan="6"><div class="skeleton" style="height:20px"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({role:'admin'});
+  if (!session) return;
+
+  const REVISION_STATUS = ['submitted','in_progress','completed','approved'];
+
+  async function renderRevisions() {
+    const projects = await DB.listAllProjects();
+    let rows = [];
+    for (const p of projects) {
+      const revisions = await DB.listProjectRevisions(p.id);
+      revisions.forEach(r => rows.push(Object.assign({}, r, { projectName: p.name })));
+    }
+    rows.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    const tbody = document.getElementById('revisions-tbody');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No revisions yet</strong><p>Client-submitted revision requests will appear here.</p></div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(r => `<tr data-search-row>
+      <td>${Dash.escapeHtml(r.projectName)}</td>
+      <td>${Dash.escapeHtml(r.module)}</td>
+      <td style="max-width:280px">${Dash.escapeHtml(r.description || '')}</td>
+      <td>${Dash.escapeHtml(r.priority || 'normal')}</td>
+      <td>${Dash.formatDate(r.created_at)}</td>
+      <td>
+        <select class="form-select js-revision-status" data-revision-id="${r.id}" style="padding:7px 10px;font-size:12.5px">
+          ${REVISION_STATUS.map(s => `<option value="${s}" ${s === r.status ? 'selected' : ''}>${s.replace('_',' ')}</option>`).join('')}
+        </select>
+      </td>
+    </tr>`).join('');
+
+    tbody.querySelectorAll('.js-revision-status').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        await DB.updateRevisionStatus(sel.getAttribute('data-revision-id'), sel.value);
+        Dash.toast('Revision status updated', 'success');
+      });
+    });
+  }
+
+  await renderRevisions();
+});
+</script>
+</body>
+</html>

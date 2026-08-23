@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar-brand"><a href="/admin/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a></div>
+    <div class="dash-sidebar-tag">ADMIN PANEL</div>
+    <a href="/admin/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Dashboard</a>
+    <a href="/admin/clients/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Clients</a>
+    <a href="/admin/projects/" class="dash-nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
+    <a href="/admin/tasks/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Tasks</a>
+    <a href="/admin/revisions/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Revisions</a>
+    <a href="/admin/approvals/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Approvals</a>
+    <a href="/admin/files/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Files</a>
+    <a href="/admin/invoices/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg> Invoices</a>
+    <a href="/admin/messages/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Messages</a>
+    <a href="/admin/leads/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Leads</a>
+    <div class="dash-sidebar-foot">
+      <a href="/admin/settings/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+    </div>
+  </aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/">Admin</a><span>/</span><span>Projects</span></div>
+      <div class="dash-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search projects..."></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head dash-flex-between">
+        <div>
+          <h1>Projects</h1>
+          <p>Track status, progress, and manage deliverables for every project.</p>
+        </div>
+        <button class="btn btn-primary" id="new-project-btn">+ New Project</button>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="dash-table-scroll">
+          <table class="dash-table">
+            <thead>
+              <tr><th>Project</th><th>Client</th><th>Status</th><th>Progress</th><th>Target Date</th><th></th></tr>
+            </thead>
+            <tbody id="projects-tbody">
+              <tr><td colspan="6"><div class="skeleton" style="height:20px"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- New Project Modal -->
+<div class="modal-overlay" id="modal-new-project">
+  <div class="modal-box">
+    <div class="modal-header"><h3>New Project</h3><button class="modal-close" data-modal-close="modal-new-project">&times;</button></div>
+    <form id="new-project-form">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="np-client">Client</label>
+            <select id="np-client" class="form-select" required></select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="np-name">Project Name</label>
+            <input type="text" id="np-name" class="form-input" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="np-desc">Description</label>
+            <textarea id="np-desc" class="form-textarea"></textarea>
+          </div>
+          <div class="form-grid cols-2">
+            <div class="form-field">
+              <label class="form-label" for="np-budget">Budget Range</label>
+              <input type="text" id="np-budget" class="form-input" placeholder="Rp 5.000.000 - Rp 10.000.000">
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="np-start">Start Date</label>
+              <input type="date" id="np-start" class="form-input">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="np-target">Target Date</label>
+            <input type="date" id="np-target" class="form-input">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="modal-new-project">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Manage Project Modal -->
+<div class="modal-overlay" id="modal-manage">
+  <div class="modal-box" style="width:min(760px,100%)">
+    <div class="modal-header"><h3 id="manage-title">Manage Project</h3><button class="modal-close" data-modal-close="modal-manage">&times;</button></div>
+    <div class="modal-body" data-tab-scope>
+      <div class="dash-tabs">
+        <button type="button" class="dash-tab active" data-tab-target="updates">Updates</button>
+        <button type="button" class="dash-tab" data-tab-target="files">Files</button>
+        <button type="button" class="dash-tab" data-tab-target="revisions">Revisions</button>
+        <button type="button" class="dash-tab" data-tab-target="approvals">Approvals</button>
+      </div>
+
+      <div class="dash-tab-panel active" data-tab-panel="updates">
+        <div id="mp-updates-list" style="margin-bottom:18px"></div>
+        <div class="dash-section-title" style="font-size:13.5px">Add Update</div>
+        <form id="mp-updates-form" class="form-grid">
+          <div class="form-field"><label class="form-label">Title</label><input type="text" id="mp-update-title" class="form-input" required></div>
+          <div class="form-field"><label class="form-label">Description</label><textarea id="mp-update-desc" class="form-textarea" style="min-height:70px"></textarea></div>
+          <button type="submit" class="btn btn-primary" style="justify-self:start">Add Update</button>
+        </form>
+      </div>
+
+      <div class="dash-tab-panel" data-tab-panel="files">
+        <div id="mp-files-list" style="margin-bottom:18px"></div>
+        <div class="dash-section-title" style="font-size:13.5px">Upload File</div>
+        <form id="mp-files-form" class="form-grid cols-2" style="align-items:end">
+          <div class="form-field">
+            <label class="form-label">Category</label>
+            <select id="mp-file-category" class="form-select">
+              <option value="design">Design</option>
+              <option value="documents">Documents</option>
+              <option value="delivery">Delivery</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">File</label>
+            <input type="file" id="mp-file-input" class="form-input">
+          </div>
+        </form>
+      </div>
+
+      <div class="dash-tab-panel" data-tab-panel="revisions">
+        <div id="mp-revisions-list"></div>
+      </div>
+
+      <div class="dash-tab-panel" data-tab-panel="approvals">
+        <div id="mp-approvals-list" style="margin-bottom:18px"></div>
+        <div class="dash-section-title" style="font-size:13.5px">Request Approval</div>
+        <form id="mp-approvals-form" class="form-grid cols-2" style="align-items:end">
+          <div class="form-field"><label class="form-label">Title</label><input type="text" id="mp-approval-title" class="form-input" required></div>
+          <button type="submit" class="btn btn-primary">Request Approval</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({role:'admin'});
+  if (!session) return;
+
+  const STATUS_OPTIONS = [
+    ['inquiry','Inquiry'],['planning','Planning'],['design','Design'],
+    ['development','Development'],['testing','Testing'],['revision','Revision'],
+    ['deployment','Deployment'],['completed','Completed'],['maintenance','Maintenance']
+  ];
+  const REVISION_STATUS = ['submitted','in_progress','completed','approved'];
+  const REVISION_PILL = { submitted:'status-warning', in_progress:'status-info', completed:'status-success', approved:'status-success' };
+  const APPROVAL_PILL = { pending:'status-warning', approved:'status-success', revision_requested:'status-danger' };
+  const FILE_CATEGORIES = [['design','Design'],['documents','Documents'],['delivery','Delivery']];
+
+  let clients = [];
+  let projects = [];
+  let currentProjectId = null;
+
+  function statusOptionsHtml(current) {
+    return STATUS_OPTIONS.map(([v, label]) => `<option value="${v}" ${v === current ? 'selected' : ''}>${label}</option>`).join('');
+  }
+
+  async function renderProjects() {
+    clients = await DB.listClients();
+    projects = await DB.listAllProjects();
+    const tbody = document.getElementById('projects-tbody');
+    if (!projects.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><strong>No projects yet</strong><p>Create your first project to get started.</p></div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = projects.map(p => {
+      const client = clients.find(c => c.id === p.client_id);
+      return `<tr data-search-row>
+        <td><strong>${Dash.escapeHtml(p.name)}</strong></td>
+        <td>${Dash.escapeHtml(client ? client.company_name : '-')}</td>
+        <td>
+          <select class="form-select js-status-select" data-project-id="${p.id}" style="padding:7px 10px;font-size:12.5px">
+            ${statusOptionsHtml(p.status)}
+          </select>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;min-width:150px">
+            <input type="range" min="0" max="100" value="${p.progress || 0}" class="js-progress-range" data-project-id="${p.id}" style="flex:1">
+            <span class="js-progress-value" style="font-size:12px;min-width:32px" data-project-id="${p.id}">${p.progress || 0}%</span>
+          </div>
+        </td>
+        <td>${Dash.formatDate(p.target_date)}</td>
+        <td><button type="button" class="btn btn-secondary js-manage-btn" data-project-id="${p.id}" style="padding:8px 14px;font-size:12px">Manage</button></td>
+      </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('.js-status-select').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        const p = projects.find(x => x.id === sel.getAttribute('data-project-id'));
+        // Read progress live from its DOM control (not the possibly-stale `projects`
+        // array) so a near-simultaneous edit to the other field is never clobbered.
+        const rangeEl = tbody.querySelector(`.js-progress-range[data-project-id="${p.id}"]`);
+        const currentProgress = rangeEl ? Number(rangeEl.value) : p.progress;
+        await DB.updateProjectStatus(p.id, sel.value, currentProgress);
+        p.status = sel.value;
+        p.progress = currentProgress;
+        Dash.toast('Status updated', 'success');
+      });
+    });
+    tbody.querySelectorAll('.js-progress-range').forEach(range => {
+      range.addEventListener('change', async () => {
+        const p = projects.find(x => x.id === range.getAttribute('data-project-id'));
+        const val = Number(range.value);
+        // Read status live from its DOM control for the same reason as above.
+        const selEl = tbody.querySelector(`.js-status-select[data-project-id="${p.id}"]`);
+        const currentStatus = selEl ? selEl.value : p.status;
+        await DB.updateProjectStatus(p.id, currentStatus, val);
+        p.status = currentStatus;
+        p.progress = val;
+        tbody.querySelector(`.js-progress-value[data-project-id="${p.id}"]`).textContent = val + '%';
+        Dash.toast('Progress updated', 'success');
+      });
+      range.addEventListener('input', () => {
+        tbody.querySelector(`.js-progress-value[data-project-id="${range.getAttribute('data-project-id')}"]`).textContent = range.value + '%';
+      });
+    });
+    tbody.querySelectorAll('.js-manage-btn').forEach(btn => {
+      btn.addEventListener('click', () => openManageModal(btn.getAttribute('data-project-id')));
+    });
+  }
+
+  async function populateClientSelect() {
+    const sel = document.getElementById('np-client');
+    sel.innerHTML = clients.map(c => `<option value="${c.id}">${Dash.escapeHtml(c.company_name)}</option>`).join('');
+  }
+
+  document.getElementById('new-project-btn').addEventListener('click', async () => {
+    await populateClientSelect();
+    Dash.openModal('modal-new-project');
+  });
+
+  document.getElementById('new-project-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+      client_id: document.getElementById('np-client').value,
+      name: document.getElementById('np-name').value.trim(),
+      description: document.getElementById('np-desc').value.trim(),
+      budget_range: document.getElementById('np-budget').value.trim(),
+      start_date: document.getElementById('np-start').value || null,
+      target_date: document.getElementById('np-target').value || null
+    };
+    await DB.createProject(payload);
+    Dash.closeModal('modal-new-project');
+    e.target.reset();
+    Dash.toast('Project created', 'success');
+    await renderProjects();
+  });
+
+  // ---- Manage modal ----
+  async function openManageModal(projectId) {
+    currentProjectId = projectId;
+    const project = projects.find(p => p.id === projectId);
+    document.getElementById('manage-title').textContent = 'Manage — ' + (project ? project.name : '');
+    await renderUpdatesTab();
+    await renderFilesTab();
+    await renderRevisionsTab();
+    await renderApprovalsTab();
+    // reset to first tab
+    const modal = document.getElementById('modal-manage');
+    modal.querySelectorAll('.dash-tab').forEach((b, i) => b.classList.toggle('active', i === 0));
+    modal.querySelectorAll('.dash-tab-panel').forEach((p, i) => p.classList.toggle('active', i === 0));
+    Dash.openModal('modal-manage');
+  }
+
+  async function renderUpdatesTab() {
+    const updates = await DB.listProjectUpdates(currentProjectId);
+    const list = document.getElementById('mp-updates-list');
+    list.innerHTML = updates.length
+      ? '<div class="dash-timeline">' + updates.map(u => `
+          <div class="dash-timeline-item">
+            <div class="dash-timeline-date">${Dash.formatDate(u.created_at)}</div>
+            <div class="dash-timeline-title">${Dash.escapeHtml(u.title)}</div>
+            <div class="dash-timeline-desc">${Dash.escapeHtml(u.description || '')}</div>
+          </div>
+        `).join('') + '</div>'
+      : '<div class="empty-state"><strong>No updates yet</strong><p>Post the first progress update below.</p></div>';
+  }
+
+  async function renderFilesTab() {
+    const files = await DB.listProjectFiles(currentProjectId);
+    const list = document.getElementById('mp-files-list');
+    if (!files.length) {
+      list.innerHTML = '<div class="empty-state"><strong>No files yet</strong><p>Upload the first file below.</p></div>';
+      return;
+    }
+    list.innerHTML = FILE_CATEGORIES.map(([cat, label]) => {
+      const rows = files.filter(f => f.category === cat);
+      if (!rows.length) return '';
+      return `<div style="margin-bottom:14px">
+        <div class="dash-stat-label">${label}</div>
+        <div class="dash-table-wrap"><div class="dash-table-scroll"><table class="dash-table">
+          <thead><tr><th>File</th><th>Size</th><th>Uploaded</th></tr></thead>
+          <tbody>${rows.map(f => `<tr>
+            <td>${Dash.escapeHtml(f.file_name)}</td>
+            <td>${(f.file_size_kb || 0).toLocaleString('id-ID')} KB</td>
+            <td>${Dash.formatDate(f.created_at)}</td>
+          </tr>`).join('')}</tbody>
+        </table></div></div>
+      </div>`;
+    }).join('');
+  }
+
+  async function renderRevisionsTab() {
+    const revisions = await DB.listProjectRevisions(currentProjectId);
+    const list = document.getElementById('mp-revisions-list');
+    if (!revisions.length) {
+      list.innerHTML = '<div class="empty-state"><strong>No revisions yet</strong><p>Client-submitted revisions will appear here.</p></div>';
+      return;
+    }
+    list.innerHTML = `<div class="dash-table-wrap"><div class="dash-table-scroll"><table class="dash-table">
+      <thead><tr><th>Module</th><th>Description</th><th>Priority</th><th>Status</th></tr></thead>
+      <tbody>${revisions.map(r => `<tr>
+        <td>${Dash.escapeHtml(r.module)}</td>
+        <td style="max-width:260px">${Dash.escapeHtml(r.description || '')}</td>
+        <td>${Dash.escapeHtml(r.priority || 'normal')}</td>
+        <td>
+          <select class="form-select js-revision-status" data-revision-id="${r.id}" style="padding:7px 10px;font-size:12.5px">
+            ${REVISION_STATUS.map(s => `<option value="${s}" ${s === r.status ? 'selected' : ''}>${s.replace('_',' ')}</option>`).join('')}
+          </select>
+        </td>
+      </tr>`).join('')}</tbody>
+    </table></div></div>`;
+    list.querySelectorAll('.js-revision-status').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        await DB.updateRevisionStatus(sel.getAttribute('data-revision-id'), sel.value);
+        Dash.toast('Revision status updated', 'success');
+      });
+    });
+  }
+
+  async function renderApprovalsTab() {
+    const approvals = await DB.listProjectApprovals(currentProjectId);
+    const list = document.getElementById('mp-approvals-list');
+    list.innerHTML = approvals.length
+      ? approvals.map(a => `<div class="dash-flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)">
+          <span>${Dash.escapeHtml(a.title)}</span>
+          <span class="status-pill ${APPROVAL_PILL[a.status] || 'status-neutral'}">${a.status.replace('_',' ')}</span>
+        </div>`).join('')
+      : '<div class="empty-state"><strong>No approvals requested</strong><p>Request one from the form below.</p></div>';
+  }
+
+  document.getElementById('mp-updates-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('mp-update-title').value.trim();
+    const desc = document.getElementById('mp-update-desc').value.trim();
+    if (!title) return;
+    await DB.addProjectUpdate(currentProjectId, title, desc);
+    e.target.reset();
+    Dash.toast('Update posted', 'success');
+    await renderUpdatesTab();
+  });
+
+  document.getElementById('mp-file-input').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const category = document.getElementById('mp-file-category').value;
+    await DB.uploadFileRecord(currentProjectId, category, file.name, Math.round(file.size / 1024));
+    e.target.value = '';
+    Dash.toast('File uploaded (metadata only — demo mode)', 'success');
+    await renderFilesTab();
+  });
+
+  document.getElementById('mp-approvals-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('mp-approval-title').value.trim();
+    if (!title) return;
+    await DB.createApproval(currentProjectId, title);
+    e.target.reset();
+    Dash.toast('Approval requested', 'success');
+    await renderApprovalsTab();
+  });
+
+  await renderProjects();
+});
+</script>
+</body>
+</html>

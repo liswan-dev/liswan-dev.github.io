@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="author" content="Liswan Susanto"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://liswan.dev"/>
+  <meta property="og:url" content="https://liswan.dev/portfolio/"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#5B3FD6">
+  <meta name="theme-color" content="#0E3272">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <title>Portfolio — Liswan Susanto</title>
   <meta name="description" content="Selected portfolio of internal systems, dashboards, asset management, and workflow tools by Liswan Susanto."/>
@@ -26,62 +27,120 @@
 <body>
 <nav class="nav">
   <a href="/" class="brand" aria-label="Liswan.dev Home">
-    <img src="/liswan-dev-logo.svg" alt="" onerror="this.style.display='none'">
-    <span>LISWAN.DEV</span>
+    <img src="/assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer">
   </a>
-  <div class="nav-links">
-    <a href="/profile/">Profile</a>
-    <a href="/portfolio/">Portfolio</a>
-    <a href="/custom-apps/">Custom Apps</a>
-    <a href="/contact/">Contact</a>
+  <div class="nav-end">
+    <div class="nav-links">
+      <a href="/" data-id="Beranda">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/portfolio/" class="active" data-id="Proyek">Projects</a>
+      <a href="/case-studies/" data-id="Studi Kasus">Case Studies</a>
+      <a href="/profile/" data-id="Tentang">About</a>
+    </div>
+    <div class="nav-toggles">
+      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
+      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
+      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
+      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
+    </div>
   </div>
 </nav>
 
 <div class="floating-dev-menu" aria-label="Developer quick menu">
-  <a href="/portfolio/">Projects</a>
+  <a href="/portfolio/" data-id="Proyek">Projects</a>
   <a href="/stack/">Stack</a>
-  <a href="/architecture/">Architecture</a>
+  <a href="/architecture/" data-id="Arsitektur">Architecture</a>
   <a href="/log/">Log</a>
 </div>
 
 <main class="page">
 
 <section class="container hero compact">
-  <div>
-    <div class="eyebrow"><span class="dot"></span><span>Portfolio</span></div>
-    <h1><span class="dim">// SELECTED</span><span class="gradient-text">Internal</span><br>Projects</h1>
-    <p class="lead">Selected internal systems and operational tools built around reporting, approvals, tracking, asset workflows, and file services.</p>
+  <div class="reveal">
+    <div class="eyebrow"><span class="dot"></span><span data-id="Portofolio Terbaru">Latest Portfolio</span></div>
+    <h1><span class="dim" data-id="// PILIHAN">// SELECTED</span><span class="gradient-text">Internal</span><br><span data-id="Proyek">Projects</span></h1>
+    <p class="lead" data-id="Sistem internal dan alat operasional pilihan seputar reporting, approval, tracking, alur asset, dan file service.">Selected internal systems and operational tools built around reporting, approvals, tracking, asset workflows, and file services.</p>
   </div>
-  <aside class="panel">
-    <div class="profile-role">Project Filter</div>
-    <p class="lead" style="font-size:14px">Use the category buttons below to simulate an interactive portfolio experience on GitHub Pages.</p>
+  <aside class="panel reveal">
+    <div class="profile-role" data-id="Filter Project">Project Filter</div>
+    <p class="lead" style="font-size:14px" data-id="Gunakan tombol kategori di bawah untuk simulasi pengalaman portofolio interaktif di GitHub Pages.">Use the category buttons below to simulate an interactive portfolio experience on GitHub Pages.</p>
   </aside>
 </section>
+
+<div class="stats-bar section-light reveal">
+  <div class="stat-block">
+    <strong>6</strong>
+    <span data-id="Sistem Ditampilkan">Systems Shown</span>
+  </div>
+  <div class="stat-block">
+    <strong>4</strong>
+    <span data-id="Domain Dicakup">Domains Covered</span>
+  </div>
+  <div class="stat-block">
+    <strong>100%</strong>
+    <span data-id="Data Dummy">Dummy Data</span>
+  </div>
+  <div class="stat-block">
+    <strong>GAS</strong>
+    <span data-id="Berbasis Apps Script">Apps Script Backed</span>
+  </div>
+</div>
+
 <section class="container section slim">
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="operation">Operation</button>
-    <button class="filter-btn" data-filter="sales">Sales</button>
-    <button class="filter-btn" data-filter="hcga">HCGA</button>
-    <button class="filter-btn" data-filter="file">File Service</button>
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-filter="all" data-id="Semua">All</button>
+    <button class="filter-btn" data-filter="operation" data-id="Operasional">Operation</button>
+    <button class="filter-btn" data-filter="sales" data-id="Sales">Sales</button>
+    <button class="filter-btn" data-filter="hcga" data-id="HCGA">HCGA</button>
+    <button class="filter-btn" data-filter="file" data-id="Layanan File">File Service</button>
   </div>
   <div class="grid-2">
-    <article class="card" data-category="operation hcga"><div class="badge">SMART</div><h3>Asset Management</h3><p>Internal asset workflow for master asset, mutation process, validation stages, evidence uploads, and operational tracking.</p><div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Workflow</span></div></article>
-    <article class="card" data-category="sales operation"><div class="badge">DSA</div><h3>Daily Sales Activity Report</h3><p>Daily sales activity input and supervisor monitoring flow for structured operational reporting.</p><div class="tags"><span class="tag">Dashboard</span><span class="tag">Sales</span><span class="tag">Report</span></div></article>
-    <article class="card" data-category="operation hcga file"><div class="badge">SIBER</div><h3>Internal Company Website</h3><p>Internal portal concept for department access, file navigation, reports, employee data, and operational modules.</p><div class="tags"><span class="tag">WordPress</span><span class="tag">Portal</span><span class="tag">Internal</span></div></article>
-    <article class="card" data-category="sales operation"><div class="badge">SFA</div><h3>Tracking Sales &amp; Marketing</h3><p>Sales tracking and field activity support concept for branch-level monitoring and sales process visibility.</p><div class="tags"><span class="tag">Sales</span><span class="tag">Tracking</span><span class="tag">Mobile Flow</span></div></article>
-    <article class="card" data-category="file operation"><div class="badge">SFS</div><h3>Google Drive File Service</h3><p>Drive-based file portal concept for upload, folder access, file navigation, download flow, and centralized document access.</p><div class="tags"><span class="tag">Apps Script</span><span class="tag">Drive</span><span class="tag">Automation</span></div></article>
-    <article class="card" data-category="operation sales"><div class="badge">WR</div><h3>Weekly Report</h3><p>Weekly reporting workflow for structured submission, approval, revision notes, and management visibility.</p><div class="tags"><span class="tag">Report</span><span class="tag">Approval</span><span class="tag">Dashboard</span></div></article>
+    <article class="card reveal" data-category="operation hcga">
+      <img class="card-thumb" src="/projects/mockup-asset-management.png" alt="Asset Management screenshot" loading="lazy">
+      <div class="badge">SMART</div><h3>Asset Management</h3><p data-id="Alur kerja asset internal untuk master asset, proses mutasi, tahap validasi, upload bukti, dan pelacakan operasional.">Internal asset workflow for master asset, mutation process, validation stages, evidence uploads, and operational tracking.</p><div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Workflow</span></div>
+    </article>
+    <article class="card reveal" data-category="sales operation">
+      <img class="card-thumb" src="/projects/mockup-daily-sales-activity-report.png" alt="Daily Sales Activity Report screenshot" loading="lazy">
+      <div class="badge">DSA</div><h3>Daily Sales Activity Report</h3><p data-id="Input aktivitas sales harian dan alur monitoring supervisor untuk reporting operasional yang terstruktur.">Daily sales activity input and supervisor monitoring flow for structured operational reporting.</p><div class="tags"><span class="tag">Dashboard</span><span class="tag">Sales</span><span class="tag" data-id="Laporan">Report</span></div>
+    </article>
+    <article class="card reveal" data-category="operation hcga file">
+      <img class="card-thumb" src="/projects/mockup-internal-company-website.png" alt="Internal Company Website screenshot" loading="lazy">
+      <div class="badge">SIBER</div><h3>Internal Company Website</h3><p data-id="Konsep portal internal untuk akses departemen, navigasi file, laporan, data karyawan, dan modul operasional.">Internal portal concept for department access, file navigation, reports, employee data, and operational modules.</p><div class="tags"><span class="tag">WordPress</span><span class="tag">Portal</span><span class="tag">Internal</span></div>
+    </article>
+    <article class="card reveal" data-category="sales operation">
+      <img class="card-thumb" src="/projects/mockup-tracking-sales-marketing.png" alt="Tracking Sales &amp; Marketing screenshot" loading="lazy">
+      <div class="badge">SFA</div><h3>Tracking Sales &amp; Marketing</h3><p data-id="Konsep pelacakan sales dan dukungan aktivitas lapangan untuk monitoring per cabang dan visibilitas proses sales.">Sales tracking and field activity support concept for branch-level monitoring and sales process visibility.</p><div class="tags"><span class="tag">Sales</span><span class="tag" data-id="Pelacakan">Tracking</span><span class="tag" data-id="Alur Mobile">Mobile Flow</span></div>
+    </article>
+    <article class="card reveal" data-category="file operation">
+      <img class="card-thumb" src="/projects/mockup-document-file-service.png" alt="Google Drive File Service screenshot" loading="lazy">
+      <div class="badge">SFS</div><h3>Google Drive File Service</h3><p data-id="Konsep portal file berbasis Drive untuk upload, akses folder, navigasi file, alur download, dan akses dokumen terpusat.">Drive-based file portal concept for upload, folder access, file navigation, download flow, and centralized document access.</p><div class="tags"><span class="tag">Apps Script</span><span class="tag">Drive</span><span class="tag" data-id="Otomasi">Automation</span></div>
+    </article>
+    <article class="card reveal" data-category="operation sales">
+      <div class="badge">WR</div><h3>Weekly Report</h3><p data-id="Alur reporting mingguan untuk pengajuan terstruktur, persetujuan, catatan revisi, dan visibilitas manajemen.">Weekly reporting workflow for structured submission, approval, revision notes, and management visibility.</p><div class="tags"><span class="tag" data-id="Laporan">Report</span><span class="tag" data-id="Persetujuan">Approval</span><span class="tag">Dashboard</span></div>
+    </article>
   </div>
 </section>
 
 </main>
 
-<footer>
-  <span>LISWAN.DEV</span>
-  <span>© <span id="year"></span> Liswan Susanto · IT Developer &amp; Internal System Builder</span>
-  <span>WordPress · PHP · Apps Script · Internal Systems</span>
+<footer class="mega-footer">
+  <div class="mega-footer-top reveal">
+    <div class="kicker" style="margin-bottom:0" data-id="// halo">// say hello</div>
+    <div class="mega-footer-links">
+      <a href="/profile/" data-id="Profil">Profile</a>
+      <a href="/contact/" data-id="Kontak">Contact</a>
+      <a href="/stack/">Stack</a>
+      <a href="/log/">Log</a>
+    </div>
+  </div>
+  <div class="mega-footer-wordmark reveal">LISWAN.DEV</div>
+  <div class="mega-footer-bottom">
+    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
+    <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  </div>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

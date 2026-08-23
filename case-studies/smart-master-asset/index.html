@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Master Asset — Case Study — Liswan.dev</title>
+  <meta name="description" content="How Smart Master Asset centralizes asset tracking, user assignment, and reporting for a business with assets scattered across departments and branches."/>
+  <meta name="author" content="Liswan Susanto"/>
+  <meta property="og:title" content="Smart Master Asset — Case Study — Liswan.dev"/>
+  <meta property="og:description" content="How Smart Master Asset centralizes asset tracking, user assignment, and reporting for a business with assets scattered across departments and branches."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://liswan.dev/case-studies/smart-master-asset/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    /* Page-scoped additions — not present in the shared stylesheet */
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .case-subtitle{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:15px;color:var(--accent-ink);letter-spacing:.02em;margin-top:-8px}
+    .case-shot-frame{border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(20,30,50,.14);background:var(--surface)}
+    .case-shot-frame img{display:block;width:100%;height:auto}
+    .case-section p.section-desc{max-width:760px}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="brand" aria-label="Liswan.dev Home">
+    <img src="/assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer">
+  </a>
+  <div class="nav-end">
+    <div class="nav-links">
+      <a href="/" data-id="Beranda">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/portfolio/" data-id="Proyek">Projects</a>
+      <a href="/case-studies/" class="active" data-id="Studi Kasus">Case Studies</a>
+      <a href="/profile/" data-id="Tentang">About</a>
+    </div>
+    <div class="nav-toggles">
+      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
+      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
+      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
+      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
+    </div>
+  </div>
+</nav>
+
+<div class="floating-dev-menu" aria-label="Developer quick menu">
+  <a href="/portfolio/" data-id="Proyek">Projects</a>
+  <a href="/stack/">Stack</a>
+  <a href="/architecture/" data-id="Arsitektur">Architecture</a>
+  <a href="/log/">Log</a>
+</div>
+
+<main class="page">
+
+  <section class="container section slim reveal">
+    <div class="kicker" data-id="// proyek">// project</div>
+    <h1>Smart Master Asset</h1>
+    <p class="case-subtitle" data-id="Platform Manajemen Aset">Asset Management Platform</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="01 — Masalah">01 — Problem</div>
+    <h2 data-id="Aset yang tersebar tanpa pencatatan terpusat">Assets scattered, with no central record</h2>
+    <p class="section-desc" data-id="Aset fisik — laptop, peralatan, furnitur, kendaraan — tersebar di berbagai departemen dan cabang tanpa pencatatan terpusat. Pelacakan siapa memegang barang apa masih mengandalkan spreadsheet yang tercecer dan serah terima lisan, membuat audit jadi lambat dan aset yang hilang sulit terlacak.">Physical assets — laptops, tools, furniture, vehicles — were scattered across departments and branches with no central record. Tracking who had which item relied on scattered spreadsheets and verbal handoffs, making audits slow and lost or misplaced items hard to catch, with little in the way of an audit trail for accountability.</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="02 — Solusi">02 — Solution</div>
+    <h2 data-id="Satu sistem pencatatan aset terpusat">One centralized asset register</h2>
+    <p class="section-desc" data-id="Smart Master Asset menyatukan setiap aset ke dalam satu pencatatan dengan penugasan area dan pengguna, dokumentasi foto untuk catatan kondisi, dan dashboard pelaporan supaya siapa pun di tim bisa melihat apa yang ada, di mana lokasinya, dan siapa penanggung jawabnya.">Smart Master Asset centralizes every asset into a single register with area and user assignment, photo documentation for condition records, and a reporting dashboard — so any team member can see what exists, where it is, and who's responsible for it.</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="03 — Fitur">03 — Features</div>
+    <h2 data-id="Yang bisa dilakukan sistem ini">What the system does</h2>
+    <div class="grid-3" style="margin-top:34px">
+      <div class="card">
+        <div class="badge">01</div>
+        <h3 data-id="Pelacakan Aset">Asset Tracking</h3>
+        <p data-id="Setiap aset tercatat dengan ID unik dan status terkini.">Every asset logged with a unique record and current status.</p>
+      </div>
+      <div class="card">
+        <div class="badge">02</div>
+        <h3 data-id="Penugasan Pengguna">User Assignment</h3>
+        <p data-id="Tetapkan aset ke staf tertentu dan lacak kepemilikannya.">Assign items to specific staff and track custody over time.</p>
+      </div>
+      <div class="card">
+        <div class="badge">03</div>
+        <h3 data-id="Manajemen Area">Area Management</h3>
+        <p data-id="Kelompokkan aset berdasarkan cabang, lantai, atau departemen.">Organize assets by branch, floor, or department.</p>
+      </div>
+      <div class="card">
+        <div class="badge">04</div>
+        <h3 data-id="Dokumentasi Foto">Photo Documentation</h3>
+        <p data-id="Lampirkan foto kondisi saat serah terima maupun audit.">Attach condition photos at handover and during audits.</p>
+      </div>
+      <div class="card">
+        <div class="badge">05</div>
+        <h3>Dashboard</h3>
+        <p data-id="Tampilan ringkas total aset, status, dan aktivitas terbaru.">An at-a-glance view of totals, status, and recent activity.</p>
+      </div>
+      <div class="card">
+        <div class="badge">06</div>
+        <h3 data-id="Pelaporan">Reporting</h3>
+        <p data-id="Laporan yang bisa diekspor untuk audit dan tinjauan manajemen.">Exportable reports for audits and management review.</p>
+      </div>
+      <div class="card">
+        <div class="badge">07</div>
+        <h3 data-id="Tema Terang/Gelap">Light/Dark Theme</h3>
+        <p data-id="Kenyamanan melihat layar dalam kondisi pencahayaan apa pun.">Comfortable viewing in any lighting condition.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="04 — Antarmuka">04 — Interface</div>
+    <h2 data-id="Tampilan dashboard">The dashboard, in practice</h2>
+    <div class="case-shot-frame" style="margin-top:34px">
+      <img src="/projects/mockup-asset-management.png" alt="Smart Master Asset dashboard screenshot" loading="lazy">
+    </div>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="05 — Teknologi">05 — Technology</div>
+    <h2 data-id="Yang dipakai untuk membangunnya">What it's built with</h2>
+    <div class="tags" style="margin-top:6px">
+      <span class="tag">PHP</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">WordPress</span>
+    </div>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="06 — Hasil">06 — Outcome</div>
+    <h2 data-id="Dampak setelah dipakai">The impact so far</h2>
+    <p class="section-desc" data-id="Audit aset yang tadinya butuh berhari-hari pengecekan manual kini bisa langsung dilakukan dari dashboard. Dengan satu catatan bersama menggantikan spreadsheet yang tercecer, jauh lebih mudah mendeteksi aset yang hilang lebih awal dan menentukan penanggung jawabnya.">Asset audits that used to take days of manual cross-checking can now be done directly from the dashboard. Having one shared record instead of scattered spreadsheets makes it far easier to spot missing items early and hold the right person accountable.</p>
+  </section>
+
+  <section class="container section slim">
+    <div class="contact-box reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:0" data-id="// mulai proyekmu">// start yours</div>
+        <h2 style="margin-top:12px" data-id="Butuh sistem serupa?">Need something similar?</h2>
+        <p class="section-desc" style="margin-top:16px" data-id="Ceritakan kebutuhan manajemen asetmu, dan kita susun scope-nya bersama.">Tell me about your asset management needs, and let's scope it out together.</p>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <a href="/start-project/" class="btn btn-primary" data-id="Bangun yang Serupa">Build Something Similar</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mega-footer">
+  <div class="mega-footer-top reveal">
+    <div class="kicker" style="margin-bottom:0" data-id="// halo">// say hello</div>
+    <div class="mega-footer-links">
+      <a href="/profile/" data-id="Profil">Profile</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/contact/" data-id="Kontak">Contact</a>
+      <a href="/log/">Log</a>
+    </div>
+  </div>
+  <div class="mega-footer-wordmark reveal">LISWAN.DEV</div>
+  <div class="mega-footer-bottom">
+    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
+    <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

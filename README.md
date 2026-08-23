@@ -1,6 +1,6 @@
 # liswan.dev
 
-Personal portfolio of **Liswan Susanto** — IT Developer & Internal System Builder.
+Personal portfolio of **Liswan Susanto** — IT Support & Software Developer.
 
 I build internal business systems for operational workflows, reporting dashboards, approval processes, asset management, document management, and business automation.
 

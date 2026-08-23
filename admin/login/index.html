@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — Admin Panel — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+  <div class="dash-login-shell">
+    <div class="dash-login-card">
+      <a href="/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a>
+      <h2 style="text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin-bottom:22px">Admin Login</h2>
+      <form id="login-form">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" id="email" class="form-input" placeholder="you@liswan.dev" required autocomplete="username">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px">Log In</button>
+        <p id="login-error" style="color:#c2453f;font-size:12.8px;margin-top:14px;display:none"></p>
+      </form>
+      <div class="dash-demo-hint">
+        Demo account — Email: <code>admin@liswan.dev</code> &middot; Password: <code>admin123</code>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/supabase-config.js"></script>
+  <script src="/assets/js/supabase-client.js"></script>
+  <script src="/assets/js/dummy-data.js"></script>
+  <script src="/assets/js/data-layer.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+      var errorEl = document.getElementById('login-error');
+      errorEl.style.display = 'none';
+      var res = await DB.login(email, password);
+      if (res.ok && res.role === 'admin') {
+        location.href = '/admin/';
+      } else if (res.ok) {
+        await DB.logout(); // DB.login already set a session for this (non-admin) account — clear it
+        errorEl.textContent = 'This account is not an admin account.';
+        errorEl.style.display = 'block';
+      } else {
+        errorEl.textContent = res.error || 'Login failed. Please check your credentials.';
+        errorEl.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

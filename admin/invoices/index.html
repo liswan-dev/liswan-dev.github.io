@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoices — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar-brand"><a href="/admin/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a></div>
+    <div class="dash-sidebar-tag">ADMIN PANEL</div>
+    <a href="/admin/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Dashboard</a>
+    <a href="/admin/clients/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Clients</a>
+    <a href="/admin/projects/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
+    <a href="/admin/tasks/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Tasks</a>
+    <a href="/admin/revisions/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Revisions</a>
+    <a href="/admin/approvals/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Approvals</a>
+    <a href="/admin/files/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Files</a>
+    <a href="/admin/invoices/" class="dash-nav-link active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg> Invoices</a>
+    <a href="/admin/messages/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Messages</a>
+    <a href="/admin/leads/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Leads</a>
+    <div class="dash-sidebar-foot">
+      <a href="/admin/settings/" class="dash-nav-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+    </div>
+  </aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/">Admin</a><span>/</span><span>Invoices</span></div>
+      <div class="dash-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search invoices..."></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head dash-flex-between">
+        <div>
+          <h1>Invoices</h1>
+          <p>Billing across every project.</p>
+        </div>
+        <button class="btn btn-primary" id="new-invoice-btn">+ New Invoice</button>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="dash-table-scroll">
+          <table class="dash-table">
+            <thead>
+              <tr><th>Invoice #</th><th>Project</th><th>Total</th><th>Paid</th><th>Due Date</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody id="invoices-tbody">
+              <tr><td colspan="7"><div class="skeleton" style="height:20px"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-new-invoice">
+  <div class="modal-box">
+    <div class="modal-header"><h3>New Invoice</h3><button class="modal-close" data-modal-close="modal-new-invoice">&times;</button></div>
+    <form id="new-invoice-form">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="inv-project">Project</label>
+            <select id="inv-project" class="form-select" required></select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="inv-number">Invoice Number</label>
+            <input type="text" id="inv-number" class="form-input" placeholder="INV-2026-001" required>
+          </div>
+          <div class="form-grid cols-2">
+            <div class="form-field">
+              <label class="form-label" for="inv-total">Total Amount (Rp)</label>
+              <input type="number" id="inv-total" class="form-input" min="0" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="inv-due">Due Date</label>
+              <input type="date" id="inv-due" class="form-input">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="modal-new-invoice">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create Invoice</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-view-invoice">
+  <div class="modal-box">
+    <div class="modal-header"><h3 id="view-invoice-title">Invoice</h3><button class="modal-close" data-modal-close="modal-view-invoice">&times;</button></div>
+    <div class="modal-body" id="view-invoice-body"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({role:'admin'});
+  if (!session) return;
+
+  const STATUS_PILL = { unpaid: 'status-danger', partial: 'status-warning', paid: 'status-success' };
+  let projects = [];
+  let invoices = [];
+
+  async function renderInvoices() {
+    projects = await DB.listAllProjects();
+    // NOTE: DB.listInvoices() with no projectId is session-scoped to the current
+    // client in demo mode (it filters by session.clientId, which is null for an
+    // admin session), so it always returns []. Calling it per-project instead
+    // uses the branch that filters only by project_id, which works for any role
+    // — the same loop-per-project pattern used on the Revisions/Approvals/Files pages.
+    invoices = [];
+    for (const p of projects) {
+      const rows = await DB.listInvoices(p.id);
+      invoices = invoices.concat(rows);
+    }
+    invoices.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    const tbody = document.getElementById('invoices-tbody');
+    if (!invoices.length) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><strong>No invoices yet</strong><p>Create one from the button above.</p></div></td></tr>';
+    } else {
+      tbody.innerHTML = invoices.map(inv => {
+        const p = projects.find(x => x.id === inv.project_id);
+        return `<tr data-search-row>
+          <td>${Dash.escapeHtml(inv.invoice_number)}</td>
+          <td>${Dash.escapeHtml(p ? p.name : '-')}</td>
+          <td>${Dash.formatCurrency(inv.total_amount)}</td>
+          <td>${Dash.formatCurrency(inv.paid_amount)}</td>
+          <td>${Dash.formatDate(inv.due_date)}</td>
+          <td><span class="status-pill ${STATUS_PILL[inv.status] || 'status-neutral'}">${inv.status}</span></td>
+          <td><button type="button" class="btn btn-secondary js-view-invoice" data-invoice-id="${inv.id}" style="padding:8px 14px;font-size:12px">View</button></td>
+        </tr>`;
+      }).join('');
+      tbody.querySelectorAll('.js-view-invoice').forEach(btn => {
+        btn.addEventListener('click', () => viewInvoice(btn.getAttribute('data-invoice-id')));
+      });
+    }
+
+    document.getElementById('inv-project').innerHTML = projects.map(p => `<option value="${p.id}">${Dash.escapeHtml(p.name)}</option>`).join('');
+  }
+
+  async function viewInvoice(invoiceId) {
+    const inv = invoices.find(i => i.id === invoiceId);
+    const p = projects.find(x => x.id === inv.project_id);
+    const items = await DB.listInvoiceItems(invoiceId);
+    document.getElementById('view-invoice-title').textContent = inv.invoice_number;
+    document.getElementById('view-invoice-body').innerHTML = `
+      <p class="dash-muted" style="margin-bottom:14px">${Dash.escapeHtml(p ? p.name : '-')} &middot; Due ${Dash.formatDate(inv.due_date)} &middot; <span class="status-pill ${STATUS_PILL[inv.status] || 'status-neutral'}">${inv.status}</span></p>
+      <div class="dash-table-wrap"><div class="dash-table-scroll"><table class="dash-table">
+        <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th></tr></thead>
+        <tbody>${items.length ? items.map(it => `<tr>
+          <td>${Dash.escapeHtml(it.description)}</td>
+          <td>${it.qty}</td>
+          <td>${Dash.formatCurrency(it.unit_price)}</td>
+        </tr>`).join('') : '<tr><td colspan="3"><div class="empty-state" style="padding:20px"><p>No line items recorded.</p></div></td></tr>'}</tbody>
+      </table></div></div>
+      <div class="dash-flex-between" style="margin-top:16px">
+        <strong>Total</strong><strong>${Dash.formatCurrency(inv.total_amount)}</strong>
+      </div>
+      <div class="dash-flex-between">
+        <span class="dash-muted">Paid</span><span>${Dash.formatCurrency(inv.paid_amount)}</span>
+      </div>
+    `;
+    Dash.openModal('modal-view-invoice');
+  }
+
+  document.getElementById('new-invoice-btn').addEventListener('click', () => Dash.openModal('modal-new-invoice'));
+
+  document.getElementById('new-invoice-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const projectId = document.getElementById('inv-project').value;
+    const payload = {
+      invoice_number: document.getElementById('inv-number').value.trim(),
+      total_amount: Number(document.getElementById('inv-total').value) || 0,
+      due_date: document.getElementById('inv-due').value || null
+    };
+    await DB.createInvoice(projectId, payload);
+    Dash.closeModal('modal-new-invoice');
+    e.target.reset();
+    Dash.toast('Invoice created', 'success');
+    await renderInvoices();
+  });
+
+  await renderInvoices();
+});
+</script>
+</body>
+</html>

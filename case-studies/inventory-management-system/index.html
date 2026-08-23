@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Management System — Case Study — Liswan.dev</title>
+  <meta name="description" content="How the Inventory Management System connects purchase orders, material receiving, and buffer stock into one system for tracking materials and supplies."/>
+  <meta name="author" content="Liswan Susanto"/>
+  <meta property="og:title" content="Inventory Management System — Case Study — Liswan.dev"/>
+  <meta property="og:description" content="How the Inventory Management System connects purchase orders, material receiving, and buffer stock into one system for tracking materials and supplies."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://liswan.dev/case-studies/inventory-management-system/"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0E3272">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    /* Page-scoped additions — not present in the shared stylesheet */
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .case-subtitle{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:15px;color:var(--accent-ink);letter-spacing:.02em;margin-top:-8px}
+    .case-section p.section-desc{max-width:760px}
+    .case-mockup-note{font-size:12px;color:var(--muted2);margin-top:10px}
+
+    /* Larger-scale dashboard mockup (no real screenshot exists for this project) */
+    .dash-preview{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--card);box-shadow:0 30px 80px rgba(20,30,50,.14)}
+    .dash-preview-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;background:var(--surface);border-bottom:1px solid var(--border)}
+    .dpdot{width:10px;height:10px;border-radius:999px;flex-shrink:0}
+    .dash-preview-url{margin-left:10px;font-size:12px;color:var(--muted2);font-family:'Plus Jakarta Sans',sans-serif}
+    .dash-preview-body{display:flex;min-height:420px}
+    .dpv-sidebar{width:84px;background:var(--surface);border-right:1px solid var(--border);padding:20px 14px;display:flex;flex-direction:column;gap:12px;flex-shrink:0}
+    .dpv-side-item{height:12px;border-radius:6px;background:var(--border)}
+    .dpv-side-item.active{background:var(--navy)}
+    .dpv-main{flex:1;padding:30px;display:flex;flex-direction:column;gap:26px;min-width:0}
+    .dpv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .dpv-stat{border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+    .dpv-stat span{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;color:var(--text)}
+    .dpv-stat em{font-style:normal;font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em}
+    .dpv-chart{display:flex;align-items:flex-end;gap:10px;height:130px;padding:0 6px}
+    .dpv-chart div{flex:1;background:var(--navy);border-radius:6px 6px 0 0;opacity:.85}
+    .dpv-rows{display:grid;gap:10px}
+    .dpv-row{display:flex;align-items:center;gap:12px}
+    .dpv-row span{width:9px;height:9px;border-radius:999px;background:#1c8a5a;flex-shrink:0}
+    .dpv-row em{font-style:normal;font-size:13.5px;color:var(--muted)}
+    @media(max-width:600px){.dash-preview-body{min-height:320px}.dpv-sidebar{width:56px}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/" class="brand" aria-label="Liswan.dev Home">
+    <img src="/assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer">
+  </a>
+  <div class="nav-end">
+    <div class="nav-links">
+      <a href="/" data-id="Beranda">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/portfolio/" data-id="Proyek">Projects</a>
+      <a href="/case-studies/" class="active" data-id="Studi Kasus">Case Studies</a>
+      <a href="/profile/" data-id="Tentang">About</a>
+    </div>
+    <div class="nav-toggles">
+      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
+      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
+      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
+      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
+    </div>
+  </div>
+</nav>
+
+<div class="floating-dev-menu" aria-label="Developer quick menu">
+  <a href="/portfolio/" data-id="Proyek">Projects</a>
+  <a href="/stack/">Stack</a>
+  <a href="/architecture/" data-id="Arsitektur">Architecture</a>
+  <a href="/log/">Log</a>
+</div>
+
+<main class="page">
+
+  <section class="container section slim reveal">
+    <div class="kicker" data-id="// proyek">// project</div>
+    <h1>Inventory Management System</h1>
+    <p class="case-subtitle" data-id="Platform Manajemen Inventaris">Inventory Management Platform</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="01 — Masalah">01 — Problem</div>
+    <h2 data-id="Inventaris yang terputus antar spreadsheet">Inventory disconnected across spreadsheets</h2>
+    <p class="section-desc" data-id="Inventaris di bagian pembelian, penerimaan material, dan alokasi proyek dicatat di spreadsheet yang terpisah-pisah, sehingga sulit mengetahui level stok sebenarnya, menangkap kekurangan stok penyangga lebih awal, atau melacak dari supplier atau purchase order mana suatu material berasal.">Inventory across purchasing, material receiving, and project allocation was tracked in disconnected spreadsheets, making it difficult to know real stock levels, catch buffer-stock shortfalls early, or trace which supplier or purchase order a batch of material came from.</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="02 — Solusi">02 — Solution</div>
+    <h2 data-id="Satu sistem untuk seluruh alur inventaris">One system for the whole inventory flow</h2>
+    <p class="section-desc" data-id="Inventory Management System menyatukan purchase order, penerimaan material, alokasi proyek, dan data supplier ke dalam satu sistem, dengan ambang batas stok penyangga yang memberi peringatan sebelum inventaris benar-benar menipis.">The Inventory Management System brings purchase orders, material receiving, project allocation, and supplier records into one system, with buffer-stock thresholds that flag low inventory before it becomes a shortage.</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="03 — Fitur">03 — Features</div>
+    <h2 data-id="Yang bisa dilakukan sistem ini">What the system does</h2>
+    <div class="grid-3" style="margin-top:34px">
+      <div class="card">
+        <div class="badge">01</div>
+        <h3 data-id="Pelacakan Inventaris">Inventory Tracking</h3>
+        <p data-id="Level stok real-time untuk seluruh material.">Real-time stock levels across all materials.</p>
+      </div>
+      <div class="card">
+        <div class="badge">02</div>
+        <h3>Purchase Order</h3>
+        <p data-id="Buat dan lacak PO dari pengajuan sampai pemenuhan.">Create and track purchase orders from request to fulfillment.</p>
+      </div>
+      <div class="card">
+        <div class="badge">03</div>
+        <h3 data-id="Penerimaan Material">Material Receiving</h3>
+        <p data-id="Catat barang masuk terhadap pesanan yang masih terbuka.">Log incoming goods against open purchase orders.</p>
+      </div>
+      <div class="card">
+        <div class="badge">04</div>
+        <h3 data-id="Alokasi Proyek">Project Allocation</h3>
+        <p data-id="Tetapkan penggunaan material ke proyek tertentu.">Assign material usage to specific projects.</p>
+      </div>
+      <div class="card">
+        <div class="badge">05</div>
+        <h3 data-id="Stok Penyangga">Buffer Stock</h3>
+        <p data-id="Peringatan otomatis saat stok mendekati ambang minimum.">Automatic flags when stock nears minimum thresholds.</p>
+      </div>
+      <div class="card">
+        <div class="badge">06</div>
+        <h3 data-id="Manajemen Supplier">Supplier Management</h3>
+        <p data-id="Kelola data supplier dan riwayat pemesanannya.">Maintain supplier records and order history.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="04 — Antarmuka">04 — Interface</div>
+    <h2 data-id="Tampilan dashboard">The dashboard, in practice</h2>
+    <div class="dash-preview" style="margin-top:34px" aria-hidden="true">
+      <div class="dash-preview-bar">
+        <span class="dpdot" style="background:#ff5f57"></span><span class="dpdot" style="background:#febc2e"></span><span class="dpdot" style="background:#28c840"></span>
+        <span class="dash-preview-url">inventory.internal/dashboard</span>
+      </div>
+      <div class="dash-preview-body">
+        <div class="dpv-sidebar">
+          <div class="dpv-side-item active"></div>
+          <div class="dpv-side-item"></div>
+          <div class="dpv-side-item"></div>
+          <div class="dpv-side-item"></div>
+          <div class="dpv-side-item"></div>
+        </div>
+        <div class="dpv-main">
+          <div class="dpv-stats">
+            <div class="dpv-stat"><span>1,204</span><em data-id="Barang">SKU</em></div>
+            <div class="dpv-stat"><span>18</span><em data-id="PO Terbuka">Open PO</em></div>
+            <div class="dpv-stat"><span>Rp 210jt</span><em data-id="Nilai Stok">Stock Value</em></div>
+          </div>
+          <div class="dpv-chart">
+            <div style="height:55%"></div><div style="height:70%"></div><div style="height:45%"></div><div style="height:85%"></div><div style="height:60%"></div><div style="height:75%"></div><div style="height:50%"></div>
+          </div>
+          <div class="dpv-rows">
+            <div class="dpv-row"><span></span><em data-id="Stok Aman">Buffer OK</em></div>
+            <div class="dpv-row"><span style="background:#c2453f"></span><em data-id="Stok Menipis">Low Stock</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="case-mockup-note" data-id="Mockup ilustratif — bukan tangkapan layar produksi asli.">Illustrative mockup — not an actual production screenshot.</p>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="05 — Teknologi">05 — Technology</div>
+    <h2 data-id="Yang dipakai untuk membangunnya">What it's built with</h2>
+    <div class="tags" style="margin-top:6px">
+      <span class="tag">PHP</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">JavaScript</span>
+    </div>
+  </section>
+
+  <section class="container section case-section reveal">
+    <div class="kicker" data-id="06 — Hasil">06 — Outcome</div>
+    <h2 data-id="Dampak setelah dipakai">The impact so far</h2>
+    <p class="section-desc" data-id="Level stok dan purchase order terbuka kini terlihat di satu tempat, bukan tersebar di banyak spreadsheet, sehingga waktu untuk mengecek ketersediaan jadi lebih singkat dan tim mendapat peringatan lebih awal sebelum stok penyangga menipis.">Stock levels and open purchase orders are visible in one place instead of scattered across spreadsheets, which shortens the time needed to check availability and gives the team earlier warning before buffer stock runs low.</p>
+  </section>
+
+  <section class="container section slim">
+    <div class="contact-box reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:0" data-id="// mulai proyekmu">// start yours</div>
+        <h2 style="margin-top:12px" data-id="Butuh sistem serupa?">Need something similar?</h2>
+        <p class="section-desc" style="margin-top:16px" data-id="Ceritakan kebutuhan manajemen inventarismu, dan kita susun scope-nya bersama.">Tell me about your inventory management needs, and let's scope it out together.</p>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <a href="/start-project/" class="btn btn-primary" data-id="Bangun yang Serupa">Build Something Similar</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mega-footer">
+  <div class="mega-footer-top reveal">
+    <div class="kicker" style="margin-bottom:0" data-id="// halo">// say hello</div>
+    <div class="mega-footer-links">
+      <a href="/profile/" data-id="Profil">Profile</a>
+      <a href="/portfolio/">Portfolio</a>
+      <a href="/contact/" data-id="Kontak">Contact</a>
+      <a href="/log/">Log</a>
+    </div>
+  </div>
+  <div class="mega-footer-wordmark reveal">LISWAN.DEV</div>
+  <div class="mega-footer-bottom">
+    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
+    <span>WordPress · PHP · Apps Script · Internal Systems</span>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

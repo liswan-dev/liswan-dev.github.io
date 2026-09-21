@@ -1,1290 +1,586 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Liswan Susanto — IT Support &amp; Software Developer</title>
-  <meta name="description" content="Portfolio of Liswan Susanto — IT Support &amp; Software Developer."/>
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#0E3272">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --void: #ffffff;
-      --deep: #f3f5f8;
-      --surface: #f7f8fa;
-      --card: #ffffff;
-      --card-h: #f7f8fa;
-      --navy: #0e3272;
-      --navy-deep: #0a2657;
-      --gray: #585a5c;
-      --text: #14181f;
-      --muted: #5b6472;
-      --muted2: #8993a1;
-      --border: rgba(14,50,114,0.14);
-      --border-h: rgba(14,50,114,0.30);
-      --accent-ink: var(--navy);
-      --well: rgba(14,50,114,0.05);
-    }
-    @media(prefers-color-scheme:dark){
-      :root:not([data-theme="light"]){
-        --void:#0a1220;--deep:#0d1830;--surface:#111b2e;--card:#101a2e;--card-h:#16223a;
-        --text:#e7ebf2;--muted:#9aa3b0;--muted2:#6b7480;
-        --border:rgba(91,141,239,.16);--border-h:rgba(91,141,239,.34);
-        --navy:#5b8def;--navy-deep:#86aaf5;--gray:#9aa0a6;
-        --accent-ink:var(--navy);
-        --well: rgba(91,141,239,0.08);
-      }
-    }
-    [data-theme="light"]{
-      --void:#ffffff;--deep:#f3f5f8;--surface:#f7f8fa;--card:#ffffff;--card-h:#f7f8fa;
-      --text:#14181f;--muted:#5b6472;--muted2:#8993a1;
-      --border:rgba(14,50,114,.14);--border-h:rgba(14,50,114,.30);
-      --navy:#0e3272;--navy-deep:#0a2657;--gray:#585a5c;
-      --accent-ink:var(--navy);
-      --well: rgba(14,50,114,0.05);
-    }
-    [data-theme="dark"]{
-      --void:#0a1220;--deep:#0d1830;--surface:#111b2e;--card:#101a2e;--card-h:#16223a;
-      --text:#e7ebf2;--muted:#9aa3b0;--muted2:#6b7480;
-      --border:rgba(91,141,239,.16);--border-h:rgba(91,141,239,.34);
-      --navy:#5b8def;--navy-deep:#86aaf5;--gray:#9aa0a6;
-      --accent-ink:var(--navy);
-      --well: rgba(91,141,239,0.08);
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-      background:var(--void);
-      color:var(--text);
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>liswan.dev — IT Support &amp; Software Developer</title>
+<meta name="description" content="Liswan Susanto — IT Support &amp; Software Developer. Membangun sistem internal bisnis: manajemen aset, approval workflow, dashboard reporting, dan otomasi Google Apps Script.">
 
-    /* NAV */
-    .nav{
-      position:fixed;top:0;left:0;right:0;z-index:100;
-      padding:0 5vw;height:70px;
-      display:flex;align-items:center;justify-content:space-between;
-      background:transparent;
-      backdrop-filter:blur(0px);
-      border-bottom:1px solid transparent;
-      transition:background 0.3s ease,border-color 0.3s ease,backdrop-filter 0.3s ease;
-    }
-    .nav.scrolled{
-      background:var(--card);
-      backdrop-filter:blur(20px);
-      border-bottom-color:var(--border);
-      box-shadow:0 1px 0 var(--border);
-    }
-    .nav-num{
-      font-size:9px;vertical-align:super;margin-left:3px;
-      color:var(--muted2);letter-spacing:0.04em;
-    }
-    .brand{display:inline-flex;align-items:center}
-    .brand img{height:28px;width:auto;object-fit:contain}
-    .nav-end{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .nav-links{display:flex;gap:28px;align-items:center}
-    .nav-toggles{display:flex;align-items:center;gap:8px}
-    .toggle-btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      min-width:38px;height:32px;padding:0 10px;
-      border:1px solid var(--border-h);border-radius:999px;
-      background:transparent;color:var(--text);
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.03em;
-      cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s;
-    }
-    .toggle-btn:hover{border-color:var(--accent-ink);color:var(--accent-ink);background:rgba(14,50,114,0.06)}
-    .nav-links a{
-      font-size:13.5px;font-weight:600;color:var(--muted);
-      letter-spacing:0.02em;transition:color 0.2s;
-      font-family:'Plus Jakarta Sans',sans-serif;
-    }
-    .nav-links a:hover{color:var(--accent-ink)}
-    .nav-cta{
-      padding:9px 20px;
-      background:transparent;
-      border:1px solid var(--accent-ink);
-      color:var(--accent-ink)!important;
-      border-radius:4px;
-      position:relative;overflow:hidden;
-    }
-    .nav-cta::before{
-      content:'';position:absolute;inset:0;
-      background:var(--accent-ink);opacity:0;
-      transition:opacity 0.2s;
-    }
-    .nav-cta:hover::before{opacity:0.1}
+<!-- LISWAN.DEV favicon -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#060612">
 
-    /* MAIN WRAPPER */
-    .page{position:relative;z-index:1}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-    /* ─── HERO ─── */
-    .hero{
-      min-height:100vh;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      align-items:center;
-      gap:60px;
-      padding:100px 5vw 60px;
-    }
-    .hero-copy{}
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:10px;
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;
-      font-size:12.5px;color:var(--accent-ink);
-      margin-bottom:28px;letter-spacing:0.04em;
-    }
-    .eyebrow-dot{
-      width:7px;height:7px;border-radius:50%;
-      background:var(--navy);
-    }
-    .hero h1{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-weight:700;
-      font-size:clamp(38px,6vw,72px);
-      line-height:1.08;
-      letter-spacing:-0.02em;
-      margin-bottom:6px;
-      color:var(--text);
-    }
-    .hero h1 .line-dim{
-      color:var(--muted2);font-size:0.42em;
-      font-weight:600;display:block;
-      letter-spacing:0.08em;margin-bottom:8px;
-      font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;
-    }
-    .glitch{color:var(--navy)}
-    .hero-desc{
-      color:var(--muted);font-size:16px;line-height:1.75;
-      max-width:520px;margin:28px 0 36px;
-    }
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:14px 28px;border-radius:8px;
-      font-weight:700;font-size:14px;
-      font-family:'Plus Jakarta Sans',sans-serif;
-      border:1px solid transparent;
-      position:relative;overflow:hidden;
-      transition:transform 0.2s,box-shadow 0.2s,background 0.2s;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .btn-primary{
-      background:var(--navy);
-      color:#fff;
-      box-shadow:0 10px 30px rgba(14,50,114,0.22);
-    }
-    .btn-primary:hover{background:var(--navy-deep);box-shadow:0 14px 36px rgba(14,50,114,0.3)}
-    .btn-secondary{
-      border-color:var(--border-h);
-      color:var(--text);
-      background:transparent;
-    }
-    .btn-secondary:hover{background:rgba(14,50,114,0.05);border-color:var(--navy)}
-    .btn-icon{font-size:16px}
+<style>
+  :root{
+    --bg:#060612; --bg-alt:#0b0b20; --panel:#10102a; --panel-2:#14142f;
+    --border: rgba(255,255,255,.09); --border-hover: rgba(255,255,255,.18);
+    --text:#f4f4fb; --text-dim:#a6a8c4; --text-dimmer:#71749a;
+    --cyan:#00F5FF; --violet:#7B2FFF; --pink:#FF2D6B;
+    --grad: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 55%, var(--pink) 100%);
+    --grad-soft: linear-gradient(135deg, rgba(0,245,255,.15), rgba(123,47,255,.15) 55%, rgba(255,45,107,.15) 100%);
+    --radius: 18px;
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{ font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700; margin:0; letter-spacing:-.02em;}
+  p{margin:0;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .grad-text{
+    background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  section{position:relative; padding:96px 0;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--cyan); background:rgba(0,245,255,.08); border:1px solid rgba(0,245,255,.25);
+    padding:7px 14px; border-radius:999px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  .section-head{max-width:680px; margin-bottom:52px;}
+  .section-head h2{font-size:clamp(28px,4vw,40px); line-height:1.15;}
+  .section-head p{margin-top:14px; color:var(--text-dim); font-size:16.5px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:13px 24px; border-radius:12px; font-weight:600; font-size:15px;
+    cursor:pointer; border:1px solid transparent; transition:.2s transform, .2s box-shadow, .2s background, .2s border-color;
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-grad{ background:var(--grad); color:#07070f; box-shadow:0 8px 28px -8px rgba(123,47,255,.55);}
+  .btn-grad:hover{box-shadow:0 10px 34px -6px rgba(123,47,255,.75); transform:translateY(-1px);}
+  .btn-ghost{ background:rgba(255,255,255,.03); color:var(--text); border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--border-hover); background:rgba(255,255,255,.06);}
+  .btn-block{width:100%;}
 
-    /* HERO PANEL */
-    .hero-panel{}
-    .panel-3d{
-      position:relative;
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:32px;
-      box-shadow:0 20px 60px rgba(20,30,50,0.10);
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    border-bottom:1px solid var(--border);
+  }
+  /* blur lives on a pseudo-element (not on header itself) so header never becomes
+     the containing block for its position:fixed descendants (the mobile nav-links
+     panel) — filter/backdrop-filter on an ancestor does that per spec. */
+  header::before{
+    content:''; position:absolute; inset:0; z-index:-1;
+    background:rgba(6,6,18,.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:var(--maxw); margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18.5px;}
+  .brand .mark{
+    width:34px; height:34px; border-radius:10px; background:var(--grad);
+    display:flex; align-items:center; justify-content:center; color:#07070f; font-size:16px; font-weight:800;
+    flex-shrink:0;
+  }
+  .nav-links{display:flex; align-items:center; gap:30px; font-size:14.5px; font-weight:500; color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{display:flex; align-items:center; gap:14px;}
+  .nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:24px; cursor:pointer;}
+  @media (max-width:1040px){
+    .nav-links{
+      position:fixed; top:64px; left:0; right:0; bottom:0; background:var(--bg); flex-direction:column; justify-content:flex-start;
+      padding:32px 24px; gap:22px; font-size:17px; transform:translateY(-110%); transition:.25s transform; border-top:1px solid var(--border);
     }
-    .avatar-wrap{
-      width:100px;height:100px;border-radius:12px;
-      padding:2px;
-      background:var(--navy);
-      margin-bottom:20px;display:inline-block;
-    }
-    .avatar{
-      width:100%;height:100%;border-radius:10px;
-      background:var(--surface);display:block;object-fit:cover;
-    }
-    .profile-name{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:22px;font-weight:700;
-      letter-spacing:-0.01em;margin-bottom:6px;
-    }
-    .profile-role{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;
-      font-size:12.5px;color:var(--accent-ink);letter-spacing:0.04em;margin-bottom:18px;
-    }
-    .profile-bio{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:24px}
+    .nav-links.open{transform:translateY(0);}
+    .nav-toggle{display:block;}
+    .nav-cta .btn-ghost{display:none;}
+  }
+  @media (max-width:480px){
+    .nav-cta .btn-grad{display:none;}
+    .brand{font-size:16px;}
+  }
 
-    /* DASHBOARD PREVIEW (hero visual — mock software UI, not a photo) */
-    .dash-preview{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--card);box-shadow:0 30px 80px rgba(20,30,50,0.14)}
-    .dash-preview-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
-    .dpdot{width:9px;height:9px;border-radius:999px;flex-shrink:0}
-    .dash-preview-url{margin-left:10px;font-size:11px;color:var(--muted2);font-family:'Plus Jakarta Sans',sans-serif}
-    .dash-preview-body{display:flex;min-height:320px}
-    .dpv-sidebar{width:64px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:10px;flex-shrink:0}
-    .dpv-side-item{height:10px;border-radius:6px;background:var(--border)}
-    .dpv-side-item.active{background:var(--navy)}
-    .dpv-main{flex:1;padding:22px;display:flex;flex-direction:column;gap:20px;min-width:0}
-    .dpv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .dpv-stat{border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
-    .dpv-stat span{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--text)}
-    .dpv-stat em{font-style:normal;font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:0.06em}
-    .dpv-chart{display:flex;align-items:flex-end;gap:8px;height:96px;padding:0 4px}
-    .dpv-chart div{flex:1;background:var(--navy);border-radius:6px 6px 0 0;opacity:0.85}
-    .dpv-rows{display:grid;gap:8px}
-    .dpv-row{display:flex;align-items:center;gap:10px}
-    .dpv-row span{width:8px;height:8px;border-radius:999px;background:#1c8a5a;flex-shrink:0}
-    .dpv-row em{font-style:normal;font-size:12px;color:var(--muted)}
-    @media(max-width:600px){.dash-preview-body{min-height:260px}.dpv-sidebar{width:48px}}
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 60px; overflow:hidden;}
+  .hero::before{
+    content:''; position:absolute; top:-220px; right:-160px; width:640px; height:640px; border-radius:50%;
+    background:var(--grad); opacity:.16; filter:blur(90px); pointer-events:none;
+  }
+  .hero::after{
+    content:''; position:absolute; bottom:-260px; left:-200px; width:520px; height:520px; border-radius:50%;
+    background:var(--violet); opacity:.12; filter:blur(110px); pointer-events:none;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(34px,5.2vw,56px); line-height:1.08;}
+  .hero-sub{margin-top:20px; font-size:18px; color:var(--text-dim); max-width:520px;}
+  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .stack-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:40px;}
+  .stack-pill{
+    font-size:12.5px; font-weight:600; color:var(--text-dim); border:1px solid var(--border);
+    padding:7px 13px; border-radius:999px; background:rgba(255,255,255,.03);
+  }
 
-    .terminal{
-      border:1px solid var(--border);
-      background:var(--navy-deep);
-      border-radius:8px;overflow:hidden;
-    }
-    .terminal-bar{
-      display:flex;align-items:center;gap:7px;
-      padding:10px 14px;
-      background:rgba(255,255,255,0.06);
-      border-bottom:1px solid rgba(255,255,255,0.1);
-    }
-    .t-dot{width:9px;height:9px;border-radius:50%}
-    .t-dot:nth-child(1){background:#ff5f57}
-    .t-dot:nth-child(2){background:#febc2e}
-    .t-dot:nth-child(3){background:#28c840}
-    .terminal-title{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:11px;color:rgba(255,255,255,0.5);margin-left:4px;
-    }
-    .terminal-body{
-      padding:16px;
-      font-family:'Plus Jakarta Sans',monospace;
-      font-size:12px;line-height:1.8;
-    }
-    .t-prompt{color:rgba(255,255,255,0.45)}
-    .t-cmd{color:#bcd4ff}
-    .t-out{color:#a8e0c4}
-    .t-out2{color:#cdd8ee;opacity:0.9}
-    .t-cursor{
-      display:inline-block;width:8px;height:14px;
-      background:#bcd4ff;vertical-align:middle;
-      animation:blink 1s step-end infinite;
-    }
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-card{
+    position:relative; border-radius:24px; padding:2px; background:var(--grad);
+  }
+  .hero-card-inner{
+    background:var(--panel); border-radius:22px; padding:28px; font-family:'Space Grotesk',monospace;
+  }
+  .hero-card-dots{display:flex; gap:6px; margin-bottom:18px;}
+  .hero-card-dots span{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.15);}
+  .hero-card-line{display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .hero-card-line:last-child{border-bottom:none;}
+  .hero-card-line .k{color:var(--text-dim);}
+  .hero-card-line .v{color:var(--cyan); font-weight:600;}
+  .hero-card-badge{
+    display:inline-block; margin-top:18px; font-size:11.5px; font-weight:700; letter-spacing:.06em;
+    padding:6px 12px; border-radius:8px; background:rgba(0,245,255,.1); color:var(--cyan); border:1px solid rgba(0,245,255,.25);
+  }
 
-    /* ─── SECTIONS ─── */
-    .section{padding:90px 5vw}
-    .section-kicker{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
-      font-size:12px;color:var(--accent-ink);letter-spacing:0.14em;
-      text-transform:uppercase;margin-bottom:12px;
-    }
-    .section-title{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:clamp(28px,4vw,46px);
-      font-weight:700;letter-spacing:-0.02em;
-      line-height:1.08;margin-bottom:12px;
-      color:var(--text);
-    }
-    .section-desc{color:var(--muted);font-size:15px;max-width:500px;line-height:1.7}
-    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:42px}
-    .lead-statement{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;
-      font-size:clamp(20px,2.6vw,32px);line-height:1.35;
-      letter-spacing:-0.01em;color:var(--text);max-width:900px;
-    }
-    .lead-statement em{
-      font-style:normal;color:var(--muted);font-weight:500;
-    }
+  /* ---------- STATS ---------- */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:64px;}
+  @media (max-width:760px){ .stats{grid-template-columns:repeat(2,1fr);} }
+  .stat h3{font-size:clamp(26px,3.4vw,34px); background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .stat p{margin-top:6px; font-size:13.5px; color:var(--text-dim);}
 
-    /* STATS BAR */
-    .stats-bar{
-      display:grid;grid-template-columns:repeat(4,1fr);
-      border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-      background:var(--deep);
-    }
-    .stats-bar .stat-block{
-      padding:36px 28px;border-right:1px solid var(--border);
-      transition:background 0.3s;
-    }
-    .stats-bar .stat-block:last-child{border-right:none}
-    .stats-bar .stat-block:hover{background:rgba(14,50,114,0.05)}
-    .stats-bar .stat-block strong{
-      display:block;font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:clamp(26px,3.4vw,40px);font-weight:700;
-      letter-spacing:-0.01em;color:var(--navy);
-      margin-bottom:8px;
-    }
-    .stats-bar .stat-block span{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:11.5px;
-      color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase;
-    }
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:56px; align-items:start;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about-points{display:grid; gap:16px;}
+  .about-point{display:flex; gap:14px; align-items:flex-start;}
+  .about-point .ic{
+    width:38px; height:38px; border-radius:10px; background:var(--grad-soft); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--cyan);
+  }
+  .about-point h4{font-size:15.5px; margin-bottom:3px;}
+  .about-point p{font-size:14.5px; color:var(--text-dim);}
 
-    /* FAQ ACCORDION */
-    .faq-list{display:grid;gap:2px;border-top:1px solid var(--border)}
-    .faq-item{border-bottom:1px solid var(--border)}
-    .faq-question{
-      width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
-      background:transparent;border:0;text-align:left;cursor:pointer;
-      padding:24px 4px;color:var(--text);
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em;
-    }
-    .faq-question:hover{color:var(--accent-ink)}
-    .faq-icon{
-      flex-shrink:0;width:26px;height:26px;border-radius:50%;
-      border:1px solid var(--border-h);display:grid;place-items:center;
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:var(--accent-ink);
-      transition:transform 0.3s;
-    }
-    .faq-item.open .faq-icon{transform:rotate(45deg)}
-    .faq-answer{
-      max-height:0;overflow:hidden;
-      transition:max-height 0.35s ease,padding 0.35s ease;
-    }
-    .faq-item.open .faq-answer{max-height:220px;padding-bottom:24px}
-    .faq-answer p{color:var(--muted);font-size:14.5px;line-height:1.75;max-width:720px;padding:0 4px}
+  /* ---------- CARD GRID (services/portfolio) ---------- */
+  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:920px){ .card-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .card-grid{grid-template-columns:1fr;} }
 
-    /* CARDS */
-    .card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .svc-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:28px; transition:.2s border-color, .2s transform;
+  }
+  .svc-card:hover{border-color:var(--border-hover); transform:translateY(-3px);}
+  .svc-card .ic{
+    width:46px; height:46px; border-radius:12px; background:var(--grad); display:flex; align-items:center; justify-content:center;
+    color:#07070f; margin-bottom:18px;
+  }
+  .svc-card h3{font-size:17.5px; margin-bottom:8px;}
+  .svc-card p{font-size:14.5px; color:var(--text-dim);}
 
-    /* SELECTED WORK — large showcase cards, not a small generic grid */
-    .work-list{display:grid;gap:28px}
-    .work-card{display:grid;grid-template-columns:1.1fr 1fr;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:var(--card);transition:border-color .2s,box-shadow .2s}
-    .work-card:hover{border-color:var(--border-h);box-shadow:0 24px 60px rgba(20,30,50,0.10)}
-    .work-card-media{position:relative;background:var(--surface);border-right:1px solid var(--border);min-height:320px;overflow:hidden}
-    .work-card-media img{width:100%;height:100%;object-fit:cover;object-position:top}
-    .work-card-body{padding:38px;display:flex;flex-direction:column;gap:14px;justify-content:center}
-    .work-card-kicker{font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-ink)}
-    .work-card-body h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
-    .wc-features{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:2px 0}
-    .wc-features li{font-size:12.8px;color:var(--text);display:flex;align-items:center;gap:8px}
-    .wc-features li::before{content:'';width:5px;height:5px;border-radius:999px;background:var(--navy);flex-shrink:0}
-    .wc-tech{display:flex;flex-wrap:wrap;gap:8px}
-    .wc-tech span{padding:4px 10px;border:1px solid var(--border);border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11.5px;font-weight:600;color:var(--muted2)}
-    @media(max-width:860px){.work-card{grid-template-columns:1fr}.work-card-media{min-height:220px;border-right:0;border-bottom:1px solid var(--border)}.work-card-body{padding:26px}}
-    .card-3d{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:12px;
-      padding:26px;
-      position:relative;overflow:hidden;
-      transition:transform 0.2s ease,border-color 0.3s,box-shadow 0.3s;
-    }
-    .card-3d:hover{
-      transform:translateY(-4px);
-      border-color:var(--border-h);
-      box-shadow:0 16px 40px rgba(20,30,50,0.10);
-    }
-    .card-corner{display:none}
-    .card-icon-badge{
-      width:44px;height:44px;border-radius:10px;
-      display:grid;place-items:center;
-      background:rgba(14,50,114,0.08);
-      border:1px solid var(--border);
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:13px;font-weight:700;color:var(--accent-ink);
-      margin-bottom:18px;letter-spacing:0.02em;
-    }
-    .card-3d h4{
-      font-size:17px;font-weight:700;
-      letter-spacing:-0.01em;margin-bottom:10px;
-      color:var(--text);
-    }
-    .card-3d p{color:var(--muted);font-size:13.5px;line-height:1.65}
-    .card-line{
-      position:absolute;bottom:0;left:0;right:0;height:2px;
-      background:var(--navy);
-      opacity:0;transition:opacity 0.3s;
-    }
-    .card-3d:hover .card-line{opacity:1}
+  .pf-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .pf-card-top{display:flex; align-items:center; justify-content:space-between;}
+  .pf-tag{font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--violet); background:rgba(123,47,255,.12); border:1px solid rgba(123,47,255,.3); padding:5px 10px; border-radius:999px;}
+  .pf-card h3{font-size:17px;}
+  .pf-card p{font-size:14px; color:var(--text-dim);}
+  .pf-chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; padding-top:8px;}
+  .pf-chip{font-size:11.5px; color:var(--text-dimmer); border:1px solid var(--border); padding:4px 9px; border-radius:7px;}
 
-    /* PROJECT CARDS */
-    .project-card{
-      min-height:300px;
-      display:flex;flex-direction:column;justify-content:space-between;
-    }
-    .card-thumb{
-      display:block;width:calc(100% + 52px);margin:-26px -26px 20px;
-      aspect-ratio:16/10;object-fit:cover;object-position:top;
-      border-bottom:1px solid var(--border);
-    }
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .tag{
-      padding:5px 12px;border-radius:6px;
-      border:1px solid var(--border);
-      color:var(--muted);font-size:11px;font-weight:600;
-      background:rgba(14,50,114,0.04);
-      font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.02em;
-    }
-    .project-link{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:12.5px;color:var(--accent-ink);font-weight:700;
-      letter-spacing:0.02em;display:inline-flex;align-items:center;gap:6px;
-      margin-top:20px;opacity:0.85;transition:opacity 0.2s;
-    }
-    .project-link:hover{opacity:1}
-    .project-card[data-project-url]{cursor:pointer}
-    .project-card:focus-visible{
-      outline:2px solid var(--navy);
-      outline-offset:4px;
-      border-color:var(--navy);
-    }
-    button.project-link{
-      width:max-content;
-      padding:0;
-      border:0;
-      background:transparent;
-      cursor:pointer;
-      text-align:left;
-    }
+  /* ---------- PROCESS ---------- */
+  .process-list{display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:step;}
+  @media (max-width:980px){ .process-list{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .process-list{grid-template-columns:1fr;} }
+  .process-item{
+    border:1px solid var(--border); border-radius:var(--radius); padding:24px 20px; background:var(--panel); position:relative;
+  }
+  .process-num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--cyan);
+    display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px;
+    background:rgba(0,245,255,.08); border:1px solid rgba(0,245,255,.25); margin-bottom:14px;
+  }
+  .process-item h4{font-size:14.5px; margin-bottom:6px;}
+  .process-item p{font-size:12.8px; color:var(--text-dim);}
 
-    /* PROJECT MARQUEE */
-    .project-marquee{
-      overflow:hidden;width:100%;
-      -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-      mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-    }
-    .project-marquee-track{
-      display:flex;gap:20px;width:max-content;
-      animation:project-marquee-scroll 26s linear infinite;
-    }
-    .project-marquee:hover .project-marquee-track{animation-play-state:paused}
-    @keyframes project-marquee-scroll{
-      from{transform:translateX(0)}
-      to{transform:translateX(-50%)}
-    }
-    .project-tile{
-      flex-shrink:0;width:132px;aspect-ratio:1/1;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-      padding:16px;border:1px solid var(--border);border-radius:16px;background:var(--card);
-      cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;
-      font-family:'Plus Jakarta Sans',sans-serif;
-    }
-    .project-tile:hover{border-color:var(--border-h);transform:translateY(-4px);box-shadow:0 14px 32px rgba(20,30,50,.10)}
-    .project-tile-icon{width:38px;height:38px;color:var(--navy);flex-shrink:0}
-    .project-tile-icon svg{width:100%;height:100%;display:block}
-    .project-tile-label{font-size:12px;font-weight:600;color:var(--text);text-align:center;line-height:1.3}
-    @media(max-width:600px){
-      .project-tile{width:104px}
-      .project-tile-icon{width:32px;height:32px}
-      .project-tile-label{font-size:11px}
-      .project-marquee-track{animation-duration:20s}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .project-marquee-track{animation:none}
-    }
+  /* ---------- PRICING ---------- */
+  .price-toggle{
+    display:inline-flex; gap:4px; padding:5px; border:1px solid var(--border); border-radius:999px;
+    background:var(--panel); margin-bottom:44px;
+  }
+  .price-toggle-btn{
+    border:none; background:transparent; color:var(--text-dim); font-family:inherit; font-size:14px; font-weight:600;
+    padding:10px 22px; border-radius:999px; cursor:pointer; transition:.2s background, .2s color;
+  }
+  .price-toggle-btn.active{ background:var(--grad); color:#07070f; }
+  .price-group.hidden{display:none;}
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
+  @media (max-width:920px){ .price-grid{grid-template-columns:1fr; max-width:420px; margin:0 auto;} }
+  .price-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:20px; padding:32px 26px;
+    display:flex; flex-direction:column;
+  }
+  .price-card.featured{
+    background:linear-gradient(180deg, rgba(123,47,255,.14), var(--panel) 40%);
+    border-color:rgba(123,47,255,.45); position:relative; transform:translateY(-10px);
+  }
+  @media (max-width:920px){ .price-card.featured{transform:none;} }
+  .price-badge{
+    position:absolute; top:-13px; right:26px; background:var(--grad); color:#07070f; font-size:11.5px; font-weight:800;
+    padding:6px 13px; border-radius:999px; letter-spacing:.03em;
+  }
+  .price-card h3{font-size:19px;}
+  .price-card .price-desc{font-size:13.5px; color:var(--text-dim); margin-top:8px; min-height:38px;}
+  .price-amount{margin-top:22px; display:flex; align-items:baseline; gap:6px;}
+  .price-amount .from{font-size:12.5px; color:var(--text-dimmer); display:block; margin-bottom:2px;}
+  .price-amount .num{font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:700;}
+  .price-features{list-style:none; margin:26px 0 30px; padding:0; display:grid; gap:12px; font-size:14px; color:var(--text-dim);}
+  .price-features li{display:flex; gap:10px; align-items:flex-start;}
+  .price-features li svg{flex-shrink:0; margin-top:2px; color:var(--cyan);}
 
-    /* PROJECT PREVIEW MODAL */
-    body.modal-open{overflow:hidden}
-    .project-modal{
-      position:fixed;inset:0;z-index:9500;
-      display:grid;place-items:center;
-      padding:24px;
-      opacity:0;visibility:hidden;pointer-events:none;
-      transition:opacity 0.3s ease,visibility 0.3s ease;
-    }
-    .project-modal.active{
-      opacity:1;visibility:visible;pointer-events:auto;
-    }
-    .project-modal-backdrop{
-      position:absolute;inset:0;
-      background:rgba(10,15,25,0.6);
-      backdrop-filter:blur(8px);
-    }
-    .project-modal-window{
-      position:relative;z-index:1;
-      width:min(1180px,94vw);
-      height:min(780px,88vh);
-      display:flex;flex-direction:column;
-      overflow:hidden;
-      border:1px solid var(--border);
-      border-radius:16px;
-      background:var(--card);
-      box-shadow:0 32px 100px rgba(0,0,0,0.35);
-      transform:translateY(24px) scale(0.97);
-      transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);
-    }
-    .project-modal.active .project-modal-window{
-      transform:translateY(0) scale(1);
-    }
-    .project-modal-header{
-      min-height:58px;
-      display:flex;align-items:center;justify-content:space-between;
-      gap:18px;padding:10px 12px 10px 18px;
-      border-bottom:1px solid var(--border);
-      background:var(--deep);
-      flex-shrink:0;
-    }
-    .project-modal-heading{
-      min-width:0;display:flex;align-items:center;gap:12px;
-    }
-    .project-modal-dots{display:flex;gap:6px;flex-shrink:0}
-    .project-modal-dot{width:9px;height:9px;border-radius:50%}
-    .project-modal-dot:nth-child(1){background:#ff5f57}
-    .project-modal-dot:nth-child(2){background:#febc2e}
-    .project-modal-dot:nth-child(3){background:#28c840}
-    .project-modal-title{
-      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:12.5px;font-weight:700;color:var(--navy);
-      letter-spacing:0.02em;
-    }
-    .project-modal-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
-    .project-modal-action,.project-modal-close{
-      min-height:36px;
-      display:inline-flex;align-items:center;justify-content:center;gap:7px;
-      border:1px solid var(--border-h);
-      border-radius:7px;
-      background:var(--card);
-      color:var(--text);
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:11px;font-weight:700;
-      cursor:pointer;
-      transition:background 0.2s,border-color 0.2s,color 0.2s;
-    }
-    .project-modal-action{padding:8px 13px}
-    .project-modal-close{width:36px;padding:0;font-size:16px}
-    .project-modal-action:hover,.project-modal-close:hover{
-      color:var(--navy);border-color:var(--navy);
-      background:rgba(14,50,114,0.05);
-    }
-    .project-modal-body{
-      position:relative;flex:1;min-height:0;background:#fff;
-    }
-    .project-modal-frame{
-      display:block;width:100%;height:100%;border:0;background:#fff;
-    }
-    .project-modal-loading{
-      position:absolute;inset:0;z-index:2;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-      background:var(--deep);
-      color:var(--muted);
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;
-      transition:opacity 0.25s ease,visibility 0.25s ease;
-    }
-    .project-modal-loading.hidden{opacity:0;visibility:hidden;pointer-events:none}
-    .project-modal-spinner{
-      width:38px;height:38px;border-radius:50%;
-      border:2px solid var(--border);
-      border-top-color:var(--navy);
-      animation:project-spin 0.8s linear infinite;
-    }
-    @keyframes project-spin{to{transform:rotate(360deg)}}
-    .project-modal-note{
-      flex-shrink:0;padding:8px 14px;
-      border-top:1px solid var(--border);
-      background:var(--deep);
-      color:var(--muted2);
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:10px;text-align:center;
-    }
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    background:linear-gradient(135deg, rgba(0,245,255,.08), rgba(123,47,255,.1) 55%, rgba(255,45,107,.08));
+    border:1px solid var(--border); border-radius:28px; padding:56px; text-align:center;
+  }
+  .contact-box h2{font-size:clamp(26px,4vw,38px);}
+  .contact-box p{margin-top:14px; color:var(--text-dim); font-size:16px; max-width:520px; margin-left:auto; margin-right:auto;}
+  .contact-actions{display:flex; gap:14px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
+  .contact-meta{display:flex; gap:28px; justify-content:center; margin-top:36px; flex-wrap:wrap; font-size:13.5px; color:var(--text-dim);}
+  .contact-meta a:hover{color:var(--text);}
 
-    /* STACK SECTION */
-    .stack-grid{
-      display:flex;flex-wrap:wrap;gap:10px;
-    }
-    .stack-badge{
-      padding:12px 18px;
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:8px;
-      font-weight:600;font-size:13px;
-      font-family:'Plus Jakarta Sans',sans-serif;
-      color:var(--text);letter-spacing:0.02em;
-      transition:border-color 0.2s,color 0.2s;
-    }
-    .stack-badge:hover{
-      border-color:var(--accent-ink);color:var(--accent-ink);
-    }
-    .stack-badge span{position:relative;z-index:1}
+  footer{border-top:1px solid var(--border); padding:36px 0; margin-top:20px;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:13.5px; color:var(--text-dimmer);}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links a:hover{color:var(--text-dim);}
 
-    /* ARCHITECTURE */
-    .arch-card{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:16px;padding:36px;
-    }
-    .flow-grid{
-      display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:32px;
-    }
-    .flow-node{
-      border:1px solid var(--border);
-      background:var(--well);
-      border-radius:10px;padding:18px;
-      position:relative;
-      transition:border-color 0.3s,background 0.3s;
-    }
-    .flow-node:hover{
-      border-color:var(--border-h);
-      background:rgba(14,50,114,0.06);
-    }
-    .flow-node::after{
-      content:'→';
-      position:absolute;right:-18px;top:50%;transform:translateY(-50%);
-      color:var(--muted2);font-size:14px;
-    }
-    .flow-node:last-child::after{content:none}
-    .flow-num{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
-      font-size:10.5px;color:var(--accent-ink);
-      letter-spacing:0.1em;margin-bottom:10px;display:block;
-    }
-    .flow-node strong{
-      display:block;font-size:14px;font-weight:600;
-      margin-bottom:6px;letter-spacing:-0.01em;
-    }
-    .flow-node p{color:var(--muted);font-size:11.5px;line-height:1.6}
-
-    /* LOG */
-    .log-list{display:grid;gap:14px}
-    .log-item{
-      display:grid;grid-template-columns:160px 1fr;gap:24px;
-      padding:20px 24px;
-      border:1px solid var(--border);
-      background:var(--card);border-radius:10px;
-      transition:border-color 0.2s,background 0.2s;
-    }
-    .log-item:hover{
-      border-color:var(--border-h);
-      background:var(--card-h);
-    }
-    .log-date{
-      font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:12.5px;color:var(--accent-ink);font-weight:700;
-      letter-spacing:0.02em;padding-top:2px;
-    }
-    .log-item strong{display:block;font-size:15px;font-weight:600;margin-bottom:5px}
-    .log-item p{color:var(--muted);font-size:13.5px;line-height:1.6}
-
-    /* CONTACT */
-    .contact-card{
-      border:1px solid var(--border);
-      background:var(--card);
-      border-radius:16px;padding:48px;
-      display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
-      position:relative;overflow:hidden;
-    }
-    .contact-card p{color:var(--muted);margin-top:10px;line-height:1.7}
-
-    /* TINTED SECTION (alternating band) */
-    .section-light{background:var(--deep)}
-
-    /* FOOTER */
-    footer{
-      border-top:1px solid var(--border);
-      padding:64px 5vw 28px;
-      background:var(--deep);
-    }
-    .footer-top{
-      display:flex;justify-content:space-between;align-items:flex-start;
-      gap:24px;flex-wrap:wrap;margin-bottom:36px;
-    }
-    .footer-links{display:flex;gap:24px;flex-wrap:wrap}
-    .footer-links a{
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:600;
-      color:var(--muted);letter-spacing:0.02em;transition:color 0.2s;
-    }
-    .footer-links a:hover{color:var(--accent-ink)}
-    .footer-brand{
-      font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
-      font-size:clamp(40px,11vw,140px);line-height:0.9;letter-spacing:-0.02em;
-      color:var(--navy);
-      margin-bottom:28px;word-break:break-word;
-    }
-    .footer-bottom{
-      display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
-      padding-top:20px;border-top:1px solid var(--border);
-    }
-    footer span{color:var(--muted2);font-size:12px;font-family:'Plus Jakarta Sans',sans-serif}
-
-    /* SECTION DIVIDER */
-    .divider{
-      height:1px;
-      background:var(--border);
-      margin:0 5vw;
-    }
-
-    /* SCROLL REVEAL — GSAP-driven; html.js-anim is added by JS once GSAP is confirmed loaded,
-       so content stays visible by default if JS/CDN fails (progressive enhancement). */
-    .reveal{opacity:1;transform:none;clip-path:none}
-    html.js-anim .reveal{opacity:0;will-change:transform,opacity}
-    html.js-anim .reveal:not([data-anim]){transform:translateY(24px)}
-    html.js-anim .reveal[data-anim="fade"]{transform:none}
-    html.js-anim .reveal[data-anim="fade-down"]{transform:translateY(-24px)}
-    html.js-anim .reveal[data-anim="slide-left"]{transform:translateX(-50px)}
-    html.js-anim .reveal[data-anim="slide-right"]{transform:translateX(50px)}
-    html.js-anim .reveal[data-anim="scale-up"]{transform:scale(0.92)}
-    html.js-anim .reveal[data-anim="mask"]{opacity:1;clip-path:inset(0 0 100% 0)}
-    .reveal.show{opacity:1!important;transform:none!important;clip-path:none!important}
-    [data-parallax]{will-change:transform}
-
-    @media(max-width:600px){
-      html.js-anim .reveal[data-anim="slide-left"]{transform:translateX(-22px)}
-      html.js-anim .reveal[data-anim="slide-right"]{transform:translateX(22px)}
-    }
-    @media(prefers-reduced-motion:reduce){
-      html.js-anim .reveal{opacity:1!important;transform:none!important;clip-path:none!important}
-      [data-parallax]{transform:none!important}
-    }
-
-    /* MOBILE */
-    @media(max-width:960px){
-      .hero{grid-template-columns:1fr;padding-top:90px}
-      .card-grid-3,.card-grid-2,.flow-grid{grid-template-columns:1fr}
-      .section-head{flex-direction:column;align-items:flex-start}
-      .contact-card{grid-template-columns:1fr}
-      .nav-links{display:none}
-      .flow-node::after{display:none}
-      .stats-bar{grid-template-columns:repeat(2,1fr)}
-      .stats-bar .stat-block:nth-child(2){border-right:none}
-      .stats-bar .stat-block{border-bottom:1px solid var(--border)}
-    }
-    @media(max-width:560px){
-      .log-item{grid-template-columns:1fr}
-      .section{padding:60px 4vw}
-      .project-modal{padding:10px}
-      .project-modal-window{width:96vw;height:92vh;border-radius:12px}
-      .project-modal-header{padding-left:12px;gap:8px}
-      .project-modal-title{font-size:10px}
-      .project-modal-action span{display:none}
-      .project-modal-action{width:36px;padding:0;font-size:15px}
-      .project-modal-note{font-size:9px}
-      .stats-bar{grid-template-columns:1fr}
-      .stats-bar .stat-block{border-right:none;border-bottom:1px solid var(--border)}
-      .faq-question{font-size:15px;padding:18px 2px}
-    }
-  </style>
+  ::selection{background:var(--violet); color:#fff;}
+</style>
 </head>
 <body>
 
-<!-- PROJECT PREVIEW MODAL -->
-<div id="project-modal" class="project-modal" aria-hidden="true">
-  <div class="project-modal-backdrop" data-project-close></div>
-  <section class="project-modal-window" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
-    <header class="project-modal-header">
-      <div class="project-modal-heading">
-        <div class="project-modal-dots" aria-hidden="true">
-          <span class="project-modal-dot"></span>
-          <span class="project-modal-dot"></span>
-          <span class="project-modal-dot"></span>
-        </div>
-        <span id="project-modal-title" class="project-modal-title">PROJECT_PREVIEW</span>
-      </div>
-      <div class="project-modal-actions">
-        <a id="project-modal-external" class="project-modal-action" href="#" target="_blank" rel="noopener noreferrer" aria-label="Open project in a new tab">↗ <span>OPEN FULL PAGE</span></a>
-        <button type="button" class="project-modal-close" data-project-close aria-label="Close project preview">✕</button>
-      </div>
-    </header>
-    <div class="project-modal-body">
-      <div id="project-modal-loading" class="project-modal-loading">
-        <span class="project-modal-spinner"></span>
-        <span>LOADING PROJECT...</span>
-      </div>
-      <iframe id="project-modal-frame" class="project-modal-frame" title="Project preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<header>
+  <nav>
+    <a href="#top" class="brand"><span class="mark">&lt;/&gt;</span>liswan.dev</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">Tentang</a>
+      <a href="#services">Layanan</a>
+      <a href="#portfolio">Portofolio</a>
+      <a href="#process">Proses</a>
+      <a href="#pricing">Harga</a>
+      <a href="#contact">Kontak</a>
     </div>
-    <div class="project-modal-note">If the embedded preview is restricted, use “Open Full Page”.</div>
-  </section>
-</div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-ghost">Kontak</a>
+      <a href="mailto:hello@liswan.dev" class="btn btn-grad">Konsultasi Gratis</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+</header>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="/" class="brand"><img src="assets/img/liswan-logo.svg" alt="Liswan.dev — IT Support &amp; Software Developer"></a>
-  <div class="nav-end">
-    <div class="nav-links">
-      <a href="/" class="active" data-id="Beranda">Home</a>
-      <a href="/services/">Services</a>
-      <a href="/portfolio/" data-id="Proyek">Projects</a>
-      <a href="/case-studies/" data-id="Studi Kasus">Case Studies</a>
-      <a href="/profile/" data-id="Tentang">About</a>
-    </div>
-    <div class="nav-toggles">
-      <button type="button" class="toggle-btn" id="theme-toggle" aria-label="Toggle light/dark theme"></button>
-      <button type="button" class="toggle-btn" id="lang-toggle" aria-label="Toggle language">ID</button>
-      <a href="/client/login/" class="btn btn-secondary nav-btn-sm" data-id="Login Klien">Client Login</a>
-      <a href="/start-project/" class="btn btn-primary nav-btn-sm" data-id="Mulai Proyek">Start Project</a>
-    </div>
-  </div>
-</nav>
+<main id="top">
 
-<main class="page">
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow reveal" data-anim="fade-down">
-        <span class="eyebrow-dot"></span>
-        <span data-id="IT Support · Pengembangan Perangkat Lunak · Sistem Internal · Otomasi">IT Support · Software Development · Internal Systems · Automation</span>
-      </div>
-      <h1 class="reveal" data-anim="mask">
-        <span data-id="Solusi Digital untuk">Digital Solutions for</span><br>
-        <span data-id="Masalah Bisnis Nyata.">Real Business Problems.</span>
-      </h1>
-      <p class="hero-desc reveal" data-anim="fade-up" data-id="Saya merancang dan membangun sistem digital praktis yang menyederhanakan operasional bisnis, meningkatkan visibilitas, dan mengurangi kerja manual.">
-        I design and build practical digital systems that simplify business operations, improve visibility, and reduce manual work.
-      </p>
-      <div class="hero-actions reveal" data-anim="fade-up">
-        <a href="/portfolio/" class="btn btn-primary"><span data-id="Lihat Proyek">View Projects</span></a>
-        <a href="/start-project/" class="btn btn-secondary"><span data-id="Mulai Proyek">Start a Project</span></a>
-      </div>
-    </div>
-
-    <div class="hero-panel reveal" data-anim="scale-up" data-parallax="0.12" id="hero-panel">
-      <div class="dash-preview" aria-hidden="true">
-        <div class="dash-preview-bar">
-          <span class="dpdot" style="background:#ff5f57"></span><span class="dpdot" style="background:#febc2e"></span><span class="dpdot" style="background:#28c840"></span>
-          <span class="dash-preview-url">app.liswan.dev/dashboard</span>
-        </div>
-        <div class="dash-preview-body">
-          <div class="dpv-sidebar">
-            <div class="dpv-side-item active"></div>
-            <div class="dpv-side-item"></div>
-            <div class="dpv-side-item"></div>
-            <div class="dpv-side-item"></div>
-            <div class="dpv-side-item"></div>
-          </div>
-          <div class="dpv-main">
-            <div class="dpv-stats">
-              <div class="dpv-stat"><span>72%</span><em data-id="Progres">Progress</em></div>
-              <div class="dpv-stat"><span>Rp 8.5jt</span><em data-id="Nilai">Value</em></div>
-              <div class="dpv-stat"><span>3</span><em data-id="Aktif">Active</em></div>
-            </div>
-            <div class="dpv-chart">
-              <div style="height:40%"></div><div style="height:65%"></div><div style="height:50%"></div><div style="height:80%"></div><div style="height:60%"></div><div style="height:90%"></div><div style="height:70%"></div>
-            </div>
-            <div class="dpv-rows">
-              <div class="dpv-row"><span></span><em data-id="Disetujui">Approved</em></div>
-              <div class="dpv-row"><span style="background:#d69614"></span><em data-id="Sedang Ditinjau">In Review</em></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- SELECTED WORK -->
-  <section class="section" id="selected-work">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// pilihan proyek">// selected work</div>
-        <h2 class="section-title"><span data-id="Karya">Selected</span><br><span data-id="Pilihan">Work</span></h2>
-      </div>
-      <p class="section-desc" data-id="Platform bisnis nyata yang dibangun untuk masalah operasional nyata — bukan proyek konsep.">Real business platforms built for real operational problems — not concept projects.</p>
-    </div>
-    <div class="work-list">
-      <article class="work-card reveal" data-anim="fade-up">
-        <div class="work-card-media"><img src="/projects/mockup-asset-management.png" alt="Smart Master Asset dashboard preview" loading="lazy"></div>
-        <div class="work-card-body">
-          <span class="work-card-kicker" data-id="Platform Manajemen Aset">Asset Management Platform</span>
-          <h3>Smart Master Asset</h3>
-          <ul class="wc-features">
-            <li data-id="Pelacakan Aset">Asset Tracking</li>
-            <li data-id="Penugasan Pengguna">User Assignment</li>
-            <li data-id="Manajemen Area">Area Management</li>
-            <li data-id="Dokumentasi Foto">Photo Documentation</li>
-            <li>Dashboard</li>
-            <li data-id="Pelaporan">Reporting</li>
-            <li data-id="Tema Terang/Gelap">Light/Dark Theme</li>
-          </ul>
-          <div class="wc-tech"><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>WordPress</span></div>
-          <div class="hero-actions" style="margin-top:6px">
-            <a href="/case-studies/smart-master-asset/" class="btn btn-secondary" data-id="Lihat Studi Kasus">View Case Study</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="work-card reveal" data-anim="fade-up">
-        <div class="work-card-media"><img src="/projects/mockup-tracking-sales-marketing.png" alt="Sales Force Automation dashboard preview" loading="lazy"></div>
-        <div class="work-card-body">
-          <span class="work-card-kicker" data-id="Platform Operasional Sales">Sales Operational Platform</span>
-          <h3>Sales Force Automation</h3>
-          <ul class="wc-features">
-            <li data-id="Kunjungan Sales">Sales Visit</li>
-            <li data-id="Serah Terima Stok">Stock Handover</li>
-            <li data-id="Closing Harian">Daily Closing</li>
-            <li data-id="Pelacakan Pembayaran">Payment Tracking</li>
-            <li data-id="Pelaporan Sales">Sales Reporting</li>
-            <li data-id="Manajemen Toko">Store Management</li>
-          </ul>
-          <div class="wc-tech"><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>Google Apps Script</span></div>
-          <div class="hero-actions" style="margin-top:6px">
-            <a href="/case-studies/sales-force-automation/" class="btn btn-secondary" data-id="Lihat Studi Kasus">View Case Study</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="work-card reveal" data-anim="fade-up">
-        <div class="work-card-media">
-          <div class="dash-preview" style="border:0;border-radius:0;box-shadow:none;height:100%" aria-hidden="true">
-            <div class="dash-preview-bar"><span class="dpdot" style="background:#ff5f57"></span><span class="dpdot" style="background:#febc2e"></span><span class="dpdot" style="background:#28c840"></span><span class="dash-preview-url">inventory.internal/dashboard</span></div>
-            <div class="dash-preview-body">
-              <div class="dpv-sidebar"><div class="dpv-side-item active"></div><div class="dpv-side-item"></div><div class="dpv-side-item"></div><div class="dpv-side-item"></div></div>
-              <div class="dpv-main">
-                <div class="dpv-stats"><div class="dpv-stat"><span>1,204</span><em data-id="Barang">SKU</em></div><div class="dpv-stat"><span>18</span><em data-id="PO Terbuka">Open PO</em></div><div class="dpv-stat"><span>Rp 210jt</span><em data-id="Nilai Stok">Stock Value</em></div></div>
-                <div class="dpv-chart"><div style="height:55%"></div><div style="height:70%"></div><div style="height:45%"></div><div style="height:85%"></div><div style="height:60%"></div><div style="height:75%"></div><div style="height:50%"></div></div>
-                <div class="dpv-rows"><div class="dpv-row"><span></span><em data-id="Stok Aman">Buffer OK</em></div><div class="dpv-row"><span style="background:#c2453f"></span><em data-id="Stok Menipis">Low Stock</em></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="work-card-body">
-          <span class="work-card-kicker" data-id="Sistem Manajemen Inventaris">Inventory Management System</span>
-          <h3>Inventory Management System</h3>
-          <ul class="wc-features">
-            <li data-id="Pelacakan Inventaris">Inventory Tracking</li>
-            <li data-id="Purchase Order">Purchase Order</li>
-            <li data-id="Penerimaan Material">Material Receiving</li>
-            <li data-id="Alokasi Proyek">Project Allocation</li>
-            <li data-id="Stok Penyangga">Buffer Stock</li>
-            <li data-id="Manajemen Supplier">Supplier Management</li>
-          </ul>
-          <div class="wc-tech"><span>PHP</span><span>MySQL</span><span>JavaScript</span></div>
-          <div class="hero-actions" style="margin-top:6px">
-            <a href="/case-studies/inventory-management-system/" class="btn btn-secondary" data-id="Lihat Studi Kasus">View Case Study</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section" id="how-it-works">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// alurnya">// how it works</div>
-        <h2 class="section-title"><span data-id="Dari ide sampai">From idea</span><br><span data-id="jadi sistem yang jalan.">to a working system.</span></h2>
-      </div>
-      <p class="section-desc" data-id="Tiga langkah sederhana setelah kamu kirim idenya.">Three simple steps after you send your idea.</p>
-    </div>
-    <div class="card-grid-3">
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">01</div>
-        <h4 data-id="Ceritakan idemu">Share your idea</h4>
-        <p data-id="Ketik di kolom atas, atau email langsung — nggak perlu spesifikasi lengkap, yang masih kasar juga oke.">Type it above, or email me directly — rough is fine, no full spec needed.</p>
-      </div>
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">02</div>
-        <h4 data-id="Aku susun scope-nya">I scope it out</h4>
-        <p data-id="Kamu bakal dapat gambaran jelas: apa yang realistis, effort-nya seperti apa, dan pendekatan yang dipakai.">You'll get a clear picture back: what's realistic, the effort involved, and how we'd approach it.</p>
-      </div>
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">03</div>
-        <h4 data-id="Build &amp; demo">Build &amp; demo</h4>
-        <p data-id="Kamu bakal lihat progres yang jalan dari awal — seperti live preview di portofolio di bawah.">You'll see working progress early — like the live previews in the portfolio below.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- STATS BAR -->
-  <div class="stats-bar section-light">
-    <div class="stat-block reveal" data-anim="scale-up">
-      <strong>7+</strong>
-      <span data-id="Sistem Dibangun">Systems Shipped</span>
-    </div>
-    <div class="stat-block reveal" data-anim="scale-up">
-      <strong>OPS</strong>
-      <span data-id="Fokus Workflow">Workflow Focus</span>
-    </div>
-    <div class="stat-block reveal" data-anim="scale-up">
-      <strong>12+</strong>
-      <span data-id="Tools Digunakan">Tools In Stack</span>
-    </div>
-    <div class="stat-block reveal" data-anim="scale-up">
-      <strong>WP</strong>
-      <span data-id="Aplikasi Shortcode">Shortcode Apps</span>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// tentang">// about</div>
-        <h2 class="section-title"><span data-id="Alat operasional,">Operational tools,</span><br><span data-id="bukan sekadar landing page.">not just landing pages.</span></h2>
-      </div>
-    </div>
-    <p class="lead-statement reveal"><span data-id="Pekerjaan saya berpusat pada membangun sistem yang membantu tim">My work is centered on building systems that help teams</span> <em><span data-id="mencatat data, menyetujui permintaan, memantau aktivitas,">record data, approve requests, monitor activity,</span></em> <span data-id="membuat dokumen, dan mengurangi kerja operasional manual — menggunakan WordPress, PHP, dan Google Apps Script.">generate documents, and reduce manual operational work — using WordPress, PHP, and Google Apps Script.</span></p>
-    <div style="height:36px"></div>
-    <div class="card-grid-3">
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">01</div>
-        <h4 data-id="Sistem Workflow">Workflow Systems</h4>
-        <p data-id="Alur persetujuan, proses mutasi, tahap validasi, pembuatan dokumen, dan upload bukti — dari awal sampai akhir.">Approval flows, mutation processes, validation stages, document generation, and evidence uploads — end-to-end.</p>
-      </div>
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">02</div>
-        <h4 data-id="Dashboard">Dashboards</h4>
-        <p data-id="Laporan mingguan, monitoring aktivitas sales, tampilan per cabang, tracking target, dan chart operasional.">Weekly reports, sales activity monitoring, branch-level views, target tracking, and operational charts.</p>
-      </div>
-      <div class="card-3d reveal">
-        <div class="card-corner"></div>
-        <div class="card-line"></div>
-        <div class="card-icon-badge">03</div>
-        <h4 data-id="Otomasi File">File Automation</h4>
-        <p data-id="Alur upload berbasis Google Drive, akses folder, otomasi Apps Script, dan antarmuka portal file.">Google Drive-based upload flows, folder access, Apps Script automation, and file portal interfaces.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- PROJECTS -->
-  <section class="section" id="live-demos">
-    <div class="section-head reveal" data-anim="slide-right">
-      <div>
-        <div class="section-kicker" data-id="// coba langsung">// try it live</div>
-        <h2 class="section-title"><span data-id="Klik untuk membuka">Click to open a</span><br><span data-id="demo sistem yang jalan.">live working demo.</span></h2>
-      </div>
-      <p class="section-desc" data-id="Sistem ditampilkan menggunakan alur dan data dummy untuk keperluan portofolio. Tidak ada data perusahaan yang rahasia dipublikasikan.">Systems presented using recreated flows and dummy data for portfolio purposes. No confidential company data published.</p>
-    </div>
-    <div class="project-marquee reveal" data-anim="fade">
-      <div class="project-marquee-track">
-        <button type="button" class="project-tile" data-project-title="POS System" data-project-url="https://script.google.com/macros/s/AKfycbz2RqMNHba5_bjfipL7fo-X3tdnMYC61JhxQQpeQL8fl5Gfid1DJQsJQxj-tEFxj08hpA/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.68 12.39a2 2 0 0 0 2 1.61h8.72a2 2 0 0 0 2-1.61L23 7.5H6.5"/></svg></span>
-          <span class="project-tile-label">POS System</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Asset Management" data-project-url="https://script.google.com/macros/s/AKfycbxhDg--Yl4_D118rQMpr2ohOR_WfdFPP0Vr4bgcfUo4fg26940XfGwTxX1Mq8vB3pfX/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span>
-          <span class="project-tile-label">Asset Management</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Daily Sales Activity" data-project-url="https://script.google.com/macros/s/AKfycbwcz87KCa0ZUSodD_6Yd9u0Wn_uk6Zg7DgzcnM9hRsnsRMBuK-fVxPu1SHfFHYxzNN0/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
-          <span class="project-tile-label">Daily Sales Activity</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Document and File Service" data-project-url="https://script.google.com/macros/s/AKfycbwSG_ttYPmcag5f8GJgct-gX96cZYfBn97Xhy1tMuQq7r1du6_Q59P6NWjZMpB23exbPg/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2.5h8A2 2 0 0 1 21 8.5V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg></span>
-          <span class="project-tile-label">Document &amp; File Service</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Employee Resource Center" data-project-url="https://script.google.com/macros/s/AKfycbyxWDEM9EV9XFVaBk4yr7kwMpVbBQqRPIgZQFkJH8Rv1loM7MLwwtluxdlRoooqczLrRQ/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 20v-1.5a3.5 3.5 0 0 0-3.5-3.5H7a3.5 3.5 0 0 0-3.5 3.5V20"/><circle cx="10" cy="7.5" r="3.5"/><path d="M20.5 20v-1.5a3.2 3.2 0 0 0-2.2-3"/><path d="M14.8 4.2a3.5 3.5 0 0 1 0 6.6"/></svg></span>
-          <span class="project-tile-label">Employee Resource Center</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Tracking Sales and Marketing Monitoring" data-project-url="https://script.google.com/macros/s/AKfycbwrbL6tDmTPpKypUvyk2tVZYxGzIRiV2cHNpmgm3b2ZMSAZKLNafUPVv_PloP7WDK6D/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 18 9.5 10.5 14 15 22 6"/><polyline points="16 6 22 6 22 12"/></svg></span>
-          <span class="project-tile-label">Sales &amp; Marketing Tracking</span>
-        </button>
-        <button type="button" class="project-tile" data-project-title="Internal Company Website" data-project-url="https://script.google.com/macros/s/AKfycbwrgupOd9YzyhzwWWhw1D0PSJbPIAThZC-c6WNkH-o4e7Vqvy7IjQJTZw32NXQjSB_y/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><line x1="2.5" y1="12" x2="21.5" y2="12"/><path d="M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z"/></svg></span>
-          <span class="project-tile-label">Internal Company Website</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="POS System" data-project-url="https://script.google.com/macros/s/AKfycbz2RqMNHba5_bjfipL7fo-X3tdnMYC61JhxQQpeQL8fl5Gfid1DJQsJQxj-tEFxj08hpA/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.68 12.39a2 2 0 0 0 2 1.61h8.72a2 2 0 0 0 2-1.61L23 7.5H6.5"/></svg></span>
-          <span class="project-tile-label">POS System</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Asset Management" data-project-url="https://script.google.com/macros/s/AKfycbxhDg--Yl4_D118rQMpr2ohOR_WfdFPP0Vr4bgcfUo4fg26940XfGwTxX1Mq8vB3pfX/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg></span>
-          <span class="project-tile-label">Asset Management</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Daily Sales Activity" data-project-url="https://script.google.com/macros/s/AKfycbwcz87KCa0ZUSodD_6Yd9u0Wn_uk6Zg7DgzcnM9hRsnsRMBuK-fVxPu1SHfFHYxzNN0/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
-          <span class="project-tile-label">Daily Sales Activity</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Document and File Service" data-project-url="https://script.google.com/macros/s/AKfycbwSG_ttYPmcag5f8GJgct-gX96cZYfBn97Xhy1tMuQq7r1du6_Q59P6NWjZMpB23exbPg/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2.5h8A2 2 0 0 1 21 8.5V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg></span>
-          <span class="project-tile-label">Document &amp; File Service</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Employee Resource Center" data-project-url="https://script.google.com/macros/s/AKfycbyxWDEM9EV9XFVaBk4yr7kwMpVbBQqRPIgZQFkJH8Rv1loM7MLwwtluxdlRoooqczLrRQ/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 20v-1.5a3.5 3.5 0 0 0-3.5-3.5H7a3.5 3.5 0 0 0-3.5 3.5V20"/><circle cx="10" cy="7.5" r="3.5"/><path d="M20.5 20v-1.5a3.2 3.2 0 0 0-2.2-3"/><path d="M14.8 4.2a3.5 3.5 0 0 1 0 6.6"/></svg></span>
-          <span class="project-tile-label">Employee Resource Center</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Tracking Sales and Marketing Monitoring" data-project-url="https://script.google.com/macros/s/AKfycbwrbL6tDmTPpKypUvyk2tVZYxGzIRiV2cHNpmgm3b2ZMSAZKLNafUPVv_PloP7WDK6D/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 18 9.5 10.5 14 15 22 6"/><polyline points="16 6 22 6 22 12"/></svg></span>
-          <span class="project-tile-label">Sales &amp; Marketing Tracking</span>
-        </button>
-        <button type="button" class="project-tile" aria-hidden="true" tabindex="-1" data-project-title="Internal Company Website" data-project-url="https://script.google.com/macros/s/AKfycbwrgupOd9YzyhzwWWhw1D0PSJbPIAThZC-c6WNkH-o4e7Vqvy7IjQJTZw32NXQjSB_y/exec">
-          <span class="project-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><line x1="2.5" y1="12" x2="21.5" y2="12"/><path d="M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z"/></svg></span>
-          <span class="project-tile-label">Internal Company Website</span>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- STACK -->
-  <section class="section" id="stack">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// tech_stack">// tech_stack</div>
-        <h2 class="section-title"><span data-id="Tools yang saya pakai">Tools I use to build</span><br><span data-id="untuk membangun sistem praktis.">practical systems.</span></h2>
-      </div>
-      <p class="section-desc" data-id="Fokus pada deployment cepat, kemudahan operasional, dan integrasi dengan tools yang sudah dipakai perusahaan.">Focused on fast deployment, operational usability, and integration with tools that companies already use.</p>
-    </div>
-    <div class="stack-grid">
-      <div class="stack-badge reveal"><span>HTML</span></div>
-      <div class="stack-badge reveal"><span>CSS</span></div>
-      <div class="stack-badge reveal"><span>JavaScript</span></div>
-      <div class="stack-badge reveal"><span>PHP</span></div>
-      <div class="stack-badge reveal"><span>WordPress</span></div>
-      <div class="stack-badge reveal"><span>MySQL</span></div>
-      <div class="stack-badge reveal"><span>Google Apps Script</span></div>
-      <div class="stack-badge reveal"><span>Google Drive API</span></div>
-      <div class="stack-badge reveal"><span>Chart.js</span></div>
-      <div class="stack-badge reveal"><span>GitHub Pages</span></div>
-      <div class="stack-badge reveal"><span>Workflow Automation</span></div>
-      <div class="stack-badge reveal"><span>Internal Portal</span></div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ARCHITECTURE -->
-  <section class="section" id="architecture">
-    <div class="arch-card">
-      <div class="section-kicker reveal" data-anim="fade-down" data-id="// arsitektur_sistem">// system_architecture</div>
-      <h2 class="section-title reveal" data-anim="fade-up" data-id="Alur sistem internal yang umum.">Typical internal system flow.</h2>
-      <p class="section-desc reveal" data-anim="fade-up" data-id="Akses pengguna aman → input terstruktur → penyimpanan → otomasi → output. Pola yang saya ulang di setiap sistem.">Secure user access → structured input → storage → automation → output. A pattern I repeat across every system.</p>
-      <div class="flow-grid">
-        <div class="flow-node reveal" data-anim="slide-left">
-          <span class="flow-num">NODE_01</span>
-          <strong data-id="Akses Pengguna">User Access</strong>
-          <p data-id="Login, akses role, NIK, departemen, cabang, atau mapping supervisor.">Login, role access, NIK, department, branch, or supervisor mapping.</p>
-        </div>
-        <div class="flow-node reveal" data-anim="slide-left">
-          <span class="flow-num">NODE_02</span>
-          <strong data-id="Modul Portal">Portal Module</strong>
-          <p data-id="Halaman WordPress, aplikasi shortcode, form, tabel, modal, atau tampilan dashboard.">WordPress page, shortcode app, form, table, modal, or dashboard view.</p>
-        </div>
-        <div class="flow-node reveal" data-anim="slide-left">
-          <span class="flow-num">NODE_03</span>
-          <strong data-id="Lapisan Data">Data Layer</strong>
-          <p data-id="MySQL, Google Sheet, master data terstruktur, atau catatan transaksi.">MySQL, Google Sheet, structured master data, or transaction records.</p>
-        </div>
-        <div class="flow-node reveal" data-anim="slide-left">
-          <span class="flow-num">NODE_04</span>
-          <strong data-id="Otomasi">Automation</strong>
-          <p data-id="Persetujuan email, Apps Script, upload Drive, pembuatan dokumen, atau validasi.">Email approval, Apps Script, Drive upload, document generation, or validation.</p>
-        </div>
-        <div class="flow-node reveal" data-anim="slide-left">
-          <span class="flow-num">NODE_05</span>
-          <strong data-id="Output">Output</strong>
-          <p data-id="Dashboard, laporan, BAST, tautan file, activity log, atau ringkasan manajemen.">Dashboard, report, BAST, file link, activity log, or management summary.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- LOG -->
-  <section class="section" id="log">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// log_pengembangan">// dev_log</div>
-        <h2 class="section-title"><span data-id="Arah pengembangan">Current building</span><br><span data-id="saat ini.">direction.</span></h2>
-      </div>
-      <p class="section-desc" data-id="Log ringan untuk menunjukkan bahwa portofolio ini aktif dan terus dikembangkan.">A lightweight log to show that the portfolio is active and continuously developed.</p>
-    </div>
-    <div class="log-list">
-      <div class="log-item reveal">
-        <div class="log-date">JUN_2026</div>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
         <div>
-          <strong>Employee Resource Center</strong>
-          <p data-id="Membangun pusat informasi untuk karyawan dengan resource yang terorganisir, formulir, pengumuman, dan akses terstruktur.">Building an employee-facing information center with organized resources, forms, announcements, and structured access.</p>
+          <span class="eyebrow" id="c-hero-eyebrow">IT Support &amp; Software Developer</span>
+          <h1 id="c-hero-headline">Sistem Internal Bisnis yang <span class="grad-text">Rapi, Otomatis,</span> dan Mudah Dipakai</h1>
+          <p class="hero-sub" id="c-hero-sub">Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.</p>
+          <div class="hero-actions">
+            <a href="mailto:hello@liswan.dev" class="btn btn-grad" id="c-hero-cta-primary">Konsultasi Gratis</a>
+            <a href="#portfolio" class="btn btn-ghost" id="c-hero-cta-secondary">Lihat Portofolio</a>
+          </div>
+          <div class="stack-row" id="c-hero-stack">
+            <span class="stack-pill">Google Apps Script</span>
+            <span class="stack-pill">WordPress / PHP</span>
+            <span class="stack-pill">MySQL</span>
+            <span class="stack-pill">Google Drive API</span>
+            <span class="stack-pill">JavaScript</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div class="hero-card-dots"><span></span><span></span><span></span></div>
+            <div id="c-hero-card-lines">
+              <div class="hero-card-line"><span class="k">Sistem</span><span class="v">Asset Management</span></div>
+              <div class="hero-card-line"><span class="k">Status</span><span class="v">Live &amp; Digunakan</span></div>
+              <div class="hero-card-line"><span class="k">Approval Flow</span><span class="v">Email + Dashboard</span></div>
+              <div class="hero-card-line"><span class="k">Integrasi</span><span class="v">Google Drive</span></div>
+              <div class="hero-card-line"><span class="k">Akses</span><span class="v">Role-based</span></div>
+            </div>
+            <span class="hero-card-badge" id="c-hero-card-badge">&#9679; DIBANGUN CUSTOM UNTUK KEBUTUHAN ANDA</span>
+          </div>
         </div>
       </div>
-      <div class="log-item reveal">
-        <div class="log-date">JUN_2026</div>
-        <div>
-          <strong>Daily Sales Activity</strong>
-          <p data-id="Menyempurnakan alur input harian, monitoring aktivitas, review supervisor, ringkasan progres, dan reporting operasional.">Improving daily input flows, activity monitoring, supervisor review, progress summaries, and operational reporting.</p>
-        </div>
+
+      <div class="stats" id="c-stats">
+        <div class="stat"><h3>6+</h3><p>Sistem internal yang sudah dibangun</p></div>
+        <div class="stat"><h3>100%</h3><p>Dirancang custom, bukan template</p></div>
+        <div class="stat"><h3>1</h3><p>Kontak langsung, tanpa lapisan sales</p></div>
+        <div class="stat"><h3>&infin;</h3><p>Dukungan revisi selama masa pengerjaan</p></div>
       </div>
-      <div class="log-item reveal">
-        <div class="log-date">JUN_2026</div>
-        <div>
-          <strong>Document and File Service</strong>
-          <p data-id="Menyempurnakan navigasi dokumen dengan upload drag-and-drop, folder terstruktur, akses preview, dan navigasi breadcrumb.">Improving document navigation with drag-and-drop upload, structured folders, preview access, and breadcrumb navigation.</p>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <span class="eyebrow" id="c-about-eyebrow">Tentang Kami</span>
+        <h2 id="c-about-title">Fokus pada satu hal: <span class="grad-text">sistem internal</span> yang benar-benar dipakai</h2>
+        <p id="c-about-desc" style="margin-top:18px; color:var(--text-dim); font-size:15.5px;">
+          Saya Liswan Susanto, membangun tools operasional yang membantu perusahaan mengelola pekerjaan sehari-hari
+          dengan lebih efisien, akurat, dan transparan — mulai dari input data sampai laporan ke manajemen.
+        </p>
+      </div>
+      <div class="about-points" id="c-about-points">
+        <div class="about-point">
+          <div class="ic">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div><h4>Sesuai proses kerja Anda</h4><p>Alur sistem dirancang mengikuti workflow yang sudah berjalan, bukan memaksa Anda mengikuti template.</p></div>
+        </div>
+        <div class="about-point">
+          <div class="ic">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div><h4>Cepat dipakai, minim training</h4><p>Antarmuka sederhana dan jelas, supaya tim Anda tidak butuh waktu lama untuk beradaptasi.</p></div>
+        </div>
+        <div class="about-point">
+          <div class="ic">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div><h4>Didampingi sampai jalan</h4><p>Bukan cuma serah terima kode — saya bantu sampai sistem benar-benar dipakai tim Anda.</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- FAQ -->
-  <section class="section section-light" id="faq">
-    <div class="section-head reveal">
-      <div>
-        <div class="section-kicker" data-id="// faq">// faq</div>
-        <h2 class="section-title"><span data-id="Pertanyaan umum">Common questions</span><br><span data-id="sebelum kita mulai.">before we start.</span></h2>
+  <!-- ================= SERVICES ================= -->
+  <section id="services" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow" id="c-services-eyebrow">Layanan Kami</span>
+        <h2 id="c-services-title">Apa yang bisa saya bantu</h2>
+        <p id="c-services-desc">Setiap layanan bisa berdiri sendiri atau digabung jadi satu sistem terintegrasi.</p>
       </div>
-      <p class="section-desc" data-id="Beberapa hal yang biasa ditanyakan sebelum menghubungi saya.">A few things people usually ask before reaching out.</p>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item reveal" data-anim="fade-up">
-        <button type="button" class="faq-question">
-          <span data-id="Sistem seperti apa yang kamu bangun?">What kind of systems do you build?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p data-id="Sebagian besar tool operasional internal — manajemen aset, alur persetujuan, dashboard reporting, portal karyawan, dan layanan file/dokumen — dibangun dengan WordPress, PHP, MySQL, dan Google Apps Script.">Mostly internal operational tools — asset management, approval workflows, reporting dashboards, employee portals, and file/document services — built on WordPress, PHP, MySQL, and Google Apps Script.</p>
+      <div class="card-grid" id="c-services-grid">
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
+          <h3>Sistem Internal Bisnis</h3>
+          <p>Manajemen aset, inventaris, dan operasional harian dalam satu sistem yang mudah dipantau.</p>
         </div>
-      </div>
-      <div class="faq-item reveal" data-anim="fade-up">
-        <button type="button" class="faq-question">
-          <span data-id="Apakah data yang ditampilkan di portofolio ini nyata?">Is the data shown in this portfolio real?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p data-id="Tidak. Setiap sistem di sini dibuat ulang dengan data dummy untuk keperluan demonstrasi — tidak ada data perusahaan yang rahasia dipublikasikan.">No. Every system here is recreated with dummy data for demonstration purposes — no confidential company data is published.</p>
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <h3>Approval &amp; Document Workflow</h3>
+          <p>Alur persetujuan bertingkat, notifikasi email otomatis, dan riwayat dokumen yang rapi.</p>
         </div>
-      </div>
-      <div class="faq-item reveal" data-anim="fade-up">
-        <button type="button" class="faq-question">
-          <span data-id="Bisakah saya coba project secara live?">Can I try a project live?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p data-id="Bisa — klik &quot;open live preview&quot; pada kartu project mana pun di atas untuk memuat demo yang berjalan langsung di browser.">Yes — click "open live preview" on any project card above to load a working demo directly in the browser.</p>
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14"/></svg></div>
+          <h3>Dashboard &amp; Reporting</h3>
+          <p>Data operasional dan penjualan ditampilkan real-time, mudah dibaca oleh manajemen.</p>
         </div>
-      </div>
-      <div class="faq-item reveal" data-anim="fade-up">
-        <button type="button" class="faq-question">
-          <span data-id="Cara terbaik untuk menghubungi kamu?">What's the best way to reach you?</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p data-id="Email paling cepat — lihat bagian kontak di bawah — atau cari source code project ini di GitHub.">Email is fastest — see the contact section below — or find the source for these projects on GitHub.</p>
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3>Otomasi Google Apps Script</h3>
+          <p>Otomatiskan pekerjaan berulang di Google Sheets, Docs, dan Gmail tanpa perlu server tambahan.</p>
+        </div>
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 001.6-9.75A6 6 0 006 9.5 4.5 4.5 0 003 15z"/></svg></div>
+          <h3>Integrasi Google Drive</h3>
+          <p>Upload, penamaan otomatis, dan pengaturan akses dokumen langsung dari sistem internal Anda.</p>
+        </div>
+        <div class="svc-card">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></div>
+          <h3>Website &amp; WordPress</h3>
+          <p>Website company profile atau aplikasi berbasis shortcode WordPress untuk kebutuhan internal.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="contact-card reveal" data-anim="scale-up">
-      <div>
-        <div class="section-kicker" data-id="// kontak">// contact</div>
-        <h2 class="section-title"><span data-id="Mari membangun sistem">Let's build practical</span><br><span data-id="internal yang praktis.">internal systems.</span></h2>
-        <p data-id="Untuk kolaborasi, ide tool internal, konsep dashboard, atau otomasi workflow — hubungi saya lewat email atau GitHub.">For collaboration, internal tool ideas, dashboard concepts, or workflow automation — reach me via email or GitHub.</p>
+  <!-- ================= PORTFOLIO ================= -->
+  <section id="portfolio">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow" id="c-portfolio-eyebrow">Portofolio</span>
+        <h2 id="c-portfolio-title">Sistem yang sudah dibangun</h2>
+        <p id="c-portfolio-desc">Sebagian ditampilkan dengan data contoh untuk kebutuhan demonstrasi — data rahasia perusahaan tidak dipublikasikan.</p>
       </div>
-      <div class="hero-actions">
-        <a href="mailto:hello@liswan.dev" class="btn btn-primary">⌁ <span data-id="Email Saya">Email Me</span></a>
-        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-secondary">⌘ GitHub</a>
+      <div class="card-grid" id="c-portfolio-grid">
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>Asset Management System</h3><span class="pf-tag">Sistem</span></div>
+          <p>Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.</p>
+          <div class="pf-chips"><span class="pf-chip">QR Code</span><span class="pf-chip">Role-based Access</span><span class="pf-chip">Apps Script</span></div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>Asset Mutation Workflow</h3><span class="pf-tag">Workflow</span></div>
+          <p>Alur permintaan mutasi aset, approval manajerial via email, hingga generate dokumen serah terima (BAST).</p>
+          <div class="pf-chips"><span class="pf-chip">Email Approval</span><span class="pf-chip">Auto Document</span></div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>liswan.dev — Nota &amp; Invoice System</h3><span class="pf-tag">Sistem</span></div>
+          <p>Aplikasi pembuatan nota, review, invoice, dan inventory dalam satu platform berbasis Google Sheets.</p>
+          <div class="pf-chips"><span class="pf-chip">Google Sheets</span><span class="pf-chip">Auto Nomor Dokumen</span><span class="pf-chip">TTD Digital</span></div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>Internal Company Website</h3><span class="pf-tag">Portal</span></div>
+          <p>Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.</p>
+          <div class="pf-chips"><span class="pf-chip">Multi Departemen</span><span class="pf-chip">Reporting</span></div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>Daily Sales Activity Report</h3><span class="pf-tag">Reporting</span></div>
+          <p>Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.</p>
+          <div class="pf-chips"><span class="pf-chip">Dashboard Cabang</span><span class="pf-chip">Target Tracking</span></div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-card-top"><h3>Document &amp; File Service</h3><span class="pf-tag">Google Drive</span></div>
+          <p>Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.</p>
+          <div class="pf-chips"><span class="pf-chip">Access Control</span><span class="pf-chip">Drive Integration</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section id="process" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow" id="c-process-eyebrow">Proses Kerja</span>
+        <h2 id="c-process-title">Bagaimana sistem Anda dibangun</h2>
+        <p id="c-process-desc">Lima tahap yang jelas, supaya Anda tahu persis di mana progresnya setiap saat.</p>
+      </div>
+      <div class="process-list" id="c-process-list">
+        <div class="process-item"><span class="process-num">01</span><h4>Konsultasi &amp; Briefing</h4><p>Diskusi kebutuhan, masalah yang ingin diselesaikan, dan ekspektasi hasil akhir.</p></div>
+        <div class="process-item"><span class="process-num">02</span><h4>Analisis Kebutuhan</h4><p>Memetakan alur kerja, data, dan role pengguna sebagai dasar rancangan sistem.</p></div>
+        <div class="process-item"><span class="process-num">03</span><h4>Desain &amp; Prototype</h4><p>Rancangan alur dan tampilan awal untuk disepakati sebelum masuk pengembangan.</p></div>
+        <div class="process-item"><span class="process-num">04</span><h4>Pengembangan &amp; Testing</h4><p>Sistem dibangun bertahap dengan pengujian di setiap modul utama.</p></div>
+        <div class="process-item"><span class="process-num">05</span><h4>Deploy &amp; Pendampingan</h4><p>Sistem live dan digunakan, dengan pendampingan revisi di masa awal pemakaian.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow" id="c-pricing-eyebrow">Harga</span>
+        <h2 id="c-pricing-title">Investasi yang jelas sejak awal</h2>
+        <p id="c-pricing-desc">Estimasi harga mulai dari. Harga final tergantung kompleksitas dan jumlah modul — didiskusikan setelah konsultasi gratis.</p>
+      </div>
+
+      <div class="price-toggle" role="tablist">
+        <button class="price-toggle-btn active" data-target="apps" role="tab" aria-selected="true" id="c-pricing-tab-apps">Aplikasi Custom</button>
+        <button class="price-toggle-btn" data-target="website" role="tab" aria-selected="false" id="c-pricing-tab-website">Website</button>
+      </div>
+
+      <div class="price-group" id="price-apps">
+        <div class="price-grid" id="c-pricing-apps-grid">
+          <div class="price-card">
+            <h3>Starter</h3>
+            <p class="price-desc">Untuk satu proses kerja spesifik, misalnya form + approval sederhana.</p>
+            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 2.500.000</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 alur kerja / workflow</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Berbasis Google Sheets / Apps Script</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Notifikasi email otomatis</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Revisi selama pengerjaan</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Starter" class="btn btn-ghost btn-block">Konsultasi</a>
+          </div>
+          <div class="price-card featured">
+            <span class="price-badge">Paling Populer</span>
+            <h3>Business</h3>
+            <p class="price-desc">Sistem multi-modul dengan dashboard dan akses multi-role.</p>
+            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 7.500.000</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Hingga 3–5 modul terintegrasi</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Dashboard &amp; reporting</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Akses berbasis role/departemen</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Integrasi Google Drive</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Pendampingan 30 hari setelah live</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Business" class="btn btn-grad btn-block">Konsultasi</a>
+          </div>
+          <div class="price-card">
+            <h3>Enterprise</h3>
+            <p class="price-desc">Sistem berskala besar, multi-departemen, dengan integrasi khusus.</p>
+            <div class="price-amount"><div><span class="from">&nbsp;</span><span class="num" style="font-size:24px;">Hubungi Kami</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Modul &amp; integrasi tanpa batas</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Arsitektur sistem custom</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Dukungan jangka panjang</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>SLA &amp; penawaran khusus</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Enterprise" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-group hidden" id="price-website">
+        <div class="price-grid" id="c-pricing-website-grid">
+          <div class="price-card">
+            <h3>Landing Page</h3>
+            <p class="price-desc">Satu halaman untuk memperkenalkan produk atau jasa dengan cepat.</p>
+            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 1.500.000</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 halaman, desain responsif</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Section harga &amp; kontak (CTA)</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Terhubung WhatsApp / Email</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Revisi selama pengerjaan</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Landing%20Page" class="btn btn-ghost btn-block">Konsultasi</a>
+          </div>
+          <div class="price-card featured">
+            <span class="price-badge">Paling Populer</span>
+            <h3>Company Profile</h3>
+            <p class="price-desc">Website multi-section seperti ini: Tentang, Layanan, Portofolio, Harga, Kontak.</p>
+            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 3.500.000</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Hingga 6 section sesuai kebutuhan</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Desain custom, bukan template</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>SEO dasar &amp; domain custom</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Pendampingan 14 hari setelah live</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Company%20Profile" class="btn btn-grad btn-block">Konsultasi</a>
+          </div>
+          <div class="price-card">
+            <h3>Website + Admin (CMS)</h3>
+            <p class="price-desc">Bisa update konten, portofolio, atau artikel sendiri lewat panel admin.</p>
+            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 6.000.000</span></div></div>
+            <ul class="price-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Semua fitur Company Profile</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Panel admin untuk update konten</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Login &amp; manajemen user</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Training pemakaian admin</li>
+            </ul>
+            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Website%20CMS" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <span class="eyebrow" id="c-contact-eyebrow">Kontak</span>
+        <h2 id="c-contact-title">Punya proses kerja yang masih manual?</h2>
+        <p id="c-contact-desc">Ceritakan kondisi saat ini — saya bantu petakan jadi sistem yang lebih rapi dan otomatis. Konsultasi awal tidak dipungut biaya.</p>
+        <div class="contact-actions">
+          <a href="mailto:hello@liswan.dev" class="btn btn-grad" id="c-contact-cta-email">Email hello@liswan.dev</a>
+          <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-ghost" id="c-contact-cta-github">Lihat GitHub</a>
+        </div>
+        <div class="contact-meta">
+          <a href="mailto:hello@liswan.dev" id="c-contact-meta-email">hello@liswan.dev</a>
+          <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" id="c-contact-meta-github">github.com/liswan-dev</a>
+          <span id="c-contact-response">Respon dalam 1×24 jam</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1292,203 +588,36 @@
 </main>
 
 <footer>
-  <div class="footer-top reveal">
-    <div class="section-kicker" data-id="// halo">// say hello</div>
+  <div class="wrap footer-row">
+    <span id="c-footer-text">&copy; <span id="year"></span> liswan.dev — Liswan Susanto. Semua hak dilindungi.</span>
     <div class="footer-links">
-      <a href="/services/">Services</a>
-      <a href="/portfolio/" data-id="Proyek">Projects</a>
-      <a href="/case-studies/" data-id="Studi Kasus">Case Studies</a>
-      <a href="/start-project/" data-id="Mulai Proyek">Start a Project</a>
-      <a href="/client/login/" data-id="Login Klien">Client Login</a>
-      <a href="#about" data-id="Tentang">About</a>
-      <a href="mailto:hello@liswan.dev">Email</a>
-      <a href="https://github.com/liswan-dev" target="_blank" rel="noopener">GitHub</a>
+      <a href="#services">Layanan</a>
+      <a href="#pricing">Harga</a>
+      <a href="mailto:hello@liswan.dev">Kontak</a>
     </div>
-  </div>
-  <div class="footer-brand reveal" data-parallax="0.06">LISWAN.DEV</div>
-  <div class="footer-bottom">
-    <span>© <span id="year"></span> Liswan Susanto · IT Support &amp; Software Developer</span>
-    <span>WordPress · PHP · Apps Script · Dashboard</span>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/assets/js/content-loader.js"></script>
 <script>
-/* ─── YEAR ─── */
-document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('open'); });
+  });
 
-/* ─── PROJECT PREVIEW MODAL ─── */
-const projectModal = document.getElementById('project-modal');
-const projectModalTitle = document.getElementById('project-modal-title');
-const projectModalFrame = document.getElementById('project-modal-frame');
-const projectModalExternal = document.getElementById('project-modal-external');
-const projectModalLoading = document.getElementById('project-modal-loading');
-const projectModalClose = projectModal.querySelector('.project-modal-close');
-let lastProjectTrigger = null;
-
-function openProjectModal(card) {
-  const title = card.dataset.projectTitle;
-  const url = card.dataset.projectUrl;
-  if (!title || !url) return;
-
-  lastProjectTrigger = card;
-  projectModalTitle.textContent = title.toUpperCase();
-  projectModalExternal.href = url;
-  projectModalLoading.classList.remove('hidden');
-  projectModalFrame.title = `${title} preview`;
-  projectModalFrame.src = url;
-  projectModal.classList.add('active');
-  projectModal.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('modal-open');
-  projectModalClose.focus({ preventScroll: true });
-}
-
-function closeProjectModal() {
-  if (!projectModal.classList.contains('active')) return;
-  projectModal.classList.remove('active');
-  projectModal.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('modal-open');
-  projectModalFrame.src = 'about:blank';
-  projectModalExternal.href = '#';
-  if (lastProjectTrigger) lastProjectTrigger.focus({ preventScroll: true });
-}
-
-document.querySelectorAll('.project-tile[data-project-url]').forEach(tile => {
-  tile.addEventListener('click', () => openProjectModal(tile));
-});
-
-document.querySelectorAll('[data-project-close]').forEach(control => {
-  control.addEventListener('click', closeProjectModal);
-});
-
-projectModalFrame.addEventListener('load', () => {
-  if (projectModalFrame.src && projectModalFrame.src !== 'about:blank') {
-    projectModalLoading.classList.add('hidden');
-  }
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && projectModal.classList.contains('active')) {
-    closeProjectModal();
-  }
-});
-
-/* ─── SCROLL REVEAL (GSAP) ─── */
-const revealEls = document.querySelectorAll('.reveal');
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (revealEls.length && window.gsap && window.ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-  document.documentElement.classList.add('js-anim');
-
-  if (reduceMotion) {
-    gsap.set(revealEls, { opacity: 1, x: 0, y: 0, scale: 1, clipPath: 'inset(0% 0 0% 0)' });
-  } else {
-    ScrollTrigger.batch(revealEls, {
-      start: 'top 85%',
-      once: true,
-      onEnter: batch => gsap.to(batch, {
-        opacity: 1, x: 0, y: 0, scale: 1, clipPath: 'inset(0% 0 0% 0)',
-        duration: 0.85, ease: 'power3.out', stagger: 0.12, overwrite: true
-      })
-    });
-  }
-
-  if (!reduceMotion) {
-    document.querySelectorAll('[data-parallax]').forEach(el => {
-      const factor = parseFloat(el.dataset.parallax) || 0.15;
-      gsap.to(el, {
-        y: -90 * factor,
-        ease: 'none',
-        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+  document.querySelectorAll('.price-toggle-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.price-toggle-btn').forEach(function(b){
+        b.classList.remove('active'); b.setAttribute('aria-selected','false');
       });
-    });
-  }
-} else if (revealEls.length && 'IntersectionObserver' in window) {
-  // Fallback if GSAP failed to load (e.g. CDN blocked): simple fade-up via IntersectionObserver.
-  document.documentElement.classList.add('js-anim');
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
-  },{threshold:0.1});
-  revealEls.forEach(el=>obs.observe(el));
-}
-
-/* ─── NAV SCROLLED STATE + SCROLL-SPY ─── */
-const navEl = document.querySelector('.nav');
-const onNavScroll = () => navEl.classList.toggle('scrolled', window.scrollY > 40);
-onNavScroll();
-window.addEventListener('scroll', onNavScroll, { passive: true });
-
-const spyLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-if (window.ScrollTrigger && spyLinks.length) {
-  spyLinks.forEach(link => {
-    const section = document.querySelector(link.getAttribute('href'));
-    if (!section) return;
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => { spyLinks.forEach(a => a.classList.remove('active')); link.classList.add('active'); },
-      onEnterBack: () => { spyLinks.forEach(a => a.classList.remove('active')); link.classList.add('active'); }
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      document.getElementById('price-apps').classList.toggle('hidden', btn.dataset.target !== 'apps');
+      document.getElementById('price-website').classList.toggle('hidden', btn.dataset.target !== 'website');
     });
   });
-}
-
-/* ─── FAQ ACCORDION ─── */
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.faq-item');
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  });
-});
-
-/* ─── THEME TOGGLE ─── */
-const THEME_KEY = 'liswan-theme';
-const themeToggle = document.getElementById('theme-toggle');
-const currentTheme = () => document.documentElement.getAttribute('data-theme')
-  || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-const paintThemeToggle = () => { if (themeToggle) themeToggle.textContent = currentTheme() === 'dark' ? '☀' : '🌙'; };
-paintThemeToggle();
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const next = currentTheme() === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(THEME_KEY, next);
-    paintThemeToggle();
-  });
-}
-
-/* ─── LANGUAGE TOGGLE ─── */
-const LANG_KEY = 'liswan-lang';
-const langToggle = document.getElementById('lang-toggle');
-function applyLanguage(lang) {
-  document.documentElement.setAttribute('lang', lang === 'id' ? 'id' : 'en');
-  document.querySelectorAll('[data-id]').forEach(el => {
-    if (el.dataset.enCache === undefined) el.dataset.enCache = el.textContent;
-    el.textContent = lang === 'id' ? el.getAttribute('data-id') : el.dataset.enCache;
-    if (el.hasAttribute('data-text')) el.setAttribute('data-text', el.textContent);
-  });
-  document.querySelectorAll('[data-placeholder-id]').forEach(el => {
-    if (el.dataset.placeholderEnCache === undefined) el.dataset.placeholderEnCache = el.placeholder;
-    el.placeholder = lang === 'id' ? el.getAttribute('data-placeholder-id') : el.dataset.placeholderEnCache;
-  });
-  if (langToggle) langToggle.textContent = lang === 'id' ? 'EN' : 'ID';
-}
-applyLanguage(localStorage.getItem(LANG_KEY) || 'en');
-
-if (langToggle) {
-  langToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('lang') === 'id' ? 'en' : 'id';
-    localStorage.setItem(LANG_KEY, next);
-    applyLanguage(next);
-  });
-}
-
-/* ─── TYPING EFFECT ─── */
-// Subtle: re-type terminal on scroll into view
 </script>
 </body>
 </html>

@@ -1,0 +1,146 @@
+{
+  "hero": {
+    "eyebrow": "IT Support & Software Developer",
+    "headline": "Sistem Internal Bisnis yang <grad>Rapi, Otomatis,</grad> dan Mudah Dipakai",
+    "subheadline": "Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.",
+    "ctaPrimaryLabel": "Konsultasi Gratis",
+    "ctaSecondaryLabel": "Lihat Portofolio",
+    "stack": ["Google Apps Script", "WordPress / PHP", "MySQL", "Google Drive API", "JavaScript"],
+    "card": {
+      "lines": [
+        { "k": "Sistem", "v": "Asset Management" },
+        { "k": "Status", "v": "Live & Digunakan" },
+        { "k": "Approval Flow", "v": "Email + Dashboard" },
+        { "k": "Integrasi", "v": "Google Drive" },
+        { "k": "Akses", "v": "Role-based" }
+      ],
+      "badge": "DIBANGUN CUSTOM UNTUK KEBUTUHAN ANDA"
+    }
+  },
+
+  "stats": [
+    { "value": "6+", "label": "Sistem internal yang sudah dibangun" },
+    { "value": "100%", "label": "Dirancang custom, bukan template" },
+    { "value": "1", "label": "Kontak langsung, tanpa lapisan sales" },
+    { "value": "∞", "label": "Dukungan revisi selama masa pengerjaan" }
+  ],
+
+  "about": {
+    "eyebrow": "Tentang Kami",
+    "title": "Fokus pada satu hal: <grad>sistem internal</grad> yang benar-benar dipakai",
+    "description": "Saya Liswan Susanto, membangun tools operasional yang membantu perusahaan mengelola pekerjaan sehari-hari dengan lebih efisien, akurat, dan transparan — mulai dari input data sampai laporan ke manajemen.",
+    "points": [
+      { "icon": "check", "title": "Sesuai proses kerja Anda", "desc": "Alur sistem dirancang mengikuti workflow yang sudah berjalan, bukan memaksa Anda mengikuti template." },
+      { "icon": "bolt", "title": "Cepat dipakai, minim training", "desc": "Antarmuka sederhana dan jelas, supaya tim Anda tidak butuh waktu lama untuk beradaptasi." },
+      { "icon": "clock", "title": "Didampingi sampai jalan", "desc": "Bukan cuma serah terima kode — saya bantu sampai sistem benar-benar dipakai tim Anda." }
+    ]
+  },
+
+  "services": {
+    "eyebrow": "Layanan Kami",
+    "title": "Apa yang bisa saya bantu",
+    "description": "Setiap layanan bisa berdiri sendiri atau digabung jadi satu sistem terintegrasi.",
+    "items": [
+      { "icon": "assets", "title": "Sistem Internal Bisnis", "desc": "Manajemen aset, inventaris, dan operasional harian dalam satu sistem yang mudah dipantau." },
+      { "icon": "workflow", "title": "Approval & Document Workflow", "desc": "Alur persetujuan bertingkat, notifikasi email otomatis, dan riwayat dokumen yang rapi." },
+      { "icon": "dashboard", "title": "Dashboard & Reporting", "desc": "Data operasional dan penjualan ditampilkan real-time, mudah dibaca oleh manajemen." },
+      { "icon": "automation", "title": "Otomasi Google Apps Script", "desc": "Otomatiskan pekerjaan berulang di Google Sheets, Docs, dan Gmail tanpa perlu server tambahan." },
+      { "icon": "drive", "title": "Integrasi Google Drive", "desc": "Upload, penamaan otomatis, dan pengaturan akses dokumen langsung dari sistem internal Anda." },
+      { "icon": "website", "title": "Website & WordPress", "desc": "Website company profile atau aplikasi berbasis shortcode WordPress untuk kebutuhan internal." }
+    ]
+  },
+
+  "portfolio": {
+    "eyebrow": "Portofolio",
+    "title": "Sistem yang sudah dibangun",
+    "description": "Sebagian ditampilkan dengan data contoh untuk kebutuhan demonstrasi — data rahasia perusahaan tidak dipublikasikan.",
+    "items": [
+      { "title": "Asset Management System", "tag": "Sistem", "desc": "Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.", "chips": ["QR Code", "Role-based Access", "Apps Script"] },
+      { "title": "Asset Mutation Workflow", "tag": "Workflow", "desc": "Alur permintaan mutasi aset, approval manajerial via email, hingga generate dokumen serah terima (BAST).", "chips": ["Email Approval", "Auto Document"] },
+      { "title": "liswan.dev — Nota & Invoice System", "tag": "Sistem", "desc": "Aplikasi pembuatan nota, review, invoice, dan inventory dalam satu platform berbasis Google Sheets.", "chips": ["Google Sheets", "Auto Nomor Dokumen", "TTD Digital"] },
+      { "title": "Internal Company Website", "tag": "Portal", "desc": "Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.", "chips": ["Multi Departemen", "Reporting"] },
+      { "title": "Daily Sales Activity Report", "tag": "Reporting", "desc": "Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.", "chips": ["Dashboard Cabang", "Target Tracking"] },
+      { "title": "Document & File Service", "tag": "Google Drive", "desc": "Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.", "chips": ["Access Control", "Drive Integration"] }
+    ]
+  },
+
+  "process": {
+    "eyebrow": "Proses Kerja",
+    "title": "Bagaimana sistem Anda dibangun",
+    "description": "Lima tahap yang jelas, supaya Anda tahu persis di mana progresnya setiap saat.",
+    "steps": [
+      { "num": "01", "title": "Konsultasi & Briefing", "desc": "Diskusi kebutuhan, masalah yang ingin diselesaikan, dan ekspektasi hasil akhir." },
+      { "num": "02", "title": "Analisis Kebutuhan", "desc": "Memetakan alur kerja, data, dan role pengguna sebagai dasar rancangan sistem." },
+      { "num": "03", "title": "Desain & Prototype", "desc": "Rancangan alur dan tampilan awal untuk disepakati sebelum masuk pengembangan." },
+      { "num": "04", "title": "Pengembangan & Testing", "desc": "Sistem dibangun bertahap dengan pengujian di setiap modul utama." },
+      { "num": "05", "title": "Deploy & Pendampingan", "desc": "Sistem live dan digunakan, dengan pendampingan revisi di masa awal pemakaian." }
+    ]
+  },
+
+  "pricing": {
+    "eyebrow": "Harga",
+    "title": "Investasi yang jelas sejak awal",
+    "description": "Estimasi harga mulai dari. Harga final tergantung kompleksitas dan jumlah modul — didiskusikan setelah konsultasi gratis.",
+    "tabs": { "apps": "Aplikasi Custom", "website": "Website" },
+    "apps": [
+      {
+        "name": "Starter", "featured": false,
+        "desc": "Untuk satu proses kerja spesifik, misalnya form + approval sederhana.",
+        "priceFrom": "Mulai dari", "price": "Rp 2.500.000",
+        "features": ["1 alur kerja / workflow", "Berbasis Google Sheets / Apps Script", "Notifikasi email otomatis", "Revisi selama pengerjaan"],
+        "ctaLabel": "Konsultasi", "ctaSubject": "Konsultasi Paket Starter"
+      },
+      {
+        "name": "Business", "featured": true,
+        "desc": "Sistem multi-modul dengan dashboard dan akses multi-role.",
+        "priceFrom": "Mulai dari", "price": "Rp 7.500.000",
+        "features": ["Hingga 3–5 modul terintegrasi", "Dashboard & reporting", "Akses berbasis role/departemen", "Integrasi Google Drive", "Pendampingan 30 hari setelah live"],
+        "ctaLabel": "Konsultasi", "ctaSubject": "Konsultasi Paket Business"
+      },
+      {
+        "name": "Enterprise", "featured": false,
+        "desc": "Sistem berskala besar, multi-departemen, dengan integrasi khusus.",
+        "priceFrom": "", "price": "Hubungi Kami",
+        "features": ["Modul & integrasi tanpa batas", "Arsitektur sistem custom", "Dukungan jangka panjang", "SLA & penawaran khusus"],
+        "ctaLabel": "Diskusikan Kebutuhan", "ctaSubject": "Konsultasi Paket Enterprise"
+      }
+    ],
+    "website": [
+      {
+        "name": "Landing Page", "featured": false,
+        "desc": "Satu halaman untuk memperkenalkan produk atau jasa dengan cepat.",
+        "priceFrom": "Mulai dari", "price": "Rp 1.500.000",
+        "features": ["1 halaman, desain responsif", "Section harga & kontak (CTA)", "Terhubung WhatsApp / Email", "Revisi selama pengerjaan"],
+        "ctaLabel": "Konsultasi", "ctaSubject": "Konsultasi Landing Page"
+      },
+      {
+        "name": "Company Profile", "featured": true,
+        "desc": "Website multi-section seperti ini: Tentang, Layanan, Portofolio, Harga, Kontak.",
+        "priceFrom": "Mulai dari", "price": "Rp 3.500.000",
+        "features": ["Hingga 6 section sesuai kebutuhan", "Desain custom, bukan template", "SEO dasar & domain custom", "Pendampingan 14 hari setelah live"],
+        "ctaLabel": "Konsultasi", "ctaSubject": "Konsultasi Company Profile"
+      },
+      {
+        "name": "Website + Admin (CMS)", "featured": false,
+        "desc": "Bisa update konten, portofolio, atau artikel sendiri lewat panel admin.",
+        "priceFrom": "Mulai dari", "price": "Rp 6.000.000",
+        "features": ["Semua fitur Company Profile", "Panel admin untuk update konten", "Login & manajemen user", "Training pemakaian admin"],
+        "ctaLabel": "Diskusikan Kebutuhan", "ctaSubject": "Konsultasi Website CMS"
+      }
+    ]
+  },
+
+  "contact": {
+    "eyebrow": "Kontak",
+    "title": "Punya proses kerja yang masih manual?",
+    "description": "Ceritakan kondisi saat ini — saya bantu petakan jadi sistem yang lebih rapi dan otomatis. Konsultasi awal tidak dipungut biaya.",
+    "email": "hello@liswan.dev",
+    "github": "https://github.com/liswan-dev",
+    "githubLabel": "github.com/liswan-dev",
+    "responseNote": "Respon dalam 1×24 jam"
+  },
+
+  "footer": {
+    "text": "liswan.dev — Liswan Susanto. Semua hak dilindungi."
+  }
+}

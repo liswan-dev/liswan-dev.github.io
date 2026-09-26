@@ -117,15 +117,115 @@ window.Dash = (function () {
     });
   }
 
+  // Admin sidebar — single source for every /admin/ page (static <aside> markup is replaced).
+  var ICON = {
+    invoice: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
+    content: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>'
+  };
+  var ADMIN_NAV = [
+    { label: 'Invoice', icon: 'invoice', items: [
+      { href: '/admin/invoices/', label: 'Semua Invoice' },
+      { href: '/admin/invoices/new/', label: 'Buat Invoice' },
+      { href: '/admin/invoices/payments/', label: 'Pembayaran' },
+      { href: '/admin/clients/', label: 'Klien' },
+      { href: '/admin/invoices/settings/', label: 'Pengaturan Invoice' }
+    ] },
+    { label: 'Edit Konten Halaman', icon: 'content', items: [
+      { href: '/admin/content/', label: 'Beranda' },
+      { href: '/admin/pages/', label: 'Halaman Lain' }
+    ] }
+  ];
+
+  function svg(name) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICON[name] + '</svg>';
+  }
+
+  function renderAdminNav(path) {
+    var aside = document.querySelector('.dash-sidebar');
+    if (!aside) return;
+    var html = '<div class="dash-sidebar-brand"><a href="/admin/invoices/" class="brand"><img src="/assets/img/liswan-logo.svg" alt="Liswan.dev"></a></div>' +
+      '<div class="dash-sidebar-tag">ADMIN PANEL</div>';
+    ADMIN_NAV.forEach(function (g) {
+      var open = g.items.some(function (it) { return it.href === path; });
+      html += '<div class="dash-nav-group' + (open ? ' open' : '') + '">' +
+        '<button type="button" class="dash-nav-link dash-nav-toggle' + (open ? ' current' : '') + '">' + svg(g.icon) + '<span>' + escapeHtml(g.label) + '</span><i class="dash-nav-caret"></i></button>' +
+        '<div class="dash-nav-sub">' + g.items.map(function (it) {
+          return '<a href="' + it.href + '" class="dash-nav-sublink' + (it.href === path ? ' active' : '') + '">' + escapeHtml(it.label) + '</a>';
+        }).join('') + '</div></div>';
+    });
+    html += '<div class="dash-sidebar-foot"><a href="/admin/settings/" class="dash-nav-link' + (path === '/admin/settings/' ? ' active' : '') + '">' + svg('settings') + ' Settings</a></div>';
+    aside.innerHTML = html;
+    aside.querySelectorAll('.dash-nav-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () { btn.parentElement.classList.toggle('open'); });
+    });
+  }
+
+  // Info popovers — admin pages keep explanations out of sight: page descriptions
+  // (.dash-page-head p), form hints (.form-hint) and [data-info] become a small "i"
+  // button that shows the text on click. Hint elements are moved, not copied, so
+  // code that later updates their textContent keeps working.
+  var openPop = null;
+  function closePop() { if (openPop) { openPop.remove(); openPop = null; } }
+  function infoButton(contentEl) {
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'dash-info'; btn.setAttribute('aria-label', 'Info'); btn.textContent = 'i';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var same = openPop && openPop._owner === btn;
+      closePop();
+      if (same || !contentEl.textContent.trim()) return;
+      var pop = document.createElement('div');
+      pop.className = 'dash-pop'; pop._owner = btn;
+      var copy = pop.appendChild(contentEl.cloneNode(true));
+      copy.removeAttribute('id'); copy.hidden = false;
+      document.body.appendChild(pop);
+      var r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+      pop.style.top = (r.bottom + 8) + 'px';
+      pop.style.left = Math.max(12, Math.min(window.innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + 'px';
+      pop.addEventListener('click', function (ev) { ev.stopPropagation(); });
+      openPop = pop;
+    });
+    return btn;
+  }
+  function collapseText(root) {
+    root.querySelectorAll('.dash-page-head p:not([data-info-done]), .form-hint:not([data-info-done]), [data-info]:not([data-info-done])').forEach(function (el) {
+      el.setAttribute('data-info-done', '');
+      var host, content = el;
+      if (el.hasAttribute('data-info')) {
+        host = el; content = document.createElement('span'); content.textContent = el.getAttribute('data-info');
+        host.appendChild(infoButton(content));
+        return;
+      }
+      if (el.matches('.dash-page-head p')) host = el.parentElement.querySelector('h1');
+      else { var field = el.closest('.form-field'); host = field && field.querySelector('.form-label'); }
+      if (!host) return;
+      el.hidden = true;
+      host.appendChild(infoButton(el));
+    });
+  }
+  function enableInfo() {
+    document.body.classList.add('dash-admin');
+    collapseText(document);
+    new MutationObserver(function () { collapseText(document); }).observe(document.body, { childList: true, subtree: true });
+    document.addEventListener('click', closePop);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+    window.addEventListener('scroll', closePop, true);
+  }
+
   function initShell(opts) {
     opts = opts || {};
     var session = window.DB ? window.DB.requireAuth(opts.role || 'client') : null;
     if (!session) return null;
 
     var path = location.pathname.replace(/\/index\.html$/, '/');
+    if (opts.role === 'admin') { renderAdminNav(path); enableInfo(); }
     document.querySelectorAll('.dash-nav-link').forEach(function (a) {
       var href = a.getAttribute('href');
-      if (href && path.indexOf(href) === 0 && href !== '/') a.classList.add('active');
+      if (!href || href === '/') return;
+      // top-level links like "/admin/" only match exactly, otherwise they'd light up on every sub-page
+      var exact = href.split('/').filter(Boolean).length < 2;
+      if (exact ? path === href : path.indexOf(href) === 0) a.classList.add('active');
     });
 
     var nameEl = document.getElementById('profile-name');
@@ -223,6 +323,6 @@ window.Dash = (function () {
   return {
     initShell: initShell, toast: toast, openModal: openModal, closeModal: closeModal,
     confirm: confirmAction, escapeHtml: escapeHtml, formatCurrency: formatCurrency,
-    formatDate: formatDate, initials: initials, renderNotifications: renderNotifications
+    formatDate: formatDate, initials: initials, renderNotifications: renderNotifications, infoButton: infoButton
   };
 })();

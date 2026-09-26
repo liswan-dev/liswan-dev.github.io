@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buat Invoice — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#032E66">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar"></aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/invoices/">Invoice</a><span>/</span><span>Buat Invoice</span></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head">
+        <h1>Buat Invoice</h1>
+        <p>Nomor, jatuh tempo, dan pajak terisi otomatis dari Pengaturan Invoice.</p>
+      </div>
+
+      <form id="inv-form" class="inv-layout">
+        <div style="display:grid;gap:18px">
+          <div class="dash-card">
+            <div class="dash-section-title">Klien</div>
+            <div class="form-grid cols-2">
+              <div class="form-field">
+                <label class="form-label" for="f-client">Klien</label>
+                <select id="f-client" class="form-select" required></select>
+                <div class="form-hint">Klien baru ditambahkan di menu Invoice → Klien.</div>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-project">Proyek</label>
+                <select id="f-project" class="form-select" required></select>
+              </div>
+            </div>
+            <div class="form-field" id="f-new-project-wrap" hidden style="margin-top:14px">
+              <label class="form-label" for="f-new-project">Nama proyek baru</label>
+              <input type="text" id="f-new-project" class="form-input" placeholder="Nama proyek">
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-section-title">Item</div>
+            <div class="inv-items" id="f-items"></div>
+            <button type="button" class="btn-add" id="f-add-item">+ Tambah item</button>
+          </div>
+
+          <div class="dash-card">
+            <div class="form-field">
+              <label class="form-label" for="f-notes">Catatan</label><div class="form-hint">Tampil di invoice yang dicetak.</div>
+              <textarea id="f-notes" class="form-textarea" rows="3" placeholder="Opsional"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-side">
+          <div class="dash-card">
+            <div class="dash-section-title">Detail</div>
+            <div class="form-grid">
+              <div class="form-field"><label class="form-label" for="f-number">No. invoice</label><input type="text" id="f-number" class="form-input" required></div>
+              <div class="form-grid cols-2">
+                <div class="form-field"><label class="form-label" for="f-issue">Tanggal</label><input type="date" id="f-issue" class="form-input" required></div>
+                <div class="form-field"><label class="form-label" for="f-due">Jatuh tempo</label><input type="date" id="f-due" class="form-input"></div>
+              </div>
+              <div class="form-grid cols-2">
+                <div class="form-field"><label class="form-label" for="f-discount">Diskon (Rp)</label><input type="number" id="f-discount" class="form-input" min="0" value="0"></div>
+                <div class="form-field"><label class="form-label" for="f-tax">Pajak (%)</label><input type="number" id="f-tax" class="form-input" min="0" max="100" step="0.01" value="0"></div>
+              </div>
+            </div>
+            <div class="inv-sum" id="f-sum"></div>
+            <div style="display:grid;gap:10px;margin-top:16px">
+              <button type="submit" class="btn btn-primary" data-then="print">Simpan &amp; Cetak</button>
+              <button type="submit" class="btn btn-secondary" data-then="list">Simpan</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/js/invoice-lib.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({ role: 'admin' });
+  if (!session) return;
+  const esc = Dash.escapeHtml, cur = Dash.formatCurrency, $ = id => document.getElementById(id);
+  const settings = INV.getSettings();
+  const data = await INV.loadAll();
+  const NEW = '__new__';
+
+  $('f-client').innerHTML = data.clients.length
+    ? data.clients.map(c => `<option value="${c.id}">${esc(c.company_name)}</option>`).join('')
+    : '<option value="">— belum ada klien —</option>';
+  function fillProjects() {
+    const list = data.projects.filter(p => p.client_id === $('f-client').value);
+    $('f-project').innerHTML = list.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('') + `<option value="${NEW}">+ Proyek baru…</option>`;
+    toggleNewProject();
+  }
+  function toggleNewProject() {
+    const isNew = $('f-project').value === NEW;
+    $('f-new-project-wrap').hidden = !isNew;
+    $('f-new-project').required = isNew;
+  }
+  $('f-client').addEventListener('change', fillProjects);
+  $('f-project').addEventListener('change', toggleNewProject);
+  fillProjects();
+
+  $('f-number').value = INV.nextNumber(data.invoices);
+  $('f-issue').value = INV.today();
+  $('f-due').value = INV.addDays(INV.today(), settings.due_days);
+  $('f-tax').value = settings.tax_percent;
+  $('f-issue').addEventListener('change', () => { $('f-due').value = INV.addDays($('f-issue').value, settings.due_days); });
+
+  function addItem(it) {
+    it = it || { description: '', qty: 1, unit_price: 0 };
+    const row = document.createElement('div');
+    row.className = 'inv-item';
+    row.innerHTML = `<input class="form-input" data-k="description" placeholder="Deskripsi" required value="${esc(it.description)}">
+      <input class="form-input" data-k="qty" type="number" min="1" value="${it.qty}" title="Qty">
+      <input class="form-input" data-k="unit_price" type="number" min="0" value="${it.unit_price}" title="Harga satuan">
+      <span class="inv-item-amt"></span>
+      <button type="button" class="btn-remove" title="Hapus item">&times;</button>`;
+    row.querySelector('.btn-remove').addEventListener('click', () => { if ($('f-items').children.length > 1) { row.remove(); recalc(); } });
+    row.addEventListener('input', recalc);
+    $('f-items').appendChild(row);
+    recalc();
+  }
+  function items() {
+    return [...$('f-items').children].map(r => ({
+      description: r.querySelector('[data-k=description]').value.trim(),
+      qty: Number(r.querySelector('[data-k=qty]').value) || 0,
+      unit_price: Number(r.querySelector('[data-k=unit_price]').value) || 0
+    }));
+  }
+  function recalc() {
+    [...$('f-items').children].forEach(r => {
+      r.querySelector('.inv-item-amt').textContent = cur((Number(r.querySelector('[data-k=qty]').value) || 0) * (Number(r.querySelector('[data-k=unit_price]').value) || 0));
+    });
+    const t = INV.totals(items(), $('f-tax').value, $('f-discount').value);
+    $('f-sum').innerHTML = `<div><span>Subtotal</span><span>${cur(t.subtotal)}</span></div>` +
+      (t.discount ? `<div><span>Diskon</span><span>− ${cur(t.discount)}</span></div>` : '') +
+      (t.tax ? `<div><span>Pajak</span><span>${cur(t.tax)}</span></div>` : '') +
+      `<div class="t"><span>Total</span><span>${cur(t.total)}</span></div>`;
+    return t;
+  }
+  $('f-add-item').addEventListener('click', () => addItem());
+  $('f-tax').addEventListener('input', recalc);
+  $('f-discount').addEventListener('input', recalc);
+  addItem();
+
+  let then = 'list';
+  document.querySelectorAll('#inv-form [data-then]').forEach(b => b.addEventListener('click', () => { then = b.getAttribute('data-then'); }));
+  $('inv-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!$('f-client').value) { Dash.toast('Tambahkan klien dulu di menu Klien', 'danger'); return; }
+    const its = items().filter(i => i.description);
+    if (!its.length) { Dash.toast('Isi minimal satu item', 'danger'); return; }
+    const t = recalc();
+    if (t.total <= 0) { Dash.toast('Total invoice harus lebih dari 0', 'danger'); return; }
+    const btns = document.querySelectorAll('#inv-form button[type=submit]');
+    btns.forEach(b => b.disabled = true);
+    try {
+      let projectId = $('f-project').value;
+      if (projectId === NEW) {
+        const p = await DB.createProject({ client_id: $('f-client').value, name: $('f-new-project').value.trim(), status: 'planning', start_date: $('f-issue').value });
+        projectId = p.id;
+      }
+      const inv = await DB.createInvoiceWithItems(projectId, {
+        invoice_number: $('f-number').value.trim(),
+        issue_date: $('f-issue').value,
+        due_date: $('f-due').value || null,
+        tax_percent: Number($('f-tax').value) || 0,
+        discount_amount: t.discount,
+        total_amount: t.total,
+        notes: $('f-notes').value.trim() || null
+      }, its);
+      Dash.toast('Invoice ' + inv.invoice_number + ' tersimpan', 'success');
+      if (then === 'print') {
+        const all = await INV.loadAll();
+        INV.print(all.invoices.find(i => i.id === inv.id), its, []);
+      }
+      setTimeout(() => { location.href = '/admin/invoices/?open=' + encodeURIComponent(inv.id); }, then === 'print' ? 600 : 300);
+    } catch (err) {
+      Dash.toast('Gagal menyimpan: ' + err.message, 'danger');
+      btns.forEach(b => b.disabled = false);
+    }
+  });
+});
+</script>
+</body>
+</html>

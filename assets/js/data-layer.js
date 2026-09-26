@@ -28,7 +28,19 @@
   function loadStore() {
     if (!window.isLiveBackend) {
       var raw = localStorage.getItem(STORE_KEY);
-      if (raw) { try { return JSON.parse(raw); } catch (e) {} }
+      if (raw) {
+        try {
+          var saved = JSON.parse(raw);
+          // stores seeded before invoice payments existed: turn each paid_amount into an opening payment
+          if (!saved.invoice_payments) {
+            saved.invoice_payments = (saved.invoices || []).filter(function (i) { return Number(i.paid_amount) > 0; }).map(function (i) {
+              return { id: 'pay-' + i.id, invoice_id: i.id, amount: Number(i.paid_amount), paid_at: String(i.created_at).slice(0, 10), method: 'Saldo awal', note: '', created_at: i.created_at };
+            });
+            localStorage.setItem(STORE_KEY, JSON.stringify(saved));
+          }
+          return saved;
+        } catch (e) {}
+      }
       var seed = JSON.parse(JSON.stringify(window.DUMMY_DB || {}));
       localStorage.setItem(STORE_KEY, JSON.stringify(seed));
       return seed;
@@ -370,6 +382,95 @@
       var row = Object.assign({ id: uid('inv'), project_id: projectId, paid_amount: 0, status: 'unpaid', created_at: nowIso() }, payload);
       store.invoices = store.invoices || []; store.invoices.push(row); saveStore(store);
       return row;
+    },
+
+    // --------------------------------------------------------- INVOICE MODULE (admin)
+    async listAllInvoices() {
+      if (this.isLive) { var r = await window.sb.from('invoices').select('*').order('created_at', { ascending: false }); return r.data || []; }
+      return (loadStore().invoices || []).slice().sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+    },
+
+    async createInvoiceWithItems(projectId, payload, items) {
+      items = (items || []).filter(function (it) { return it.description; });
+      if (this.isLive) {
+        var r = await window.sb.from('invoices').insert(Object.assign({ project_id: projectId }, payload)).select().single();
+        if (r.error) throw new Error(r.error.message);
+        if (items.length) {
+          var ri = await window.sb.from('invoice_items').insert(items.map(function (it) { return Object.assign({ invoice_id: r.data.id }, it); }));
+          if (ri.error) throw new Error(ri.error.message);
+        }
+        return r.data;
+      }
+      var store = loadStore();
+      store.invoices = store.invoices || [];
+      if (store.invoices.some(function (i) { return i.invoice_number === payload.invoice_number; })) throw new Error('Nomor invoice sudah dipakai');
+      var row = Object.assign({ id: uid('inv'), project_id: projectId, paid_amount: 0, status: 'unpaid', created_at: nowIso() }, payload);
+      store.invoices.push(row);
+      store.invoice_items = store.invoice_items || [];
+      items.forEach(function (it) { store.invoice_items.push(Object.assign({ id: uid('ii'), invoice_id: row.id }, it)); });
+      saveStore(store);
+      return row;
+    },
+
+    async deleteInvoice(invoiceId) {
+      if (this.isLive) { await window.sb.from('invoices').delete().eq('id', invoiceId); return; }
+      var store = loadStore();
+      store.invoices = (store.invoices || []).filter(function (i) { return i.id !== invoiceId; });
+      store.invoice_items = (store.invoice_items || []).filter(function (i) { return i.invoice_id !== invoiceId; });
+      store.invoice_payments = (store.invoice_payments || []).filter(function (p) { return p.invoice_id !== invoiceId; });
+      saveStore(store);
+    },
+
+    async listPayments(invoiceId) {
+      if (this.isLive) {
+        var q = window.sb.from('invoice_payments').select('*').order('paid_at', { ascending: false });
+        if (invoiceId) q = q.eq('invoice_id', invoiceId);
+        var r = await q; return r.data || [];
+      }
+      return (loadStore().invoice_payments || []).filter(function (p) { return !invoiceId || p.invoice_id === invoiceId; })
+        .sort(function (a, b) { return new Date(b.paid_at) - new Date(a.paid_at); });
+    },
+
+    // Recompute paid_amount/status from the payment rows so the invoice never drifts.
+    async _syncInvoicePaid(invoiceId) {
+      var pays = await this.listPayments(invoiceId);
+      var paid = pays.reduce(function (s, p) { return s + (Number(p.amount) || 0); }, 0);
+      var inv;
+      if (this.isLive) { var r = await window.sb.from('invoices').select('*').eq('id', invoiceId).single(); inv = r.data; }
+      else inv = (loadStore().invoices || []).find(function (i) { return i.id === invoiceId; });
+      if (!inv) return;
+      var total = Number(inv.total_amount) || 0;
+      var patch = { paid_amount: paid, status: paid <= 0 ? 'unpaid' : (paid >= total ? 'paid' : 'partial') };
+      if (this.isLive) { await window.sb.from('invoices').update(patch).eq('id', invoiceId); return; }
+      var store = loadStore();
+      var row = (store.invoices || []).find(function (i) { return i.id === invoiceId; });
+      if (row) Object.assign(row, patch);
+      saveStore(store);
+    },
+
+    async recordPayment(invoiceId, payload) {
+      var row = Object.assign({ invoice_id: invoiceId }, payload);
+      if (this.isLive) {
+        var r = await window.sb.from('invoice_payments').insert(row).select().single();
+        if (r.error) throw new Error(r.error.message);
+        row = r.data;
+      } else {
+        var store = loadStore();
+        row = Object.assign({ id: uid('pay'), created_at: nowIso() }, row);
+        store.invoice_payments = store.invoice_payments || []; store.invoice_payments.push(row); saveStore(store);
+      }
+      await this._syncInvoicePaid(invoiceId);
+      return row;
+    },
+
+    async deletePayment(paymentId, invoiceId) {
+      if (this.isLive) await window.sb.from('invoice_payments').delete().eq('id', paymentId);
+      else {
+        var store = loadStore();
+        store.invoice_payments = (store.invoice_payments || []).filter(function (p) { return p.id !== paymentId; });
+        saveStore(store);
+      }
+      await this._syncInvoicePaid(invoiceId);
     },
 
     async listLeads() {

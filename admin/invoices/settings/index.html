@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengaturan Invoice — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#032E66">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar"></aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/invoices/">Invoice</a><span>/</span><span>Pengaturan Invoice</span></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head">
+        <h1>Pengaturan Invoice</h1>
+        <p>Dipakai di setiap invoice yang dicetak. Tersimpan di browser ini saja, tidak ikut ke repo publik.</p>
+      </div>
+
+      <form id="settings-form" class="dash-grid cols-2">
+        <div class="dash-card">
+          <div class="dash-section-title">Penerbit invoice</div>
+          <div class="form-grid">
+            <div class="form-field"><label class="form-label">Nama / usaha</label><input class="form-input" data-f="issuer_name" required></div>
+            <div class="form-grid cols-2">
+              <div class="form-field"><label class="form-label">Email</label><input class="form-input" type="email" data-f="issuer_email"></div>
+              <div class="form-field"><label class="form-label">Telepon / WA</label><input class="form-input" data-f="issuer_phone"></div>
+            </div>
+            <div class="form-field"><label class="form-label">Alamat</label><textarea class="form-textarea" rows="2" data-f="issuer_address"></textarea></div>
+            <div class="form-field"><label class="form-label">NPWP</label><input class="form-input" data-f="issuer_npwp"></div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-section-title">Rekening pembayaran</div>
+          <div class="form-grid">
+            <div class="form-grid cols-2">
+              <div class="form-field"><label class="form-label">Bank</label><input class="form-input" data-f="bank_name" placeholder="BCA"></div>
+              <div class="form-field"><label class="form-label">No. rekening</label><input class="form-input" data-f="bank_account"></div>
+            </div>
+            <div class="form-field"><label class="form-label">Atas nama</label><input class="form-input" data-f="bank_holder"></div>
+            <div class="form-field"><label class="form-label">Metode pembayaran</label><input class="form-input" data-f="payment_methods"><div class="form-hint">Pisahkan dengan koma.</div></div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-section-title">Default invoice baru</div>
+          <div class="form-grid">
+            <div class="form-grid cols-2">
+              <div class="form-field"><label class="form-label">Prefix nomor</label><input class="form-input" data-f="prefix" required><div class="form-hint" id="num-preview"></div></div>
+              <div class="form-field"><label class="form-label">Jatuh tempo (hari)</label><input class="form-input" type="number" min="0" data-f="due_days"></div>
+            </div>
+            <div class="form-field"><label class="form-label">Pajak default (%)</label><input class="form-input" type="number" min="0" max="100" step="0.01" data-f="tax_percent"><div class="form-hint">Isi 11 untuk PPN 11%, atau 0 jika tidak memungut pajak.</div></div>
+          </div>
+        </div>
+
+        <div class="dash-card">
+          <div class="dash-section-title">Catatan kaki</div>
+          <div class="form-field"><label class="form-label">Teks penutup</label><textarea class="form-textarea" rows="3" data-f="footer_note"></textarea></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:18px"><button type="submit" class="btn btn-primary">Simpan Pengaturan</button></div>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/js/invoice-lib.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const session = Dash.initShell({ role: 'admin' });
+  if (!session) return;
+  const form = document.getElementById('settings-form');
+  const fields = form.querySelectorAll('[data-f]');
+  const s = INV.getSettings();
+  fields.forEach(el => { el.value = s[el.getAttribute('data-f')] != null ? s[el.getAttribute('data-f')] : ''; });
+  const preview = () => { document.getElementById('num-preview').textContent = 'Contoh: ' + (form.querySelector('[data-f=prefix]').value || 'INV') + '-' + new Date().getFullYear() + '-001'; };
+  form.querySelector('[data-f=prefix]').addEventListener('input', preview);
+  preview();
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const next = {};
+    fields.forEach(el => {
+      const k = el.getAttribute('data-f');
+      next[k] = el.type === 'number' ? Number(el.value) || 0 : el.value.trim();
+    });
+    INV.saveSettings(next);
+    Dash.toast('Pengaturan invoice disimpan', 'success');
+  });
+});
+</script>
+</body>
+</html>

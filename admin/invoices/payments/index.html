@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('liswan-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pembayaran — Admin — Liswan.dev</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#032E66">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/dashboard.css">
+</head>
+<body class="dash-body">
+<div class="dash-sidebar-backdrop" data-sidebar-backdrop></div>
+<div class="dash-shell">
+  <aside class="dash-sidebar"></aside>
+  <div>
+    <header class="dash-topbar">
+      <button class="dash-hamburger" data-sidebar-toggle aria-label="Toggle menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <div class="dash-breadcrumb"><a href="/admin/invoices/">Invoice</a><span>/</span><span>Pembayaran</span></div>
+      <div class="dash-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Cari pembayaran..."></div>
+      <div class="dash-topbar-actions">
+        <button class="dash-icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <button class="dash-icon-btn" id="notif-bell" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="dash-notif-dot" id="notif-dot" hidden></span></button>
+        <div class="dash-dropdown" id="notif-dropdown"></div>
+        <button class="dash-profile-btn" id="profile-btn"><span class="dash-avatar" id="profile-avatar"></span><span id="profile-name"></span></button>
+        <div class="dash-dropdown" id="profile-dropdown">
+          <div class="dash-dropdown-head"><strong id="profile-name-2"></strong><span id="profile-email"></span></div>
+          <a href="/admin/settings/" class="dash-dropdown-item">Settings</a>
+          <button type="button" class="dash-dropdown-item" id="logout-btn">Log out</button>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div class="dash-page-head dash-flex-between">
+        <div>
+          <h1>Pembayaran</h1>
+          <p>Status invoice (sebagian / lunas) ikut terupdate otomatis. Klik baris untuk detail.</p>
+        </div>
+        <button class="btn btn-primary" id="new-payment-btn">+ Catat Pembayaran</button>
+      </div>
+
+      <div class="dash-grid cols-2" id="pay-stats" style="margin-bottom:48px"></div>
+
+      <div class="dash-table-wrap">
+        <div class="dash-table-scroll">
+          <table class="dash-table">
+            <thead>
+              <tr><th>Tanggal</th><th>Invoice</th><th>Klien</th><th>Jumlah</th></tr>
+            </thead>
+            <tbody id="payments-tbody">
+              <tr><td colspan="4"><div class="skeleton" style="height:20px"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-payment">
+  <div class="modal-box">
+    <div class="modal-header"><h3>Catat Pembayaran</h3><button class="modal-close" data-modal-close="modal-payment">&times;</button></div>
+    <form id="payment-form">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="p-invoice">Invoice</label>
+            <select id="p-invoice" class="form-select" required></select>
+            <div class="form-hint" id="p-invoice-hint"></div>
+          </div>
+          <div class="form-grid cols-2">
+            <div class="form-field"><label class="form-label" for="p-amount">Jumlah (Rp)</label><input type="number" id="p-amount" class="form-input" min="1" required></div>
+            <div class="form-field"><label class="form-label" for="p-date">Tanggal bayar</label><input type="date" id="p-date" class="form-input" required></div>
+          </div>
+          <div class="form-grid cols-2">
+            <div class="form-field"><label class="form-label" for="p-method">Metode</label><select id="p-method" class="form-select"></select></div>
+            <div class="form-field"><label class="form-label" for="p-note">Catatan</label><input type="text" id="p-note" class="form-input" placeholder="DP 50%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close="modal-payment">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan Pembayaran</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-pay-detail">
+  <div class="modal-box" style="width:min(460px,100%)">
+    <div class="modal-header"><h3 id="pd-title">Pembayaran</h3><button class="modal-close" data-modal-close="modal-pay-detail">&times;</button></div>
+    <div class="modal-body"><div class="kv" id="pd-body"></div></div>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button type="button" class="btn-icon-text danger" id="pd-delete">Hapus</button>
+      <a class="btn btn-secondary" id="pd-invoice">Lihat Invoice</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-config.js"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script src="/assets/js/dummy-data.js"></script>
+<script src="/assets/js/data-layer.js"></script>
+<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/js/invoice-lib.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = Dash.initShell({ role: 'admin' });
+  if (!session) return;
+  const esc = Dash.escapeHtml, cur = Dash.formatCurrency, $ = id => document.getElementById(id);
+  let data = { invoices: [] }, pays = [];
+
+  $('p-method').innerHTML = INV.getSettings().payment_methods.split(',').map(m => m.trim()).filter(Boolean)
+    .map(m => `<option>${esc(m)}</option>`).join('');
+
+  let selected = null;
+  function render() {
+    const month = INV.today().slice(0, 7);
+    const sum = list => list.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+    const card = (label, value) => `<div class="dash-card"><div class="dash-stat-label">${label}</div><div class="dash-stat-value">${value}</div></div>`;
+    $('pay-stats').innerHTML = card('Diterima bulan ini', cur(sum(pays.filter(p => String(p.paid_at).slice(0, 7) === month)))) +
+      card('Belum terbayar', cur(data.invoices.reduce((s, i) => s + INV.balance(i), 0)));
+
+    const tbody = $('payments-tbody');
+    if (!pays.length) { tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><strong>Belum ada pembayaran</strong></div></td></tr>'; return; }
+    tbody.innerHTML = pays.map(p => {
+      const inv = data.invoices.find(i => i.id === p.invoice_id);
+      return `<tr class="row-click" data-search-row data-pay="${p.id}">
+        <td class="dash-muted">${Dash.formatDate(p.paid_at)}</td>
+        <td><strong>${esc(inv ? inv.invoice_number : '-')}</strong></td>
+        <td>${esc(inv && inv._client ? inv._client.company_name : '-')}</td>
+        <td><strong>${cur(p.amount)}</strong></td>
+      </tr>`;
+    }).join('');
+    tbody.querySelectorAll('[data-pay]').forEach(r => r.addEventListener('click', () => showPay(r.getAttribute('data-pay'))));
+  }
+
+  function showPay(id) {
+    const p = pays.find(x => x.id === id), inv = data.invoices.find(i => i.id === p.invoice_id);
+    selected = p;
+    $('pd-title').textContent = cur(p.amount);
+    const row = (k, v) => v ? `<div><span>${k}</span><strong>${esc(v)}</strong></div>` : '';
+    $('pd-body').innerHTML = row('Tanggal', Dash.formatDate(p.paid_at)) + row('Invoice', inv ? inv.invoice_number : '-') +
+      row('Klien', inv && inv._client ? inv._client.company_name : '') + row('Metode', p.method) + row('Catatan', p.note);
+    $('pd-invoice').href = '/admin/invoices/?open=' + encodeURIComponent(p.invoice_id);
+    Dash.openModal('modal-pay-detail');
+  }
+  $('pd-delete').addEventListener('click', async () => {
+    if (!selected || !(await Dash.confirm('Hapus pembayaran ini? Sisa tagihan akan dihitung ulang.', 'Hapus'))) return;
+    await DB.deletePayment(selected.id, selected.invoice_id);
+    Dash.closeModal('modal-pay-detail');
+    Dash.toast('Pembayaran dihapus', 'success');
+    await load();
+  });
+
+  function openForm(invoiceId) {
+    const open = data.invoices.filter(i => INV.balance(i) > 0);
+    if (!open.length) { Dash.toast('Semua invoice sudah lunas', 'warning'); return; }
+    $('p-invoice').innerHTML = open.map(i => `<option value="${i.id}">${esc(i.invoice_number)} — ${esc(i._client ? i._client.company_name : '-')} (sisa ${cur(INV.balance(i))})</option>`).join('');
+    if (invoiceId && open.some(i => i.id === invoiceId)) $('p-invoice').value = invoiceId;
+    $('p-date').value = INV.today();
+    $('p-note').value = '';
+    syncAmount();
+    Dash.openModal('modal-payment');
+  }
+  function syncAmount() {
+    const inv = data.invoices.find(i => i.id === $('p-invoice').value);
+    if (!inv) return;
+    $('p-amount').value = INV.balance(inv);
+    $('p-amount').max = INV.balance(inv);
+    $('p-invoice-hint').textContent = 'Total ' + cur(inv.total_amount) + ' · sudah dibayar ' + cur(inv.paid_amount) + ' · jatuh tempo ' + Dash.formatDate(inv.due_date);
+  }
+  $('p-invoice').addEventListener('change', syncAmount);
+  $('new-payment-btn').addEventListener('click', () => openForm());
+
+  $('payment-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    try {
+      await DB.recordPayment($('p-invoice').value, {
+        amount: Number($('p-amount').value) || 0,
+        paid_at: $('p-date').value,
+        method: $('p-method').value,
+        note: $('p-note').value.trim() || null
+      });
+      Dash.closeModal('modal-payment');
+      Dash.toast('Pembayaran tercatat', 'success');
+      await load();
+    } catch (err) { Dash.toast('Gagal menyimpan: ' + err.message, 'danger'); }
+  });
+
+  async function load() {
+    const res = await Promise.all([INV.loadAll(), DB.listPayments()]);
+    data = res[0]; pays = res[1];
+    render();
+  }
+  await load();
+  const pre = new URLSearchParams(location.search).get('invoice');
+  if (pre) openForm(pre);
+});
+</script>
+</body>
+</html>

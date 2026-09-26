@@ -124,6 +124,11 @@ window.DUMMY_DB = {
     { id: 'ii-1', invoice_id: 'inv-1', description: 'Website Company Profile — Development (60% milestone)', qty: 1, unit_price: 8500000 }
   ],
 
+  invoice_payments: [
+    { id: 'pay-1', invoice_id: 'inv-1', amount: 4250000, paid_at: '2026-08-18', method: 'Transfer Bank', note: 'DP 50%', created_at: '2026-08-18T10:00:00' },
+    { id: 'pay-2', invoice_id: 'inv-2', amount: 32000000, paid_at: '2025-12-15', method: 'Transfer Bank', note: 'Pelunasan', created_at: '2025-12-15T10:00:00' }
+  ],
+
   notifications: [
     { id: 'n-1', user_id: 'u-client-1', title: 'Approval needed', body: 'Dashboard UI — Version 2 is waiting for your approval.', is_read: false, link: '/client/approvals/', created_at: '2026-08-23T14:20:00' },
     { id: 'n-2', user_id: 'u-client-1', title: 'File uploaded', body: 'Dashboard-v3.png was added to your project files.', is_read: false, link: '/client/files/', created_at: '2026-08-23T14:20:00' },

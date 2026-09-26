@@ -168,6 +168,14 @@ window.GH = (function () {
     }).then(function () { return '/' + path; });
   }
 
+  // GitHub's English errors -> what to do about them
+  function explain(msg) {
+    if (/bad credentials/i.test(msg)) return 'Token ditolak GitHub (salah, terpotong, kedaluwarsa, atau sudah dihapus). Buat token baru lalu tempel ulang.';
+    if (/not accessible|forbidden|permission/i.test(msg)) return 'Token tidak punya izin. Pastikan repo ini dipilih dan Contents = Read and write.';
+    if (/not found/i.test(msg)) return 'Repo tidak ditemukan — cek Owner/Repo, atau token belum diberi akses ke repo ini.';
+    return msg;
+  }
+
   function testConnection() {
     return api('').then(function (repo) {
       if (repo.permissions && !repo.permissions.push) throw new Error('Token tidak punya izin menulis ke repo ini');
@@ -214,9 +222,11 @@ window.GH = (function () {
       status.textContent = 'Token dihapus dari browser ini.'; if (onSaved) onSaved();
     };
     wrap.querySelector('[data-test]').onclick = function () {
-      saveSettings(read()); status.textContent = 'Menghubungkan…';
+      var n = read();
+      if (!n.token) { status.textContent = '✕ Token belum diisi — tempel token github_pat_… di kolom Token.'; return; }
+      saveSettings(n); status.textContent = 'Menghubungkan…';
       testConnection().then(function (r) { status.textContent = '✓ Terhubung ke ' + r.full_name + ' — siap publish.'; })
-        .catch(function (e) { status.textContent = '✕ ' + e.message; });
+        .catch(function (e) { status.textContent = '✕ ' + explain(e.message); });
     };
     wrap.querySelector('[data-save]').onclick = function () {
       saveSettings(read()); close();
@@ -229,6 +239,6 @@ window.GH = (function () {
     getSettings: getSettings, isReady: isReady, hasToken: hasToken, isLocal: isLocal, ready: ready, target: target,
     getJson: getJson, putFile: putFile, putJson: putJson,
     compressImage: compressImage, uploadImage: uploadImage, blobToBase64: blobToBase64,
-    testConnection: testConnection, openSettings: openSettings
+    testConnection: testConnection, openSettings: openSettings, explain: explain
   };
 })();

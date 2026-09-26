@@ -479,7 +479,7 @@
       STATE = data; BLOBS = {}; renderAll();
       if (window.Dash) Dash.toast(GH.hasToken() ? 'Terpublish! Beranda live terupdate dalam ±1 menit.' : 'Tersimpan ke data/content.json — refresh beranda untuk melihat hasilnya.', 'success');
     }).catch(function (err) {
-      if (window.Dash) Dash.toast('Gagal menyimpan: ' + err.message, 'danger');
+      if (window.Dash) Dash.toast('Gagal menyimpan: ' + GH.explain(err.message), 'danger');
     }).then(function () { renderGh(); });
   }
 

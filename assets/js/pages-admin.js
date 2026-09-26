@@ -226,7 +226,7 @@
       afterChange();
       toast(GH.hasToken() ? 'Terpublish! Situs live terupdate dalam ±1 menit.' : 'Tersimpan ke data/pages.json — refresh halaman untuk melihat hasilnya.');
     }).catch(function (err) {
-      toast('Gagal menyimpan: ' + err.message, 'danger');
+      toast('Gagal menyimpan: ' + GH.explain(err.message), 'danger');
     }).then(function () { renderGh(); });
   }
 

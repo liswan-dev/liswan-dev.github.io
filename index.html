@@ -84,9 +84,8 @@
   nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:var(--maxw); margin:0 auto;}
   .brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18.5px;}
   .brand .mark{
-    width:34px; height:34px; border-radius:10px; background:var(--grad);
-    display:flex; align-items:center; justify-content:center; color:#07070f; font-size:16px; font-weight:800;
-    flex-shrink:0;
+    width:36px; height:36px; border-radius:50%; flex-shrink:0; display:block;
+    box-shadow:0 0 0 1px rgba(255,255,255,.18);
   }
   .nav-links{display:flex; align-items:center; gap:30px; font-size:14.5px; font-weight:500; color:var(--text-dim);}
   .nav-links a:hover{color:var(--text);}
@@ -263,7 +262,7 @@
 
 <header>
   <nav>
-    <a href="#top" class="brand"><span class="mark">&lt;/&gt;</span>liswan.dev</a>
+    <a href="#top" class="brand"><img class="mark" src="/assets/img/liswan-dev-logo-round.svg" alt="" width="36" height="36">liswan.dev</a>
     <div class="nav-links" id="navLinks">
       <a href="#about">Tentang</a>
       <a href="#services">Layanan</a>

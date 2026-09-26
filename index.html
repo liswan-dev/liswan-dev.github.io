@@ -7,291 +7,366 @@
 <meta name="description" content="Liswan Susanto — IT Support &amp; Software Developer. Membangun sistem internal bisnis: manajemen aset, approval workflow, dashboard reporting, dan otomasi Google Apps Script.">
 
 <!-- LISWAN.DEV favicon -->
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#060612">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#032E66">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --bg:#060612; --bg-alt:#0b0b20; --panel:#10102a; --panel-2:#14142f;
-    --border: rgba(255,255,255,.09); --border-hover: rgba(255,255,255,.18);
-    --text:#f4f4fb; --text-dim:#a6a8c4; --text-dimmer:#71749a;
-    --cyan:#00F5FF; --violet:#7B2FFF; --pink:#FF2D6B;
-    --grad: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 55%, var(--pink) 100%);
-    --grad-soft: linear-gradient(135deg, rgba(0,245,255,.15), rgba(123,47,255,.15) 55%, rgba(255,45,107,.15) 100%);
-    --radius: 18px;
-    --maxw: 1180px;
+    --bg:#02060d; --bg-2:#050b16; --panel:#08111f; --panel-2:#0c1729;
+    --line:rgba(130,170,240,.09); --line-2:rgba(130,170,240,.18);
+    --text:#eef2f8; --dim:#98a3b6; --dimmer:#5f6b80;
+    /* brand = navy logo; accent = lighter tint of the same hue, readable on dark */
+    --brand:#032e66; --brand-2:#0a4596; --brand-deep:#021a3d;
+    --accent:#5b8def; --accent-2:#86aaf5;
+    --maxw:1320px; --gutter:24px;
+    --display:'Archivo',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--bg); color:var(--text);
-    font-family:'Inter',system-ui,-apple-system,sans-serif;
-    line-height:1.55; -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:15px;
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
   }
-  h1,h2,h3,h4{ font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700; margin:0; letter-spacing:-.02em;}
-  p{margin:0;}
   a{color:inherit; text-decoration:none;}
   img{max-width:100%; display:block;}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
-  .grad-text{
-    background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  section{position:relative; padding:96px 0;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:12.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--cyan); background:rgba(0,245,255,.08); border:1px solid rgba(0,245,255,.25);
-    padding:7px 14px; border-radius:999px; margin-bottom:18px;
-  }
-  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
-  .section-head{max-width:680px; margin-bottom:52px;}
-  .section-head h2{font-size:clamp(28px,4vw,40px); line-height:1.15;}
-  .section-head p{margin-top:14px; color:var(--text-dim); font-size:16.5px;}
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:13px 24px; border-radius:12px; font-weight:600; font-size:15px;
-    cursor:pointer; border:1px solid transparent; transition:.2s transform, .2s box-shadow, .2s background, .2s border-color;
-    white-space:nowrap;
-  }
-  .btn:active{transform:scale(.97);}
-  .btn-grad{ background:var(--grad); color:#07070f; box-shadow:0 8px 28px -8px rgba(123,47,255,.55);}
-  .btn-grad:hover{box-shadow:0 10px 34px -6px rgba(123,47,255,.75); transform:translateY(-1px);}
-  .btn-ghost{ background:rgba(255,255,255,.03); color:var(--text); border-color:var(--border);}
-  .btn-ghost:hover{border-color:var(--border-hover); background:rgba(255,255,255,.06);}
-  .btn-block{width:100%;}
+  h1,h2,h3,h4{font-family:var(--display); font-weight:800; margin:0; text-transform:uppercase; letter-spacing:-.02em; line-height:.95;}
+  p{margin:0;}
+  ::selection{background:var(--brand-2); color:#fff;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter); position:relative;}
+  .mono{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;}
+  .grad-text{color:var(--accent);}
+
+  /* background column grid */
+  .grid-bg{position:fixed; inset:0; pointer-events:none; z-index:0;}
+  .grid-bg .wrap{height:100%; display:grid; grid-template-columns:repeat(4,1fr);}
+  .grid-bg .wrap span{border-left:1px solid var(--line);}
+  .grid-bg .wrap span:last-child{border-right:1px solid var(--line);}
+  main,footer{position:relative; z-index:1;}
 
   /* ---------- NAV ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    border-bottom:1px solid var(--border);
+  .nav{
+    position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:50;
+    width:min(560px, calc(100% - 24px));
   }
-  /* blur lives on a pseudo-element (not on header itself) so header never becomes
-     the containing block for its position:fixed descendants (the mobile nav-links
-     panel) — filter/backdrop-filter on an ancestor does that per spec. */
-  header::before{
-    content:''; position:absolute; inset:0; z-index:-1;
-    background:rgba(6,6,18,.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  .nav-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:rgba(10,10,10,.82); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--line-2); padding:8px 8px 8px 12px;
   }
-  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:var(--maxw); margin:0 auto;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18.5px;}
-  .brand .mark{
-    width:36px; height:36px; border-radius:50%; flex-shrink:0; display:block;
-    box-shadow:0 0 0 1px rgba(255,255,255,.18);
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:800; font-size:15px; text-transform:uppercase; letter-spacing:.01em;}
+  .brand img{width:28px; height:28px; border-radius:50%;}
+  .brand sup{font-size:9px; color:var(--dim); margin-left:1px;}
+  .menu-btn{
+    display:flex; align-items:center; gap:10px; background:none; border:0; color:var(--text); cursor:pointer;
+    font:600 13px/1 'Inter',sans-serif; padding:8px 8px 8px 12px;
   }
-  .nav-links{display:flex; align-items:center; gap:30px; font-size:14.5px; font-weight:500; color:var(--text-dim);}
-  .nav-links a:hover{color:var(--text);}
-  .nav-cta{display:flex; align-items:center; gap:14px;}
-  .nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:24px; cursor:pointer;}
-  @media (max-width:1040px){
-    .nav-links{
-      position:fixed; top:64px; left:0; right:0; bottom:0; background:var(--bg); flex-direction:column; justify-content:flex-start;
-      padding:32px 24px; gap:22px; font-size:17px; transform:translateY(-110%); transition:.25s transform; border-top:1px solid var(--border);
-    }
-    .nav-links.open{transform:translateY(0);}
-    .nav-toggle{display:block;}
-    .nav-cta .btn-ghost{display:none;}
+  .menu-ic{width:22px; height:14px; position:relative;}
+  .menu-ic i{position:absolute; left:0; right:0; height:2px; background:currentColor; transition:.3s;}
+  .menu-ic i:nth-child(1){top:0;} .menu-ic i:nth-child(2){top:6px;} .menu-ic i:nth-child(3){top:12px;}
+  .nav.open .menu-ic i:nth-child(1){top:6px; transform:rotate(45deg);}
+  .nav.open .menu-ic i:nth-child(2){opacity:0;}
+  .nav.open .menu-ic i:nth-child(3){top:6px; transform:rotate(-45deg);}
+  .nav-panel{
+    margin-top:6px; background:rgba(10,10,10,.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--line-2); display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease, opacity .25s; opacity:0; pointer-events:none;
   }
-  @media (max-width:480px){
-    .nav-cta .btn-grad{display:none;}
-    .brand{font-size:16px;}
+  .nav.open .nav-panel{grid-template-rows:1fr; opacity:1; pointer-events:auto;}
+  .nav-panel > div{overflow:hidden;}
+  .nav-links{display:grid; grid-template-columns:1fr 1fr; padding:10px;}
+  .nav-links a{
+    display:flex; justify-content:space-between; align-items:center; padding:12px 12px; border-bottom:1px solid var(--line);
+    font-family:var(--display); font-weight:700; font-size:18px; text-transform:uppercase; transition:color .2s, padding .2s;
   }
+  .nav-links a span{font-family:var(--mono); font-size:10px; color:var(--dimmer);}
+  .nav-links a:hover{color:var(--accent); padding-left:16px;}
+  .nav-panel .btn{margin:6px 10px 10px; width:calc(100% - 20px);}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    position:relative; overflow:hidden; display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:15px 26px; font-family:var(--display); font-weight:700; font-size:13px; letter-spacing:.04em; text-transform:uppercase;
+    border:1px solid transparent; cursor:pointer; transition:background .25s, color .25s, border-color .25s;
+  }
+  .btn .roll{display:block; height:1.2em; overflow:hidden; line-height:1.2em;}
+  .btn .roll > span{display:block; transition:transform .35s cubic-bezier(.7,0,.2,1);}
+  .btn:hover .roll > span{transform:translateY(-100%);}
+  .btn-brand{background:var(--brand); color:#fff; border-color:rgba(91,141,239,.35);}
+  .btn-brand:hover{background:var(--brand-2); border-color:var(--accent);}
+  .btn-line{border-color:var(--line-2); color:var(--text); background:rgba(255,255,255,.02);}
+  .btn-line:hover{border-color:var(--text);}
+  .btn-block{width:100%;}
+  .btn svg{flex-shrink:0;}
+
+  /* ---------- STRIP (section label bar) ---------- */
+  .strip{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(5,5,5,.8);}
+  .strip .wrap{display:grid; grid-template-columns:1fr 1fr 1fr; align-items:stretch;}
+  .strip-cell{padding:11px 14px; color:var(--dimmer); display:flex; align-items:center; gap:8px;}
+  .strip-cell:nth-child(2){justify-content:center; background:var(--panel-2); color:var(--text); position:relative;}
+  .strip-cell:nth-child(2)::before{content:""; position:absolute; top:-1px; left:50%; width:7px; height:7px; background:var(--accent); transform:translate(-50%,-50%) rotate(45deg);}
+  .strip-cell:nth-child(3){justify-content:flex-end;}
+
+  section{position:relative;}
+  .sec{padding:96px 0;}
+  .sec-head{display:grid; grid-template-columns:1.4fr 1fr; gap:40px; align-items:end; margin-bottom:56px;}
+  .sec-head h2{font-size:clamp(28px, 3.3vw, 48px);}
+  .sec-head p{color:var(--dim); max-width:440px; justify-self:end;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--dim); margin-bottom:18px;}
+  .eyebrow::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
 
   /* ---------- HERO ---------- */
-  .hero{padding:88px 0 60px; overflow:hidden;}
-  .hero::before{
-    content:''; position:absolute; top:-220px; right:-160px; width:640px; height:640px; border-radius:50%;
-    background:var(--grad); opacity:.16; filter:blur(90px); pointer-events:none;
-  }
-  .hero::after{
-    content:''; position:absolute; bottom:-260px; left:-200px; width:520px; height:520px; border-radius:50%;
-    background:var(--violet); opacity:.12; filter:blur(110px); pointer-events:none;
-  }
-  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
-  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
-  .hero h1{font-size:clamp(34px,5.2vw,56px); line-height:1.08;}
-  .hero-sub{margin-top:20px; font-size:18px; color:var(--text-dim); max-width:520px;}
-  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
-  .stack-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:40px;}
-  .stack-pill{
-    font-size:12.5px; font-weight:600; color:var(--text-dim); border:1px solid var(--border);
-    padding:7px 13px; border-radius:999px; background:rgba(255,255,255,.03);
-  }
-
-  .hero-card{
-    position:relative; border-radius:24px; padding:2px; background:var(--grad);
-  }
-  .hero-card-inner{
-    background:var(--panel); border-radius:22px; padding:28px; font-family:'Space Grotesk',monospace;
-  }
-  .hero-card-dots{display:flex; gap:6px; margin-bottom:18px;}
-  .hero-card-dots span{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.15);}
-  .hero-card-line{display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
-  .hero-card-line:last-child{border-bottom:none;}
-  .hero-card-line .k{color:var(--text-dim);}
-  .hero-card-line .v{color:var(--cyan); font-weight:600;}
-  .hero-card-badge{
-    display:inline-block; margin-top:18px; font-size:11.5px; font-weight:700; letter-spacing:.06em;
-    padding:6px 12px; border-radius:8px; background:rgba(0,245,255,.1); color:var(--cyan); border:1px solid rgba(0,245,255,.25);
-  }
-
-  /* ---------- STATS ---------- */
-  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:64px;}
-  @media (max-width:760px){ .stats{grid-template-columns:repeat(2,1fr);} }
-  .stat h3{font-size:clamp(26px,3.4vw,34px); background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
-  .stat p{margin-top:6px; font-size:13.5px; color:var(--text-dim);}
+  .hero{min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; background:#000;}
+  .hero-media{position:absolute; inset:0; z-index:0;}
+  .hero-media img{width:100%; height:100%; object-fit:cover; object-position:left top; opacity:.26; filter:grayscale(.5) contrast(1.1) blur(1.5px); transform:scale(1.08); animation:drift 24s ease-in-out infinite alternate;}
+  .hero-media::before{content:""; position:absolute; inset:0; z-index:1; background:
+      linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 35%, rgba(0,0,0,.88) 78%, #000 100%),
+      radial-gradient(ellipse at 80% 20%, rgba(40,105,210,.22), transparent 55%);}
+  .hero-media::after{content:""; position:absolute; inset:0; z-index:2; opacity:.18; background:repeating-linear-gradient(0deg, rgba(255,255,255,.18) 0 1px, transparent 1px 3px); mix-blend-mode:overlay;}
+  @keyframes drift{from{transform:scale(1.08) translate(0,0);} to{transform:scale(1.16) translate(-2%, -2%);}}
+  .hero .wrap{z-index:3;}
+  .hero-top{padding-top:120px;}
+  .hero h1{font-size:clamp(34px, 4.2vw, 66px); line-height:.95; letter-spacing:-.025em; max-width:19ch;}
+  .hero-row{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:end; margin-top:40px; padding-bottom:36px;}
+  .hero-rating{display:flex; align-items:center; gap:18px;}
+  .hero-rating .big{font-family:var(--display); font-weight:800; font-size:36px; line-height:1;}
+  .hero-rating .mono{color:var(--dim); max-width:180px; line-height:1.5;}
+  .hero-right p{text-transform:uppercase; font-family:var(--display); font-weight:600; font-size:14px; letter-spacing:.02em; line-height:1.45; color:#d8d8d8; margin-bottom:22px; max-width:520px;}
+  .hero-actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .hero-actions .btn-brand{flex:1 1 260px;}
+  .stack-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:16px;}
+  .stack-pill{font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--dim); border:1px solid var(--line-2); padding:5px 9px; background:rgba(0,0,0,.35);}
+  .hero-info{border-top:1px solid var(--line-2); z-index:3; position:relative; background:rgba(0,0,0,.5);}
+  .hero-info .wrap{display:grid; grid-template-columns:repeat(4,1fr);}
+  .hero-info .mono{padding:14px 14px; color:#cfcfcf; border-left:1px solid var(--line);}
+  .hero-info .mono:last-child{border-right:1px solid var(--line); display:flex; align-items:center; gap:8px;}
+  .live-dot{width:7px; height:7px; border-radius:50%; background:var(--accent); animation:blink 1.4s infinite;}
+  @keyframes blink{50%{opacity:.25;}}
 
   /* ---------- ABOUT ---------- */
-  .about-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:56px; align-items:start;}
-  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
-  .about-points{display:grid; gap:16px;}
-  .about-point{display:flex; gap:14px; align-items:flex-start;}
-  .about-point .ic{
-    width:38px; height:38px; border-radius:10px; background:var(--grad-soft); border:1px solid var(--border);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--cyan);
-  }
-  .about-point h4{font-size:15.5px; margin-bottom:3px;}
-  .about-point p{font-size:14.5px; color:var(--text-dim);}
+  .about-statement{font-family:var(--display); font-weight:800; text-transform:uppercase; font-size:clamp(24px, 2.7vw, 40px); line-height:1.05; letter-spacing:-.025em; color:var(--text);}
+  .about-grid{display:grid; grid-template-columns:1fr 1.5fr; gap:48px; margin-top:64px; align-items:start;}
+  .about-desc{color:var(--dim); font-size:16px; max-width:420px;}
+  .about-desc + .btn{margin-top:26px;}
+  .about-points{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line-2);}
+  .about-point{padding:22px 20px 0 0;}
+  .about-point + .about-point{padding-left:20px; border-left:1px solid var(--line);}
+  .about-point .n{color:var(--accent); display:block; margin-bottom:26px;}
+  .about-point h4{font-size:19px; margin-bottom:10px; line-height:1.05;}
+  .about-point p{color:var(--dim); font-size:14px;}
+  .spec{margin-top:40px; border:1px solid var(--line-2); background:var(--panel);}
+  .spec-head{display:flex; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--line); color:var(--dimmer);}
+  .spec-head b{color:var(--accent); font-weight:500;}
+  .hero-card-line{display:flex; justify-content:space-between; gap:16px; padding:12px 14px; border-bottom:1px solid var(--line); font-size:14px;}
+  .hero-card-line .k{color:var(--dim); font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;}
+  .hero-card-line .v{font-weight:600; text-align:right;}
+  .hero-card-badge{display:block; padding:12px 14px; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--accent);}
 
-  /* ---------- CARD GRID (services/portfolio) ---------- */
-  .card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
-  @media (max-width:920px){ .card-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:620px){ .card-grid{grid-template-columns:1fr;} }
+  /* ---------- MARQUEE ---------- */
+  .marquee{background:var(--brand); color:#fff; overflow:hidden; border-top:1px solid var(--brand-2); border-bottom:1px solid var(--brand-deep);}
+  .marquee-track{display:flex; width:max-content; animation:marq 38s linear infinite;}
+  .marquee-track span{font-family:var(--display); font-weight:800; font-size:clamp(20px, 2.3vw, 32px); text-transform:uppercase; padding:11px 0; white-space:nowrap; display:flex; align-items:center;}
+  .marquee-track span::after{content:"✕"; font-size:.5em; margin:0 .9em; opacity:.7;}
+  @keyframes marq{to{transform:translateX(-50%);}}
 
-  .svc-card{
-    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
-    padding:28px; transition:.2s border-color, .2s transform;
-  }
-  .svc-card:hover{border-color:var(--border-hover); transform:translateY(-3px);}
-  .svc-card .ic{
-    width:46px; height:46px; border-radius:12px; background:var(--grad); display:flex; align-items:center; justify-content:center;
-    color:#07070f; margin-bottom:18px;
-  }
-  .svc-card h3{font-size:17.5px; margin-bottom:8px;}
-  .svc-card p{font-size:14.5px; color:var(--text-dim);}
+  /* ---------- PORTFOLIO ---------- */
+  .pf-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .pf-card{display:flex; flex-direction:column; gap:14px;}
+  .pf-card:first-child{grid-column:1 / -1;}
+  .pf-media{position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--panel); border:1px solid var(--line);}
+  .pf-card:first-child .pf-media{aspect-ratio:21/9;}
+  .pf-media img{width:100%; height:100%; object-fit:cover; object-position:left top; transition:transform .8s cubic-bezier(.2,.7,.2,1), filter .5s; filter:saturate(.85);}
+  .pf-card:hover .pf-media img{transform:scale(1.04); filter:saturate(1.05);}
+  .pf-media .file{position:absolute; left:12px; top:12px; background:rgba(0,0,0,.7); border:1px solid var(--line-2); padding:5px 8px; color:#ddd;}
+  .pf-media .rec{position:absolute; right:12px; top:12px; display:flex; align-items:center; gap:6px; color:#ddd;}
+  .pf-ph{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/40px 40px,
+      radial-gradient(ellipse at 30% 30%, rgba(40,105,210,.28), transparent 60%), var(--panel);}
+  .pf-ph b{font-family:var(--display); font-weight:900; font-size:clamp(60px, 9vw, 140px); color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.28); letter-spacing:-.04em;}
+  .pf-meta{display:grid; grid-template-columns:auto 1fr; gap:6px 18px; align-items:start;}
+  .pf-meta .idx{color:var(--accent); padding-top:4px;}
+  .pf-card h3{font-size:clamp(18px, 1.7vw, 24px);}
+  .pf-card p{color:var(--dim); font-size:14.5px; grid-column:2; max-width:560px;}
+  .pf-chips{grid-column:2; display:flex; flex-wrap:wrap; gap:4px 12px; color:var(--dimmer);}
+  .pf-chips span + span::before{content:"— "; color:var(--dimmer);}
+  .pf-tag{color:var(--text);}
+  .sec-foot{margin-top:48px; display:flex; justify-content:flex-end;}
+  .sec-foot .btn{min-width:320px;}
 
-  .pf-card{
-    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
-    display:flex; flex-direction:column; gap:14px;
-  }
-  .pf-card-top{display:flex; align-items:center; justify-content:space-between;}
-  .pf-tag{font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--violet); background:rgba(123,47,255,.12); border:1px solid rgba(123,47,255,.3); padding:5px 10px; border-radius:999px;}
-  .pf-card h3{font-size:17px;}
-  .pf-card p{font-size:14px; color:var(--text-dim);}
-  .pf-chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; padding-top:8px;}
-  .pf-chip{font-size:11.5px; color:var(--text-dimmer); border:1px solid var(--border); padding:4px 9px; border-radius:7px;}
+  /* ---------- SERVICES (accordion) ---------- */
+  .svc-list{border-top:1px solid var(--line-2);}
+  .svc-item{border-bottom:1px solid var(--line-2);}
+  .svc-item summary{list-style:none; cursor:pointer; display:grid; grid-template-columns:90px 1fr auto; align-items:center; gap:18px; padding:26px 0; transition:padding .3s, background .3s;}
+  .svc-item summary::-webkit-details-marker{display:none;}
+  .svc-item summary .n{color:var(--dimmer);}
+  .svc-item summary h3{font-size:clamp(20px, 2.1vw, 30px); transition:color .25s, transform .3s;}
+  .svc-item summary:hover h3{color:var(--accent); transform:translateX(6px);}
+  .svc-plus{width:44px; height:44px; border:1px solid var(--line-2); position:relative; flex-shrink:0; transition:background .25s, border-color .25s;}
+  .svc-plus::before,.svc-plus::after{content:""; position:absolute; left:50%; top:50%; width:14px; height:2px; background:var(--text); transform:translate(-50%,-50%); transition:transform .3s;}
+  .svc-plus::after{transform:translate(-50%,-50%) rotate(90deg);}
+  .svc-item[open] .svc-plus{background:var(--brand); border-color:var(--accent);}
+  .svc-item[open] .svc-plus::after{transform:translate(-50%,-50%) rotate(0);}
+  .svc-item[open] summary .n{color:var(--accent);}
+  .svc-body{display:grid; grid-template-columns:90px 1fr auto; gap:18px; padding:0 0 30px;}
+  .svc-body p{grid-column:2; color:var(--dim); font-size:16px; max-width:620px;}
+  .svc-body .ic{grid-column:3; width:44px; color:var(--accent);}
+
+  /* ---------- STATS ---------- */
+  .stats-head h2{font-size:clamp(28px, 3.3vw, 48px); max-width:18ch; margin-bottom:48px;}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line-2); border-bottom:1px solid var(--line-2);}
+  .stat{padding:30px 22px 34px; border-left:1px solid var(--line);}
+  .stat:first-child{border-left:0; padding-left:0;}
+  .stat h3{font-size:clamp(42px, 4.2vw, 64px); letter-spacing:-.04em; margin-bottom:14px; display:flex; align-items:flex-start;}
+  .stat h3 .grad-text{color:var(--accent);}
+  .stat p{color:var(--dim); font-size:14px; max-width:220px;}
 
   /* ---------- PROCESS ---------- */
-  .process-list{display:grid; grid-template-columns:repeat(5,1fr); gap:18px; counter-reset:step;}
-  @media (max-width:980px){ .process-list{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:560px){ .process-list{grid-template-columns:1fr;} }
-  .process-item{
-    border:1px solid var(--border); border-radius:var(--radius); padding:24px 20px; background:var(--panel); position:relative;
-  }
-  .process-num{
-    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; color:var(--cyan);
-    display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px;
-    background:rgba(0,245,255,.08); border:1px solid rgba(0,245,255,.25); margin-bottom:14px;
-  }
-  .process-item h4{font-size:14.5px; margin-bottom:6px;}
-  .process-item p{font-size:12.8px; color:var(--text-dim);}
+  .process-list{border-top:1px solid var(--line-2);}
+  .process-item{display:grid; grid-template-columns:90px 1.1fr 1fr; gap:18px; align-items:baseline; padding:26px 0; border-bottom:1px solid var(--line-2); transition:background .3s;}
+  .process-item:hover{background:linear-gradient(90deg, rgba(40,105,210,.08), transparent 70%);}
+  .process-num{font-family:var(--mono); font-size:12px; color:var(--accent);}
+  .process-item h4{font-size:clamp(17px, 1.6vw, 23px);}
+  .process-item p{color:var(--dim);}
 
   /* ---------- PRICING ---------- */
-  .price-toggle{
-    display:inline-flex; gap:4px; padding:5px; border:1px solid var(--border); border-radius:999px;
-    background:var(--panel); margin-bottom:44px;
-  }
-  .price-toggle-btn{
-    border:none; background:transparent; color:var(--text-dim); font-family:inherit; font-size:14px; font-weight:600;
-    padding:10px 22px; border-radius:999px; cursor:pointer; transition:.2s background, .2s color;
-  }
-  .price-toggle-btn.active{ background:var(--grad); color:#07070f; }
-  .price-group.hidden{display:none;}
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch;}
-  @media (max-width:920px){ .price-grid{grid-template-columns:1fr; max-width:420px; margin:0 auto;} }
-  .price-card{
-    background:var(--panel); border:1px solid var(--border); border-radius:20px; padding:32px 26px;
-    display:flex; flex-direction:column;
-  }
-  .price-card.featured{
-    background:linear-gradient(180deg, rgba(123,47,255,.14), var(--panel) 40%);
-    border-color:rgba(123,47,255,.45); position:relative; transform:translateY(-10px);
-  }
-  @media (max-width:920px){ .price-card.featured{transform:none;} }
-  .price-badge{
-    position:absolute; top:-13px; right:26px; background:var(--grad); color:#07070f; font-size:11.5px; font-weight:800;
-    padding:6px 13px; border-radius:999px; letter-spacing:.03em;
-  }
-  .price-card h3{font-size:19px;}
-  .price-card .price-desc{font-size:13.5px; color:var(--text-dim); margin-top:8px; min-height:38px;}
-  .price-amount{margin-top:22px; display:flex; align-items:baseline; gap:6px;}
-  .price-amount .from{font-size:12.5px; color:var(--text-dimmer); display:block; margin-bottom:2px;}
-  .price-amount .num{font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:700;}
-  .price-features{list-style:none; margin:26px 0 30px; padding:0; display:grid; gap:12px; font-size:14px; color:var(--text-dim);}
-  .price-features li{display:flex; gap:10px; align-items:flex-start;}
-  .price-features li svg{flex-shrink:0; margin-top:2px; color:var(--cyan);}
+  .price-toggle{display:inline-flex; border:1px solid var(--line-2); margin-bottom:28px;}
+  .price-toggle-btn{background:none; border:0; color:var(--dim); padding:12px 20px; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; cursor:pointer;}
+  .price-toggle-btn.active{background:var(--text); color:#000;}
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line-2);}
+  .price-grid.hidden{display:none;}
+  .price-card{position:relative; padding:30px 26px; display:flex; flex-direction:column; background:var(--bg-2);}
+  .price-card + .price-card{border-left:1px solid var(--line-2);}
+  .price-card.featured{background:linear-gradient(180deg, rgba(40,105,210,.16), rgba(40,105,210,.02) 60%), var(--panel); box-shadow:inset 0 3px 0 var(--accent);}
+  .price-badge{position:absolute; top:16px; right:16px; background:var(--brand-2); color:#fff; font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:4px 8px;}
+  .price-card h3{font-size:24px; margin-bottom:10px;}
+  .price-desc{color:var(--dim); font-size:14px; min-height:44px;}
+  .price-amount{margin:26px 0 22px; padding-top:18px; border-top:1px solid var(--line);}
+  .price-amount .from{display:block; font-family:var(--mono); font-size:10.5px; color:var(--dimmer); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;}
+  .price-amount .num{font-family:var(--display); font-weight:800; font-size:28px; letter-spacing:-.02em;}
+  .price-features{list-style:none; margin:0 0 28px; padding:0; display:grid; gap:10px; flex:1;}
+  .price-features li{display:flex; gap:10px; font-size:14px; color:#d4d4d4;}
+  .price-features svg{color:var(--accent); flex-shrink:0; margin-top:3px;}
+  .price-note{margin-top:18px; color:var(--dimmer);}
 
   /* ---------- CONTACT ---------- */
-  .contact-box{
-    background:linear-gradient(135deg, rgba(0,245,255,.08), rgba(123,47,255,.1) 55%, rgba(255,45,107,.08));
-    border:1px solid var(--border); border-radius:28px; padding:56px; text-align:center;
+  .cta-big{display:block; background:var(--brand); color:#fff; text-align:center; padding:clamp(28px,5vw,56px) 16px; position:relative; overflow:hidden; transition:background .3s;}
+  .cta-big:hover{background:var(--brand-2);}
+  .cta-big b{display:block; font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:clamp(40px, 6.2vw, 100px); line-height:.88; letter-spacing:-.04em;}
+  .cta-big .mono{display:block; margin-top:14px; opacity:.85;}
+  .contact-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:48px; margin-top:56px; align-items:end;}
+  .contact-grid h2{font-size:clamp(26px, 2.9vw, 42px);}
+  .contact-grid p{color:var(--dim); font-size:16px; margin-bottom:24px;}
+  .contact-actions{display:flex; gap:10px; flex-wrap:wrap;}
+  .contact-meta{display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:22px; color:var(--dim); font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;}
+  .contact-meta a:hover{color:var(--accent);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:linear-gradient(180deg, var(--bg) 0%, var(--brand-deep) 45%, var(--brand) 100%); padding-top:90px; overflow:hidden;}
+  .foot-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px;}
+  .foot-nav{border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.25);}
+  .foot-nav a{display:flex; justify-content:space-between; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.1); font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;}
+  .foot-nav a:last-child{border-bottom:0;}
+  .foot-nav a:hover{background:rgba(255,255,255,.06);}
+  .foot-contact{grid-column:3; display:grid; gap:14px; align-content:start;}
+  .foot-contact a,.foot-contact span{font-family:var(--mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase;}
+  .foot-contact a:hover{color:#fff; text-decoration:underline;}
+  .foot-socials{display:flex; gap:8px;}
+  .foot-socials a{width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.14);}
+  .foot-word{font-family:var(--display); font-weight:900; text-transform:uppercase; font-size:clamp(40px, 13vw, 210px); line-height:.78; letter-spacing:-.055em; margin:70px 0 0; white-space:nowrap; color:#fff;}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 22px; border-top:1px solid rgba(255,255,255,.14); font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.75);}
+
+  /* ---------- REVEAL ---------- */
+  .rv{opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
+  .rv.in{opacity:1; transform:none;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .grid-bg .wrap{grid-template-columns:repeat(2,1fr);}
+    .hero-row,.sec-head,.about-grid,.contact-grid{grid-template-columns:1fr;}
+    .sec-head p{justify-self:start;}
+    .about-points{grid-template-columns:1fr;}
+    .about-point + .about-point{padding-left:0; border-left:0; border-top:1px solid var(--line); margin-top:22px;}
+    .about-point .n{margin-bottom:10px;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .stat:nth-child(3){border-left:0; padding-left:0;}
+    .stat:nth-child(n+3){border-top:1px solid var(--line);}
+    .price-grid{grid-template-columns:1fr;}
+    .price-card + .price-card{border-left:0; border-top:1px solid var(--line-2);}
+    .process-item{grid-template-columns:60px 1fr;}
+    .process-item p{grid-column:2;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .foot-contact{grid-column:auto;}
   }
-  .contact-box h2{font-size:clamp(26px,4vw,38px);}
-  .contact-box p{margin-top:14px; color:var(--text-dim); font-size:16px; max-width:520px; margin-left:auto; margin-right:auto;}
-  .contact-actions{display:flex; gap:14px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
-  .contact-meta{display:flex; gap:28px; justify-content:center; margin-top:36px; flex-wrap:wrap; font-size:13.5px; color:var(--text-dim);}
-  .contact-meta a:hover{color:var(--text);}
-
-  footer{border-top:1px solid var(--border); padding:36px 0; margin-top:20px;}
-  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:13.5px; color:var(--text-dimmer);}
-  .footer-links{display:flex; gap:22px;}
-  .footer-links a:hover{color:var(--text-dim);}
-
-  ::selection{background:var(--violet); color:#fff;}
+  @media (max-width:640px){
+    :root{--gutter:16px;}
+    .sec{padding:80px 0;}
+    .hero-top{padding-top:110px;}
+    .hero-info .wrap{grid-template-columns:1fr 1fr;}
+    .hero-info .mono:nth-child(2){border-right:1px solid var(--line);}
+    .hero-info .mono:nth-child(n+3){border-top:1px solid var(--line);}
+    .strip .wrap{grid-template-columns:1fr;}
+    .strip-cell:nth-child(1),.strip-cell:nth-child(3){display:none;}
+    .pf-grid{grid-template-columns:1fr;}
+    .pf-card:first-child .pf-media{aspect-ratio:16/9;}
+    .svc-item summary,.svc-body{grid-template-columns:44px 1fr auto;}
+    .svc-body .ic{display:none;}
+    .nav-links{grid-template-columns:1fr;}
+    .sec-foot .btn{min-width:0; width:100%;}
+    .foot-grid{grid-template-columns:1fr;}
+    .stat h3{font-size:52px;}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <nav>
-    <a href="#top" class="brand"><img class="mark" src="/assets/img/liswan-dev-logo-round.svg" alt="" width="36" height="36">liswan.dev</a>
-    <div class="nav-links" id="navLinks">
-      <a href="#about">Tentang</a>
-      <a href="#services">Layanan</a>
-      <a href="#portfolio">Portofolio</a>
-      <a href="#process">Proses</a>
-      <a href="#pricing">Harga</a>
-      <a href="#contact">Kontak</a>
+<div class="grid-bg" aria-hidden="true"><div class="wrap"><span></span><span></span><span></span><span></span></div></div>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" id="nav" aria-label="Navigasi utama">
+  <div class="nav-bar">
+    <a href="#top" class="brand"><img src="assets/img/liswan-dev-logo-round-light.svg" alt="" width="28" height="28">liswan.dev<sup>®</sup></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navPanel">Menu <span class="menu-ic" aria-hidden="true"><i></i><i></i><i></i></span></button>
+  </div>
+  <div class="nav-panel" id="navPanel">
+    <div>
+      <div class="nav-links">
+        <a href="#about">Tentang <span>01</span></a>
+        <a href="#portfolio">Portofolio <span>02</span></a>
+        <a href="#services">Layanan <span>03</span></a>
+        <a href="#process">Proses <span>04</span></a>
+        <a href="#pricing">Harga <span>05</span></a>
+        <a href="#contact">Kontak <span>06</span></a>
+        <a href="/case-studies/">Case Studies <span>↗</span></a>
+        <a href="/client/login/">Client Portal <span>↗</span></a>
+      </div>
+      <a href="mailto:hello@liswan.dev" class="btn btn-brand"><span class="roll"><span>Konsultasi Gratis</span><span>Konsultasi Gratis</span></span></a>
     </div>
-    <div class="nav-cta">
-      <a href="#contact" class="btn btn-ghost">Kontak</a>
-      <a href="mailto:hello@liswan.dev" class="btn btn-grad">Konsultasi Gratis</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
-    </div>
-  </nav>
-</header>
+  </div>
+</nav>
 
 <main id="top">
 
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
+    <div class="hero-media" aria-hidden="true"><img src="projects/mockup-asset-management.webp" alt="" fetchpriority="high"></div>
+    <div class="wrap hero-top">
+      <span class="eyebrow" id="c-hero-eyebrow">IT Support &amp; Software Developer</span>
+      <h1 id="c-hero-headline" class="rv">Sistem Internal Bisnis yang <span class="grad-text">Rapi, Otomatis,</span> dan Mudah Dipakai</h1>
+      <div class="hero-row">
         <div>
-          <span class="eyebrow" id="c-hero-eyebrow">IT Support &amp; Software Developer</span>
-          <h1 id="c-hero-headline">Sistem Internal Bisnis yang <span class="grad-text">Rapi, Otomatis,</span> dan Mudah Dipakai</h1>
-          <p class="hero-sub" id="c-hero-sub">Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.</p>
-          <div class="hero-actions">
-            <a href="mailto:hello@liswan.dev" class="btn btn-grad" id="c-hero-cta-primary">Konsultasi Gratis</a>
-            <a href="#portfolio" class="btn btn-ghost" id="c-hero-cta-secondary">Lihat Portofolio</a>
+          <div class="hero-rating">
+            <span class="big" id="c-hero-kpi">6+</span>
+            <span class="mono" id="c-hero-kpi-label">Sistem internal yang sudah dibangun</span>
           </div>
           <div class="stack-row" id="c-hero-stack">
             <span class="stack-pill">Google Apps Script</span>
@@ -301,9 +376,36 @@
             <span class="stack-pill">JavaScript</span>
           </div>
         </div>
-        <div class="hero-card">
-          <div class="hero-card-inner">
-            <div class="hero-card-dots"><span></span><span></span><span></span></div>
+        <div class="hero-right">
+          <p id="c-hero-sub">Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.</p>
+          <div class="hero-actions">
+            <a href="mailto:hello@liswan.dev" class="btn btn-brand" id="c-hero-cta-primary">Konsultasi Gratis</a>
+            <a href="#portfolio" class="btn btn-line" id="c-hero-cta-secondary">Lihat Portofolio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-info">
+      <div class="wrap">
+        <span class="mono">[Indonesia — Remote]</span>
+        <span class="mono">[Custom, bukan template]</span>
+        <span class="mono">[Respon 1×24 jam]</span>
+        <span class="mono"><i class="live-dot"></i><span id="clock">--:--:--</span>&nbsp;WIB</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">README.MD</span><span class="strip-cell mono" id="c-about-eyebrow">Tentang Kami</span><span class="strip-cell mono">PROFILE.JSON</span></div></div>
+  <section id="about" class="sec">
+    <div class="wrap">
+      <h2 class="about-statement rv" id="c-about-title">Fokus pada satu hal: <span class="grad-text">sistem internal</span> yang benar-benar dipakai</h2>
+      <div class="about-grid">
+        <div class="rv">
+          <p class="about-desc" id="c-about-desc">Saya Liswan Susanto, membangun tools operasional yang membantu perusahaan mengelola pekerjaan sehari-hari dengan lebih efisien, akurat, dan transparan — mulai dari input data sampai laporan ke manajemen.</p>
+          <a href="/profile/" class="btn btn-line"><span class="roll"><span>Profil Lengkap</span><span>Profil Lengkap</span></span></a>
+          <div class="spec">
+            <div class="spec-head mono"><span>system.spec</span><b>● live</b></div>
             <div id="c-hero-card-lines">
               <div class="hero-card-line"><span class="k">Sistem</span><span class="v">Asset Management</span></div>
               <div class="hero-card-line"><span class="k">Status</span><span class="v">Live &amp; Digunakan</span></div>
@@ -314,9 +416,64 @@
             <span class="hero-card-badge" id="c-hero-card-badge">&#9679; DIBANGUN CUSTOM UNTUK KEBUTUHAN ANDA</span>
           </div>
         </div>
+        <div class="about-points rv" id="c-about-points">
+          <div class="about-point"><span class="n mono">[01]</span><h4>Sesuai proses kerja Anda</h4><p>Alur sistem dirancang mengikuti workflow yang sudah berjalan, bukan memaksa Anda mengikuti template.</p></div>
+          <div class="about-point"><span class="n mono">[02]</span><h4>Cepat dipakai, minim training</h4><p>Antarmuka sederhana dan jelas, supaya tim Anda tidak butuh waktu lama untuk beradaptasi.</p></div>
+          <div class="about-point"><span class="n mono">[03]</span><h4>Didampingi sampai jalan</h4><p>Bukan cuma serah terima kode — saya bantu sampai sistem benar-benar dipakai tim Anda.</p></div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="stats" id="c-stats">
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee">
+    <span>Sistem Internal Bisnis</span><span>Approval &amp; Document Workflow</span><span>Dashboard &amp; Reporting</span><span>Otomasi Google Apps Script</span><span>Integrasi Google Drive</span><span>Website &amp; WordPress</span>
+    <span>Sistem Internal Bisnis</span><span>Approval &amp; Document Workflow</span><span>Dashboard &amp; Reporting</span><span>Otomasi Google Apps Script</span><span>Integrasi Google Drive</span><span>Website &amp; WordPress</span>
+  </div></div>
+
+  <!-- ================= PORTFOLIO ================= -->
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">ASSET_MGMT.GS</span><span class="strip-cell mono" id="c-portfolio-eyebrow">Portofolio</span><span class="strip-cell mono">DEPLOY_LOG.TXT</span></div></div>
+  <section id="portfolio" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="rv" id="c-portfolio-title">Sistem yang sudah dibangun</h2>
+        <p class="rv" id="c-portfolio-desc">Sebagian ditampilkan dengan data contoh untuk kebutuhan demonstrasi — data rahasia perusahaan tidak dipublikasikan.</p>
+      </div>
+      <div class="pf-grid" id="c-portfolio-grid">
+        <article class="pf-card rv"><div class="pf-media"><img src="projects/mockup-asset-management.webp" alt="Asset Management System" loading="lazy"><span class="file mono">asset_management_system</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[01]</span><h3>Asset Management System</h3><p>Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.</p><div class="pf-chips mono"><span class="pf-tag">Sistem</span><span>QR Code</span><span>Role-based Access</span><span>Apps Script</span></div></div></article>
+        <article class="pf-card rv"><div class="pf-media"><div class="pf-ph"><b>02</b></div><span class="file mono">asset_mutation_workflow</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[02]</span><h3>Asset Mutation Workflow</h3><p>Alur permintaan mutasi aset, approval manajerial via email, hingga generate dokumen serah terima (BAST).</p><div class="pf-chips mono"><span class="pf-tag">Workflow</span><span>Email Approval</span><span>Auto Document</span></div></div></article>
+        <article class="pf-card rv"><div class="pf-media"><div class="pf-ph"><b>03</b></div><span class="file mono">liswan_dev_nota_invoice_system</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[03]</span><h3>liswan.dev — Nota &amp; Invoice System</h3><p>Aplikasi pembuatan nota, review, invoice, dan inventory dalam satu platform berbasis Google Sheets.</p><div class="pf-chips mono"><span class="pf-tag">Sistem</span><span>Google Sheets</span><span>Auto Nomor Dokumen</span><span>TTD Digital</span></div></div></article>
+        <article class="pf-card rv"><div class="pf-media"><img src="projects/mockup-internal-company-website.webp" alt="Internal Company Website" loading="lazy"><span class="file mono">internal_company_website</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[04]</span><h3>Internal Company Website</h3><p>Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.</p><div class="pf-chips mono"><span class="pf-tag">Portal</span><span>Multi Departemen</span><span>Reporting</span></div></div></article>
+        <article class="pf-card rv"><div class="pf-media"><img src="projects/mockup-daily-sales-activity-report.webp" alt="Daily Sales Activity Report" loading="lazy"><span class="file mono">daily_sales_activity_report</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[05]</span><h3>Daily Sales Activity Report</h3><p>Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.</p><div class="pf-chips mono"><span class="pf-tag">Reporting</span><span>Dashboard Cabang</span><span>Target Tracking</span></div></div></article>
+        <article class="pf-card rv"><div class="pf-media"><img src="projects/mockup-document-file-service.webp" alt="Document &amp; File Service" loading="lazy"><span class="file mono">document_file_service</span><span class="rec mono"><i class="live-dot"></i>Live</span></div><div class="pf-meta"><span class="idx mono">[06]</span><h3>Document &amp; File Service</h3><p>Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.</p><div class="pf-chips mono"><span class="pf-tag">Google Drive</span><span>Access Control</span><span>Drive Integration</span></div></div></article>
+      </div>
+      <div class="sec-foot"><a href="/case-studies/" class="btn btn-brand"><span class="roll"><span>Lihat Semua Case Study</span><span>Lihat Semua Case Study</span></span></a></div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">SERVICES.JSON</span><span class="strip-cell mono" id="c-services-eyebrow">Layanan Kami</span><span class="strip-cell mono">APPROVAL_FLOW.GS</span></div></div>
+  <section id="services" class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="rv" id="c-services-title">Apa yang bisa saya bantu</h2>
+        <p class="rv" id="c-services-desc">Setiap layanan bisa berdiri sendiri atau digabung jadi satu sistem terintegrasi.</p>
+      </div>
+      <div class="svc-list" id="c-services-grid">
+        <details class="svc-item" open><summary><span class="n mono">[001]</span><h3>Sistem Internal Bisnis</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Manajemen aset, inventaris, dan operasional harian dalam satu sistem yang mudah dipantau.</p></div></details>
+        <details class="svc-item"><summary><span class="n mono">[002]</span><h3>Approval &amp; Document Workflow</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Alur persetujuan bertingkat, notifikasi email otomatis, dan riwayat dokumen yang rapi.</p></div></details>
+        <details class="svc-item"><summary><span class="n mono">[003]</span><h3>Dashboard &amp; Reporting</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Data operasional dan penjualan ditampilkan real-time, mudah dibaca oleh manajemen.</p></div></details>
+        <details class="svc-item"><summary><span class="n mono">[004]</span><h3>Otomasi Google Apps Script</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Otomatiskan pekerjaan berulang di Google Sheets, Docs, dan Gmail tanpa perlu server tambahan.</p></div></details>
+        <details class="svc-item"><summary><span class="n mono">[005]</span><h3>Integrasi Google Drive</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Upload, penamaan otomatis, dan pengaturan akses dokumen langsung dari sistem internal Anda.</p></div></details>
+        <details class="svc-item"><summary><span class="n mono">[006]</span><h3>Website &amp; WordPress</h3><span class="svc-plus" aria-hidden="true"></span></summary><div class="svc-body"><p>Website company profile atau aplikasi berbasis shortcode WordPress untuk kebutuhan internal.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="stats-head"><h2 class="rv">Angka yang tidak muncul dalam semalam</h2></div>
+      <div class="stats rv" id="c-stats">
         <div class="stat"><h3>6+</h3><p>Sistem internal yang sudah dibangun</p></div>
         <div class="stat"><h3>100%</h3><p>Dirancang custom, bukan template</p></div>
         <div class="stat"><h3>1</h3><p>Kontak langsung, tanpa lapisan sales</p></div>
@@ -325,133 +482,13 @@
     </div>
   </section>
 
-  <!-- ================= ABOUT ================= -->
-  <section id="about">
-    <div class="wrap about-grid">
-      <div>
-        <span class="eyebrow" id="c-about-eyebrow">Tentang Kami</span>
-        <h2 id="c-about-title">Fokus pada satu hal: <span class="grad-text">sistem internal</span> yang benar-benar dipakai</h2>
-        <p id="c-about-desc" style="margin-top:18px; color:var(--text-dim); font-size:15.5px;">
-          Saya Liswan Susanto, membangun tools operasional yang membantu perusahaan mengelola pekerjaan sehari-hari
-          dengan lebih efisien, akurat, dan transparan — mulai dari input data sampai laporan ke manajemen.
-        </p>
-      </div>
-      <div class="about-points" id="c-about-points">
-        <div class="about-point">
-          <div class="ic">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <div><h4>Sesuai proses kerja Anda</h4><p>Alur sistem dirancang mengikuti workflow yang sudah berjalan, bukan memaksa Anda mengikuti template.</p></div>
-        </div>
-        <div class="about-point">
-          <div class="ic">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <div><h4>Cepat dipakai, minim training</h4><p>Antarmuka sederhana dan jelas, supaya tim Anda tidak butuh waktu lama untuk beradaptasi.</p></div>
-        </div>
-        <div class="about-point">
-          <div class="ic">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <div><h4>Didampingi sampai jalan</h4><p>Bukan cuma serah terima kode — saya bantu sampai sistem benar-benar dipakai tim Anda.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SERVICES ================= -->
-  <section id="services" style="background:var(--bg-alt);">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" id="c-services-eyebrow">Layanan Kami</span>
-        <h2 id="c-services-title">Apa yang bisa saya bantu</h2>
-        <p id="c-services-desc">Setiap layanan bisa berdiri sendiri atau digabung jadi satu sistem terintegrasi.</p>
-      </div>
-      <div class="card-grid" id="c-services-grid">
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
-          <h3>Sistem Internal Bisnis</h3>
-          <p>Manajemen aset, inventaris, dan operasional harian dalam satu sistem yang mudah dipantau.</p>
-        </div>
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <h3>Approval &amp; Document Workflow</h3>
-          <p>Alur persetujuan bertingkat, notifikasi email otomatis, dan riwayat dokumen yang rapi.</p>
-        </div>
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14"/></svg></div>
-          <h3>Dashboard &amp; Reporting</h3>
-          <p>Data operasional dan penjualan ditampilkan real-time, mudah dibaca oleh manajemen.</p>
-        </div>
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-          <h3>Otomasi Google Apps Script</h3>
-          <p>Otomatiskan pekerjaan berulang di Google Sheets, Docs, dan Gmail tanpa perlu server tambahan.</p>
-        </div>
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 001.6-9.75A6 6 0 006 9.5 4.5 4.5 0 003 15z"/></svg></div>
-          <h3>Integrasi Google Drive</h3>
-          <p>Upload, penamaan otomatis, dan pengaturan akses dokumen langsung dari sistem internal Anda.</p>
-        </div>
-        <div class="svc-card">
-          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></div>
-          <h3>Website &amp; WordPress</h3>
-          <p>Website company profile atau aplikasi berbasis shortcode WordPress untuk kebutuhan internal.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PORTFOLIO ================= -->
-  <section id="portfolio">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" id="c-portfolio-eyebrow">Portofolio</span>
-        <h2 id="c-portfolio-title">Sistem yang sudah dibangun</h2>
-        <p id="c-portfolio-desc">Sebagian ditampilkan dengan data contoh untuk kebutuhan demonstrasi — data rahasia perusahaan tidak dipublikasikan.</p>
-      </div>
-      <div class="card-grid" id="c-portfolio-grid">
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>Asset Management System</h3><span class="pf-tag">Sistem</span></div>
-          <p>Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.</p>
-          <div class="pf-chips"><span class="pf-chip">QR Code</span><span class="pf-chip">Role-based Access</span><span class="pf-chip">Apps Script</span></div>
-        </div>
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>Asset Mutation Workflow</h3><span class="pf-tag">Workflow</span></div>
-          <p>Alur permintaan mutasi aset, approval manajerial via email, hingga generate dokumen serah terima (BAST).</p>
-          <div class="pf-chips"><span class="pf-chip">Email Approval</span><span class="pf-chip">Auto Document</span></div>
-        </div>
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>liswan.dev — Nota &amp; Invoice System</h3><span class="pf-tag">Sistem</span></div>
-          <p>Aplikasi pembuatan nota, review, invoice, dan inventory dalam satu platform berbasis Google Sheets.</p>
-          <div class="pf-chips"><span class="pf-chip">Google Sheets</span><span class="pf-chip">Auto Nomor Dokumen</span><span class="pf-chip">TTD Digital</span></div>
-        </div>
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>Internal Company Website</h3><span class="pf-tag">Portal</span></div>
-          <p>Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.</p>
-          <div class="pf-chips"><span class="pf-chip">Multi Departemen</span><span class="pf-chip">Reporting</span></div>
-        </div>
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>Daily Sales Activity Report</h3><span class="pf-tag">Reporting</span></div>
-          <p>Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.</p>
-          <div class="pf-chips"><span class="pf-chip">Dashboard Cabang</span><span class="pf-chip">Target Tracking</span></div>
-        </div>
-        <div class="pf-card">
-          <div class="pf-card-top"><h3>Document &amp; File Service</h3><span class="pf-tag">Google Drive</span></div>
-          <p>Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.</p>
-          <div class="pf-chips"><span class="pf-chip">Access Control</span><span class="pf-chip">Drive Integration</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= PROCESS ================= -->
-  <section id="process" style="background:var(--bg-alt);">
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">BRIEF.MD</span><span class="strip-cell mono" id="c-process-eyebrow">Proses Kerja</span><span class="strip-cell mono">RELEASE_V1.0</span></div></div>
+  <section id="process" class="sec">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" id="c-process-eyebrow">Proses Kerja</span>
-        <h2 id="c-process-title">Bagaimana sistem Anda dibangun</h2>
-        <p id="c-process-desc">Lima tahap yang jelas, supaya Anda tahu persis di mana progresnya setiap saat.</p>
+      <div class="sec-head">
+        <h2 class="rv" id="c-process-title">Bagaimana sistem Anda dibangun</h2>
+        <p class="rv" id="c-process-desc">Lima tahap yang jelas, supaya Anda tahu persis di mana progresnya setiap saat.</p>
       </div>
       <div class="process-list" id="c-process-list">
         <div class="process-item"><span class="process-num">01</span><h4>Konsultasi &amp; Briefing</h4><p>Diskusi kebutuhan, masalah yang ingin diselesaikan, dan ekspektasi hasil akhir.</p></div>
@@ -464,121 +501,55 @@
   </section>
 
   <!-- ================= PRICING ================= -->
-  <section id="pricing">
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">QUOTE.PDF</span><span class="strip-cell mono" id="c-pricing-eyebrow">Harga</span><span class="strip-cell mono">INVOICE_0001</span></div></div>
+  <section id="pricing" class="sec">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" id="c-pricing-eyebrow">Harga</span>
-        <h2 id="c-pricing-title">Investasi yang jelas sejak awal</h2>
-        <p id="c-pricing-desc">Estimasi harga mulai dari. Harga final tergantung kompleksitas dan jumlah modul — didiskusikan setelah konsultasi gratis.</p>
+      <div class="sec-head">
+        <h2 class="rv" id="c-pricing-title">Investasi yang jelas sejak awal</h2>
+        <p class="rv" id="c-pricing-desc">Estimasi harga mulai dari. Harga final tergantung kompleksitas dan jumlah modul — didiskusikan setelah konsultasi gratis.</p>
       </div>
-
       <div class="price-toggle" role="tablist">
         <button class="price-toggle-btn active" data-target="apps" role="tab" aria-selected="true" id="c-pricing-tab-apps">Aplikasi Custom</button>
         <button class="price-toggle-btn" data-target="website" role="tab" aria-selected="false" id="c-pricing-tab-website">Website</button>
       </div>
-
-      <div class="price-group" id="price-apps">
-        <div class="price-grid" id="c-pricing-apps-grid">
-          <div class="price-card">
-            <h3>Starter</h3>
-            <p class="price-desc">Untuk satu proses kerja spesifik, misalnya form + approval sederhana.</p>
-            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 2.500.000</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 alur kerja / workflow</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Berbasis Google Sheets / Apps Script</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Notifikasi email otomatis</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Revisi selama pengerjaan</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Starter" class="btn btn-ghost btn-block">Konsultasi</a>
-          </div>
-          <div class="price-card featured">
-            <span class="price-badge">Paling Populer</span>
-            <h3>Business</h3>
-            <p class="price-desc">Sistem multi-modul dengan dashboard dan akses multi-role.</p>
-            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 7.500.000</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Hingga 3–5 modul terintegrasi</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Dashboard &amp; reporting</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Akses berbasis role/departemen</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Integrasi Google Drive</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Pendampingan 30 hari setelah live</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Business" class="btn btn-grad btn-block">Konsultasi</a>
-          </div>
-          <div class="price-card">
-            <h3>Enterprise</h3>
-            <p class="price-desc">Sistem berskala besar, multi-departemen, dengan integrasi khusus.</p>
-            <div class="price-amount"><div><span class="from">&nbsp;</span><span class="num" style="font-size:24px;">Hubungi Kami</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Modul &amp; integrasi tanpa batas</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Arsitektur sistem custom</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Dukungan jangka panjang</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>SLA &amp; penawaran khusus</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Enterprise" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
-          </div>
+      <div class="price-grid" id="price-apps">
+        <div id="c-pricing-apps-grid" style="display:contents">
+          <div class="price-card"><h3>Starter</h3><p class="price-desc">Untuk satu proses kerja spesifik, misalnya form + approval sederhana.</p><div class="price-amount"><span class="from">Mulai dari</span><span class="num">Rp 2.500.000</span></div><ul class="price-features"><li>1 alur kerja / workflow</li><li>Berbasis Google Sheets / Apps Script</li><li>Notifikasi email otomatis</li><li>Revisi selama pengerjaan</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Starter" class="btn btn-line btn-block">Konsultasi</a></div>
+          <div class="price-card featured"><span class="price-badge">Paling Populer</span><h3>Business</h3><p class="price-desc">Sistem multi-modul dengan dashboard dan akses multi-role.</p><div class="price-amount"><span class="from">Mulai dari</span><span class="num">Rp 7.500.000</span></div><ul class="price-features"><li>Hingga 3–5 modul terintegrasi</li><li>Dashboard &amp; reporting</li><li>Akses berbasis role/departemen</li><li>Integrasi Google Drive</li><li>Pendampingan 30 hari setelah live</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Business" class="btn btn-brand btn-block">Konsultasi</a></div>
+          <div class="price-card"><h3>Enterprise</h3><p class="price-desc">Sistem berskala besar, multi-departemen, dengan integrasi khusus.</p><div class="price-amount"><span class="from">&nbsp;</span><span class="num">Hubungi Kami</span></div><ul class="price-features"><li>Modul &amp; integrasi tanpa batas</li><li>Arsitektur sistem custom</li><li>Dukungan jangka panjang</li><li>SLA &amp; penawaran khusus</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Paket%20Enterprise" class="btn btn-line btn-block">Diskusikan Kebutuhan</a></div>
         </div>
       </div>
-
-      <div class="price-group hidden" id="price-website">
-        <div class="price-grid" id="c-pricing-website-grid">
-          <div class="price-card">
-            <h3>Landing Page</h3>
-            <p class="price-desc">Satu halaman untuk memperkenalkan produk atau jasa dengan cepat.</p>
-            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 1.500.000</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>1 halaman, desain responsif</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Section harga &amp; kontak (CTA)</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Terhubung WhatsApp / Email</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Revisi selama pengerjaan</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Landing%20Page" class="btn btn-ghost btn-block">Konsultasi</a>
-          </div>
-          <div class="price-card featured">
-            <span class="price-badge">Paling Populer</span>
-            <h3>Company Profile</h3>
-            <p class="price-desc">Website multi-section seperti ini: Tentang, Layanan, Portofolio, Harga, Kontak.</p>
-            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 3.500.000</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Hingga 6 section sesuai kebutuhan</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Desain custom, bukan template</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>SEO dasar &amp; domain custom</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Pendampingan 14 hari setelah live</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Company%20Profile" class="btn btn-grad btn-block">Konsultasi</a>
-          </div>
-          <div class="price-card">
-            <h3>Website + Admin (CMS)</h3>
-            <p class="price-desc">Bisa update konten, portofolio, atau artikel sendiri lewat panel admin.</p>
-            <div class="price-amount"><div><span class="from">Mulai dari</span><span class="num">Rp 6.000.000</span></div></div>
-            <ul class="price-features">
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Semua fitur Company Profile</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Panel admin untuk update konten</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Login &amp; manajemen user</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Training pemakaian admin</li>
-            </ul>
-            <a href="mailto:hello@liswan.dev?subject=Konsultasi%20Website%20CMS" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
-          </div>
+      <div class="price-grid hidden" id="price-website">
+        <div id="c-pricing-website-grid" style="display:contents">
+          <div class="price-card"><h3>Landing Page</h3><p class="price-desc">Satu halaman untuk memperkenalkan produk atau jasa dengan cepat.</p><div class="price-amount"><span class="from">Mulai dari</span><span class="num">Rp 1.500.000</span></div><ul class="price-features"><li>1 halaman, desain responsif</li><li>Section harga &amp; kontak (CTA)</li><li>Terhubung WhatsApp / Email</li><li>Revisi selama pengerjaan</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Landing%20Page" class="btn btn-line btn-block">Konsultasi</a></div>
+          <div class="price-card featured"><span class="price-badge">Paling Populer</span><h3>Company Profile</h3><p class="price-desc">Website multi-section seperti ini: Tentang, Layanan, Portofolio, Harga, Kontak.</p><div class="price-amount"><span class="from">Mulai dari</span><span class="num">Rp 3.500.000</span></div><ul class="price-features"><li>Hingga 6 section sesuai kebutuhan</li><li>Desain custom, bukan template</li><li>SEO dasar &amp; domain custom</li><li>Pendampingan 14 hari setelah live</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Company%20Profile" class="btn btn-brand btn-block">Konsultasi</a></div>
+          <div class="price-card"><h3>Website + Admin (CMS)</h3><p class="price-desc">Bisa update konten, portofolio, atau artikel sendiri lewat panel admin.</p><div class="price-amount"><span class="from">Mulai dari</span><span class="num">Rp 6.000.000</span></div><ul class="price-features"><li>Semua fitur Company Profile</li><li>Panel admin untuk update konten</li><li>Login &amp; manajemen user</li><li>Training pemakaian admin</li></ul><a href="mailto:hello@liswan.dev?subject=Konsultasi%20Website%20CMS" class="btn btn-line btn-block">Diskusikan Kebutuhan</a></div>
         </div>
       </div>
+      <p class="price-note mono">* Harga final dikonfirmasi setelah konsultasi singkat.</p>
     </div>
   </section>
 
   <!-- ================= CONTACT ================= -->
-  <section id="contact">
+  <div class="strip"><div class="wrap"><span class="strip-cell mono">NEW_PROJECT.MD</span><span class="strip-cell mono" id="c-contact-eyebrow">Kontak</span><span class="strip-cell mono">HELLO.TXT</span></div></div>
+  <section id="contact" class="sec">
     <div class="wrap">
-      <div class="contact-box">
-        <span class="eyebrow" id="c-contact-eyebrow">Kontak</span>
-        <h2 id="c-contact-title">Punya proses kerja yang masih manual?</h2>
-        <p id="c-contact-desc">Ceritakan kondisi saat ini — saya bantu petakan jadi sistem yang lebih rapi dan otomatis. Konsultasi awal tidak dipungut biaya.</p>
-        <div class="contact-actions">
-          <a href="mailto:hello@liswan.dev" class="btn btn-grad" id="c-contact-cta-email">Email hello@liswan.dev</a>
-          <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-ghost" id="c-contact-cta-github">Lihat GitHub</a>
+      <a href="mailto:hello@liswan.dev" class="cta-big rv" id="c-contact-cta-big"><b>Mulai Proyek</b><span class="mono">Konsultasi awal gratis — klik untuk kirim email</span></a>
+      <div class="contact-grid">
+        <div class="rv">
+          <h2 id="c-contact-title">Punya proses kerja yang masih manual?</h2>
         </div>
-        <div class="contact-meta">
-          <a href="mailto:hello@liswan.dev" id="c-contact-meta-email">hello@liswan.dev</a>
-          <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" id="c-contact-meta-github">github.com/liswan-dev</a>
-          <span id="c-contact-response">Respon dalam 1×24 jam</span>
+        <div class="rv">
+          <p id="c-contact-desc">Ceritakan kondisi saat ini — saya bantu petakan jadi sistem yang lebih rapi dan otomatis. Konsultasi awal tidak dipungut biaya.</p>
+          <div class="contact-actions">
+            <a href="mailto:hello@liswan.dev" class="btn btn-brand" id="c-contact-cta-email">Email hello@liswan.dev</a>
+            <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" class="btn btn-line" id="c-contact-cta-github">Lihat GitHub</a>
+          </div>
+          <div class="contact-meta">
+            <a href="mailto:hello@liswan.dev" id="c-contact-meta-email">hello@liswan.dev</a>
+            <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" id="c-contact-meta-github">github.com/liswan-dev</a>
+            <span id="c-contact-response">Respon dalam 1×24 jam</span>
+          </div>
         </div>
       </div>
     </div>
@@ -586,37 +557,79 @@
 
 </main>
 
+<!-- ================= FOOTER ================= -->
 <footer>
-  <div class="wrap footer-row">
-    <span id="c-footer-text">&copy; <span id="year"></span> liswan.dev — Liswan Susanto. Semua hak dilindungi.</span>
-    <div class="footer-links">
-      <a href="#services">Layanan</a>
-      <a href="#pricing">Harga</a>
-      <a href="mailto:hello@liswan.dev">Kontak</a>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-nav">
+        <a href="#top">Home <span>↳</span></a>
+        <a href="#about">Tentang <span>↳</span></a>
+        <a href="#portfolio">Portofolio <span>↳</span></a>
+        <a href="#services">Layanan <span>↳</span></a>
+        <a href="#pricing">Harga <span>↳</span></a>
+        <a href="/case-studies/">Case Studies <span>↳</span></a>
+        <a href="/client/login/">Client Portal <span>↳</span></a>
+        <a href="#contact">Kontak <span>↳</span></a>
+      </div>
+      <div></div>
+      <div class="foot-contact">
+        <div class="foot-socials">
+          <a href="https://github.com/liswan-dev" target="_blank" rel="noopener" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .5z"/></svg></a>
+          <a href="mailto:hello@liswan.dev" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg></a>
+        </div>
+        <a href="mailto:hello@liswan.dev">hello@liswan.dev</a>
+        <a href="https://github.com/liswan-dev" target="_blank" rel="noopener">github.com/liswan-dev</a>
+        <span>Indonesia — Remote</span>
+      </div>
+    </div>
+    <div class="foot-word" aria-hidden="true">Liswan.dev</div>
+    <div class="foot-bottom">
+      <span id="c-footer-text">&copy; <span id="year"></span> liswan.dev — Liswan Susanto. Semua hak dilindungi.</span>
+      <span>IT Support &amp; Software Developer</span>
     </div>
   </div>
 </footer>
 
-<script src="/assets/js/content-loader.js"></script>
+<script src="assets/js/content-loader.js"></script>
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-  var toggle = document.getElementById('navToggle');
-  var links = document.getElementById('navLinks');
-  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
-  links.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ links.classList.remove('open'); });
-  });
+  (function () {
+    var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-  document.querySelectorAll('.price-toggle-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.price-toggle-btn').forEach(function(b){
-        b.classList.remove('active'); b.setAttribute('aria-selected','false');
+    // nav menu
+    var nav = document.getElementById('nav'), btn = document.getElementById('menuBtn');
+    function setMenu(open) { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); setMenu(!nav.classList.contains('open')); });
+    document.getElementById('navPanel').addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('click', function (e) { if (!nav.contains(e.target)) setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+    // live clock (WIB)
+    var clock = document.getElementById('clock');
+    function tick() {
+      try { clock.textContent = new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false }).replace(/\./g, ':'); }
+      catch (e) { clock.textContent = new Date().toLocaleTimeString(); }
+    }
+    tick(); setInterval(tick, 1000);
+
+    // pricing tabs
+    document.querySelectorAll('.price-toggle-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('.price-toggle-btn').forEach(function (x) { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+        b.classList.add('active'); b.setAttribute('aria-selected', 'true');
+        document.getElementById('price-apps').classList.toggle('hidden', b.dataset.target !== 'apps');
+        document.getElementById('price-website').classList.toggle('hidden', b.dataset.target !== 'website');
       });
-      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-      document.getElementById('price-apps').classList.toggle('hidden', btn.dataset.target !== 'apps');
-      document.getElementById('price-website').classList.toggle('hidden', btn.dataset.target !== 'website');
     });
-  });
+
+    // scroll reveal (re-run after content-loader swaps markup)
+    var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
+    window.observeReveal = function () {
+      document.querySelectorAll('.rv:not(.in)').forEach(function (el) { if (io) io.observe(el); else el.classList.add('in'); });
+    };
+    window.observeReveal();
+  })();
 </script>
 </body>
 </html>

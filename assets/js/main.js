@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const revealEls = document.querySelectorAll('.reveal');
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Animations always run, even when the OS requests reduced motion.
+  const reduceMotion = false;
 
   if (revealEls.length && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);

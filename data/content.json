@@ -5,6 +5,7 @@
     "subheadline": "Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.",
     "ctaPrimaryLabel": "Konsultasi Gratis",
     "ctaSecondaryLabel": "Lihat Portofolio",
+    "image": "/projects/mockup-asset-management.webp",
     "stack": ["Google Apps Script", "WordPress / PHP", "MySQL", "Google Drive API", "JavaScript"],
     "card": {
       "lines": [
@@ -55,12 +56,12 @@
     "title": "Sistem yang sudah dibangun",
     "description": "Sebagian ditampilkan dengan data contoh untuk kebutuhan demonstrasi — data rahasia perusahaan tidak dipublikasikan.",
     "items": [
-      { "title": "Asset Management System", "tag": "Sistem", "desc": "Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.", "chips": ["QR Code", "Role-based Access", "Apps Script"] },
+      { "title": "Asset Management System", "image": "/projects/mockup-asset-management.webp", "tag": "Sistem", "desc": "Pencatatan, pelacakan, dan monitoring aset perusahaan lengkap dengan label QR code dan riwayat mutasi.", "chips": ["QR Code", "Role-based Access", "Apps Script"] },
       { "title": "Asset Mutation Workflow", "tag": "Workflow", "desc": "Alur permintaan mutasi aset, approval manajerial via email, hingga generate dokumen serah terima (BAST).", "chips": ["Email Approval", "Auto Document"] },
       { "title": "liswan.dev — Nota & Invoice System", "tag": "Sistem", "desc": "Aplikasi pembuatan nota, review, invoice, dan inventory dalam satu platform berbasis Google Sheets.", "chips": ["Google Sheets", "Auto Nomor Dokumen", "TTD Digital"] },
-      { "title": "Internal Company Website", "tag": "Portal", "desc": "Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.", "chips": ["Multi Departemen", "Reporting"] },
-      { "title": "Daily Sales Activity Report", "tag": "Reporting", "desc": "Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.", "chips": ["Dashboard Cabang", "Target Tracking"] },
-      { "title": "Document & File Service", "tag": "Google Drive", "desc": "Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.", "chips": ["Access Control", "Drive Integration"] }
+      { "title": "Internal Company Website", "image": "/projects/mockup-internal-company-website.webp", "tag": "Portal", "desc": "Portal internal berbasis departemen: Finance, HCGA, IT Support, Business Development, dan laporan mingguan.", "chips": ["Multi Departemen", "Reporting"] },
+      { "title": "Daily Sales Activity Report", "image": "/projects/mockup-daily-sales-activity-report.webp", "tag": "Reporting", "desc": "Input aktivitas sales harian, review oleh supervisor, dan ringkasan performa per cabang.", "chips": ["Dashboard Cabang", "Target Tracking"] },
+      { "title": "Document & File Service", "image": "/projects/mockup-document-file-service.webp", "tag": "Google Drive", "desc": "Portal file berbasis folder dengan kontrol akses karyawan dan integrasi upload ke Google Drive.", "chips": ["Access Control", "Drive Integration"] }
     ]
   },
 

@@ -42,6 +42,11 @@
     return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + (ICONS[name] || ICONS.check) + '</svg>';
   }
 
+  function pad(n, len) { n = String(n); while (n.length < len) n = '0' + n; return n; }
+  function slug(str) { return String(str || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''); }
+  function roll(label) { var l = esc(label); return '<span class="roll"><span>' + l + '</span><span>' + l + '</span></span>'; }
+  function revealAgain() { if (window.observeReveal) window.observeReveal(); }
+
   function renderHero(d) {
     setText('c-hero-eyebrow', d.eyebrow);
     setHtml('c-hero-headline', gradHtml(d.headline));
@@ -57,6 +62,8 @@
       }).join('');
     }
     if (d.card) setHtml('c-hero-card-badge', '&#9679; ' + esc(d.card.badge));
+    var heroImg = document.querySelector('.hero-media img');
+    if (heroImg && d.image) heroImg.src = d.image;
   }
 
   function renderStats(list) {
@@ -65,6 +72,8 @@
     el.innerHTML = list.map(function (s) {
       return '<div class="stat"><h3>' + gradHtml(s.value) + '</h3><p>' + esc(s.label) + '</p></div>';
     }).join('');
+    // hero KPI mirrors the first stat
+    if (list[0]) { setText('c-hero-kpi', list[0].value); setText('c-hero-kpi-label', list[0].label); }
   }
 
   function renderAbout(d) {
@@ -73,9 +82,9 @@
     setText('c-about-desc', d.description);
     var el = document.getElementById('c-about-points');
     if (el && d.points) {
-      el.innerHTML = d.points.map(function (p) {
-        return '<div class="about-point"><div class="ic">' + icon(p.icon, 18) + '</div>' +
-          '<div><h4>' + esc(p.title) + '</h4><p>' + esc(p.desc) + '</p></div></div>';
+      el.innerHTML = d.points.map(function (p, i) {
+        return '<div class="about-point"><span class="n mono">[' + pad(i + 1, 2) + ']</span>' +
+          '<h4>' + esc(p.title) + '</h4><p>' + esc(p.desc) + '</p></div>';
       }).join('');
     }
   }
@@ -86,10 +95,17 @@
     setText('c-services-desc', d.description);
     var el = document.getElementById('c-services-grid');
     if (el && d.items) {
-      el.innerHTML = d.items.map(function (s) {
-        return '<div class="svc-card"><div class="ic">' + icon(s.icon, 22) + '</div>' +
-          '<h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
+      el.innerHTML = d.items.map(function (s, i) {
+        return '<details class="svc-item"' + (i === 0 ? ' open' : '') + '><summary><span class="n mono">[' + pad(i + 1, 3) + ']</span>' +
+          '<h3>' + esc(s.title) + '</h3><span class="svc-plus" aria-hidden="true"></span></summary>' +
+          '<div class="svc-body"><p>' + esc(s.desc) + '</p><span class="ic">' + icon(s.icon, 40) + '</span></div></details>';
       }).join('');
+    }
+    // red marquee band repeats the service titles
+    var mq = document.getElementById('marquee');
+    if (mq && d.items && d.items.length) {
+      var once = d.items.map(function (s) { return '<span>' + esc(s.title) + '</span>'; }).join('');
+      mq.innerHTML = once + once;
     }
   }
 
@@ -99,10 +115,16 @@
     setText('c-portfolio-desc', d.description);
     var el = document.getElementById('c-portfolio-grid');
     if (el && d.items) {
-      el.innerHTML = d.items.map(function (p) {
-        var chips = (p.chips || []).map(function (c) { return '<span class="pf-chip">' + esc(c) + '</span>'; }).join('');
-        return '<div class="pf-card"><div class="pf-card-top"><h3>' + esc(p.title) + '</h3><span class="pf-tag">' + esc(p.tag) + '</span></div>' +
-          '<p>' + esc(p.desc) + '</p><div class="pf-chips">' + chips + '</div></div>';
+      el.innerHTML = d.items.map(function (p, i) {
+        var num = pad(i + 1, 2);
+        var chips = '<span class="pf-tag">' + esc(p.tag) + '</span>' + (p.chips || []).map(function (c) { return '<span>' + esc(c) + '</span>'; }).join('');
+        var media = p.image
+          ? '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy">'
+          : '<div class="pf-ph"><b>' + num + '</b></div>';
+        return '<article class="pf-card rv"><div class="pf-media">' + media +
+          '<span class="file mono">' + esc(slug(p.title)) + '</span><span class="rec mono"><i class="live-dot"></i>Live</span></div>' +
+          '<div class="pf-meta"><span class="idx mono">[' + num + ']</span><h3>' + esc(p.title) + '</h3>' +
+          '<p>' + esc(p.desc) + '</p><div class="pf-chips mono">' + chips + '</div></div></article>';
       }).join('');
     }
   }
@@ -126,10 +148,10 @@
       (tier.featured ? '<span class="price-badge">Paling Populer</span>' : '') +
       '<h3>' + esc(tier.name) + '</h3>' +
       '<p class="price-desc">' + esc(tier.desc) + '</p>' +
-      '<div class="price-amount"><div><span class="from">' + (tier.priceFrom ? esc(tier.priceFrom) : '&nbsp;') + '</span>' +
-      '<span class="num"' + (tier.priceFrom ? '' : ' style="font-size:24px;"') + '>' + esc(tier.price) + '</span></div></div>' +
+      '<div class="price-amount"><span class="from">' + (tier.priceFrom ? esc(tier.priceFrom) : '&nbsp;') + '</span>' +
+      '<span class="num">' + esc(tier.price) + '</span></div>' +
       '<ul class="price-features">' + features + '</ul>' +
-      '<a href="mailto:hello@liswan.dev?subject=' + subject + '" class="btn ' + (tier.featured ? 'btn-grad' : 'btn-ghost') + ' btn-block">' + esc(tier.ctaLabel || 'Konsultasi') + '</a>' +
+      '<a href="mailto:hello@liswan.dev?subject=' + subject + '" class="btn ' + (tier.featured ? 'btn-brand' : 'btn-line') + ' btn-block">' + roll(tier.ctaLabel || 'Konsultasi') + '</a>' +
       '</div>';
   }
 
@@ -149,7 +171,7 @@
     setText('c-contact-title', d.title);
     setText('c-contact-desc', d.description);
     setText('c-contact-cta-email', 'Email ' + d.email);
-    var emailLinks = ['c-hero-cta-primary', 'c-contact-cta-email', 'c-contact-meta-email'];
+    var emailLinks = ['c-hero-cta-primary', 'c-contact-cta-email', 'c-contact-meta-email', 'c-contact-cta-big'];
     emailLinks.forEach(function (id) {
       var el = document.getElementById(id);
       if (el && el.tagName === 'A' && d.email) el.href = 'mailto:' + d.email;
@@ -178,9 +200,10 @@
     if (content.pricing) renderPricing(content.pricing);
     if (content.contact) renderContact(content.contact);
     if (content.footer) renderFooter(content.footer);
+    revealAgain();
   }
 
-  fetch('/data/content.json', { cache: 'no-store' })
+  fetch('/data/content.json?t=' + Date.now(), { cache: 'no-store' })
     .then(function (res) { if (!res.ok) throw new Error('content.json not found'); return res.json(); })
     .then(render)
     .catch(function (err) {

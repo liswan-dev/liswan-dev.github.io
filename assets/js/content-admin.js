@@ -460,7 +460,6 @@
     var ok = GH.isReady(), t = GH.target();
     document.getElementById('gh-dot').classList.toggle('ok', ok);
     document.getElementById('gh-label').textContent = t.label;
-    document.getElementById('btn-publish').disabled = !ok;
     document.getElementById('btn-publish').textContent = t.button;
     var note = document.getElementById('save-note');
     if (note) note.innerHTML = t.note;

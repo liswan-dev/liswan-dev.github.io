@@ -79,7 +79,6 @@
     var ok = GH.isReady(), t = GH.target();
     $('pe-gh-dot').classList.toggle('ok', ok);
     $('pe-gh-label').textContent = t.label;
-    $('pe-publish').disabled = !ok;
     $('pe-publish').textContent = t.button;
     $('pe-save-note').innerHTML = t.note;
   }

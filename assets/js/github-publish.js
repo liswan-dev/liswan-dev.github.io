@@ -41,8 +41,11 @@ window.GH = (function () {
       note: 'Di-commit langsung ke GitHub — situs live terupdate ±1 menit kemudian.' };
     if (LOCAL) return { button: 'Simpan', label: 'Mode lokal',
       note: 'Disimpan langsung ke folder proyek — refresh situs lokal untuk melihat hasilnya. Untuk live: commit &amp; push, atau hubungkan GitHub.' };
-    return { button: 'Publish', label: 'Belum terhubung',
-      note: 'Belum bisa menyimpan otomatis. Jalankan situs lewat <b>run.bat</b> (simpan langsung ke proyek) atau hubungkan GitHub. Alternatif: unduh JSON lalu timpa file di folder <code>data/</code>.' };
+    var onLocalhost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    return { button: 'Hubungkan GitHub', label: 'Belum terhubung',
+      note: onLocalhost
+        ? 'Jalankan situs lewat <b>run.bat</b> agar bisa simpan langsung ke proyek, atau hubungkan GitHub.'
+        : 'Klik <b>Hubungkan GitHub</b> dan tempel token GitHub (sekali saja per browser). Setelah itu tombol berubah jadi <b>Publish</b>.' };
   }
 
   function localSave(path, base64) {

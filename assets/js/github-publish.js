@@ -192,7 +192,8 @@ window.GH = (function () {
       '<div class="modal-box" style="max-width:520px">' +
         '<div class="modal-header"><h3>Koneksi GitHub</h3><button class="modal-close" type="button" data-x>&times;</button></div>' +
         '<div class="modal-body"><div class="form-grid">' +
-          '<p class="form-hint" style="margin:0">Buat <b>fine-grained token</b> di GitHub → Settings → Developer settings → Personal access tokens. Repository access: <b>hanya repo ini</b>. Permissions: <b>Contents = Read and write</b>. Token disimpan hanya di browser ini.</p>' +
+          '<p style="margin:0;font-size:13px;line-height:1.7;color:var(--muted)"><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:var(--accent-ink);font-weight:700">Buat token di GitHub &#8599;</a><br>' +
+          'Repository access: <b>hanya repo ini</b> · Contents: <b>Read and write</b>. Token disimpan hanya di browser ini.</p>' +
           '<div class="form-grid cols-2">' +
             '<div class="form-field"><label class="form-label">Owner</label><input class="form-input" data-f="owner"></div>' +
             '<div class="form-field"><label class="form-label">Repo</label><input class="form-input" data-f="repo"></div>' +

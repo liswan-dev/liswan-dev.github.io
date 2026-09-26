@@ -9,11 +9,8 @@
     "stack": ["Google Apps Script", "WordPress / PHP", "MySQL", "Google Drive API", "JavaScript"],
     "card": {
       "lines": [
-        { "k": "Sistem", "v": "Asset Management" },
-        { "k": "Status", "v": "Live & Digunakan" },
-        { "k": "Approval Flow", "v": "Email + Dashboard" },
-        { "k": "Integrasi", "v": "Google Drive" },
-        { "k": "Akses", "v": "Role-based" }
+        { "k": "Sistem", "v": "POS" },
+        { "k": "HRIS", "v": "Human Resource Information System" }
       ],
       "badge": "DIBANGUN CUSTOM UNTUK KEBUTUHAN ANDA"
     }

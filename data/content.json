@@ -5,7 +5,7 @@
     "subheadline": "Saya bantu bisnis membangun sistem manajemen aset, approval workflow, dashboard reporting, dan otomasi internal — dirancang khusus sesuai proses kerja Anda, bukan template generik.",
     "ctaPrimaryLabel": "Konsultasi Gratis",
     "ctaSecondaryLabel": "Lihat Portofolio",
-    "image": "/projects/mockup-asset-management.webp",
+    "image": "/assets/img/hero-bg.webp",
     "stack": ["Google Apps Script", "WordPress / PHP", "MySQL", "Google Drive API", "JavaScript"],
     "card": {
       "lines": [

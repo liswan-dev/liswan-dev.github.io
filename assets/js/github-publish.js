@@ -7,6 +7,9 @@
  * Local mode: when the site runs through run.bat (tools/dev-server.py on localhost),
  * edits are also written straight into the project folder, so they show up on the
  * local site immediately — commit & push afterwards to put them live.
+ * Worker mode (preferred): when window.PUBLISH_API is set (assets/js/publish-config.js), the
+ * admin logs in with email/password at /admin/login/ and every publish goes through the
+ * Cloudflare Worker in cloudflare-worker/ — the GitHub token only lives on that server.
  * Without a token or local server, admin pages fall back to "download the JSON and commit by hand".
  */
 window.GH = (function () {
@@ -22,6 +25,43 @@ window.GH = (function () {
   }
   function hasToken() { return !!getSettings().token; }
 
+  // ---- Worker mode (publish API holds the GitHub token server-side)
+  var API = String(window.PUBLISH_API || '').replace(/\/+$/, '');
+  var SESSION_KEY = 'liswan-publish-session';
+  function getSession() {
+    try { var s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); return s && s.exp > Date.now() ? s : null; }
+    catch (e) { return null; }
+  }
+  function hasApi() { return !!API; }
+  function workerReady() { return !!(API && getSession()); }
+  function login(email, password) {
+    return fetch(API + '/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: password }) })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          if (!r.ok) throw new Error(j.error || 'Login gagal (HTTP ' + r.status + ')');
+          localStorage.setItem(SESSION_KEY, JSON.stringify({ token: j.token, exp: j.exp, name: j.name, email: j.email }));
+          return j;
+        });
+      });
+  }
+  function logout() { try { localStorage.removeItem(SESSION_KEY); } catch (e) {} }
+  function worker(path, opts) {
+    var s = getSession();
+    if (!s) return Promise.reject(new Error('Sesi login habis — silakan login ulang'));
+    opts = opts || {};
+    return fetch(API + path, {
+      method: opts.method || 'GET',
+      headers: { 'Authorization': 'Bearer ' + s.token, 'Content-Type': 'application/json' },
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (r) {
+      if (r.status === 401) logout();
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var e = new Error(j.error || 'HTTP ' + r.status); e.status = r.status; throw e; }
+        return j;
+      });
+    });
+  }
+
   // Detect tools/dev-server.py once; LOCAL stays false on the live site.
   var LOCAL = false;
   var readyPromise = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)
@@ -30,11 +70,15 @@ window.GH = (function () {
     : Promise.resolve();
   function ready() { return readyPromise; }
   function isLocal() { return LOCAL; }
-  function isReady() { return hasToken() || LOCAL; }
+  function isReady() { return workerReady() || hasToken() || LOCAL; }
 
   // UI text for the save bar: where "Publish" will write to.
   function target() {
     var s = getSettings();
+    if (workerReady()) return { button: 'Publish', label: LOCAL ? 'Lokal + Terhubung' : 'Terhubung',
+      note: 'Perubahan langsung di-commit ke repo lewat server admin — situs live terupdate ±1 menit kemudian.' };
+    if (API && !LOCAL) return { button: 'Login untuk Publish', label: 'Sesi habis',
+      note: 'Sesi login berlaku 12 jam. Login ulang untuk bisa publish — perubahan di halaman ini tetap aman selama tab tidak ditutup.' };
     if (hasToken() && LOCAL) return { button: 'Publish', label: 'Lokal + GitHub',
       note: 'Disimpan ke folder proyek <b>dan</b> di-commit ke GitHub. Situs lokal langsung berubah, situs live ±1 menit kemudian.' };
     if (hasToken()) return { button: 'Publish', label: 'GitHub',
@@ -98,6 +142,7 @@ window.GH = (function () {
   // Write one file: into the local project (if running via run.bat) and/or GitHub (one commit).
   function putFile(path, base64, message) {
     var local = LOCAL ? localSave(path, base64) : Promise.resolve();
+    if (workerReady()) return local.then(function () { return worker('/put', { method: 'POST', body: { path: path, base64: base64, message: message } }); });
     if (!hasToken()) return local;
     return local.then(function () { return putGithub(path, base64, message); });
   }
@@ -125,7 +170,14 @@ window.GH = (function () {
       return fetch('/' + path + '?t=' + Date.now(), { cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
     };
-    if (!hasToken() || LOCAL) return fromSite();
+    if (LOCAL) return fromSite();
+    if (workerReady()) {
+      var s0 = getSession();
+      return fetch(API + '/get?path=' + encodeURIComponent(path), { headers: { 'Authorization': 'Bearer ' + s0.token }, cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .catch(fromSite);
+    }
+    if (!hasToken()) return fromSite();
     var s = getSettings();
     return api('/contents/' + path + '?ref=' + encodeURIComponent(s.branch), { allow404: true })
       .then(function (f) { return f && f.content ? JSON.parse(base64ToUtf8(f.content)) : fromSite(); })
@@ -181,6 +233,12 @@ window.GH = (function () {
       if (repo.permissions && !repo.permissions.push) throw new Error('Token tidak punya izin menulis ke repo ini');
       return repo;
     });
+  }
+
+  // "Publish" pressed while not ready: Worker mode -> back to login, otherwise the token modal.
+  function connect(onSaved) {
+    if (API) { location.href = '/admin/login/?next=' + encodeURIComponent(location.pathname); return; }
+    openSettings(onSaved);
   }
 
   // Settings modal, shared by every admin page that publishes.
@@ -240,6 +298,8 @@ window.GH = (function () {
     getSettings: getSettings, isReady: isReady, hasToken: hasToken, isLocal: isLocal, ready: ready, target: target,
     getJson: getJson, putFile: putFile, putJson: putJson,
     compressImage: compressImage, uploadImage: uploadImage, blobToBase64: blobToBase64,
-    testConnection: testConnection, openSettings: openSettings, explain: explain
+    testConnection: testConnection, openSettings: openSettings, explain: explain,
+    hasApi: hasApi, login: login, logout: logout, connect: connect,
+    isRemote: function () { return workerReady() || hasToken(); }
   };
 })();

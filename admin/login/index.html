@@ -45,6 +45,8 @@
   <script src="/assets/js/supabase-client.js"></script>
   <script src="/assets/js/dummy-data.js"></script>
   <script src="/assets/js/data-layer.js"></script>
+  <script src="/assets/js/publish-config.js"></script>
+  <script src="/assets/js/github-publish.js"></script>
   <script>
     document.getElementById('login-form').addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -52,9 +54,26 @@
       var password = document.getElementById('password').value;
       var errorEl = document.getElementById('login-error');
       errorEl.style.display = 'none';
+      var next = new URLSearchParams(location.search).get('next');
+      if (!next || !/^\/admin\//.test(next)) next = '/admin/';
+      // Worker configured: this is the real admin login (demo accounts no longer work)
+      if (GH.hasApi()) {
+        var btn = e.target.querySelector('[type=submit]');
+        if (btn) btn.disabled = true;
+        try {
+          var s = await GH.login(email, password);
+          DB.setAdminSession(s.email || email, s.name);
+          location.href = next;
+        } catch (err) {
+          errorEl.textContent = err.message;
+          errorEl.style.display = 'block';
+          if (btn) btn.disabled = false;
+        }
+        return;
+      }
       var res = await DB.login(email, password);
       if (res.ok && res.role === 'admin') {
-        location.href = '/admin/';
+        location.href = next;
       } else if (res.ok) {
         await DB.logout(); // DB.login already set a session for this (non-admin) account — clear it
         errorEl.textContent = 'This account is not an admin account.';

@@ -265,6 +265,7 @@ window.Dash = (function () {
     var logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) logoutBtn.addEventListener('click', async function () {
       await window.DB.logout();
+      try { localStorage.removeItem('liswan-publish-session'); } catch (e) {}
       location.href = opts.role === 'admin' ? '/admin/login/' : '/client/login/';
     });
 

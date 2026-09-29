@@ -466,7 +466,7 @@
   }
 
   function publish() {
-    if (!GH.isReady()) { GH.openSettings(renderGh); return; }
+    if (!GH.isReady()) { GH.connect(renderGh); return; }
     var btn = document.getElementById('btn-publish');
     btn.disabled = true; btn.textContent = 'Mengunggah…';
     var out = JSON.parse(JSON.stringify(STATE)), uploaded = {};
@@ -477,7 +477,7 @@
       return GH.putJson('data/content.json', data, 'Update konten beranda via admin').then(function () { return data; });
     }).then(function (data) {
       STATE = data; BLOBS = {}; renderAll();
-      if (window.Dash) Dash.toast(GH.hasToken() ? 'Terpublish! Beranda live terupdate dalam ±1 menit.' : 'Tersimpan ke data/content.json — refresh beranda untuk melihat hasilnya.', 'success');
+      if (window.Dash) Dash.toast(GH.isRemote() ? 'Terpublish! Beranda live terupdate dalam ±1 menit.' : 'Tersimpan ke data/content.json — refresh beranda untuk melihat hasilnya.', 'success');
     }).catch(function (err) {
       if (window.Dash) Dash.toast('Gagal menyimpan: ' + GH.explain(err.message), 'danger');
     }).then(function () { renderGh(); });

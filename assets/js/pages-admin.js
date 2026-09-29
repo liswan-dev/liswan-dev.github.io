@@ -210,7 +210,7 @@
   }
 
   function publish() {
-    if (!GH.isReady()) { GH.openSettings(renderGh); return; }
+    if (!GH.isReady()) { GH.connect(renderGh); return; }
     if (!changeList().length) { toast('Tidak ada perubahan untuk disimpan', 'warning'); return; }
     var btn = $('pe-publish');
     btn.disabled = true; btn.textContent = 'Mengunggah…';
@@ -224,7 +224,7 @@
     }).then(function (data) {
       BASE = clone(data); WORK = clone(data); BLOBS = {};
       afterChange();
-      toast(GH.hasToken() ? 'Terpublish! Situs live terupdate dalam ±1 menit.' : 'Tersimpan ke data/pages.json — refresh halaman untuk melihat hasilnya.');
+      toast(GH.isRemote() ? 'Terpublish! Situs live terupdate dalam ±1 menit.' : 'Tersimpan ke data/pages.json — refresh halaman untuk melihat hasilnya.');
     }).catch(function (err) {
       toast('Gagal menyimpan: ' + GH.explain(err.message), 'danger');
     }).then(function () { renderGh(); });

@@ -83,6 +83,11 @@
       return { ok: true, role: role };
     },
 
+    // Admin signed in through the publish API (Cloudflare Worker) — see admin/login.
+    setAdminSession(email, fullName) {
+      setSessionSync({ role: 'admin', userId: 'u-admin-1', email: email, fullName: fullName || 'Admin', clientId: null });
+    },
+
     async logout() {
       if (this.isLive) { try { await window.sb.auth.signOut(); } catch (e) {} }
       setSessionSync(null);
